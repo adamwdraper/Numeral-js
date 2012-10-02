@@ -47,11 +47,13 @@ var string = numeral(1000).format('0,000');
 // 1,000
 </pre>
             <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Number</th>
-                    <th>Format</th>
-                    <th>Result</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Format</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
                 <script type="text/javascript">
                     var nums = [
                         10000,
@@ -105,11 +107,13 @@ var string = numeral().unformat('($10,000.00)');
 // -10000
 </pre>
             <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Before</th>
-                    <th>Function</th>
-                    <th>After</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Before</th>
+                        <th>Function</th>
+                        <th>After</th>
+                    </tr>
+                </thead>
                 <script type="text/javascript">
                     document.write('<tr><td>10,000.123</td><td>numeral().unformat(\'10,000.123\')</td><td>' + numeral().unformat('10,000.123') + '</td></tr>');
                     document.write('<tr><td>(0.12345)</td><td>numeral().unformat(\'(0.12345)\')</td><td>' + numeral().unformat('(0.12345)') + '</td></tr>');
@@ -126,11 +130,13 @@ var added = number.add(10);
 // 1010
 </pre>
             <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Before</th>
-                    <th>Function</th>
-                    <th>After</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Before</th>
+                        <th>Function</th>
+                        <th>After</th>
+                    </tr>
+                </thead>
                 <script type="text/javascript">
                     var num = numeral(1000);
                     document.write('<tr><td>' + num.format('0,000') + '</td><td>number.add(100)</td><td>' + num.add(100).format('0,000') + '</td></tr>');
