@@ -3,7 +3,7 @@
 // version : 1.0.0
 // author : Adam Draper
 // license : MIT
-// https://github.com/adamwdraper/Numeral-js
+// http://adamwdraper.github.com/Numeral-js/
 
 (function () {
 
