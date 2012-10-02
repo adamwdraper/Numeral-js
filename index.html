@@ -57,7 +57,7 @@ var number = numeral(1000);
 </pre>
         <h3>Format</h3>
         <p>
-            Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places and comma delineated thousands.
+            Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
         </p>
 <pre>
 var string = numeral(1000).format('0,000');
@@ -81,7 +81,10 @@ var string = numeral(1000).format('0,000');
                     -10000,
                     -.23,
                     -.23,
-                    .23
+                    .23,
+                    1230974,
+                    1460,
+                    -104000
                 ],
                 formats = [
                     '0,000.0000',
@@ -91,7 +94,10 @@ var string = numeral(1000).format('0,000');
                     '(0,000.0000)',
                     '.00',
                     '(.00)',
-                    '0.00000'
+                    '0.00000',
+                    '0.0a',
+                    '0a',
+                    '0a'
                 ];
 
                 for (var i = 0; i < nums.length; i++) {
@@ -112,12 +118,14 @@ var string = numeral(1000).format('0,000');
                 nums = [
                     1000.234,
                     -1000.234,
-                    -1000.234
+                    -1000.234,
+                    1230974
                 ],
                 formats = [
                     '$0,000.00',
                     '($0,000)',
-                    '$0,000.00'
+                    '$0,000.00',
+                    '($0.00a)'
                 ];
 
                 for (i = 0; i < nums.length; i++) {
@@ -198,6 +206,7 @@ var string = numeral().unformat('($10,000.00)');
             <script type="text/javascript">
                 document.write('<tr><td>10,000.123</td><td>numeral().unformat(\'10,000.123\')</td><td>' + numeral().unformat('10,000.123') + '</td></tr>');
                 document.write('<tr><td>(0.12345)</td><td>numeral().unformat(\'(0.12345)\')</td><td>' + numeral().unformat('(0.12345)') + '</td></tr>');
+                document.write('<tr><td>($1.23m)</td><td>numeral().unformat(\'($1.23m)\')</td><td>' + numeral().unformat('($1.23m)') + '</td></tr>');
                 document.write('<tr><td>$10,000.00</td><td>numeral().unformat(\'$10,000.00\')</td><td>' + numeral().unformat('$10,000.00') + '</td></tr>');
                 document.write('<tr><td>-76%</td><td>numeral().unformat(\'-76%\')</td><td>' + numeral().unformat('-76%') + '</td></tr>');
                 document.write('<tr><td>2:23:57</td><td>numeral().unformat(\'2:23:57\')</td><td>' + numeral().unformat('2:23:57') + '</td></tr>');
@@ -256,9 +265,10 @@ var value = number.value();
 </pre>
         <h3>Acknowlegements</h3>
         <p>
-            Numeral.js, while way less complex, was inspired by and heavily borrowed from the amazing <a href="http://momentjs.com/">Moment.js</a>
+            Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
         </p>
-    </div>      </section>
+    </div>
+     </section>
       <footer>
         <div class="clearfix shares">
             <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fadamwdraper.github.com%2FNumeral-js%2F&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=147563921952522" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
