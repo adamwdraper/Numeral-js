@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.0.0
+// version : 1.0.1
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -70,7 +70,7 @@
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
-            n._n = ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|\(|\)*/ig, ''));
+            n._n = ((string.indexOf('k') > -1) ? 1000 : 1) * ((string.indexOf('m') > -1) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|k|m|\(|\)*/ig, ''));
         }
         return n._n;
     }
@@ -130,15 +130,30 @@
     }
 
     function formatNumber (n, format) {
-        var w = n._n.toString().split('.')[0],
-            negP = false;
+        var negP = false,
+            abbr = false;
 
+        // see if we should use parentheses for negative number
         if (format.indexOf('(') > -1) {
             negP = true;
             format = format.slice(1, -1);
         }
 
-        var precision = format.split('.')[1],
+        // see if abbreviation is wanted
+        if (format.indexOf('a') > -1) {
+            format = format.replace('a', '');
+
+            if (n._n > 1000000) {
+                abbr = 'm';
+                n._n = n._n / 1000000;
+            } else {
+                abbr = 'k';
+                n._n = n._n / 1000;
+            }
+        }
+
+        var w = n._n.toString().split('.')[0],
+            precision = format.split('.')[1],
             thousands = format.indexOf(','),
             d = '',
             neg = false;
@@ -162,7 +177,11 @@
             d = '.' + toFixed(n._n, precision.length).split('.')[1];
         }
 
-        return ((negP) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((negP) ? ')' : '');
+        if (abbr) {
+
+        }
+
+        return ((negP) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((abbr) ? abbr : '') + ((negP) ? ')' : '');
     }
 
     /************************************
