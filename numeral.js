@@ -46,7 +46,7 @@
         Formatting
     ************************************/
 
-    // format date using native date object
+    // determine what type of formatting we need to do
     function formatNumeral (n, format) {
         var output;
         
@@ -63,6 +63,16 @@
 
         // return string
         return output;
+    }
+
+    // revert to number
+    function unformatNumeral (n, string) {
+        if (string.indexOf(':') > -1) {
+            n._n = unformatTime(string);
+        } else {
+            n._n = ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|\(|\)*/ig, ''));
+        }
+        return n._n;
     }
 
     function formatMoney (n, format) {
@@ -96,8 +106,27 @@
         var hours = Math.floor(n._n/60/60),
             minutes = Math.floor((n._n - (hours * 60 * 60))/60),
             seconds = Math.round(n._n - (hours * 60 * 60) - (minutes * 60));
-
         return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+    }
+
+    function unformatTime (string) {
+        var timeArray = string.split(':'),
+            seconds = 0;
+        // turn hours and minutes into seconds and add them all up
+        if (timeArray.length === 3) {
+            // hours
+            seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+            // minutes
+            seconds = seconds + (Number(timeArray[1]) * 60);
+            // seconds
+            seconds = seconds + Number(timeArray[2]);
+        } else if (timeArray.lenght === 2) {
+            // minutes
+            seconds = seconds + (Number(timeArray[0]) * 60);
+            // seconds
+            seconds = seconds + Number(timeArray[1]);
+        }
+        return Number(seconds);
     }
 
     function formatNumber (n, format) {
@@ -142,7 +171,7 @@
 
     numeral = function (input) {
         if (!Number(input)) {
-            return null;
+            input = 0;
         }
         return new Numeral(Number(input));
     };
@@ -169,6 +198,19 @@
 
         format : function (inputString) {
             return formatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+        },
+
+        unformat : function (inputString) {
+            return unformatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+        },
+
+        value : function () {
+            return this._n;
+        },
+
+        set : function (value) {
+            this._n = Number(value);
+            return this;
         },
 
         add : function (value) {
