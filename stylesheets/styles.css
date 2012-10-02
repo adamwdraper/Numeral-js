@@ -103,39 +103,23 @@ header {
 
 header ul {
   list-style:none;
-  height:40px;
-  
   padding:0;
-  
-  background: #eee;
-  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
-  background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  
-  border-radius:5px;
-  border:1px solid #d2d2d2;
-  box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
   width:270px;
+  margin: 0;
 }
 
 header li {
-  width:89px;
-  float:left;
-  border-right:1px solid #d2d2d2;
-  height:40px;
+  width:90px;
+  padding: 3px 0;
 }
 
 header ul a {
-  line-height:1;
-  font-size:11px;
-  color:#999;
-  display:block;
   text-align:center;
-  padding-top:6px;
-  height:40px;
+}
+
+header ul a:hover {
+  text-decoration: none;
+  background: #f8f8f8;
 }
 
 strong {
@@ -183,6 +167,11 @@ footer {
   bottom:50px;
 }
 
+footer .shares {
+  width: 320px;
+  margin-bottom: 20px;
+}
+
 @media print, screen and (max-width: 960px) {
   
   div.wrapper {
@@ -197,11 +186,9 @@ footer {
   }
   
   header {
-    padding-right:320px;
   }
   
   section {
-    border:1px solid #e5e5e5;
     border-width:1px 0;
     padding:20px 0;
     margin:0 0 20px;
@@ -212,9 +199,7 @@ footer {
   }
   
   header ul {
-    position:absolute;
-    right:50px;
-    top:52px;
+
   }
 }
 
