@@ -24,12 +24,12 @@ h1 {
   font-size:28px;
 }
 
-h2 {
+h2, body h3{
   color:#393939;
 }
 
-h3, h4, h5, h6 {
-  color:#494949;
+body h4, h5, h6 {
+  color:#696969;
 }
 
 a {
