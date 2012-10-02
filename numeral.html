@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .content {
+            width: 550px;
+            margin: 20px auto;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <script src="numeral-min.js"></script>
+        <h2>Numeral.js</h2>
+        <p class="lead">A javascript library for formatting and manipulating numbers.</p>
+        <h3>Initialize</h3>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>var number = numeral(1000);</th>
+            </tr>
+        </table>
+        <h3>Format</h3>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>.format('0,000');</th>
+            </tr>
+        </table>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Number</th>
+                <th>Format</th>
+                <th>Result</th>
+            </tr>
+            <script type="text/javascript">
+                var nums = [
+                    10000,
+                    10000,
+                    -10000,
+                    10000.1234,
+                    -10000,
+                    -.23,
+                    -.23,
+                    .23,
+                    1000.234,
+                    -1000.234,
+                    -1000.234,
+                    1,
+                    .974878234,
+                    -.43,
+                    -.43,
+                    238,
+                    63846
+                ],
+                formats = [
+                    '0,000.0000',
+                    '0,000',
+                    '0,000.0',
+                    '0.000',
+                    '(0,000.0000)',
+                    '.00',
+                    '(.00)',
+                    '0.00000',
+                    '$0,000.00',
+                    '($0,000)',
+                    '$0,000.00',
+                    '0%',
+                    '0.000%',
+                    '0%',
+                    '(0.000%)',
+                    '00:00:00',
+                    '00:00:00'
+                ];
+
+                for (var i = 0; i < nums.length; i++) {
+                    document.write('<tr><td>' + nums[i] + '</td><td>&quot;' + formats[i] + '&quot;</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                }
+
+            </script>
+        </table>
+        <h3>Manipulate</h3>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>var number = numeral(1000);</th>
+            </tr>
+        </table>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Before</th>
+                <th>Function</th>
+                <th>After</th>
+            </tr>
+            <script type="text/javascript">
+                var num = numeral(1000);
+                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.add(100)</td><td>' + num.add(100).format('0,000') + '</td></tr>');
+                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.subtract(100)</td><td>' + num.subtract(100).format('0,000') + '</td></tr>');
+                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.multiply(100)</td><td>' + num.multiply(100).format('0,000') + '</td></tr>');
+                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.divide(100)</td><td>' + num.divide(100).format('0,000') + '</td></tr>');
+            </script>
+        </table>
+    </div>
+</body>
+</html>
