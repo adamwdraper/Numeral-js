@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.0.2
+
+Add clone functionality
+
 ### 1.0.1
 
 Added abbreviations for thousands and millions using 'a' in the format

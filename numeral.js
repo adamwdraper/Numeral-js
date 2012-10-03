@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.0.1
+// version : 1.0.2
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.0.0',
+        VERSION = '1.0.2',
         round = Math.round, i,
 
         // check for nodeJS
@@ -189,10 +189,19 @@
     ************************************/
 
     numeral = function (input) {
-        if (!Number(input)) {
+        if (numeral.isNumeral(input)) {
+            input = input.value();
+        } else if (!Number(input)) {
             input = 0;
         }
+
         return new Numeral(Number(input));
+    };
+
+    // compare numeral object
+    numeral.isNumeral = function (obj) {
+        console.log(obj);
+        return obj instanceof Numeral;
     };
 
     // version number

@@ -18,18 +18,26 @@
             text-align: center;
         }
     </style>
-    <script src="numeral-min.js"></script>
+    <script src="../min/numeral-min.js"></script>
 </head>
 <body>
     
     <div class="content">
         <h2>Numeral.js</h2>
         <p class="lead">A javascript library for formatting and manipulating numbers.</p>
-        <h3>Initialize</h3>
+        <h3>Use it</h3>
+        <h4>In the Browser</h4>
 <pre>
 &lt;script src=&quot;numeral-min.js&quot;&gt;&lt;/script&gt;
-var number = numeral(1000);
 </pre>
+<h4>In Node.js</h4>
+<pre>
+npm install numeral
+</pre>
+<pre>
+var numeral = require('numeral');
+</pre>
+
         <h3>Format</h3>
         <p>
             Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
@@ -238,6 +246,39 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
+        <h3>Clone</h3>
+        <p>
+            Any Numeral object can be cloned as well.
+        </p>
+<pre>
+var a = numeral(1000);
+var b = numeral(a);
+var c = a.clone();
+
+var aVal = a.set(2000).value();
+// 2000
+
+var bVal = b.value();
+// 1000
+
+var cVal = c.add(10).value();
+// 1010
+</pre>
+<script type="text/javascript">
+// console.log('Cloning:');
+// var a = numeral(1000);
+// var b = numeral(a);
+// var c = a.clone();
+
+// var aVal = a.set(2000).value();
+// console.log(aVal);
+
+// var bVal = b.value();
+// console.log(bVal);
+
+// var cVal = c.add(10).value();
+// console.log(cVal);
+</script>
         <h3>Acknowlegements</h3>
         <p>
             Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
