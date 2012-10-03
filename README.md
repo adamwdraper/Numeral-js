@@ -1,4 +1,4 @@
-[Numeral-js](http://adamwdraper.github.com/Numeral-js/)
+[Numeral.js](http://adamwdraper.github.com/Numeral-js/)
 =======================================================
 
 A javascript library for formatting and manipulating numbers.
