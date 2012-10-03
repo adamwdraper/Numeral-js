@@ -11,10 +11,10 @@
   "keywords": [
     "numeral",
     "number",
+    "format",
     "time",
     "money",
-    "percentage",
-    "validate"
+    "percentage"
   ],
   "main": "./numeral.js",
   "engines": {
