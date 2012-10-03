@@ -101,6 +101,11 @@ header {
   position:fixed;
 }
 
+header .shares {
+  margin-top: 30px;
+  width: 320px;
+}
+
 header ul {
   list-style:none;
   padding:0;
@@ -167,10 +172,6 @@ footer {
   bottom:50px;
 }
 
-footer .shares {
-  width: 320px;
-  margin-bottom: 20px;
-}
 
 @media print, screen and (max-width: 960px) {
   
