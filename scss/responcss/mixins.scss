@@ -1,0 +1,83 @@
+// Clearfix
+// For clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+    zoom: 1;
+    
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+    }
+    
+    &:after {
+        clear: both;
+    }
+}
+
+// Box base style --------------------------------------------
+@mixin box($size_cols, $num_cols, $gutter) {
+    float: left;
+    display:block;
+    @if $gutter == 0 {
+        $base: (1 / ($size_cols)) * 100%;
+        width: $num_cols * $base;
+    } @else {
+        $total_cols: $size_cols + $gutter;
+        $total_margins: $size_cols * 2;
+        $base: (1 / $total_cols) * 100%;
+        $margin-width: ($base * $gutter) / $total_margins;    
+        width: (($margin-width * 2) * ($num_cols - 1)) + ($num_cols * $base);
+        margin: 0 $margin-width;
+    }
+}
+
+// Margin for overs ----------------------------------------------
+@mixin box-over($size_cols, $num_cols, $gutter) {
+    @if $gutter == 0 {
+        $base: (1 / ($size_cols)) * 100%;
+        margin-left: $num_cols * $base;
+    } @else {
+        $total_cols: $size_cols + $gutter;
+        $total_margins: $size_cols * 2;
+        $base: (1 / $total_cols) * 100%;
+        $margin-width: ($base * $gutter) / $total_margins;
+        margin-left: (($margin-width * 2) * ($num_cols - 1)) + ($num_cols * $base) + ($margin-width * 3);
+    }
+}
+
+// Margins for Centered boxes --------------------------------------------------
+@mixin center-margins($size_cols, $num_cols, $gutter) {
+    @if $gutter == 0 {
+        $base: (1 / ($size_cols)) * 100%;
+        $margin_cols: ($size_cols - $num_cols) / 2;
+        $margin: $margin_cols * $base;
+        margin-right: $margin;
+        margin-left: $margin;
+    } @else {
+        $total_cols: $size_cols + $gutter;
+        $total_margins: $size_cols * 2;
+        $base: (1 / $total_cols) * 100%;
+        $margin-width: ($base * $gutter) / $total_margins;
+        $margin_cols: ($size_cols - $num_cols) / 2;
+        $margin: (($margin-width * 2) * ($margin_cols - 1)) + ($margin_cols * $base) + ($margin-width * 3);
+        margin-right: $margin;
+        margin-left: $margin;
+    }
+}
+
+// Box base style -----------------------------------------------------
+@mixin b-box($size_cols, $num_cols, $gutter) {
+    float: left;
+    display:block;    
+    @if $gutter == 0 {
+        $base: (1 / ($size_cols)) * 100%;
+        width: $num_cols * $base;
+    } @else {
+        $total_cols: $size_cols + $gutter;
+        $total_margins: $size_cols * 2;
+        $base: (1 / $total_cols) * 100%;
+        $margin-width: ($base * $gutter) / $total_margins;    
+        width: (($margin-width * 2) * ($num_cols - 1)) + ($num_cols * $base);
+        margin: 0 $margin-width;
+    }
+}

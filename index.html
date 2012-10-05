@@ -1,27 +1,26 @@
 <!doctype html>
-<html>
-  <head>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
     <title>Numeral.js</title>
+    <meta name="description" content="A javascript library for formatting and manipulating numbers.">
+    <meta name="author" content="">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        .table {
-            width: 100%;
-        }
+    <link rel="stylesheet" href="css/style.css">
 
-        .table th, .table td {
-            text-align: center;
-        }
-    </style>
-    <script src="javascripts/numeral-min.js"></script>
+    <script src="js/respond-min.js"></script>
+    <script src="js/numeral-min.js"></script>
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -35,40 +34,37 @@
       })();
 
     </script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Numeral.js</h1>
-        <p class="lead">A javascript library for formatting and manipulating numbers.</p>
-
-        <ul class="btn-group">
-          <li class="btn btn-small"><a href="https://github.com/adamwdraper/Numeral-js/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li class="btn btn-small"><a href="https://github.com/adamwdraper/Numeral-js/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li class="btn btn-small"><a href="https://github.com/adamwdraper/Numeral-js">View On <strong>GitHub</strong></a></li>
-        </ul>
-        <div class="clearfix shares">
-            <iframe src="http://ghbtns.com/github-btn.html?user=adamwdraper&repo=Numeral-js&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
-
-              <!-- Place this tag where you want the +1 button to render. -->
-            <div class="g-plusone" data-size="medium"></div>
-
-            <!-- Place this tag after the last +1 button tag. -->
-            <script type="text/javascript">
-              (function() {
-                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                po.src = 'https://apis.google.com/js/plusone.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-              })();
-            </script>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-text="Numeral.js - easily format javascript numbers" data-via="adamwdraper">Tweet</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</head>
+<body class="cf">
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+    <div class="header-bar full"></div>
+    <div class="sidebar thrd m-full s-full">
+        <div class="inner">
+            <h1 class="logo">
+                Numeral.js
+            </h1>
+            <p class="tagline">
+                A javascript library for formatting and manipulating numbers.
+            </p> 
+            <div id="nav" class="nav"></div>
+            <div class="github-links">
+                <a class="button" href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="i-github"></i> Github</a>
+                <a class="button download" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="i-install"></i> .ZIP</a>
+                <a class="button download" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="i-install"></i> .TGZ</a>
+            </div>
+            <div class="footer">
+                <p>
+                    This is a project by <a href="http://github.com/adamwdraper">Adam Draper</a>
+                </p>
+                <iframe src="http://ghbtns.com/github-btn.html?user=adamwdraper&type=follow" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="20px"></iframe>
+            </div>
         </div>
-      </header>
-      <section>
-    <div class="content">
-        <h3>Use it</h3>
-        <h4>In the Browser</h4>
+    </div>
+    <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
+        <div class="inner">
+
+            <h3>Use it</h3>
+            <h4>In the Browser</h4>
 <pre>
 &lt;script src=&quot;numeral-min.js&quot;&gt;&lt;/script&gt;
 </pre>
@@ -80,193 +76,193 @@ npm install numeral
 var numeral = require('numeral');
 </pre>
 
-        <h3>Format</h3>
-        <p>
-            Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
-        </p>
+            <h3>Format</h3>
+            <p>
+                Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
+            </p>
 <pre>
 var string = numeral(1000).format('0,000');
 // 1,000
 </pre>
-        <h4>Numbers</h4>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Format</th>
-                    <th>String</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                var nums = [
-                    10000,
-                    10000,
-                    -10000,
-                    10000.1234,
-                    -10000,
-                    -.23,
-                    -.23,
-                    .23,
-                    1230974,
-                    1460,
-                    -104000
-                ],
-                formats = [
-                    '0,000.0000',
-                    '0,000',
-                    '0,000.0',
-                    '0.000',
-                    '(0,000.0000)',
-                    '.00',
-                    '(.00)',
-                    '0.00000',
-                    '0.0a',
-                    '0a',
-                    '0a'
-                ];
+            <h4>Numbers</h4>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Format</th>
+                        <th>String</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    var nums = [
+                        10000,
+                        10000,
+                        -10000,
+                        10000.1234,
+                        -10000,
+                        -.23,
+                        -.23,
+                        .23,
+                        1230974,
+                        1460,
+                        -104000
+                    ],
+                    formats = [
+                        '0,000.0000',
+                        '0,000',
+                        '0,000.0',
+                        '0.000',
+                        '(0,000.0000)',
+                        '.00',
+                        '(.00)',
+                        '0.00000',
+                        '0.0a',
+                        '0a',
+                        '0a'
+                    ];
 
-                for (var i = 0; i < nums.length; i++) {
-                    document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                }
-            </script>
-        </table>
-        <h4>Money</h4>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Format</th>
-                    <th>String</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                nums = [
-                    1000.234,
-                    -1000.234,
-                    -1000.234,
-                    1230974
-                ],
-                formats = [
-                    '$0,000.00',
-                    '($0,000)',
-                    '$0,000.00',
-                    '($0.00a)'
-                ];
+                    for (var i = 0; i < nums.length; i++) {
+                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                    }
+                </script>
+            </table>
+            <h4>Money</h4>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Format</th>
+                        <th>String</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    nums = [
+                        1000.234,
+                        -1000.234,
+                        -1000.234,
+                        1230974
+                    ],
+                    formats = [
+                        '$0,000.00',
+                        '($0,000)',
+                        '$0,000.00',
+                        '($0.00a)'
+                    ];
 
-                for (i = 0; i < nums.length; i++) {
-                    document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                }
-            </script>
-        </table>
-        <h4>Percentages</h4>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Format</th>
-                    <th>String</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                var nums = [
-                    1,
-                    .974878234,
-                    -.43,
-                    -.43
-                ],
-                formats = [
-                    '0%',
-                    '0.000%',
-                    '0%',
-                    '(0.000%)'
-                ];
+                    for (i = 0; i < nums.length; i++) {
+                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                    }
+                </script>
+            </table>
+            <h4>Percentages</h4>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Format</th>
+                        <th>String</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    var nums = [
+                        1,
+                        .974878234,
+                        -.43,
+                        -.43
+                    ],
+                    formats = [
+                        '0%',
+                        '0.000%',
+                        '0%',
+                        '(0.000%)'
+                    ];
 
-                for (var i = 0; i < nums.length; i++) {
-                    document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                }
-            </script>
-        </table>
-        <h4>Time</h4>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Format</th>
-                    <th>String</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                var nums = [
-                    25,
-                    238,
-                    63846
-                ],
-                formats = [
-                    '00:00:00',
-                    '00:00:00',
-                    '00:00:00'
-                ];
+                    for (var i = 0; i < nums.length; i++) {
+                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                    }
+                </script>
+            </table>
+            <h4>Time</h4>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Format</th>
+                        <th>String</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    var nums = [
+                        25,
+                        238,
+                        63846
+                    ],
+                    formats = [
+                        '00:00:00',
+                        '00:00:00',
+                        '00:00:00'
+                    ];
 
-                for (var i = 0; i < nums.length; i++) {
-                    document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                }
-            </script>
-        </table>
-        <h3>Unformat</h3>
-        <p>
-            Got a formatted string?  Use the unformat function to make it useful again.
-        </p>
+                    for (var i = 0; i < nums.length; i++) {
+                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                    }
+                </script>
+            </table>
+            <h3>Unformat</h3>
+            <p>
+                Got a formatted string?  Use the unformat function to make it useful again.
+            </p>
 <pre>
 var string = numeral().unformat('($10,000.00)');
 // -10000
 </pre>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>String</th>
-                    <th>Function</th>
-                    <th>Number</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                document.write('<tr><td>10,000.123</td><td>numeral().unformat(\'10,000.123\')</td><td>' + numeral().unformat('10,000.123') + '</td></tr>');
-                document.write('<tr><td>(0.12345)</td><td>numeral().unformat(\'(0.12345)\')</td><td>' + numeral().unformat('(0.12345)') + '</td></tr>');
-                document.write('<tr><td>($1.23m)</td><td>numeral().unformat(\'($1.23m)\')</td><td>' + numeral().unformat('($1.23m)') + '</td></tr>');
-                document.write('<tr><td>$10,000.00</td><td>numeral().unformat(\'$10,000.00\')</td><td>' + numeral().unformat('$10,000.00') + '</td></tr>');
-                document.write('<tr><td>-76%</td><td>numeral().unformat(\'-76%\')</td><td>' + numeral().unformat('-76%') + '</td></tr>');
-                document.write('<tr><td>2:23:57</td><td>numeral().unformat(\'2:23:57\')</td><td>' + numeral().unformat('2:23:57') + '</td></tr>');
-            </script>
-        </table>
-        <h3>Manipulate</h3>
-        <p>
-            Not that you will uses these often, but they're there when you need them.
-        </p>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>String</th>
+                        <th>Function</th>
+                        <th>Number</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    document.write('<tr><td>10,000.123</td><td>numeral().unformat(\'10,000.123\')</td><td>' + numeral().unformat('10,000.123') + '</td></tr>');
+                    document.write('<tr><td>(0.12345)</td><td>numeral().unformat(\'(0.12345)\')</td><td>' + numeral().unformat('(0.12345)') + '</td></tr>');
+                    document.write('<tr><td>($1.23m)</td><td>numeral().unformat(\'($1.23m)\')</td><td>' + numeral().unformat('($1.23m)') + '</td></tr>');
+                    document.write('<tr><td>$10,000.00</td><td>numeral().unformat(\'$10,000.00\')</td><td>' + numeral().unformat('$10,000.00') + '</td></tr>');
+                    document.write('<tr><td>-76%</td><td>numeral().unformat(\'-76%\')</td><td>' + numeral().unformat('-76%') + '</td></tr>');
+                    document.write('<tr><td>2:23:57</td><td>numeral().unformat(\'2:23:57\')</td><td>' + numeral().unformat('2:23:57') + '</td></tr>');
+                </script>
+            </table>
+            <h3>Manipulate</h3>
+            <p>
+                Not that you will uses these often, but they're there when you need them.
+            </p>
 <pre>
 var number = numeral(1000);
 
 var added = number.add(10);
 // 1010
 </pre>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Before</th>
-                    <th>Function</th>
-                    <th>After</th>
-                </tr>
-            </thead>
-            <script type="text/javascript">
-                var num = numeral(1000);
-                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.add(100)</td><td>' + num.add(100).format('0,000') + '</td></tr>');
-                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.subtract(100)</td><td>' + num.subtract(100).format('0,000') + '</td></tr>');
-                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.multiply(100)</td><td>' + num.multiply(100).format('0,000') + '</td></tr>');
-                document.write('<tr><td>' + num.format('0,000') + '</td><td>number.divide(100)</td><td>' + num.divide(100).format('0,000') + '</td></tr>');
-            </script>
-        </table>
-        <h3>Value</h3>
-        <p>
-            The value is always available.
-        </p>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Before</th>
+                        <th>Function</th>
+                        <th>After</th>
+                    </tr>
+                </thead>
+                <script type="text/javascript">
+                    var num = numeral(1000);
+                    document.write('<tr><td>' + num.format('0,000') + '</td><td>number.add(100)</td><td>' + num.add(100).format('0,000') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,000') + '</td><td>number.subtract(100)</td><td>' + num.subtract(100).format('0,000') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,000') + '</td><td>number.multiply(100)</td><td>' + num.multiply(100).format('0,000') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,000') + '</td><td>number.divide(100)</td><td>' + num.divide(100).format('0,000') + '</td></tr>');
+                </script>
+            </table>
+            <h3>Value</h3>
+            <p>
+                The value is always available.
+            </p>
 <pre>
 var number = numeral(1000);
 
@@ -276,10 +272,10 @@ var string = number.format('0,000');
 var value = number.value();
 // 1000
 </pre>
-        <h3>Set</h3>
-        <p>
-            Set the value of your numeral object.
-        </p>
+            <h3>Set</h3>
+            <p>
+                Set the value of your numeral object.
+            </p>
 <pre>
 var number = numeral();
 
@@ -288,10 +284,10 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
-        <h3>Clone</h3>
-        <p>
-            Go ahead and clone any numeral object while you're at it.
-        </p>
+            <h3>Clone</h3>
+            <p>
+                Go ahead and clone any numeral object while you're at it.
+            </p>
 <pre>
 var a = numeral(1000);
 var b = numeral(a);
@@ -306,20 +302,23 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-        <h3>Acknowlegements</h3>
-        <p>
-            Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
-        </p>
-    </div>     </section>
-      <footer>
-        <p>
-            This project is maintained by <a href="https://github.com/adamwdraper">adamwdraper</a>
-        </p>
-        <iframe src="http://ghbtns.com/github-btn.html?user=adamwdraper&type=follow" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="20px"></iframe>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+            <h3>Acknowlegements</h3>
+            <p>
+                Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
+            </p>
+
+        </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+
+    <div class="footer full">
+        <div class="inner">
+            <p>
+                This is a project by <a href="http://github.com/adamwdraper">Adam Draper</a>
+            </p>
+            <iframe src="http://ghbtns.com/github-btn.html?user=adamwdraper&type=follow" allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="20px"></iframe>
+        </div>
+    </div>
+
+    <script src="js/build/site-min.js"></script>
+</body>
 </html>

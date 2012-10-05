@@ -1,0 +1,19 @@
+// Bonus Clearfix Style --------------------------------
+.cf {
+    @include clearfix();
+}
+
+// universal clear
+.clear {
+    clear: both;
+}
+
+// universal show
+.show {
+    display: block;
+}
+
+// universal hide
+.hide {
+    display: none;
+}

@@ -1,0 +1,52 @@
+// Mobile Devices
+@media (max-width: 767px) {
+
+    // display override
+    .s-show {
+        display: block;
+    }
+
+    .s-hide {
+        display: none !important;
+    }
+}
+
+ 
+// Portrait tablet
+@media (min-width: 768px) and (max-width: 980px) {
+
+    // display override
+    .m-show {
+        display: block;
+    }
+
+    .m-hide {
+        display:none !important;
+    }
+}
+ 
+// Landscape tablet or desktop
+@media (min-width: 981px) and (max-width: 1209px) {
+
+    // display override
+    .l-show {
+        display: block;
+    }
+
+    .l-hide {
+        display: none !important;
+    }
+}
+ 
+// Large desktop
+@media (min-width: 1210px) {
+
+    // display override
+    .xl-show {
+        display: block;
+    }
+
+    .xl-hide {
+        display: none !important;
+    }
+}
