@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.0.2
+// version : 1.0.3
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.0.2',
+        VERSION = '1.0.3',
         round = Math.round, i,
 
         // check for nodeJS
@@ -70,7 +70,7 @@
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
-            n._n = ((string.indexOf('k') > -1) ? 1000 : 1) * ((string.indexOf('m') > -1) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|k|m|\(|\)*/ig, ''));
+            n._n = ((string.indexOf('k') > -1) ? 1000 : 1) * ((string.indexOf('m') > -1) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|k|m|th|st|nd|rd|\(|\)*/ig, ''));
         }
         return n._n;
     }
@@ -131,7 +131,8 @@
 
     function formatNumber (n, format) {
         var negP = false,
-            abbr = false;
+            abbr = false,
+            ord = false;
 
         // see if we should use parentheses for negative number
         if (format.indexOf('(') > -1) {
@@ -150,6 +151,16 @@
                 abbr = 'k';
                 n._n = n._n / 1000;
             }
+        }
+
+        // see if ordinal is wanted
+        if (format.indexOf('o') > -1) {
+            format = format.replace('o', '');
+
+            var r = n._n % 100,
+                suffix = ['th', 'st', 'nd', 'rd', 'th'];
+
+            ord = r < 21 ? (r < 4 ? suffix[r] : suffix[0]) : (r % 10 > 4 ? suffix[0] : suffix[r % 10]);
         }
 
         var w = n._n.toString().split('.')[0],
@@ -181,7 +192,7 @@
 
         }
 
-        return ((negP) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((abbr) ? abbr : '') + ((negP) ? ')' : '');
+        return ((negP) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((negP) ? ')' : '');
     }
 
     /************************************

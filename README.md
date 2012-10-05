@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.0.3
+
+Add ordinal formatting using 'o' in the format
+
 ### 1.0.2
 
 Add clone functionality
