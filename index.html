@@ -105,7 +105,11 @@ var string = numeral(1000).format('0,000');
                         .23,
                         1230974,
                         1460,
-                        -104000
+                        -104000,
+                        1,
+                        52,
+                        23,
+                        100
                     ],
                     formats = [
                         '0,000.0000',
@@ -118,7 +122,11 @@ var string = numeral(1000).format('0,000');
                         '0.00000',
                         '0.0a',
                         '0a',
-                        '0a'
+                        '0a',
+                        '0o',
+                        '0o',
+                        '0o',
+                        '0o'
                     ];
 
                     for (var i = 0; i < nums.length; i++) {
@@ -228,12 +236,13 @@ var string = numeral().unformat('($10,000.00)');
                     document.write('<tr><td>10,000.123</td><td>.unformat(\'10,000.123\')</td><td>' + numeral().unformat('10,000.123') + '</td></tr>');
                     document.write('<tr><td>(0.12345)</td><td>.unformat(\'(0.12345)\')</td><td>' + numeral().unformat('(0.12345)') + '</td></tr>');
                     document.write('<tr><td>($1.23m)</td><td>.unformat(\'($1.23m)\')</td><td>' + numeral().unformat('($1.23m)') + '</td></tr>');
+                    document.write('<tr><td>23rd</td><td>.unformat(\'23rd\')</td><td>' + numeral().unformat('23rd') + '</td></tr>');
                     document.write('<tr><td>$10,000.00</td><td>.unformat(\'$10,000.00\')</td><td>' + numeral().unformat('$10,000.00') + '</td></tr>');
                     document.write('<tr><td>-76%</td><td>.unformat(\'-76%\')</td><td>' + numeral().unformat('-76%') + '</td></tr>');
                     document.write('<tr><td>2:23:57</td><td>.unformat(\'2:23:57\')</td><td>' + numeral().unformat('2:23:57') + '</td></tr>');
                 </script>
             </table>
-            <h3>Manipulate</h3>
+             <h3>Manipulate</h3>
             <p>
                 Not that you will uses these often, but they're there when you need them.
             </p>
