@@ -129,6 +129,10 @@ h4 {
         display: none;
     }
 
+    .shares {
+        display: none;
+    }
+
     .footer {
         display: none;
     }
@@ -325,6 +329,11 @@ table {
             &:hover, &.active {
                 background: $lColor;
             }
+        }
+    
+        .shares {
+            display: block;
+            margin-top: 2em;
         }
 
         .footer {
