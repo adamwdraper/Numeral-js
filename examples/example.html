@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.10.0.css">
     <style type="text/css">
         .content {
             width: 550px;
@@ -20,18 +19,6 @@
         }
     </style>
     <script src="../min/numeral-min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.10.0.js"></script>
-    <script type="text/javascript">
-                    function myFormatTest (title, tests) {
-                        test(title, function() {
-                            var formatNum;
-                            for (var i = 0; i < tests.length; i++) {
-                                formatNum = numeral(tests[i].num);
-                                strictEqual(formatNum.format(tests[i].format), tests[i].expected, tests[i].format);
-                            }
-                        });
-                    };
-    </script>
 </head>
 <body>
     
@@ -102,37 +89,11 @@ var string = numeral(1000).format('0,0');
                         '0o',
                         '0o',
                         '0o'
-                    ],
-                    expecteds = [
-                        '10,000.0000',
-                        '10,000',
-                        '-10,000.0',
-                        '10000.123',
-                        '(10,000.0000)',
-                        '-.23',
-                        '(.23)',
-                        '0.23000',
-                        '1.2m',
-                        '1k',
-                        '-104k',
-                        '1st',
-                        '52nd',
-                        '23rd',
-                        '100th'
                     ];
-                    
-                    var formatNumberQunitTests = [];
 
                     for (var i = 0; i < nums.length; i++) {
                         document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>');
-                        formatNumberQunitTests.push({
-                            num: nums[i],
-                            format: formats[i],
-                            expected: expecteds[i]
-                        });
                     }
-
-                    myFormatTest('Format Numbers', formatNumberQunitTests);
 
                 </script>
             </table>
@@ -157,26 +118,11 @@ var string = numeral(1000).format('0,0');
                         '($0,0)',
                         '$0.00',
                         '($0.00a)'
-                    ],
-                    expecteds = [
-                        '$1,000.23',
-                        '($1,000)',
-                        '-$1000.23',
-                        '$1.23m'
                     ];
-
-                    var formatMoneyQunitTests = [];
 
                     for (i = 0; i < nums.length; i++) {
                         document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                        formatMoneyQunitTests.push({
-                            num: nums[i],
-                            format: formats[i],
-                            expected: expecteds[i]
-                        });
                     }
-                    
-                    myFormatTest('Format Money', formatMoneyQunitTests);
                 </script>
             </table>
             <h4>Percentages</h4>
@@ -200,26 +146,11 @@ var string = numeral(1000).format('0,0');
                         '0.000%',
                         '0%',
                         '(0.000%)'
-                    ],
-                    expecteds = [
-                        '100%',
-                        '97.488%',
-                        '-43%',
-                        '43.000%'
                     ];
-
-                    var formatPercentageQunitTests = [];
 
                     for (var i = 0; i < nums.length; i++) {
                         document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                        formatPercentageQunitTests.push({
-                            num: nums[i],
-                            format: formats[i],
-                            expected: expecteds[i]
-                        });
                     }
-
-                    myFormatTest('Format Percentages', formatPercentageQunitTests);
                 </script>
             </table>
             <h4>Time</h4>
@@ -241,25 +172,11 @@ var string = numeral(1000).format('0,0');
                         '00:00:00',
                         '00:00:00',
                         '00:00:00'
-                    ],
-                    expecteds = [
-                        '0:00:25',
-                        '0:03:58',
-                        '17:44:06'
                     ];
-
-                    var formatTimeQunitTests = [];
 
                     for (var i = 0; i < nums.length; i++) {
                         document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                        formatTimeQunitTests.push({
-                            num: nums[i],
-                            format: formats[i],
-                            expected: expecteds[i]
-                        });
                     }
-
-                    myFormatTest('Format Times', formatTimeQunitTests);
                 </script>
             </table>
             <h3>Unformat</h3>
@@ -357,8 +274,6 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-            <h3>Tests</h3>
-            <div id="qunit"></div>
 
             <h3>Acknowlegements</h3>
             <p>

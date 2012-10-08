@@ -9,6 +9,11 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.1.0
+
+Add Tests
+Bug fix: Fix difference returning negative values
+
 ### 1.0.4
 
 Bug fix: Non negative numbers were displaying as negative when using parentheses
