@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.0.3
+// version : 1.0.4
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.0.3',
+        VERSION = '1.0.4',
         round = Math.round, i,
 
         // check for nodeJS
@@ -192,7 +192,7 @@
 
         }
 
-        return ((negP) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((negP) ? ')' : '');
+        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
     }
 
     /************************************

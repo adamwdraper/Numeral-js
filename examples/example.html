@@ -43,7 +43,7 @@ var numeral = require('numeral');
                 Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
             </p>
 <pre>
-var string = numeral(1000).format('0,000');
+var string = numeral(1000).format('0,0');
 // 1,000
 </pre>
             <h4>Numbers</h4>
@@ -74,11 +74,11 @@ var string = numeral(1000).format('0,000');
                         100
                     ],
                     formats = [
-                        '0,000.0000',
-                        '0,000',
-                        '0,000.0',
+                        '0,0.0000',
+                        '0,0',
+                        '0,0.0',
                         '0.000',
-                        '(0,000.0000)',
+                        '(0,0.0000)',
                         '.00',
                         '(.00)',
                         '0.00000',
@@ -113,9 +113,9 @@ var string = numeral(1000).format('0,000');
                         1230974
                     ],
                     formats = [
-                        '$0,000.00',
-                        '($0,000)',
-                        '$0,000.00',
+                        '$0,0.00',
+                        '($0,0)',
+                        '$0,0.00',
                         '($0.00a)'
                     ];
 
@@ -138,7 +138,7 @@ var string = numeral(1000).format('0,000');
                         1,
                         .974878234,
                         -.43,
-                        -.43
+                        .43
                     ],
                     formats = [
                         '0%',
@@ -204,7 +204,7 @@ var string = numeral().unformat('($10,000.00)');
                     document.write('<tr><td>2:23:57</td><td>.unformat(\'2:23:57\')</td><td>' + numeral().unformat('2:23:57') + '</td></tr>');
                 </script>
             </table>
-            <h3>Manipulate</h3>
+             <h3>Manipulate</h3>
             <p>
                 Not that you will uses these often, but they're there when you need them.
             </p>
@@ -224,10 +224,10 @@ var added = number.add(10);
                 </thead>
                 <script type="text/javascript">
                     var num = numeral(1000);
-                    document.write('<tr><td>' + num.format('0,000') + '</td><td>.add(100)</td><td>' + num.add(100).format('0,000') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,000') + '</td><td>.subtract(100)</td><td>' + num.subtract(100).format('0,000') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,000') + '</td><td>.multiply(100)</td><td>' + num.multiply(100).format('0,000') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,000') + '</td><td>.divide(100)</td><td>' + num.divide(100).format('0,000') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.add(100)</td><td>' + num.add(100).format('0,0') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.subtract(100)</td><td>' + num.subtract(100).format('0,0') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.multiply(100)</td><td>' + num.multiply(100).format('0,0') + '</td></tr>');
+                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.divide(100)</td><td>' + num.divide(100).format('0,0') + '</td></tr>');
                 </script>
             </table>
             <h3>Value</h3>
@@ -237,7 +237,7 @@ var added = number.add(10);
 <pre>
 var number = numeral(1000);
 
-var string = number.format('0,000');
+var string = number.format('0,0');
 // 1,000
 
 var value = number.value();
@@ -273,25 +273,10 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-<script type="text/javascript">
-// console.log('Cloning:');
-// var a = numeral(1000);
-// var b = numeral(a);
-// var c = a.clone();
-
-// var aVal = a.set(2000).value();
-// console.log(aVal);
-
-// var bVal = b.value();
-// console.log(bVal);
-
-// var cVal = c.add(10).value();
-// console.log(cVal);
-</script>
-        <h3>Acknowlegements</h3>
-        <p>
-            Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
-        </p>
+            <h3>Acknowlegements</h3>
+            <p>
+                Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
+            </p>
     </div>
 </body>
 </html>

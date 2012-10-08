@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.0.4
+
+Bug fix: Non negative numbers were displaying as negative when using parentheses
+
 ### 1.0.3
 
 Add ordinal formatting using 'o' in the format
