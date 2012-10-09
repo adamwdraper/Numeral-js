@@ -225,10 +225,10 @@ var added = number.add(10);
                 </thead>
                 <script type="text/javascript">
                     var num = numeral(1000);
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.add(100)</td><td>' + num.add(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.subtract(100)</td><td>' + num.subtract(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.multiply(100)</td><td>' + num.multiply(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.divide(100)</td><td>' + num.divide(100).format('0,0') + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.add(100)</td><td>' + num.add(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.subtract(100)</td><td>' + num.subtract(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.multiply(100)</td><td>' + num.multiply(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.divide(100)</td><td>' + num.divide(100).value() + '</td></tr>');
                 </script>
             </table>
             <h3>Value</h3>
@@ -255,6 +255,17 @@ number.set(1000);
 
 var value = number.value();
 // 1000
+</pre>
+            <h3>Difference</h3>
+            <p>
+                Find the difference between your numeral object and a value
+            </p>
+<pre>
+var number = numeral(1000),
+    value = 100;
+
+var difference = number.difference(value);
+// 900
 </pre>
             <h3>Clone</h3>
             <p>
