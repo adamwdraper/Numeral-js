@@ -96,7 +96,7 @@ var string = numeral(1000).format('0,0');
                 <script type="text/javascript">
                     var nums = [
                         10000,
-                        10000,
+                        10000.23,
                         -10000,
                         10000.1234,
                         -10000,
@@ -130,8 +130,9 @@ var string = numeral(1000).format('0,0');
                     ];
 
                     for (var i = 0; i < nums.length; i++) {
-                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>');
                     }
+
                 </script>
             </table>
             <h4>Money</h4>
@@ -153,7 +154,7 @@ var string = numeral(1000).format('0,0');
                     formats = [
                         '$0,0.00',
                         '($0,0)',
-                        '$0,0.00',
+                        '$0.00',
                         '($0.00a)'
                     ];
 
@@ -172,7 +173,7 @@ var string = numeral(1000).format('0,0');
                     </tr>
                 </thead>
                 <script type="text/javascript">
-                    var nums = [
+                    nums = [
                         1,
                         .974878234,
                         -.43,
@@ -200,7 +201,7 @@ var string = numeral(1000).format('0,0');
                     </tr>
                 </thead>
                 <script type="text/javascript">
-                    var nums = [
+                    nums = [
                         25,
                         238,
                         63846
@@ -262,10 +263,10 @@ var added = number.add(10);
                 </thead>
                 <script type="text/javascript">
                     var num = numeral(1000);
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.add(100)</td><td>' + num.add(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.subtract(100)</td><td>' + num.subtract(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.multiply(100)</td><td>' + num.multiply(100).format('0,0') + '</td></tr>');
-                    document.write('<tr><td>' + num.format('0,0') + '</td><td>.divide(100)</td><td>' + num.divide(100).format('0,0') + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.add(100)</td><td>' + num.add(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.subtract(100)</td><td>' + num.subtract(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.multiply(100)</td><td>' + num.multiply(100).value() + '</td></tr>');
+                    document.write('<tr><td>' + num.value() + '</td><td>.divide(100)</td><td>' + num.divide(100).value() + '</td></tr>');
                 </script>
             </table>
             <h3>Value</h3>
@@ -293,6 +294,17 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
+            <h3>Difference</h3>
+            <p>
+                Find the difference between your numeral object and a value
+            </p>
+<pre>
+var number = numeral(1000),
+    value = 100;
+
+var difference = number.difference(value);
+// 900
+</pre>
             <h3>Clone</h3>
             <p>
                 Go ahead and clone any numeral object while you're at it.
@@ -311,6 +323,7 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
+
             <h3>Acknowlegements</h3>
             <p>
                 Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
