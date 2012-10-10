@@ -12,6 +12,7 @@ Changelog
 ### 1.1.0
 
 Add Tests
+
 Bug fix: Fix difference returning negative values
 
 ### 1.0.4
