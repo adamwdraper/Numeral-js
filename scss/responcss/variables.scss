@@ -17,10 +17,9 @@ $xl-gutter: 0;
 
 // Fractions -------------------------------------------------------------
 // These are bonus classes that are generated 
-$fractions: qtr, thrd, half, thrd2, qtr3, full;
-$fraction-divisors: 4, 3, 2, 3, 4, 1;
-$fraction-multipliers: 1, 1, 1, 2, 3, 1;
-
+$fractions: fth, qtr, thrd, fth2, half, fth3, thrd2, qtr3, fth4, full;
+$fraction-divisors: 5, 4, 3, 5, 2, 5, 3, 4, 5, 1;
+$fraction-multipliers: 1, 1, 1, 2, 1, 3, 2, 3, 4, 1;
 
 // Block grid settings ---------------------------------------------------
 
@@ -33,7 +32,7 @@ $xl-b-gutter: 4;
 
 // Largest block grid
 // Block grids with values of 1 to this number will be created
-$block-grid-through: 7;
+$block-grid-through: 5;
 
 
 // // Media screen widths ----------------------------------------------------

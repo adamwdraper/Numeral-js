@@ -1,0 +1,76 @@
+// Styles - https://github.com/adamwdraper/styles
+// Tag Cloud 0.0.1
+// -----------------------------------------------------------------
+
+@mixin tag-cloud-type($type) {
+    color: white;
+    background: $type;
+    border: 1px solid darken($type, $tagBorderVarient);
+
+    i {
+
+        &:before {
+            color: white;
+        }
+    }
+}
+
+ul {
+
+    &.tag-cloud {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+.tag-cloud {
+    @include clearfix();
+
+    .tag, li {
+        float: left;
+        padding: .15em .7em;
+        background: $tagBackgroundColor;
+        border: 1px solid darken($tagBackgroundColor, $tagBorderVarient);
+        font-size: pxem($defaultFontSize);
+        line-height: pxem($defaultLineHeight, $defaultFontSize);
+        @include border-radius($tagBorderRadius);
+        @include user-select(none);
+        color: $grayDark;
+        margin: 0 .3em .3em 0;
+        
+        &:hover, &:active {
+            text-decoration: none;
+        }
+
+        &.disabled {
+            @include opacity(.6);
+            cursor: not-allowed;
+            background-image: none;
+        }
+
+        @for $i from 1 through length($typeList) {
+            &.#{nth($typeList, $i)} {
+                @include tag-cloud-type(nth($typeVarsList, $i));
+            }
+        }
+    } 
+
+    &.small {
+
+        .tag, li {
+            font-size: pxem($smallFontSize);
+            line-height: pxem($smallLineHeight, $smallFontSize);
+            @include border-radius($buttonSmallBorderRadius);
+        }
+    }
+
+    &.large {
+
+        .tag, li {
+            font-size: pxem($largeFontSize);
+            line-height: pxem($largeLineHeight, $largeFontSize);
+            @include border-radius($buttonLargeBorderRadius);
+        }
+    }
+}

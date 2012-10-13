@@ -1,194 +1,64 @@
 // This is a convenient boilerplate less file for starting a project with ResponCSS
 
-@import "normalize";
-
-@import "mixins";
-
-// ResponCSS
-@import "responcss/responcss";
-
-@import "icons";
-
-
-$black: #000;
-$grayDarkest: #111;
-$grayDarker: #333;
-$grayDark: #666;
-$gray: #999;
-$grayLight: #CCC;
-$grayLighter: #DDD;
-$grayLightest: #F3F3F3;
-$white: #fff;
-
-$r-darkOrange: #E34C26;
-$r-orange: #F06529;
-$r-blue: #0092BF;
-$r-green: #6FBF4D;
-$r-gray: #EBEBEB;
-$r-yellow: #F5BA3D;
-
-$sColor: $r-darkOrange;
-$mColor: $r-orange;
-$lColor: $r-green;
-$xlColor: $r-blue;
-
-/*!
- * 
- *  Begin Project CSS
- *
- */
+@import "theme/theme";
 
 // Style Defaults ------------------------------
-a {
-    text-decoration: none;
-    @include transition(color .3s ease);
-}
-
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
 body {
-    font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-    color: $grayDarker;
-}
 
-h3 {
-    color: $grayDark;
-}
-
-h4 {
-    color: $gray;
-}
-
-.table {
-    width: 100%;
-}
-
-.table th, .table td {
-    text-align: center;
-    width: 33%;
 }
 
 .header-bar {
-    position: fixed;
-    background: $sColor;
-    height: .3em;
+
+}
+
+table {
+    
+    td {
+        width: 33%;
+        text-align: center;
+    }
 }
 
 .sidebar {
 
     .inner {
-        padding: 0 0 0 1em;
     }
 
     h1 {
-        display: block;
-        line-height: 2em;
-        color: #999;
-        font-size: 2.7em;
-        margin: 0;
     }
 
     .tagline {
-        display: block;
-        line-height: 1.5em;
-        color: #BBB;
-        font-size: 1.3em;
-        margin: 0;
     }
 
     .github-links {
-        position: absolute;
-        top: 1em;
-        right: 1em;
+    }
+
+    .nav {
     }
 
     .button {
-        display: inline-block;
-        text-decoration: none;
-        margin: .5em 0;
-        padding: .5em;
-        @include border-radius(.2em);
-        @include transition(all .3s ease);
-        background: $grayLightest;
-        color: $grayDarkest;
 
-        &:hover, &:active {
-            color: white;
+        &:hover, &:active, &:visited, &.active {
         }
 
     }
 
     .download {
-        display: none;
-    }
-
-    .shares {
-        display: none;
-    }
-
-    .footer {
-        display: none;
     }
 
 }
 
 .content {
-    border-top: 1px solid $grayLightest;
-    border-bottom: 1px solid $grayLightest;
 
     .inner {
-        padding: 0em 1em 2em 1em;
     }
 }
 
 .footer {
 
     .inner {
-        padding: 1em;
     }
 }
-
-
-
-// Default zebra-stripe styles (alternating gray and transparent backgrounds)
-table {
-    width: 100%;
-    background: $grayLightest;
-    border-collapse: separate; // Done so we can round those corners!
-    @include border-radius(.3em);
-
-    // Cells
-    th,
-    td {
-        padding: 8px;
-        line-height: 1em;
-        text-align: left;
-        vertical-align: top;
-    }
-    th {
-        font-weight: bold;
-    }
-    // Bottom align for column headings
-    thead th {
-        vertical-align: bottom;
-    }
-
-    tbody {
-        
-        tr:nth-child(odd) td,
-        tr:nth-child(odd) th {
-            background-color: #DDD;
-        }
-    }
-}
-
 
 // Media Queries ------------------------------
 // Smartphones
@@ -199,32 +69,11 @@ table {
 // Smartphone and Tablet Devices
 @media (max-width: 767px) {
 
-    body {
-        padding-top: 0;
-    }
-
-    a {
-        color: $sColor;
-
-        &:hover {
-            color: darken($sColor, 15%);
-        }
-    }
-    
-    .m, .l, .xl {
-        color: #CCC;
-    }
-
-    .s {
-        color: #333;
-    }
-
     .sidebar {
 
         .button {
 
             &:hover, &.active {
-                background: $sColor;
             }
         }
     }
@@ -234,37 +83,15 @@ table {
 // Portrait tablet
 @media (min-width: 768px) {
 
-    a {
-        color: $mColor;
-
-        &:hover {
-            color: darken($mColor, 15%);
-        }
-    }
-
-    .s, .l, .xl {
-        color: #CCC;
-    }
-
-    .m {
-        color: #333;
-    }
-
-    .header-bar {
-        background: $mColor;
-    }
-
     .sidebar {
 
         .button {
 
             &:hover, &.active {
-                background: $mColor;
             }
         }
 
         .download {
-            display: inline-block;
         }
     }
 
@@ -274,123 +101,59 @@ table {
 @media (min-width: 981px) {
 
     a {
-        color: $lColor;
 
         &:hover {
-            color: darken($lColor, 15%);
         }
-    }
-    
-    .m, .s, .xl {
-        color: #CCC;
-    }
-
-    .l {
-        color: #333;
-    }
-
-    .header-bar {
-        background: $lColor;
     }
 
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
 
         .inner {
-            padding: 0 0 0 2em;
         }
 
         h1 {
-            display: block;
-            line-height: 2.5em;
-            color: #999;
-            font-size: 2.7em;
         }
 
         .tagline {
-            display: block;
-            line-height: 1.5em;
-            color: #BBB;
-            font-size: 1.3em;
         }
 
         .github-links {
-            position: relative;
-            top: auto;
-            right: auto;
-            margin-top: .8em;
+        }
+
+        .nav {
         }
 
         .button {
 
             &:hover, &.active {
-                background: $lColor;
             }
         }
-    
-        .shares {
-            display: block;
-            margin-top: 2em;
-        }
-
-        .footer {
-            display: block;
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-        }
-
     }
 
     .content {
-        border: none;
 
         .inner {
-            padding: 1.5em 2em 2em 2em;
         }
     }
 
     .footer {
-        display: none;
+        
+        .inner {
+        }
     }
 }
  
 // Large desktop
 @media (min-width: 1210px) {
 
-    a {
-        color: $xlColor;
-
-        &:hover {
-            color: darken($xlColor, 15%);
-        }
-    }
-
-    .m, .l, .s {
-        color: #CCC;
-    }
-
-    .xl {
-        color: #333;
-    }
-
-    .header-bar {
-            background: $xlColor;
-    }
-
     .sidebar {
 
         .inner {
-            padding: 0 0 0 4em;
         }
 
         .button {
 
             &:hover, &.active {
-                background: $xlColor;
             }
         }
     }
@@ -398,7 +161,12 @@ table {
     .content {
 
         .inner {
-            padding: 1.5em 4em 2em 2em;
+        }
+    }
+
+    .footer {
+
+        .inner {
         }
     }
 }

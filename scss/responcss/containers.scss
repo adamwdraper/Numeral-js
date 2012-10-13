@@ -1,9 +1,20 @@
 // Mobile Devices
 @media (max-width: 767px) {
 
-    // Universal Sizes (.qtr, .s-half, etc.)
+    // Universal Sizes (.qtr etc.)
     @for $i from 1 through length($fractions) {        
-        .#{nth($fractions, $i)}, .s-#{nth($fractions, $i)} {            
+        .#{nth($fractions, $i)} {            
+            @include box($s-columns, ($s-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $s-gutter);
+
+            &.center {
+                @include center-margins($s-columns, ($s-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $s-gutter);
+            }
+        }
+    }
+
+    // Universal Sizes (.s-half, etc.)
+    @for $i from 1 through length($fractions) {        
+        .s-#{nth($fractions, $i)} {            
             @include box($s-columns, ($s-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $s-gutter);
 
             &.center {
@@ -29,9 +40,20 @@
 // // Portrait tablet
 @media (min-width: 768px) and (max-width: 980px) {
 
-    // Universal Sizes (.qtr, .m-half, etc.)
+    // Universal Sizes (.qtr etc.)
     @for $i from 1 through length($fractions) {        
-        .#{nth($fractions, $i)}, .m-#{nth($fractions, $i)} {            
+        .#{nth($fractions, $i)} {            
+            @include box($m-columns, ($m-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $m-gutter);
+
+            &.center {
+                @include center-margins($m-columns, ($m-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $m-gutter);
+            }
+        }
+    }
+
+    // Universal Sizes (.m-half, etc.)
+    @for $i from 1 through length($fractions) {        
+        .m-#{nth($fractions, $i)} {            
             @include box($m-columns, ($m-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $m-gutter);
 
             &.center {
@@ -58,7 +80,18 @@
 
     // Universal Sizes (.qtr, .l-half, etc.)
     @for $i from 1 through length($fractions) {        
-        .#{nth($fractions, $i)}, .l-#{nth($fractions, $i)} {            
+        .#{nth($fractions, $i)} {            
+            @include box($l-columns, ($l-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $l-gutter);
+
+            &.center {
+                @include center-margins($l-columns, ($l-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $l-gutter);
+            }
+        }
+    }
+
+    // Universal Sizes (.qtr, .l-half, etc.)
+    @for $i from 1 through length($fractions) {        
+        .l-#{nth($fractions, $i)} {            
             @include box($l-columns, ($l-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $l-gutter);
 
             &.center {
@@ -86,7 +119,7 @@
 
     // Universal Sizes (.qtr, .l-half, etc.)
     @for $i from 1 through length($fractions) {        
-        .#{nth($fractions, $i)}, .xl-#{nth($fractions, $i)} {            
+        .#{nth($fractions, $i)} {            
             @include box($xl-columns, ($xl-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $xl-gutter);
 
             &.center {
@@ -95,7 +128,18 @@
         }
     }
 
-    // Small Sizes (Overides universals) (.l-1, .l-2, etc.)
+    // Specific Universal Sizes (.xl-half, etc.)
+    @for $i from 1 through length($fractions) {        
+        .xl-#{nth($fractions, $i)} {            
+            @include box($xl-columns, ($xl-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $xl-gutter);
+
+            &.center {
+                @include center-margins($xl-columns, ($xl-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $xl-gutter);
+            }
+        }
+    }
+
+    // Small Sizes (Overides universals) (.xl-1, .xl-2, etc.)
     @for $i from 1 through $xl-columns {
         .xl-#{$i} {
             @include box($xl-columns, $i, $xl-gutter);

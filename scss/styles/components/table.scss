@@ -1,0 +1,107 @@
+// Styles - https://github.com/adamwdraper/styles
+// Tables 0.0.1
+// -----------------------------------------------------------------
+
+table {
+    width: 100%;
+    background: $tableBackground;
+    border: $tableBorder;
+    border-collapse: collapse; // Done so we can round those corners!
+    @include border-radius($tableBorderRadius);
+
+    // Cells
+    th,
+    td {
+        padding: .8em;
+        line-height: 1em;
+        text-align: left;
+        vertical-align: top;
+        border-top: $tableBorder;
+    }
+    th {
+        font-weight: bold;
+    }
+    // Bottom align for column headings
+    thead th {
+        vertical-align: bottom;
+    }
+
+    tbody {
+        
+    }
+
+    // Default zebra-stripe styles (alternating gray and transparent backgrounds)
+    &.striped {
+
+        tbody {
+            tr:nth-child(odd) td,
+            tr:nth-child(odd) th {
+                background-color: $tableStripedBackground;
+            }
+        }
+    }
+
+    &.bordered {
+        border: $tableBorder;
+        border-collapse: separate; // Done so we can round those corners!
+        border-left: 0;
+        @include border-radius($tableBorderRadius);
+
+        th, td {
+            border-left: $tableBorder;
+        }
+
+        // Prevent a double border
+        caption + thead tr:first-child th,
+        caption + tbody tr:first-child th,
+        caption + tbody tr:first-child td,
+        colgroup + thead tr:first-child th,
+        colgroup + tbody tr:first-child th,
+        colgroup + tbody tr:first-child td,
+        thead:first-child tr:first-child th,
+        tbody:first-child tr:first-child th,
+        tbody:first-child tr:first-child td {
+            border-top: 0;
+        }
+
+        // For first th or td in the first row in the first thead or tbody
+        thead:first-child tr:first-child th:first-child,
+        tbody:first-child tr:first-child td:first-child {
+            @include border-radius($tableBorderRadius 0 0 0);
+        }
+
+        thead:first-child tr:first-child th:last-child,
+        tbody:first-child tr:first-child td:last-child {
+            @include border-radius(0 $tableBorderRadius 0 0);
+        }
+
+        // For first th or td in the first row in the first thead or tbody
+        thead:last-child tr:last-child th:first-child,
+        tbody:last-child tr:last-child td:first-child,
+        tfoot:last-child tr:last-child td:first-child {
+            @include border-radius(0 0 0 $tableBorderRadius);
+        }
+
+        thead:last-child tr:last-child th:last-child,
+        tbody:last-child tr:last-child td:last-child,
+        tfoot:last-child tr:last-child td:last-child {
+            @include border-radius(0 0 $tableBorderRadius 0);
+        }
+
+        // Special fixes to round the left border on the first td/th
+        caption + thead tr:first-child th:first-child,
+        caption + tbody tr:first-child td:first-child,
+        colgroup + thead tr:first-child th:first-child,
+        colgroup + tbody tr:first-child td:first-child {
+            @include border-radius($tableBorderRadius 0 0 0);
+        }
+
+        caption + thead tr:first-child th:last-child,
+        caption + tbody tr:first-child td:last-child,
+        colgroup + thead tr:first-child th:last-child,
+        colgroup + tbody tr:first-child td:last-child {
+            @include border-radius(0 $tableBorderRadius 0 0);
+        }
+
+    }
+}

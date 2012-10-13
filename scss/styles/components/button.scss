@@ -1,0 +1,164 @@
+// Styles - https://github.com/adamwdraper/styles
+// Buttons 0.0.1
+// -----------------------------------------------------------------
+
+@mixin button-type-color($type) {
+    color: white;
+    @include gradient-vertical(lighten($type, $buttonGradientVarient), darken($type, $buttonGradientVarient));
+    border: 1px solid darken($type, $buttonBorderVarient);
+
+    &.flat {
+        background: $type;
+
+        &:hover, &:active {
+            background: darken($type, $buttonGradientVarient);
+        }
+    }
+
+    i {
+
+        &:before {
+            color: white;
+        }
+    }
+}
+
+.button {
+    @include inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: .15em .7em;
+    @include gradient-vertical(lighten($buttonBackgroundColor, $buttonGradientVarient), darken($buttonBackgroundColor, $buttonGradientVarient));
+    border: 1px solid darken($buttonBackgroundColor, $buttonBorderVarient);
+    @include transition(all .3s ease);
+    font-size: pxem($defaultFontSize);
+    line-height: pxem($defaultLineHeight, $defaultFontSize);
+    @include border-radius($buttonBorderRadius);
+    @include box-shadow(none);
+    @include user-select(none);
+    color: $grayDark;
+    
+    &:hover, &:active {
+        background-position: 0 -15px;
+        text-decoration: none;
+    }
+
+    &.disabled {
+        @include opacity(.6);
+        cursor: not-allowed;
+        background-image: none;
+    }
+
+    @for $i from 1 through length($typeList) {
+        &.#{nth($typeList, $i)} {
+            @include button-type-color(nth($typeVarsList, $i));
+        }
+    }
+
+    &.small {
+        font-size: pxem($smallFontSize);
+        line-height: pxem($smallLineHeight, $smallFontSize);
+        @include border-radius($buttonSmallBorderRadius);
+    }
+
+    &.large {
+        font-size: pxem($largeFontSize);
+        line-height: pxem($largeLineHeight, $largeFontSize);
+        @include border-radius($buttonLargeBorderRadius);
+    }
+
+    &.flat {
+        background: $buttonBackgroundColor;
+        
+        &:hover, &:active {
+            background: darken($buttonBackgroundColor, $buttonGradientVarient);
+        }
+    }
+}
+
+.group {
+
+    .button {
+        margin-left: -1px;
+        @include border-radius(0);
+
+        &:first-child {
+            margin-left: 0;
+            @include border-radius($buttonBorderRadius 0 0 $buttonBorderRadius);
+        }
+        
+        &:last-child {
+            @include border-radius(0 $buttonBorderRadius $buttonBorderRadius 0);
+        }
+        
+        &.small {
+
+            &:first-child {
+                @include border-radius($buttonSmallBorderRadius 0 0 $buttonSmallBorderRadius);
+            }
+            
+            &:last-child {
+                @include border-radius(0 $buttonSmallBorderRadius $buttonSmallBorderRadius 0);
+            }
+        }
+
+        &.large {
+
+            &:first-child {
+                @include border-radius($buttonLargeBorderRadius 0 0 $buttonLargeBorderRadius);
+            }
+            
+            &:last-child {
+                @include border-radius(0 $buttonLargeBorderRadius $buttonLargeBorderRadius 0);
+            }
+        }
+    }
+}
+
+.list {
+    padding: 0;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .button {
+        text-align: left;
+        margin: -1px 0 0 0;
+        width: 100%;
+        @include border-radius(0);
+
+        &:first-child {
+            margin-left: 0;
+            @include border-radius($buttonBorderRadius $buttonBorderRadius 0 0);
+        }
+        
+        &:last-child {
+            @include border-radius(0 0 $buttonBorderRadius $buttonBorderRadius);
+        }
+        
+        &.small {
+
+            &:first-child {
+                @include border-radius($buttonSmallBorderRadius $buttonSmallBorderRadius 0 0);
+            }
+            
+            &:last-child {
+                @include border-radius(0 0 $buttonSmallBorderRadius $buttonSmallBorderRadius);
+            }
+        }
+
+        &.large {
+
+            &:first-child {
+                @include border-radius($buttonLargeBorderRadius $buttonLargeBorderRadius 0 0);
+            }
+            
+            &:last-child {
+                @include border-radius(0 0 $buttonLargeBorderRadius $buttonLargeBorderRadius);
+            }
+        }
+    }
+}

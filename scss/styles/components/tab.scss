@@ -1,0 +1,68 @@
+// Styles - https://github.com/adamwdraper/styles
+// Tab 0.0.1
+// -----------------------------------------------------------------
+
+.tabs {
+    margin-bottom: .7em;
+    border-bottom: 1px solid #DDD;
+
+    .tab {
+        display: block;
+        float: left;
+        @include border-radius(3px 3px 0 0);
+        margin: 0 7px -1px 0;
+        border: 1px solid #EEE;
+        border-bottom: none;
+        cursor: pointer;
+        line-height: 1.5em;
+        font-size: 1em;
+        padding: 0 .5em;
+        @include transition(background .3s ease);
+
+        &:hover {
+            background: #F3F3F3;
+        }
+
+        &.active {
+            border: 1px solid #DDD;
+            border-bottom: 1px solid #FFF;
+            color: #333;
+
+            &:hover {
+                background: none;
+            }
+        }
+    }
+
+    &.left {
+        margin-bottom: 0;
+        border-bottom: none;
+        margin-right: .7em;
+        border-right: 1px solid #DDD;
+
+        .tab {
+            float: none;
+            @include border-radius(3px 0 0 3px);
+            margin: 0 -1px 0 3px;
+            border: 1px solid #FFF;
+            border-right: none;
+
+            &.active {
+                border: 1px solid #DDD;
+                border-right: 1px solid #FFF;
+            }
+        }
+    }
+
+}
+
+.tab-panes {
+
+    .tab-pane {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}

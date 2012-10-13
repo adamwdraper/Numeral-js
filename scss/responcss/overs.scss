@@ -1,11 +1,21 @@
 // Mobile Devices
 @media (max-width: 767px) {
 
-    // Universal Sizes (.over-qtr, .s-over-half, etc.)
+    // Universal Sizes (.over-qtr etc.)
     @for $i from 1 through length($fractions) {
 
         @if nth($fractions, $i) != 'full' {
-            .over-#{nth($fractions, $i)}, .s-over-#{nth($fractions, $i)} {            
+            .over-#{nth($fractions, $i)} {            
+                @include box-over($s-columns, ($s-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $s-gutter);
+            }            
+        }      
+    }
+
+    // Universal Sizes (.s-over-half, etc.)
+    @for $i from 1 through length($fractions) {
+
+        @if nth($fractions, $i) != 'full' {
+            .s-over-#{nth($fractions, $i)} {            
                 @include box-over($s-columns, ($s-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $s-gutter);
             }            
         }      
@@ -24,11 +34,21 @@
 // Portrait tablet
 @media (min-width: 768px) and (max-width: 980px) {
 
-    // Universal Sizes (.over-qtr, .m-over-half, etc.)
+    // Universal Sizes (.over-qtr etc.)
     @for $i from 1 through length($fractions) {
 
         @if nth($fractions, $i) != 'full' {
-            .over-#{nth($fractions, $i)}, .m-over-#{nth($fractions, $i)} {            
+            .over-#{nth($fractions, $i)} {            
+                @include box-over($m-columns, ($m-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $m-gutter);
+            }            
+        }      
+    }
+
+    // Universal Sizes (.m-over-half, etc.)
+    @for $i from 1 through length($fractions) {
+
+        @if nth($fractions, $i) != 'full' {
+            .m-over-#{nth($fractions, $i)} {            
                 @include box-over($m-columns, ($m-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $m-gutter);
             }            
         }      
@@ -47,14 +67,24 @@
 // Landscape tablet or desktop
 @media (min-width: 981px) and (max-width: 1209px) {
 
-    // Universal Sizes (.over-qtr, .l-over-half, etc.)
+    // Universal Sizes (.over-qtr etc.)
     @for $i from 1 through length($fractions) {
 
         @if nth($fractions, $i) != 'full' {
-            .over-#{nth($fractions, $i)}, .l-over-#{nth($fractions, $i)} {            
+            .over-#{nth($fractions, $i)} {            
                 @include box-over($l-columns, ($l-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $l-gutter);
-            }            
-        }      
+            }
+        }
+    }
+
+    // Universal Sizes (.l-over-half, etc.)
+    @for $i from 1 through length($fractions) {
+
+        @if nth($fractions, $i) != 'full' {
+            .l-over-#{nth($fractions, $i)} {            
+                @include box-over($l-columns, ($l-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $l-gutter);
+            }
+        }
     }
 
     // Small Sizes (Overides universals) (.l-over-1, .l-over-2, etc.)
@@ -69,14 +99,24 @@
 // // Large desktop
 @media (min-width: 1210px) {
 
-    // Universal Sizes (.over-qtr, .l-over-half, etc.)
+    // Universal Sizes (.over-qtr, etc.)
     @for $i from 1 through length($fractions) {
 
         @if nth($fractions, $i) != 'full' {
-            .over-#{nth($fractions, $i)}, .xl-over-#{nth($fractions, $i)} {            
+            .over-#{nth($fractions, $i)} {            
                 @include box-over($xl-columns, ($xl-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $xl-gutter);
-            }            
-        }      
+            }
+        }
+    }
+
+    // Universal Sizes (.l-over-half, etc.)
+    @for $i from 1 through length($fractions) {
+
+        @if nth($fractions, $i) != 'full' {
+            .xl-over-#{nth($fractions, $i)} {            
+                @include box-over($xl-columns, ($xl-columns/nth($fraction-divisors, $i)) * nth($fraction-multipliers, $i), $xl-gutter);
+            }
+        }
     }
 
     // Small Sizes (Overides universals) (.l-over-1, .l-over-2, etc.)

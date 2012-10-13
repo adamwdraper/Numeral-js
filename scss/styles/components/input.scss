@@ -1,0 +1,55 @@
+// Styles - https://github.com/adamwdraper/styles
+// Inputs 0.0.1
+// -----------------------------------------------------------------
+
+input, textarea {
+    vertical-align: middle;
+    padding: 0 .5em;
+    border: 1px solid darken($inputBackgroundColor, $inputBorderVarient);
+    font-size: pxem($defaultFontSize);
+    line-height: pxem($defaultLineHeight);
+    height: pxem($defaultLineHeight);
+    @include border-radius($inputBorderRadius);
+
+    @if lightness($inputBackgroundColor) >= 50% {
+        color: $grayDark;
+
+        &:hover, &:active, &:visited, &.active {
+            color: $grayDark;
+            background-position: 0 -15px;
+        }
+
+        &.disabled {
+            color: $grayLight;
+        }
+    }
+
+    @if lightness($inputBackgroundColor) < 50% {
+        color: white;
+
+        &:hover, &:active, &:visited, &.active {
+            color: white;
+            background-position: 0 -15px;
+        }
+    }
+
+    &.inline {
+        @include inline-block;
+    }
+
+    &.disabled {
+        background-color: lighten($inputBackgroundColor, $inputDisableVarient);
+    }
+
+    &.small {
+        font-size: pxem($smallFontSize);
+        line-height: pxem($smallLineHeight, $smallFontSize);
+        @include border-radius($inputSmallBorderRadius);
+    }
+
+    &.large {
+        font-size: pxem($largeFontSize);
+        line-height: pxem($largeLineHeight, $largeFontSize);
+        @include border-radius($inputLargeBorderRadius);
+    }
+}

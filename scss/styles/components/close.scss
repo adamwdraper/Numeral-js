@@ -1,0 +1,21 @@
+// Styles - https://github.com/adamwdraper/styles
+// Close 0.0.1
+// -----------------------------------------------------------------
+
+.close {
+    color: $grayLight;
+    @include transition(color .3s ease);
+
+    &:before {
+        color: $grayLight;
+        @include transition(color .3s ease);
+    }
+
+    &:hover {
+        color: $gray;
+
+        &:before {
+            color: $gray;
+        }
+    }
+}
