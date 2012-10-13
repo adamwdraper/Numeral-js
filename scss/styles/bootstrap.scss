@@ -1,5 +1,5 @@
 /*!
- * Styles 0.0.1 - https://github.com/adamwdraper/styles
+ * Styles 0.0.2 - https://github.com/adamwdraper/styles
  *
  * (c) 2012, Adam Draper - https://github.com/adamwdraper
  *
@@ -12,9 +12,9 @@
 
 @import "mixins";
 
-@import "../../normalize";
+@import "normalize";
 
 @import "utilities";
 
-// ResponCss for responsive grid
-@import "../../responcss/responcss";
+// import styles vars
+@import "variables";

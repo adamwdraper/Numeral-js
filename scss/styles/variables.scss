@@ -66,7 +66,7 @@ $sansFontFamily: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",H
 $serifFontFamily: Georgia, "Times New Roman", Times, serif;
 $monoFontFamily: Menlo, Monaco, Consolas, "Courier New", monospace;
 
-$baseFontSize: 14px;
+$baseFontSize: 16px;
 $baseFontSizeNum: 14; // used for px to em conversion
 $baseFontFamily: $sansFontFamily;
 $baseLineHeight: 20px;
@@ -101,16 +101,72 @@ $largeFontSize: 22;
 $largeLineHeight: 34;
 $largeIconSquare: 24;
 
+// Component Vars
+// -------------------------
 
+// Alert
+// -------------------------
+$alertSmallBorderRadius: $smallInnerBorderRadius;
+$alertBorderRadius: $innerBorderRadius;
+$alertLargeBorderRadius: $largeInnerBorderRadius;
+$alertBackgroundVarient: 35%;
+$alertBorderVarient: 25%;
+$alertColorVarient: 18%;
 
-// Nav Bar
+// Auto Suggest
+// -------------------------
+$autoSuggestBackground: white;
+$autoSuggestBorderVarient: 15%;
+$autoSuggestActiveSuggestionBackground: #EDF4FC;
+$autoSuggestTitleColor: #a1a1a1;
+$autoSuggestTitleBackground: #F9F9F9;
+
+// Box
 // -----------------------
-$navBarBackgroundColor: $grayDarker;
-$navBarIconColor: white;
+$boxBorderRadius: $borderRadius;
+$boxBorderInnerRadius: $innerBorderRadius;
+$boxBackground: $white;
+$boxBorderColor: #dfdfdf;
+$boxFooterBackground: $grayLightest;
 
-// Icons
+// Button
+// -------------------------
+$buttonSmallBorderRadius: $smallInnerBorderRadius;
+$buttonBorderRadius: $borderRadius;
+$buttonLargeBorderRadius: $largeInnerBorderRadius;
+$buttonGradientVarient: 6%;
+$buttonBorderVarient: 5%;
+$buttonBackgroundColor: #f6f6f6;
+
+// Close
+// -------------------------
+$closeColor: $grayLight;
+$closeHoverColor: $gray;
+
+// Code
+// -------------------------
+$codeColor: $grayDark;
+$codeBackground: #f8f8f8;
+$codeBorder: 1px solid $grayLight;
+$codeBorderRadius: $borderRadius;
+
+// Dropdown
+// -------------------------
+
+
+// Icon
 // -----------------------
 $iconColor: $gray;
+
+// Input
+// -------------------------
+$inputSmallBorderRadius: $smallInnerBorderRadius;
+$inputBorderRadius: $innerBorderRadius;
+$inputLargeBorderRadius: $largeInnerBorderRadius;
+
+$inputBackgroundColor: $white;
+$inputBorderVarient: 10%;
+$inputDisableVarient: 50%;
 
 // Modal
 // -----------------------
@@ -121,66 +177,25 @@ $boxFooterBackground: $grayLightest;
 $modalOverlayBackground: $black;
 $modalOverlayOpacity: .7;
 
-
-// Boxes
+// Nav Bar
 // -----------------------
-$boxBorderRadius: $borderRadius;
-$boxBorderInnerRadius: $innerBorderRadius;
-$boxBackground: $white;
-$boxBorderColor: #dfdfdf;
-$boxFooterBackground: $grayLightest;
+$navBarBackgroundColor: $grayDarker;
+$navBarIconColor: white;
 
-// Buttons
+// Tab
 // -------------------------
-$buttonSmallBorderRadius: $smallInnerBorderRadius;
-$buttonBorderRadius: $borderRadius;
-$buttonLargeBorderRadius: $largeInnerBorderRadius;
 
-$buttonGradientVarient: 6%;
-$buttonBorderVarient: 5%;
-
-$buttonBackgroundColor: #f6f6f6;
+// Table
+// -------------------------
+$tableBackground: #F8F8F8;
+$tableBorder: 1px solid $grayLight;
+$tableStripedBackground: $grayLightest;
+$tableBorderRadius: $borderRadius;
 
 // Tag Cloud
 // -------------------------
 $tagSmallBorderRadius: $smallInnerBorderRadius;
 $tagBorderRadius: $borderRadius;
 $tagLargeBorderRadius: $largeInnerBorderRadius;
-
 $tagBorderVarient: 5%;
-
 $tagBackgroundColor: #EFEFEF;
-
-// Inputs
-// -------------------------
-$inputSmallBorderRadius: $smallInnerBorderRadius;
-$inputBorderRadius: $innerBorderRadius;
-$inputLargeBorderRadius: $largeInnerBorderRadius;
-
-$inputBackgroundColor: $white;
-$inputBorderVarient: 10%;
-$inputDisableVarient: 50%;
-
-// Alerts
-// -------------------------
-$alertSmallBorderRadius: $smallInnerBorderRadius;
-$alertBorderRadius: $innerBorderRadius;
-$alertLargeBorderRadius: $largeInnerBorderRadius;
-
-$alertBackgroundVarient: 35%;
-$alertBorderVarient: 25%;
-$alertColorVarient: 18%;
-
-// Code
-// -------------------------
-$codeColor: $grayDark;
-$codeBackground: #f8f8f8;
-$codeBorder: 1px solid $grayLight;
-$codeBorderRadius: $borderRadius;
-
-// Tables
-// -------------------------
-$tableBackground: #F8F8F8;
-$tableBorder: 1px solid $grayLight;
-$tableStripedBackground: $grayLightest;
-$tableBorderRadius: $borderRadius;

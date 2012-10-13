@@ -1,23 +1,24 @@
+// Styles - https://github.com/adamwdraper/styles
 // This is a convenient boilerplate scss file for starting a project with Styles
+// -----------------------------------------------------------------
 
 // styles bootstrap
-@import "../styles/bootstrap/bootstrap";
+@import "styles/bootstrap";
 
-// import styles vars
-@import "../styles/variables";
+// styles responcss
+@import "responcss/responcss";
 
 // import project override variables
 @import "variables";
 
 // // import any styles components
-@import "../styles/components/button";
-@import "../styles/components/icon";
-@import "../styles/components/code";
-@import "../styles/components/table";
+@import "styles/components/button";
+@import "styles/components/icon";
+@import "styles/components/code";
+@import "styles/components/table";
 
-// import project icons
+// import any project specific files
 @import "icons";
-
 
 /*!
  * 

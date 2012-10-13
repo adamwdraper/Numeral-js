@@ -8,6 +8,7 @@
 
 i {
     color: $iconColor;
+    display: inline-block;
     @include transition(all .3s ease);
 
     @for $i from 1 through length($typeList) {
