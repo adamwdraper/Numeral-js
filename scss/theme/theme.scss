@@ -61,32 +61,15 @@ a {
     }
 }
 
-// Style Defaults ------------------------------
-a {
-    text-decoration: none;
-    @include transition(color .3s ease);
-}
-
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-body {
-    font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-    color: $grayDarker;
-}
-
 h3 {
     color: $grayDark;
+    font-size: 1.4em;
 }
 
 h4 {
     color: $gray;
+    font-size: 1.2em;
+    margin-bottom: .4em;
 }
 
 .header-bar {
@@ -134,7 +117,7 @@ h4 {
             color: $grayDark;
         }
 
-        &:hover, &:active, &:visited, &.active {
+        &:hover, &:active, &.active {
             color: white;
 
             i {
