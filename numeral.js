@@ -157,10 +157,11 @@
         if (format.indexOf('o') > -1) {
             format = format.replace('o', '');
 
-            var r = n._n % 100,
-                suffix = ['th', 'st', 'nd', 'rd', 'th'];
-
-            ord = r < 21 ? (r < 4 ? suffix[r] : suffix[0]) : (r % 10 > 4 ? suffix[0] : suffix[r % 10]);
+            var b = n._n % 10;
+            ord = (~~ (n._n % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
         }
 
         var w = n._n.toString().split('.')[0],

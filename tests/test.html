@@ -116,6 +116,15 @@
                 }
             });
         };
+
+        function isNumeralTest (title, tests) {
+            test(title, function() {
+                var num;
+                for (var i = 0; i < tests.length; i++) {
+                    strictEqual(numeral.isNumeral(tests[i].value), tests[i].expected, tests[i].value);
+                }
+            });
+        };
     </script>
 </head>
 <body>
@@ -501,6 +510,30 @@
                 strictEqual(bVal, 1000, 'Implicit clone unmanipulated');
                 strictEqual(cVal, 1010, 'Explicit clone + 10');
             });
+
+            // isNumeral -----------------------
+            module('isNumeral');
+            
+            values = [
+                numeral(),
+                1
+            ],
+            expecteds = [
+                true,
+                false
+            ];
+            
+            var isNumeralQunitTests = [];
+
+            for (var i = 0; i < values.length; i++) {
+                isNumeralQunitTests.push({
+                    value: values[i],
+                    expected: expecteds[i]
+                });
+            }
+
+            isNumeralTest('', isNumeralQunitTests);
+
 
         </script>
 
