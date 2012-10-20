@@ -240,6 +240,8 @@
         if (values || !languages[key]) {
             loadLanguage(key, values);
         }
+
+        return languages;
     };
 
     numeral.language('en', {
