@@ -14,7 +14,9 @@
     var numeral,
         VERSION = '1.1.0',
         round = Math.round, i,
-
+        // internal storage for language config files
+        languages = {},
+        currentLanguage = 'en',
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -70,7 +72,11 @@
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
-            n._n = ((string.indexOf('k') > -1) ? 1000 : 1) * ((string.indexOf('m') > -1) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/\$|,|%|k|m|th|st|nd|rd|\(|\)*/ig, ''));
+            if (languages[currentLanguage].delimiters.decimal !== '.') {
+                var regExp = new RegExp('\\' + languages[currentLanguage].delimiters.decimal);
+                string = string.replace(RegExp, '.');
+            }
+            n._n = ((string.indexOf(languages[currentLanguage].abbreviations.thousand) > -1) ? 1000 : 1) * ((string.indexOf(languages[currentLanguage].abbreviations.million) > -1) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
         }
         return n._n;
     }
@@ -80,10 +86,10 @@
         var output = formatNumeral(n, format);
         if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
             output = output.split('');
-            output.splice(1, 0, '$');
+            output.splice(1, 0, languages[currentLanguage].money.symbol);
             output = output.join('');
         } else {
-            output = '$' + output;
+            output = languages[currentLanguage].money.symbol + output;
         }
         return output;
     }
@@ -145,10 +151,10 @@
             format = format.replace('a', '');
 
             if (n._n > 1000000) {
-                abbr = 'm';
+                abbr = languages[currentLanguage].abbreviations.million;
                 n._n = n._n / 1000000;
             } else {
-                abbr = 'k';
+                abbr = languages[currentLanguage].abbreviations.thousand;
                 n._n = n._n / 1000;
             }
         }
@@ -157,11 +163,7 @@
         if (format.indexOf('o') > -1) {
             format = format.replace('o', '');
 
-            var b = n._n % 10;
-            ord = (~~ (n._n % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+            ord = languages[currentLanguage].ordinal(n._n);
         }
 
         var w = n._n.toString().split('.')[0],
@@ -177,7 +179,7 @@
         }
 
         if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
         }
 
         if (format.indexOf('.') === 0) {
@@ -186,7 +188,7 @@
 
         if (precision) {
             // do to fixed
-            d = '.' + toFixed(n._n, precision.length).split('.')[1];
+            d = languages[currentLanguage].delimiters.decimal + toFixed(n._n, precision.length).split('.')[1];
         }
 
         if (abbr) {
@@ -212,7 +214,6 @@
 
     // compare numeral object
     numeral.isNumeral = function (obj) {
-        console.log(obj);
         return obj instanceof Numeral;
     };
 
@@ -223,6 +224,52 @@
     numeral.isNumeral = function (obj) {
         return obj instanceof Numeral;
     };
+
+    // This function will load languages and then set the global language.  If
+    // no arguments are passed in, it will simply return the current global
+    // language key.
+    numeral.language = function (key, values) {
+        if (!key) {
+            return currentLanguage;
+        }
+
+        if (key && !values) {
+            currentLanguage = key;
+        }
+
+        if (values || !languages[key]) {
+            loadLanguage(key, values);
+        }
+    };
+
+    numeral.language('en', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        money: {
+            symbol: '$'
+        }
+    });
+
+    /************************************
+        Helpers
+    ************************************/
+    
+    function loadLanguage(key, values) {
+        languages[key] = values;
+    }
 
 
     /************************************
