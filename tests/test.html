@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.10.0.css">
     <style type="text/css">
         .content {
-            width: 550px;
+            width: 600px;
             margin: 20px auto;
         }
 
@@ -20,523 +20,268 @@
     </style>
     <script src="../min/numeral-min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/qunit/qunit-1.10.0.js"></script>
-    <script type="text/javascript">
-        function formatTest (title, tests) {
-            test(title, function() {
-                var formatNum;
-                for (var i = 0; i < tests.length; i++) {
-                    formatNum = numeral(tests[i].num);
-                    strictEqual(formatNum.format(tests[i].format), tests[i].expected, tests[i].format);
-                }
-            });
-        };
-
-        function unformatTest (title, tests) {
-            test(title, function() {
-                var value;
-                for (var i = 0; i < tests.length; i++) {
-                    value = numeral().unformat(tests[i].format);
-                    strictEqual(value, tests[i].expected, tests[i].format);
-                }
-            });
-        };
-
-        function addTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].num);
-                    num.add(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].num + ' + ' + tests[i].value);
-                }
-            });
-        };
-
-        function subtractTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].num);
-                    num.subtract(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].num + ' - ' + tests[i].value);
-                }
-            });
-        };
-
-        function multiplyTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].num);
-                    num.multiply(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].num + ' x ' + tests[i].value);
-                }
-            });
-        };
-
-        function divideTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].num);
-                    num.divide(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].num + ' / ' + tests[i].value);
-                }
-            });
-        };
-
-        function differenceTest (title, tests) {
-            test(title, function() {
-                var num,
-                    value;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].num);
-                    value = num.difference(tests[i].value);
-                    strictEqual(value, tests[i].expected, 'Difference between ' + tests[i].num + ' and ' + tests[i].value);
-                }
-            });
-        };
-
-        function valueTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].value);
-                }
-            });
-        };
-
-        function setTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    num = numeral().set(tests[i].value);
-                    strictEqual(num.value(), tests[i].expected, tests[i].value);
-                }
-            });
-        };
-
-        function isNumeralTest (title, tests) {
-            test(title, function() {
-                var num;
-                for (var i = 0; i < tests.length; i++) {
-                    strictEqual(numeral.isNumeral(tests[i].value), tests[i].expected, tests[i].value);
-                }
-            });
-        };
-    </script>
-</head>
-<body>
     
+    <script src="../languages/fr.js"></script>
+
+    <script type="text/javascript">
+        var nums,
+            formats,
+            expecteds,
+            values;
+
+        module('Format', {
+            setup: function() {
+                numeral.language('en');
+            }
+        });
+
+        // Numbers -----------------------
+        test('Numbers', 15, function() {
+            var tests = [
+                [10000,'0,0.0000','10,000.0000'],
+                [10000.23,'0,0','10,000'],
+                [-10000,'0,0.0','-10,000.0'],
+                [10000.1234,'0.000','10000.123'],
+                [-10000,'(0,0.0000)','(10,000.0000)'],
+                [-.23,'.00','-.23'],
+                [-.23,'(.00)','(.23)'],
+                [.23,'0.00000','0.23000'],
+                [1230974,'0.0a','1.2m'],
+                [1460,'0a','1k'],
+                [-104000,'0a','-104k'],
+                [1,'0o','1st'],
+                [52,'0o','52nd'],
+                [23,'0o','23rd'],
+                [100,'0o','100th']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            }
+        });
+
+        // Money -----------------------
+        test('Money', 4, function() {
+            var tests = [
+                [1000.234,'$0,0.00','$1,000.23'],
+                [-1000.234,'($0,0)','($1,000)'],
+                [-1000.234,'$0.00','-$1000.23'],
+                [1230974,'($0.00a)','$1.23m']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            }
+        });
+        
+        // Percentages -----------------------
+        test('Percentages', 4, function() {
+            var tests = [
+                [1,'0%','100%'],
+                [.974878234,'0.000%','97.488%'],
+                [-.43,'0%','-43%'],
+                [.43,'(0.000%)','43.000%']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            }
+        });
+
+        // Times -----------------------
+        test('Times', 3, function() {
+            var tests = [
+                [25,'00:00:00','0:00:25'],
+                [238,'00:00:00','0:03:58'],
+                [63846,'00:00:00','17:44:06']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            }
+        });
+
+
+        // Unformats -----------------------
+        module('Unformat', {
+            setup: function() {
+                numeral.language('en');
+            }
+        });
+        test('All', 7, function() {
+            var tests = [
+                ['10,000.123',10000.123],
+                ['(0.12345)',-.12345],
+                ['($1.23m)',-1230000],
+                ['23rd',23],
+                ['$10,000.00',10000],
+                ['-76%',-.76],
+                ['2:23:57',8637]
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral().unformat(tests[i][0]), tests[i][1], tests[i][0]);
+            }
+        });
+
+
+        // Manipulate -----------------------
+        module('Manipulate');
+
+        // Add -----------------------
+        test('Add', 3, function() {
+            var tests = [
+                    [1000,10,1010],
+                    [.5,3,3.5],
+                    [-100,200,100]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                num.add(tests[i][1]);
+                strictEqual(num.value(), tests[i][2], tests[i][0] + ' + ' + tests[i][1]);
+            }
+        });
+
+        // Subtract -----------------------
+        test('Subtract', 3, function() {
+            var tests = [
+                    [1000,10,990],
+                    [.5,3,-2.5],
+                    [-100,200,-300]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                num.subtract(tests[i][1]);
+                strictEqual(num.value(), tests[i][2], tests[i][0] + ' - ' + tests[i][1]);
+            }
+        });
+
+        // Multiply -----------------------
+        test('Multiply', 3, function() {
+            var tests = [
+                    [1000,10,10000],
+                    [.5,3,1.5],
+                    [-100,200,-20000]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                num.multiply(tests[i][1]);
+                strictEqual(num.value(), tests[i][2], tests[i][0] + ' * ' + tests[i][1]);
+            }
+        });
+
+        // Devide -----------------------
+        test('Divide', 3, function() {
+            var tests = [
+                    [1000,10,100],
+                    [.5,3,0.16666666666666666],
+                    [-100,200,-.5]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                num.divide(tests[i][1]);
+                strictEqual(num.value(), tests[i][2], tests[i][0] + ' / ' + tests[i][1]);
+            }
+        });
+
+        // Difference -----------------------
+        module('Difference');
+
+        test('', 3, function() {
+            var tests = [
+                    [1000,10,990],
+                    [.5,3,2.5],
+                    [-100,200,300]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                strictEqual(num.difference(tests[i][1]), tests[i][2], 'Difference between ' + tests[i][0] + ' and ' + tests[i][1]);
+            }
+        });
+
+        // Value -----------------------
+        module('Value');
+
+        test('', 2, function() {
+            var tests = [
+                    [1000],
+                    [.5]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral(tests[i][0]);
+                strictEqual(num.value(), tests[i][0], tests[i][0]);
+            }
+        });
+
+        // Set -----------------------
+        module('Set');
+        test('', 2, function() {
+            var tests = [
+                    [1000,1000],
+                    [-.25,-.25]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                num = numeral().set(tests[i][0]);
+                strictEqual(num.value(), tests[i][1], tests[i][0]);
+            }
+        });
+
+        // Clone -----------------------
+        module('Clone');
+
+        var a = numeral(1000);
+        var b = numeral(a);
+        var c = a.clone();
+
+        var aVal = a.value();
+        var aSet = a.set(2000).value();
+
+        var bVal = b.value();
+        // 1000
+
+        var cVal = c.add(10).value();
+        // 1010
+        
+        test('', function() {
+            strictEqual(aVal, 1000, 'Parent starting value');
+            strictEqual(aSet, 2000, 'Parent set to 2000');
+            strictEqual(bVal, 1000, 'Implicit clone unmanipulated');
+            strictEqual(cVal, 1010, 'Explicit clone + 10');
+        });
+
+        // isNumeral -----------------------
+        module('isNumeral');
+        test('', 2, function() {
+            var tests = [
+                    [numeral(),true],
+                    [1,false]
+                ],
+                num;
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral.isNumeral(tests[i][0]), tests[i][1], tests[i][0]);
+            }
+        });
+    </script>
+    <script type="text/javascript" src="languages/en.js"></script>
+    <script type="text/javascript" src="languages/fr.js"></script>
+</head>
+<body>    
     <div class="content">
-        <script type="text/javascript">
-            var nums,
-                formats,
-                expecteds,
-                values;
-
-
-            module('Format');
-            // Numbers -----------------------
-            nums = [
-                10000,
-                10000.23,
-                -10000,
-                10000.1234,
-                -10000,
-                -.23,
-                -.23,
-                .23,
-                1230974,
-                1460,
-                -104000,
-                1,
-                52,
-                23,
-                100
-            ],
-            formats = [
-                '0,0.0000',
-                '0,0',
-                '0,0.0',
-                '0.000',
-                '(0,0.0000)',
-                '.00',
-                '(.00)',
-                '0.00000',
-                '0.0a',
-                '0a',
-                '0a',
-                '0o',
-                '0o',
-                '0o',
-                '0o'
-            ],
-            expecteds = [
-                '10,000.0000',
-                '10,000',
-                '-10,000.0',
-                '10000.123',
-                '(10,000.0000)',
-                '-.23',
-                '(.23)',
-                '0.23000',
-                '1.2m',
-                '1k',
-                '-104k',
-                '1st',
-                '52nd',
-                '23rd',
-                '100th'
-            ];
-            
-            var formatNumberQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                formatNumberQunitTests.push({
-                    num: nums[i],
-                    format: formats[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            formatTest('Numbers', formatNumberQunitTests);
-
-            // Money -----------------------
-            nums = [
-                1000.234,
-                -1000.234,
-                -1000.234,
-                1230974
-            ],
-            formats = [
-                '$0,0.00',
-                '($0,0)',
-                '$0.00',
-                '($0.00a)'
-            ],
-            expecteds = [
-                '$1,000.23',
-                '($1,000)',
-                '-$1000.23',
-                '$1.23m'
-            ];
-
-            var formatMoneyQunitTests = [];
-
-            for (i = 0; i < nums.length; i++) {
-                formatMoneyQunitTests.push({
-                    num: nums[i],
-                    format: formats[i],
-                    expected: expecteds[i]
-                });
-            }
-            
-            formatTest('Money', formatMoneyQunitTests);
-            
-            // Percentages -----------------------
-            nums = [
-                1,
-                .974878234,
-                -.43,
-                .43
-            ],
-            formats = [
-                '0%',
-                '0.000%',
-                '0%',
-                '(0.000%)'
-            ],
-            expecteds = [
-                '100%',
-                '97.488%',
-                '-43%',
-                '43.000%'
-            ];
-
-            var formatPercentageQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                formatPercentageQunitTests.push({
-                    num: nums[i],
-                    format: formats[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            formatTest('Percentages', formatPercentageQunitTests);
-
-            // Times -----------------------
-            nums = [
-                25,
-                238,
-                63846
-            ],
-            formats = [
-                '00:00:00',
-                '00:00:00',
-                '00:00:00'
-            ],
-            expecteds = [
-                '0:00:25',
-                '0:03:58',
-                '17:44:06'
-            ];
-
-            var formatTimeQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                formatTimeQunitTests.push({
-                    num: nums[i],
-                    format: formats[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            formatTest('Times', formatTimeQunitTests);
-
-            // Unformats -----------------------
-            module('Unformat');
-            
-            formats = [
-                '10,000.123',
-                '(0.12345)',
-                '($1.23m)',
-                '23rd',
-                '$10,000.00',
-                '-76%',
-                '2:23:57'
-            ],
-            expecteds = [
-                10000.123,
-                -.12345,
-                -1230000,
-                23,
-                10000,
-                -.76,
-                8637
-            ];
-            
-            var unformatQunitTests = [];
-
-            for (var i = 0; i < formats.length; i++) {
-                unformatQunitTests.push({
-                    format: formats[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            unformatTest('', unformatQunitTests);
-
-
-            // Manipulate -----------------------
-            module('Manipulate');
-
-            // Add -----------------------
-            nums = [
-                1000,
-                .5,
-                -100
-            ],
-            values = [
-                10,
-                3,
-                200
-            ],
-            expecteds = [
-                1010,
-                3.5,
-                100
-            ];
-
-            var addQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                addQunitTests.push({
-                    num: nums[i],
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            addTest('Add', addQunitTests);
-
-            // Subtract -----------------------
-            expecteds = [
-                990,
-                -2.5,
-                -300
-            ];
-
-            var subtractQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                subtractQunitTests.push({
-                    num: nums[i],
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            subtractTest('Subtract', subtractQunitTests);
-
-            // Multiply -----------------------
-            expecteds = [
-                10000,
-                1.5,
-                -20000
-            ];
-
-            var multiplyQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                multiplyQunitTests.push({
-                    num: nums[i],
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            multiplyTest('Multiply', multiplyQunitTests);
-
-            // Divide -----------------------
-            expecteds = [
-                100,
-                0.16666666666666666,
-                -.5
-            ];
-
-            var divideQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                divideQunitTests.push({
-                    num: nums[i],
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            divideTest('Divide', divideQunitTests);
-
-            // Difference -----------------------
-            module('Difference');
-            expecteds = [
-                990,
-                2.5,
-                300
-            ];
-
-            var differenceQunitTests = [];
-
-            for (var i = 0; i < nums.length; i++) {
-                differenceQunitTests.push({
-                    num: nums[i],
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            differenceTest('', differenceQunitTests);
-
-
-            // Value -----------------------
-            module('Value');
-            
-            values = [
-                1000,
-                -.25
-            ],
-            expecteds = [
-                1000,
-                -.25
-            ];
-            
-            var valueQunitTests = [];
-
-            for (var i = 0; i < values.length; i++) {
-                valueQunitTests.push({
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            valueTest('', valueQunitTests);
-
-
-            // Set -----------------------
-            module('Set');
-            
-            values = [
-                1000,
-                -.25
-            ],
-            expecteds = [
-                1000,
-                -.25
-            ];
-            
-            var setQunitTests = [];
-
-            for (var i = 0; i < values.length; i++) {
-                setQunitTests.push({
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            setTest('', setQunitTests);
-
-
-            // Clone -----------------------
-            module('Clone');
-
-            var a = numeral(1000);
-            var b = numeral(a);
-            var c = a.clone();
-
-            var aVal = a.value();
-            var aSet = a.set(2000).value();
-
-            var bVal = b.value();
-            // 1000
-
-            var cVal = c.add(10).value();
-            // 1010
-            
-            test('', function() {
-                strictEqual(aVal, 1000, 'Parent starting value');
-                strictEqual(aSet, 2000, 'Parent set to 2000');
-                strictEqual(bVal, 1000, 'Implicit clone unmanipulated');
-                strictEqual(cVal, 1010, 'Explicit clone + 10');
-            });
-
-            // isNumeral -----------------------
-            module('isNumeral');
-            
-            values = [
-                numeral(),
-                1
-            ],
-            expecteds = [
-                true,
-                false
-            ];
-            
-            var isNumeralQunitTests = [];
-
-            for (var i = 0; i < values.length; i++) {
-                isNumeralQunitTests.push({
-                    value: values[i],
-                    expected: expecteds[i]
-                });
-            }
-
-            isNumeralTest('', isNumeralQunitTests);
-
-
-        </script>
-
         <div id="qunit"></div>
     </div>
 </body>
