@@ -321,6 +321,35 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
+            <h3>Languages</h3>
+            <p>
+                Lets make this useable all over the place!
+            </p>
+<pre>
+// load a language
+numeral.language('fr', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm'
+    },
+    ordinal : function (number) {
+        return number === 1 ? 'er' : 'ème';
+    },
+    money: {
+        symbol: '€'
+    }
+});
+
+// switch between languages
+numeral.language('fr');
+</pre>
+            <p>
+                As I am not qualified to create language definitions, please feel free to do so, and submit a pull request.  Don't forget to create both the language file and the language tests.
+            </p>
 
             <h3>Acknowlegements</h3>
             <p>
