@@ -9,6 +9,12 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.2.0
+
+Add localization language support
+
+Update testing for to include languages
+
 ### 1.1.0
 
 Add Tests
