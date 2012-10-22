@@ -137,6 +137,6 @@ function unformatAll () {
     ];
 
     for (var i = 0; i < formats.length; i++) {
-        $('#unformat-all tbody').append('<tr><td>' + formats[i] + '</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>');
+        $('#unformat-all tbody').append('<tr><td>\'' + formats[i] + '\'</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>');
     }
 }
