@@ -5,9 +5,7 @@ module('Language: en', {
 });
 
 // Numbers -----------------------
-test('Format Numbers', 15, function() {
-    console.log('en format start');
-    
+test('Format Numbers', 15, function() {    
     var tests = [
         [10000,'0,0.0000','10,000.0000'],
         [10000.23,'0,0','10,000'],
@@ -27,10 +25,8 @@ test('Format Numbers', 15, function() {
     ];
 
     for (var i = 0; i < tests.length; i++) {
-        console.log('en format');
         strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
     }
-    console.log('en format end');
 });
 
 // Money -----------------------
@@ -62,11 +58,13 @@ test('Format Percentages', 4, function() {
 });
 
 // Unformat ------------------------
-test('Unformat', 7, function() {
+test('Unformat', 9, function() {
     var tests = [
         ['10,000.123',10000.123],
         ['(0.12345)',-.12345],
         ['($1.23m)',-1230000],
+        ['10k',10000],
+        ['-10k',-10000],
         ['23rd',23],
         ['$10,000.00',10000],
         ['-76%',-.76],
@@ -74,7 +72,6 @@ test('Unformat', 7, function() {
     ];
 
     for (var i = 0; i < tests.length; i++) {
-
         strictEqual(numeral().unformat(tests[i][0]), tests[i][1], tests[i][0]);
     }
 });

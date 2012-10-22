@@ -75,8 +75,8 @@
             if (languages[currentLanguage].delimiters.decimal !== '.') {
                 string = string.replace(languages[currentLanguage].delimiters.decimal, '.');
             }
-            var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].money.symbol + ')$'),
-                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].money.symbol + ')$');
+            var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].money.symbol + '?)$'),
+                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].money.symbol + '?)$');
             n._n = ((string.match(thousandRegExp)) ? 1000 : 1) * ((string.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
         }
         return n._n;
