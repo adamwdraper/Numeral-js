@@ -36,6 +36,15 @@ table {
     .nav {
     }
 
+    label {
+        color: $gray;
+        margin-right: .5em;
+    }
+
+    select {
+        margin: 1.2em 0;
+    }
+
     .button {
 
         &:hover, &:active, &:visited, &.active {

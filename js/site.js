@@ -17,10 +17,11 @@
 }());
 
 $(function() {
-    $('#language-select').on('change', updateFormats());
+    $('#language-select').on('change', function() {
+        updateFormats();
+    });
 
     updateFormats();
-
 });
 
 function updateFormats () {
@@ -29,11 +30,13 @@ function updateFormats () {
 
     formatNumbers();
     formatMoney();
+    formatPercentage();
+    unformatAll();
 }
 
 function formatNumbers () {
     // remove old rows
-    $('#format-numbers tr').remove();
+    $('#format-numbers tbody').empty();
 
     var nums = [
         10000,
@@ -71,13 +74,13 @@ function formatNumbers () {
     ];
 
     for (var i = 0; i < nums.length; i++) {
-        $('#format-numbers').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>');
+        $('#format-numbers tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>');
     }
 }
 
 function formatMoney () {
     // remove old rows
-    $('#format-money tr').remove();
+    $('#format-money tbody').empty();
 
     var nums = [
         1000.234,
@@ -93,13 +96,13 @@ function formatMoney () {
     ];
 
     for (i = 0; i < nums.length; i++) {
-        $('#format-money').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+        $('#format-money tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
     }
 }
 
 function formatPercentage () {
     // remove old rows
-    $('#format-percentage tr').remove();
+    $('#format-percentage tbody').empty();
 
     var nums = [
         1,
@@ -115,12 +118,25 @@ function formatPercentage () {
     ];
 
     for (var i = 0; i < nums.length; i++) {
-        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+        $('#format-percentage tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
     }
 }
 
 function unformatAll () {
     // remove old rows
-    $('#unformat-all tr').remove();
-    
+    $('#unformat-all tbody').empty();
+
+    var formats = [
+        numeral(10000.123).format('0,0.000'),
+        numeral(.12345).format('0.00000'),
+        numeral(1234000).format('0.00a'),
+        numeral(23).format('0o'),
+        numeral(10000).format('$0,0.00'),
+        numeral(-.76).format('0%'),
+        '2:23:57'
+    ];
+
+    for (var i = 0; i < formats.length; i++) {
+        $('#unformat-all tbody').append('<tr><td>' + formats[i] + '</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>');
+    }
 }
