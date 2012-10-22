@@ -9,9 +9,13 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.2.1
+
+Bug fix: Fix unformatting non-negative abbreviations
+
 ### 1.2.0
 
-Add localization language support
+Add language support
 
 Update testing for to include languages
 
