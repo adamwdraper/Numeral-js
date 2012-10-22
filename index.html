@@ -56,6 +56,10 @@
                 <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="icon-download"></i> .ZIP</a>
                 <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="icon-download"></i> .TGZ</a>
             </div>
+            <select id="language-select">
+                <option value="en">english</option>
+                <option value="fr">french</option>
+            </select>
         </div>
     </div>
     <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
@@ -83,7 +87,7 @@ var string = numeral(1000).format('0,0');
 // 1,000
 </pre>
             <h4>Numbers</h4>
-            <table class="table striped bordered">
+            <table id="format-numbers" class="table striped bordered">
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -91,50 +95,9 @@ var string = numeral(1000).format('0,0');
                         <th>String</th>
                     </tr>
                 </thead>
-                <script type="text/javascript">
-                    var nums = [
-                        10000,
-                        10000.23,
-                        -10000,
-                        10000.1234,
-                        -10000,
-                        -.23,
-                        -.23,
-                        .23,
-                        1230974,
-                        1460,
-                        -104000,
-                        1,
-                        52,
-                        23,
-                        100
-                    ],
-                    formats = [
-                        '0,0.0000',
-                        '0,0',
-                        '0,0.0',
-                        '0.000',
-                        '(0,0.0000)',
-                        '.00',
-                        '(.00)',
-                        '0.00000',
-                        '0.0a',
-                        '0a',
-                        '0a',
-                        '0o',
-                        '0o',
-                        '0o',
-                        '0o'
-                    ];
-
-                    for (var i = 0; i < nums.length; i++) {
-                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>');
-                    }
-
-                </script>
             </table>
             <h4>Money</h4>
-            <table class="table striped bordered">
+            <table id="format-money" class="table striped bordered">
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -142,24 +105,6 @@ var string = numeral(1000).format('0,0');
                         <th>String</th>
                     </tr>
                 </thead>
-                <script type="text/javascript">
-                    nums = [
-                        1000.234,
-                        -1000.234,
-                        -1000.234,
-                        1230974
-                    ],
-                    formats = [
-                        '$0,0.00',
-                        '($0,0)',
-                        '$0.00',
-                        '($0.00a)'
-                    ];
-
-                    for (i = 0; i < nums.length; i++) {
-                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                    }
-                </script>
             </table>
             <h4>Percentages</h4>
             <table class="table striped bordered">
@@ -170,24 +115,6 @@ var string = numeral(1000).format('0,0');
                         <th>String</th>
                     </tr>
                 </thead>
-                <script type="text/javascript">
-                    nums = [
-                        1,
-                        .974878234,
-                        -.43,
-                        .43
-                    ],
-                    formats = [
-                        '0%',
-                        '0.000%',
-                        '0%',
-                        '(0.000%)'
-                    ];
-
-                    for (var i = 0; i < nums.length; i++) {
-                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                    }
-                </script>
             </table>
             <h4>Time</h4>
             <table class="table striped bordered">
@@ -348,7 +275,7 @@ numeral.language('fr', {
 numeral.language('fr');
 </pre>
             <p>
-                As I am not qualified to create language definitions, please feel free to do so, and submit a pull request.  Don't forget to create both the language file and the language tests.
+                As I am not fluent in every language on the planet, please feel free to create language files of your own by submitting a pull request.  Don't forget to create both the language file (example: languages/fr.js) and the language test (example: tests/languages/fr.js). Thanks for helping out.
             </p>
 
             <h3>Acknowlegements</h3>
@@ -366,7 +293,7 @@ numeral.language('fr');
             </p>
         </div>
     </div>
-
-    <script src="js/build/site-min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="js/min/site-min.js"></script>
 </body>
 </html>
