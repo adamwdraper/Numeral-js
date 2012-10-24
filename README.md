@@ -3,7 +3,7 @@
 
 A javascript library for formatting and manipulating numbers.
 
-[Website and documentation](http://adamwdraper.github.com/Numeral-js/)
+[Website and documentation](http://numeraljs.com/)
 
 
 Changelog
