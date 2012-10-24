@@ -1,6 +1,6 @@
 // numeral.js language configuration
 // language : united kingdom (uk)
-// author : Adam Draper : https://github.com/adamwdraper
+// author : Dan Ristic : https://github.com/dristic
 (function () {
     var language = {
         delimiters: {
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('uk', language);
+        this.numeral.language('gb', language);
     }
 }());

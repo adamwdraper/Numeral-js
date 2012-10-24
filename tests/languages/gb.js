@@ -1,6 +1,6 @@
-module('Language: uk', {
+module('Language: gb', {
     setup: function() {
-        numeral.language('uk');
+        numeral.language('gb');
     }
 });
 
