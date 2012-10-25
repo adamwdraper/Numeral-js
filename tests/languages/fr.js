@@ -29,8 +29,8 @@ test('Format Numbers', 15, function() {
     }
 });
 
-// Money -----------------------
-test('Format Money', 4, function() {
+// Currency -----------------------
+test('Format Currency', 4, function() {
     var tests = [
         [1000.234,'$0,0.00','€1 000,23'],
         [-1000.234,'($0,0)','(€1 000)'],

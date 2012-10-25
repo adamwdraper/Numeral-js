@@ -1,5 +1,5 @@
 // numeral.js language configuration
-// language : united kingdom (uk)
+// language : english united kingdom (uk)
 // author : Dan Ristic : https://github.com/dristic
 (function () {
     var language = {
@@ -18,7 +18,7 @@
                 (b === 2) ? 'nd' :
                 (b === 3) ? 'rd' : 'th';
         },
-        money: {
+        currency: {
             symbol: '£'
         }
     };
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('gb', language);
+        this.numeral.language('en-gb', language);
     }
 }());

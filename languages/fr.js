@@ -14,7 +14,7 @@
         ordinal : function (number) {
             return number === 1 ? 'er' : 'ème';
         },
-        money: {
+        currency: {
             symbol: '€'
         }
     };

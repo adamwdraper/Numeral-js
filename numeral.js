@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.1
+// version : 1.2.2
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.1',
+        VERSION = '1.2.2',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -53,8 +53,8 @@
         var output;
         
         // figure out what kind of format we are dealing with
-        if (format.indexOf('$') > -1) { // money!!!!!
-            output = formatMoney(n, format);
+        if (format.indexOf('$') > -1) { // currency!!!!!
+            output = formatCurrency(n, format);
         } else if (format.indexOf('%') > -1) { // percentage
             output = formatPercentage(n, format);
         } else if (format.indexOf(':') > -1) { // time
@@ -75,22 +75,22 @@
             if (languages[currentLanguage].delimiters.decimal !== '.') {
                 string = string.replace(languages[currentLanguage].delimiters.decimal, '.');
             }
-            var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].money.symbol + '?)$'),
-                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].money.symbol + '?)$');
+            var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$'),
+                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$');
             n._n = ((string.match(thousandRegExp)) ? 1000 : 1) * ((string.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
         }
         return n._n;
     }
 
-    function formatMoney (n, format) {
+    function formatCurrency (n, format) {
         format = format.replace('$', '');
         var output = formatNumeral(n, format);
         if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
             output = output.split('');
-            output.splice(1, 0, languages[currentLanguage].money.symbol);
+            output.splice(1, 0, languages[currentLanguage].currency.symbol);
             output = output.join('');
         } else {
-            output = languages[currentLanguage].money.symbol + output;
+            output = languages[currentLanguage].currency.symbol + output;
         }
         return output;
     }
@@ -261,7 +261,7 @@
                 (b === 2) ? 'nd' :
                 (b === 3) ? 'rd' : 'th';
         },
-        money: {
+        currency: {
             symbol: '$'
         }
     });

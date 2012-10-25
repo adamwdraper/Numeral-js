@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.2.2
+
+Changed language definition property 'money' to 'currency'
+
 ### 1.2.1
 
 Bug fix: Fix unformatting non-negative abbreviations
