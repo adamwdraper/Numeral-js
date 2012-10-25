@@ -20,7 +20,8 @@
 
     <script src="js/respond-min.js"></script>
     <script src="js/numeral-min.js"></script>
-    <script src="js/languages/fr.js"></script>
+    <script src="js/languages/min/fr-min.js"></script>
+    <script src="js/languages/min/en-gb-min.js"></script>
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -61,8 +62,9 @@
             </div>
             <label for="language-select">Language</label>
             <select id="language-select" name="language-select">
-                <option value="en">english</option>
-                <option value="fr">french</option>
+                <option value="en">English</option>
+                <option value="en-gb">English (Great Britain)</option>
+                <option value="fr">French</option>
             </select>
         </div>
     </div>
@@ -84,7 +86,7 @@ var numeral = require('numeral');
 
             <h3>Format</h3>
             <p>
-                Numbers can be formatted to look like money, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
+                Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, comma delineated thousands, and abbreviations.
             </p>
 <pre>
 var string = numeral(1000).format('0,0');
@@ -101,8 +103,8 @@ var string = numeral(1000).format('0,0');
                 </thead>
                 <tbody></tbody>
             </table>
-            <h4>Money</h4>
-            <table id="format-money" class="table striped bordered">
+            <h4>Currency</h4>
+            <table id="format-currency" class="table striped bordered">
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -265,7 +267,7 @@ numeral.language('fr', {
     ordinal : function (number) {
         return number === 1 ? 'er' : 'ème';
     },
-    money: {
+    currency: {
         symbol: '€'
     }
 });

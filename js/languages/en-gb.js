@@ -1,21 +1,25 @@
 // numeral.js language configuration
-// language : french (fr)
-// author : Adam Draper : https://github.com/adamwdraper
+// language : english united kingdom (uk)
+// author : Dan Ristic : https://github.com/dristic
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
-            decimal: ','
+            thousands: ',',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
             million: 'm'
         },
-        ordinal : function (number) {
-            return number === 1 ? 'er' : 'ème';
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
         },
         currency: {
-            symbol: '€'
+            symbol: '£'
         }
     };
 
@@ -25,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr', language);
+        this.numeral.language('en-gb', language);
     }
 }());

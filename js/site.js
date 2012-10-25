@@ -80,7 +80,7 @@ function formatNumbers () {
 
 function formatMoney () {
     // remove old rows
-    $('#format-money tbody').empty();
+    $('#format-currency tbody').empty();
 
     var nums = [
         1000.234,
@@ -95,8 +95,8 @@ function formatMoney () {
         '($0.00a)'
     ];
 
-    for (i = 0; i < nums.length; i++) {
-        $('#format-money tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+    for (var i = 0; i < nums.length; i++) {
+        $('#format-currency tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
     }
 }
 
