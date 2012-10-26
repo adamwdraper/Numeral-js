@@ -73,7 +73,7 @@
             n._n = unformatTime(string);
         } else {
             if (languages[currentLanguage].delimiters.decimal !== '.') {
-                string = string.replace(languages[currentLanguage].delimiters.decimal, '.');
+                string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
             }
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$'),
                 millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$');
