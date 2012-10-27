@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.2.3
+
+Bug Fix: Fix unformatting for languages that use '.' as thousands delimiter
+
 ### 1.2.2
 
 Changed language definition property 'money' to 'currency'
