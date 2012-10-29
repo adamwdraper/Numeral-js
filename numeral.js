@@ -55,6 +55,8 @@
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
             output = formatCurrency(n, format);
+        } else if (format.indexOf('b') > -1) { // filesize
+            output = formatBytes(n, format);
         } else if (format.indexOf('%') > -1) { // percentage
             output = formatPercentage(n, format);
         } else if (format.indexOf(':') > -1) { // time
@@ -93,6 +95,21 @@
             output = languages[currentLanguage].currency.symbol + output;
         }
         return output;
+    }
+
+    function formatBytes (n, format) {
+        n = n._n;
+        
+        if (n < 1024) return "" + n + " bytes";
+
+        var prefixes = ['kilo', 'mega', 'giga', 'tera', 'peta', 'exa', 'zetta', 'yotta'];
+        for (var power=0; power<=prefixes.length; power++) {
+          min = Math.pow(1024, power);
+          max = Math.pow(1024, power+1);
+          if (n > min && n < max) {
+            return "" + n/min + " " + prefixes[power-1] + "bytes";
+          }
+        }
     }
 
     function formatPercentage (n, format) {
