@@ -20,9 +20,10 @@
     </style>
     <script src="../min/numeral-min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.10.0.js"></script>
-    
+
     <script src="../languages/min/en-gb-min.js"></script>
     <script src="../languages/min/fr-min.js"></script>
+    <script src="../languages/min/pt-pt-min.js"></script>
 
     <script type="text/javascript">
         var nums,
@@ -74,7 +75,7 @@
                 strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
             }
         });
-        
+
         // Percentages -----------------------
         test('Percentages', 4, function() {
             var tests = [
@@ -256,7 +257,7 @@
 
         var cVal = c.add(10).value();
         // 1010
-        
+
         test('', function() {
             strictEqual(aVal, 1000, 'Parent starting value');
             strictEqual(aSet, 2000, 'Parent set to 2000');
@@ -281,8 +282,9 @@
     <script type="text/javascript" src="languages/en.js"></script>
     <script type="text/javascript" src="languages/en-gb.js"></script>
     <script type="text/javascript" src="languages/fr.js"></script>
+    <script type="text/javascript" src="languages/pt-pt.js"></script>
 </head>
-<body>    
+<body>
     <div class="content">
         <div id="qunit"></div>
     </div>
