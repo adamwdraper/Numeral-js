@@ -34,7 +34,7 @@
     /**
      * Implementation of toFixed() that treats floats more like decimals
      *
-     * Fixes binary rounding issues (eg. (0.615).toFixed(2) === "0.61") that present
+     * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
      * problems for accounting- and finance-related software.
      */
     function toFixed (value, precision) {
@@ -55,13 +55,11 @@
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
             output = formatCurrency(n, format);
-        } else if (format.indexOf('b') > -1) { // filesize
-            output = formatBytes(n, format);
         } else if (format.indexOf('%') > -1) { // percentage
             output = formatPercentage(n, format);
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
-        } else { // plain ol' number
+        } else { // plain ol' numbers or bytes
             output = formatNumber(n, format);
         }
 
@@ -79,6 +77,8 @@
             }
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$'),
                 millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$');
+
+
             n._n = ((string.match(thousandRegExp)) ? 1000 : 1) * ((string.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
         }
         return n._n;
@@ -95,21 +95,6 @@
             output = languages[currentLanguage].currency.symbol + output;
         }
         return output;
-    }
-
-    function formatBytes (n, format) {
-        n = n._n;
-        
-        if (n < 1024) return "" + n + " bytes";
-
-        var prefixes = ['kilo', 'mega', 'giga', 'tera', 'peta', 'exa', 'zetta', 'yotta'];
-        for (var power=0; power<=prefixes.length; power++) {
-          min = Math.pow(1024, power);
-          max = Math.pow(1024, power+1);
-          if (n > min && n < max) {
-            return "" + n/min + " " + prefixes[power-1] + "bytes";
-          }
-        }
     }
 
     function formatPercentage (n, format) {
@@ -156,6 +141,7 @@
     function formatNumber (n, format) {
         var negP = false,
             abbr = false,
+            bytes = false,
             ord = false;
 
         // see if we should use parentheses for negative number
@@ -174,6 +160,28 @@
             } else {
                 abbr = languages[currentLanguage].abbreviations.thousand;
                 n._n = n._n / 1000;
+            }
+        }
+
+        // see if we are formatting bytes
+        if (format.indexOf('b') > -1) {
+            format = format.replace('b', '');
+
+            var prefixes = ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'],
+                min,
+                max;
+
+            for (var power = 0; power <= prefixes.length; power++) {
+                min = Math.pow(1024, power);
+                max = Math.pow(1024, power+1);
+
+                if (n._n > min && n._n < max) {
+                    bytes = prefixes[power];
+                    if (min > 0) {
+                        n._n = n._n / min;
+                    }
+                    break;
+                }
             }
         }
 
@@ -213,7 +221,7 @@
 
         }
 
-        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
+        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
     }
 
     /************************************
@@ -365,7 +373,7 @@
     if (typeof ender === 'undefined') {
         // here, `this` means `window` in the browser, or `global` on the server
         // add `numeral` as a global object via a string identifier,
-        // for Closure Compiler "advanced" mode
+        // for Closure Compiler 'advanced' mode
         this['numeral'] = numeral;
     }
     
