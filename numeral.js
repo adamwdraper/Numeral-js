@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.2
+// version : 1.2.3
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.2',
+        VERSION = '1.2.3',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -75,7 +75,7 @@
             n._n = unformatTime(string);
         } else {
             if (languages[currentLanguage].delimiters.decimal !== '.') {
-                string = string.replace(languages[currentLanguage].delimiters.decimal, '.');
+                string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
             }
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$'),
                 millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$');
