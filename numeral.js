@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.3
+// version : 1.2.4
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.3',
+        VERSION = '1.2.4',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -75,11 +75,28 @@
             if (languages[currentLanguage].delimiters.decimal !== '.') {
                 string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
             }
+            
+            // see if abbreviations are there so that we can multiply to the correct number
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$'),
                 millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?)$');
 
+            // see if bytes are there so that we can multiply to the correct number
+            var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                bytesMultiplier = false;
 
-            n._n = ((string.match(thousandRegExp)) ? 1000 : 1) * ((string.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
+            for (var power = 0; power <= prefixes.length; power++) {
+                bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+                
+                if (bytesMultiplier) {
+                    break;
+                }
+            }
+
+            // do some math to create our number
+            n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((string.match(thousandRegExp)) ? 1000 : 1) * ((string.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
+        
+            // round if we are talking about bytes
+            n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
         }
         return n._n;
     }
@@ -167,7 +184,7 @@
         if (format.indexOf('b') > -1) {
             format = format.replace('b', '');
 
-            var prefixes = ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'],
+            var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
                 min,
                 max;
 
