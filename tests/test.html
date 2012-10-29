@@ -75,6 +75,23 @@
             }
         });
         
+
+        // Currency -----------------------
+        test('Bytes', 6, function() {
+            var tests = [
+                [100,'0b','100 bytes'],
+                [1024*2,'0b','2 kilobytes'],
+                [1024*1024*5,'0b','5 megabytes'],
+                [1024*1024*1024*7.3,'0b','7.3 gigabytes'],
+                [1024*1024*1024*1024*3.1,'0b','3.1 terabytes'],
+                [1024*1024*1024*1024*1024*2.95,'(0b)','2.95 petabytes'],
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            }
+        });
+
         // Percentages -----------------------
         test('Percentages', 4, function() {
             var tests = [
