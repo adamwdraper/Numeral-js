@@ -20,10 +20,12 @@
     </style>
     <script src="../numeral.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.10.0.js"></script>
-    
+
     <script src="../languages/min/en-gb-min.js"></script>
     <script src="../languages/min/fr-min.js"></script>
     <script src="../languages/es.js"></script>
+    <script src="../languages/min/pt-pt-min.js"></script>
+
 
     <script type="text/javascript">
         var nums,
@@ -76,8 +78,7 @@
             for (var i = 0; i < tests.length; i++) {
                 strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
             }
-        });
-        
+        });        
 
         // Bytes -----------------------
         test('Bytes', 6, function() {
@@ -278,7 +279,7 @@
 
         var cVal = c.add(10).value();
         // 1010
-        
+
         test('', function() {
             strictEqual(aVal, 1000, 'Parent starting value');
             strictEqual(aSet, 2000, 'Parent set to 2000');
@@ -304,9 +305,9 @@
     <script type="text/javascript" src="languages/en-gb.js"></script>
     <script type="text/javascript" src="languages/fr.js"></script>
     <script type="text/javascript" src="languages/es.js"></script>
+    <script type="text/javascript" src="languages/pt-pt.js"></script>
 </head>
-</head>
-<body>    
+<body>
     <div class="content">
         <div id="qunit"></div>
     </div>
