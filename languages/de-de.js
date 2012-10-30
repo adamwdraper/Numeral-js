@@ -11,8 +11,8 @@
             thousand: 'k',
             million: 'm'
         },
-        ordinal : function (number) {
-            return ''; // TODO
+        ordinal: function (number) {
+            return '.';
         },
         currency: {
             symbol: '€'
