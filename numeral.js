@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.5
+// version : 1.2.6
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.5',
+        VERSION = '1.2.6',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -37,11 +37,19 @@
      * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
      * problems for accounting- and finance-related software.
      */
-    function toFixed (value, precision) {
-        var power = Math.pow(10, precision);
+    function toFixed (value, precision, optionals) {
+        var power = Math.pow(10, precision),
+            output;
 
         // Multiply up by precision, round accurately, then divide and use native toFixed():
-        return (Math.round(value * power) / power).toFixed(precision);
+        output = (Math.round(value * power) / power).toFixed(precision);
+
+        if (optionals) {
+            var optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+            output = output.replace(optionalsRegExp, '');
+        }
+
+        return output;
     }
 
     /************************************
@@ -102,7 +110,7 @@
     }
 
     function formatCurrency (n, format) {
-        var atStart = (format.indexOf('$') <= 1) ? true : false;
+        var prependSymbol = (format.indexOf('$') <= 1) ? true : false;
 
         // remove $ for the moment
         format = format.replace('$', '');
@@ -111,7 +119,7 @@
         var output = formatNumeral(n, format);
 
         // position the symbol
-        if (atStart) {
+        if (prependSymbol) {
             if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
                 output = output.split('');
                 output.splice(1, 0, languages[currentLanguage].currency.symbol);
@@ -248,12 +256,20 @@
         }
 
         if (precision) {
-            // do to fixed
-            d = languages[currentLanguage].delimiters.decimal + toFixed(n._n, precision.length).split('.')[1];
-        }
+            if (precision.indexOf('[') > -1) {
+                precision = precision.replace(']', '');
+                precision = precision.split('[');
+                d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length).split('.')[1];
 
-        if (abbr) {
+                // go throg
+            } else {
+                // do to fixed
+                d = toFixed(n._n, precision.length).split('.')[1];
+            }
 
+            if (d) {
+                d = languages[currentLanguage].delimiters.decimal + d;
+            }
         }
 
         return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');

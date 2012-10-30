@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.2.6
+
+Add support for optional decimal places
+
 ### 1.2.5
 
 Add support for appending currency symbol
