@@ -29,7 +29,8 @@ function updateFormats () {
     numeral.language($('#language-select').val());
 
     formatNumbers();
-    formatMoney();
+    formatCurrency();
+    formatBytes();
     formatPercentage();
     unformatAll();
 }
@@ -78,7 +79,7 @@ function formatNumbers () {
     }
 }
 
-function formatMoney () {
+function formatCurrency () {
     // remove old rows
     $('#format-currency tbody').empty();
 
@@ -97,6 +98,28 @@ function formatMoney () {
 
     for (var i = 0; i < nums.length; i++) {
         $('#format-currency tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
+    }
+}
+
+function formatBytes () {
+    // remove old rows
+    $('#format-bytes tbody').empty();
+
+    var nums = [
+        100,
+        1024*2,
+        7884486213,
+        3467479682787
+    ],
+    formats = [
+        '0b',
+        '0b',
+        '0.0b',
+        '0.000b'
+    ];
+
+    for (var i = 0; i < nums.length; i++) {
+        $('#format-bytes tbody').append('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
     }
 }
 
@@ -132,6 +155,8 @@ function unformatAll () {
         numeral(1234000).format('0.00a'),
         numeral(23).format('0o'),
         numeral(10000).format('$0,0.00'),
+        numeral(100).format('0b'),
+        numeral(3467479682787).format('0.000b'),
         numeral(-.76).format('0%'),
         '2:23:57'
     ];
