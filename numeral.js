@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.4
+// version : 1.2.5
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.4',
+        VERSION = '1.2.5',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -102,15 +102,33 @@
     }
 
     function formatCurrency (n, format) {
+        var atStart = (format.indexOf('$') <= 1) ? true : false;
+
+        // remove $ for the moment
         format = format.replace('$', '');
+
+        // format the number
         var output = formatNumeral(n, format);
-        if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-            output = output.split('');
-            output.splice(1, 0, languages[currentLanguage].currency.symbol);
-            output = output.join('');
+
+        // position the symbol
+        if (atStart) {
+            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+                output = output.split('');
+                output.splice(1, 0, languages[currentLanguage].currency.symbol);
+                output = output.join('');
+            } else {
+                output = languages[currentLanguage].currency.symbol + output;
+            }
         } else {
-            output = languages[currentLanguage].currency.symbol + output;
+            if (output.indexOf(')') > -1) {
+                output = output.split('');
+                output.splice(-1, 0, languages[currentLanguage].currency.symbol);
+                output = output.join('');
+            } else {
+                output = output + languages[currentLanguage].currency.symbol;
+            }
         }
+
         return output;
     }
 
