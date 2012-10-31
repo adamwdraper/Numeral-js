@@ -12,7 +12,7 @@
             million: 'm'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'ème';
+            return number === 1 ? 'er' : 'e';
         },
         currency: {
             symbol: '€'
