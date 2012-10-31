@@ -13,9 +13,9 @@ Changelog
 
 Add support for spaces before/after $, a, o, b in a format string
 
-Bug fix: Fix unformat for languages that us '.' in ordinals
+Bug fix: Fix unformat for languages that use '.' in ordinals
 
-Bug fix: Fix Round up floating numbers with no precision correctly.
+Bug fix: Fix round up floating numbers with no precision correctly.
 
 Bug fix: Fix currency signs at the end in unformat
 
