@@ -12,7 +12,7 @@
             million: 'mil'
         },
         ordinal: function (number) {
-            return '°';
+            return 'º';
         },
         currency: {
             symbol: '€'
