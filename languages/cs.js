@@ -8,14 +8,14 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: ' tis.',
-            million: ' mil.'
+            thousand: 'tis.',
+            million: 'mil.'
         },
         ordinal: function () {
             return '.';
         },
         currency: {
-            symbol: ' Kč'
+            symbol: 'Kč'
         }
     };
 

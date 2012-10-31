@@ -8,8 +8,8 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: ' тыс.',
-            million: ' млн'
+            thousand: 'тыс.',
+            million: 'млн'
         },
         ordinal: function () {
             // not ideal, but since in Russian it can taken on 
@@ -18,7 +18,7 @@
             return '.'; 
         },
         currency: {
-            symbol: ' руб.'
+            symbol: 'руб.'
         }
     };
 
