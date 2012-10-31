@@ -59,7 +59,7 @@
     // determine what type of formatting we need to do
     function formatNumeral (n, format) {
         var output;
-        
+
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
             output = formatCurrency(n, format);
@@ -84,7 +84,7 @@
             if (languages[currentLanguage].delimiters.decimal !== '.') {
                 string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
             }
-            
+
             // see if abbreviations are there so that we can multiply to the correct number
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?(?:\\))?)?$'),
                 millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|\\' + languages[currentLanguage].currency.symbol + '?(?:\\))?)?$');
@@ -95,7 +95,7 @@
 
             for (var power = 0; power <= prefixes.length; power++) {
                 bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
-                
+
                 if (bytesMultiplier) {
                     break;
                 }
@@ -103,7 +103,7 @@
 
             // do some math to create our number
             n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? 1000 : 1) * ((stringOriginal.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
-        
+
             // round if we are talking about bytes
             n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
         }
@@ -279,6 +279,10 @@
             d = '',
             neg = false;
 
+        if (!precision) {
+            w = toFixed(n._n, null);
+        }
+
         // format number
         if (n._n < 0) {
             w = w.slice(1);
@@ -380,7 +384,7 @@
     /************************************
         Helpers
     ************************************/
-    
+
     function loadLanguage(key, values) {
         languages[key] = values;
     }
@@ -462,7 +466,7 @@
         // for Closure Compiler 'advanced' mode
         this['numeral'] = numeral;
     }
-    
+
     /*global define:false */
     if (typeof define === 'function' && define.amd) {
         define([], function () {
