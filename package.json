@@ -1,6 +1,6 @@
 {
   "name": "numeral",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
   "author": {
@@ -35,6 +35,6 @@
   "devDependencies": {},
   "ender": "./ender.js",
   "readme": "[Numeral.js](http://numeraljs.com)\n=======================================================\n\nA javascript library for formatting and manipulating numbers.\n\n[Website and documentation](http://numeraljs.com)\n\nChangelog\n=========\n\n### 1.2.6\nAdd support for optional decimal places\n### 1.2.5\nAdd support for appending currency symbol\n### 1.2.4\nAdd support for humanized filesizes\n### 1.2.2\nChanged language definition property 'money' to 'currency'\n### 1.2.1\nBug fix: Fix unformatting non-negative abbreviations\n### 1.2.3\nBug Fix: Fix unformatting for languages that use '.' as thousands delimiter\n### 1.2.0\nAdd localization language support\n\nUpdate testing for to include languages\n### 1.1.0\nAdd Tests\n\nBug fix: Fix difference returning negative values\n### 1.0.4\nBug fix: Non negative numbers were displaying as negative when using parentheses\n### 1.0.3\nAdd ordinal formatting using 'o' in the format\n### 1.0.2\nAdd clone functionality\n### 1.0.1\n\nAdded abbreviations for thousands and millions using 'a' in the format\n\n### 1.0.0\n\nInitial release\n\nAcknowlegements\n===============\n\nNumeral.js, while less complex, was inspired by and heavily borrowed from [Moment.js](http://momentjs.com)\n\nLicense\n=======\nNumeral.js is freely distributable under the terms of the MIT license.\nCopyright (c) 2012 Adam Draper\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use,copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
-  "_id": "numeral@1.2.5",
+  "_id": "numeral@1.2.7",
   "_from": "numeral"
 }

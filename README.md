@@ -9,6 +9,16 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.3.0
+
+Add support for spaces before/after $, a, o, b in a format string
+
+Bug fix: Fix unformat for languages that us '.' in ordinals
+
+Bug fix: Fix Round up floating numbers with no precision correctly.
+
+Bug fix: Fix currency signs at the end in unformat
+
 ### 1.2.6
 
 Add support for optional decimal places

@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.2.7
+// version : 1.3.0
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.2.7',
+        VERSION = '1.3.0',
         round = Math.round, i,
         // internal storage for language config files
         languages = {},
@@ -114,7 +114,18 @@
         var prependSymbol = (format.indexOf('$') <= 1) ? true : false;
 
         // remove $ for the moment
-        format = format.replace('$', '');
+        var space = '';
+
+        // check for space before or after currency
+        if (format.indexOf(' $') > -1) {
+            space = ' ';
+            format = format.replace(' $', '');
+        } else if (format.indexOf('$ ') > -1) {
+            space = ' ';
+            format = format.replace('$ ', '');
+        } else {
+            format = format.replace('$', '');
+        }
 
         // format the number
         var output = formatNumeral(n, format);
@@ -123,18 +134,18 @@
         if (prependSymbol) {
             if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
                 output = output.split('');
-                output.splice(1, 0, languages[currentLanguage].currency.symbol);
+                output.splice(1, 0, languages[currentLanguage].currency.symbol + space);
                 output = output.join('');
             } else {
-                output = languages[currentLanguage].currency.symbol + output;
+                output = languages[currentLanguage].currency.symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, languages[currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
                 output = output.join('');
             } else {
-                output = output + languages[currentLanguage].currency.symbol;
+                output = output + space + languages[currentLanguage].currency.symbol;
             }
         }
 
@@ -142,15 +153,23 @@
     }
 
     function formatPercentage (n, format) {
-        format = format.replace('%', '');
+        var space = '';
+        // check for space before %
+        if (format.indexOf(' %') > -1) {
+            space = ' ';
+            format = format.replace(' %', '');
+        } else {
+            format = format.replace('%', '');
+        }
+
         n._n = n._n * 100;
         var output = formatNumeral(n, format);
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
-            output.splice(-1, 0, '%');
+            output.splice(-1, 0, space + '%');
             output = output.join('');
         } else {
-            output = output + '%';
+            output = output + space + '%';
         }
         return output;
     }
@@ -184,9 +203,9 @@
 
     function formatNumber (n, format) {
         var negP = false,
-            abbr = false,
-            bytes = false,
-            ord = false;
+            abbr = '',
+            bytes = '',
+            ord = '';
 
         // see if we should use parentheses for negative number
         if (format.indexOf('(') > -1) {
@@ -196,20 +215,32 @@
 
         // see if abbreviation is wanted
         if (format.indexOf('a') > -1) {
-            format = format.replace('a', '');
+            // check for space before abbreviation
+            if (format.indexOf(' a') > -1) {
+                abbr = ' ';
+                format = format.replace(' a', '');
+            } else {
+                format = format.replace('a', '');
+            }
 
             if (n._n > 1000000) {
-                abbr = languages[currentLanguage].abbreviations.million;
+                abbr = abbr + languages[currentLanguage].abbreviations.million;
                 n._n = n._n / 1000000;
             } else {
-                abbr = languages[currentLanguage].abbreviations.thousand;
+                abbr = abbr + languages[currentLanguage].abbreviations.thousand;
                 n._n = n._n / 1000;
             }
         }
 
         // see if we are formatting bytes
         if (format.indexOf('b') > -1) {
-            format = format.replace('b', '');
+            // check for space before
+            if (format.indexOf(' b') > -1) {
+                bytes = ' ';
+                format = format.replace(' b', '');
+            } else {
+                format = format.replace('b', '');
+            }
 
             var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
                 min,
@@ -220,7 +251,7 @@
                 max = Math.pow(1024, power+1);
 
                 if (n._n > min && n._n < max) {
-                    bytes = prefixes[power];
+                    bytes = bytes + prefixes[power];
                     if (min > 0) {
                         n._n = n._n / min;
                     }
@@ -231,9 +262,15 @@
 
         // see if ordinal is wanted
         if (format.indexOf('o') > -1) {
-            format = format.replace('o', '');
+            // check for space before
+            if (format.indexOf(' o') > -1) {
+                ord = ' ';
+                format = format.replace(' o', '');
+            } else {
+                format = format.replace('o', '');
+            }
 
-            ord = languages[currentLanguage].ordinal(n._n);
+            ord = ord + languages[currentLanguage].ordinal(n._n);
         }
 
         var w = n._n.toString().split('.')[0],
@@ -261,10 +298,7 @@
                 precision = precision.replace(']', '');
                 precision = precision.split('[');
                 d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length).split('.')[1];
-
-                // go throg
             } else {
-                // do to fixed
                 d = toFixed(n._n, precision.length).split('.')[1];
             }
 
