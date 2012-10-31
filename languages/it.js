@@ -1,18 +1,18 @@
 // numeral.js language configuration
-// language : french (fr)
-// author : Adam Draper : https://github.com/adamwdraper
+// language : italian Italy (it)
+// author : Giacomo Trombi : http://cinquepunti.it
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'm'
+            thousand: 'mila',
+            million: 'mil'
         },
-        ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+        ordinal: function (number) {
+            return 'º';
         },
         currency: {
             symbol: '€'
@@ -25,6 +25,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr', language);
+        this.numeral.language('it', language);
     }
 }());
