@@ -68,7 +68,7 @@ function formatNumbers () {
         '0.00000',
         '0.0[0000]',
         '0.0a',
-        '0a',
+        '0 a',
         '0a',
         '0o',
         '0o',
@@ -95,11 +95,11 @@ function formatCurrency () {
     ],
     formats = [
         '$0,0.00',
-        '0,0.00$',
-        '$0,0.[00]',
+        '0,0.00 $',
+        '$ 0,0.[00]',
         '($0,0)',
         '$0.00',
-        '($0.00a)'
+        '($ 0.00 a)'
     ];
 
     for (var i = 0; i < nums.length; i++) {
@@ -119,9 +119,9 @@ function formatBytes () {
     ],
     formats = [
         '0b',
-        '0b',
+        '0 b',
         '0.0b',
-        '0.000b'
+        '0.000 b'
     ];
 
     for (var i = 0; i < nums.length; i++) {
@@ -142,8 +142,8 @@ function formatPercentage () {
     formats = [
         '0%',
         '0.000%',
-        '0%',
-        '(0.000%)'
+        '0 %',
+        '(0.000 %)'
     ];
 
     for (var i = 0; i < nums.length; i++) {
