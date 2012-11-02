@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.3.1
+
+Bug fix: Minor fix to unformatting parser
+
 ### 1.3.0
 
 Add support for spaces before/after $, a, o, b in a format string
