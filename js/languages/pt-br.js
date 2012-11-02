@@ -1,21 +1,21 @@
 // numeral.js language configuration
-// language : french (fr)
-// author : Adam Draper : https://github.com/adamwdraper
+// language : portuguese brazil (pt-br)
+// author : Ramiro Varandas Jr : https://github.com/ramirovjr
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'm'
+            thousand: 'mil',
+            million: 'milhões'
         },
-        ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+        ordinal: function (number) {
+            return 'º';
         },
         currency: {
-            symbol: '€'
+            symbol: 'R$'
         }
     };
 
@@ -25,6 +25,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr', language);
+        this.numeral.language('pt-br', language);
     }
 }());
