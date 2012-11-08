@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.3.1
+// version : 1.3.2
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,8 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.3.1',
-        round = Math.round, i,
+        VERSION = '1.3.2',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
@@ -279,12 +278,29 @@
             d = '',
             neg = false;
 
-        if (!precision) {
+        if (precision) {
+            if (precision.indexOf('[') > -1) {
+                precision = precision.replace(']', '');
+                precision = precision.split('[');
+                d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length);
+            } else {
+                d = toFixed(n._n, precision.length);
+            }
+
+            w = d.split('.')[0];
+
+            if (d.split('.')[1].length) {
+                d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+            } else {
+                d = '';
+            }
+
+        } else {
             w = toFixed(n._n, null);
         }
 
         // format number
-        if (n._n < 0) {
+        if (w.indexOf('-') > -1) {
             w = w.slice(1);
             neg = true;
         }
@@ -297,19 +313,6 @@
             w = '';
         }
 
-        if (precision) {
-            if (precision.indexOf('[') > -1) {
-                precision = precision.replace(']', '');
-                precision = precision.split('[');
-                d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length).split('.')[1];
-            } else {
-                d = toFixed(n._n, precision.length).split('.')[1];
-            }
-
-            if (d) {
-                d = languages[currentLanguage].delimiters.decimal + d;
-            }
-        }
 
         return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
     }

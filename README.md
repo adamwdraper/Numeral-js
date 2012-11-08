@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.3.2
+
+Bug fix: Formatting some numbers results in the wrong value. Issue #21
+
 ### 1.3.1
 
 Bug fix: Minor fix to unformatting parser
