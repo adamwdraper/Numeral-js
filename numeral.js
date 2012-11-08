@@ -472,7 +472,7 @@
 
     /*global define:false */
     if (typeof define === 'function' && define.amd) {
-        define([], function () {
+        define('numeral', function () {
             return numeral;
         });
     }
