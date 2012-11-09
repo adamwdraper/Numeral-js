@@ -1,4 +1,4 @@
-[Numeral.js](http://adamwdraper.github.com/Numeral-js/)
+[Numeral.js](http://numeraljs.com/)
 =======================================================
 
 A javascript library for formatting and manipulating numbers.
@@ -8,6 +8,10 @@ A javascript library for formatting and manipulating numbers.
 
 Changelog
 =========
+
+### 1.3.3
+
+AMD define() compatibility.
 
 ### 1.3.2
 
