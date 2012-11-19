@@ -61,6 +61,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('en-gb', language);
+        this.numeral.language('tr', language);
     }
 }());
