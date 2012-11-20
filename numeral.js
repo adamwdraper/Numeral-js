@@ -202,6 +202,7 @@
 
     function formatNumber (n, format) {
         var negP = false,
+            optDec = false,
             abbr = '',
             bytes = '',
             ord = '';
@@ -272,6 +273,11 @@
             ord = ord + languages[currentLanguage].ordinal(n._n);
         }
 
+        if (format.indexOf('[.]') > -1) {
+            optDec = true;
+            format = format.replace('[.]', '.');
+        }
+
         var w = n._n.toString().split('.')[0],
             precision = format.split('.')[1],
             thousands = format.indexOf(','),
@@ -295,6 +301,9 @@
                 d = '';
             }
 
+            if (optDec && d == 0) {
+                d = '';
+            }
         } else {
             w = toFixed(n._n, null);
         }
