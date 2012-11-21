@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.4.0
+
+Add optional format for all decimals
+
 ### 1.3.4
 
 Remove AMD module id. (This is encouraged by require.js to make the module more portable, and keep it from creating a global)

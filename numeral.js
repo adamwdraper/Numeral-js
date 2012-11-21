@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.3.4
+// version : 1.4.0
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.3.4',
+        VERSION = '1.4.0',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
@@ -301,7 +301,7 @@
                 d = '';
             }
 
-            if (optDec && d == 0) {
+            if (optDec && Number(d) === 0) {
                 d = '';
             }
         } else {
