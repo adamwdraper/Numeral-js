@@ -20,7 +20,7 @@
 		(b === 9) ? 'no' : 'to';
         },
         currency: {
-            symbol: '$'
+            symbol: '€'
         }
     };
 
