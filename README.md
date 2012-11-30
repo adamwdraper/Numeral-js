@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.4.1
+
+Bug fix: Bytes not formatting correctly
+
 ### 1.4.0
 
 Add optional format for all decimals

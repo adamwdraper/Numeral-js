@@ -1,6 +1,6 @@
 
 // numeral.js
-// version : 1.4.0
+// version : 1.4.1
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -12,7 +12,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.4.0',
+        VERSION = '1.4.1',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
@@ -26,7 +26,7 @@
 
 
     // Numeral prototype object
-    function Numeral(number) {
+    function Numeral (number) {
         this._n = number;
     }
 
@@ -250,7 +250,7 @@
                 min = Math.pow(1024, power);
                 max = Math.pow(1024, power+1);
 
-                if (n._n > min && n._n < max) {
+                if (n._n >= min && n._n < max) {
                     bytes = bytes + prefixes[power];
                     if (min > 0) {
                         n._n = n._n / min;
@@ -466,11 +466,11 @@
         Exposing Numeral
     ************************************/
 
-    // Commenting out common js and global variable
-    // // CommonJS module is defined
+    // CommonJS module is defined
     if (hasModule) {
         module.exports = numeral;
     }
+
     /*global ender:false */
     if (typeof ender === 'undefined') {
         // here, `this` means `window` in the browser, or `global` on the server
