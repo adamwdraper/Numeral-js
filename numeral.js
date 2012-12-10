@@ -1,4 +1,3 @@
-
 // numeral.js
 // version : 1.4.1
 // author : Adam Draper
@@ -338,12 +337,7 @@
         }
 
         return new Numeral(Number(input));
-    };
-
-    // compare numeral object
-    numeral.isNumeral = function (obj) {
-        return obj instanceof Numeral;
-    };
+    };  
 
     // version number
     numeral.version = VERSION;
