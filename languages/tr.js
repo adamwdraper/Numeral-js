@@ -37,7 +37,9 @@
         },
         abbreviations: {
             thousand: 'b',
-            million: 'm'
+            million: 'm',
+            billion: 'bi',
+            trillion: 't'
         },
         ordinal: function (number) {
           if (number === 0) {  // special case for zero

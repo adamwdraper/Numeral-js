@@ -1,5 +1,5 @@
 // numeral.js
-// version : 1.4.1
+// version : 1.4.2
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -11,7 +11,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.4.1',
+        VERSION = '1.4.2',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
@@ -85,7 +85,9 @@
 
             // see if abbreviations are there so that we can multiply to the correct number
             var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
+                billionRegExp = new RegExp(languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
+                trillionRegExp = new RegExp(languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
             // see if bytes are there so that we can multiply to the correct number
             var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -100,7 +102,7 @@
             }
 
             // do some math to create our number
-            n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? 1000 : 1) * ((stringOriginal.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
+            n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
 
             // round if we are talking about bytes
             n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
@@ -204,7 +206,8 @@
             optDec = false,
             abbr = '',
             bytes = '',
-            ord = '';
+            ord = '',
+            abs = Math.abs(n._n);
 
         // see if we should use parentheses for negative number
         if (format.indexOf('(') > -1) {
@@ -222,12 +225,22 @@
                 format = format.replace('a', '');
             }
 
-            if (n._n > 1000000) {
+            if (abs >= Math.pow(10, 12)) {
+                // trillion
+                abbr = abbr + languages[currentLanguage].abbreviations.tillion;
+                n._n = n._n / Math.pow(10, 12);
+            } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
+                // billion
+                abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                n._n = n._n / Math.pow(10, 9);
+            } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
+                // million
                 abbr = abbr + languages[currentLanguage].abbreviations.million;
-                n._n = n._n / 1000000;
-            } else {
+                n._n = n._n / Math.pow(10, 6);
+            } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
+                // thousand
                 abbr = abbr + languages[currentLanguage].abbreviations.thousand;
-                n._n = n._n / 1000;
+                n._n = n._n / Math.pow(10, 3);
             }
         }
 
@@ -337,7 +350,7 @@
         }
 
         return new Numeral(Number(input));
-    };  
+    };
 
     // version number
     numeral.version = VERSION;
@@ -373,7 +386,9 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm'
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function (number) {
             var b = number % 10;

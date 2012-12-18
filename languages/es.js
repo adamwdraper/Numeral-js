@@ -9,7 +9,9 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'mm'
+            million: 'mm',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function (number) {
             var b = number % 10;
