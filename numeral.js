@@ -376,7 +376,7 @@
             loadLanguage(key, values);
         }
 
-        return languages;
+        return numeral;
     };
 
     numeral.language('en', {
