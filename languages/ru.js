@@ -9,7 +9,9 @@
         },
         abbreviations: {
             thousand: 'тыс.',
-            million: 'млн'
+            million: 'млн',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function () {
             // not ideal, but since in Russian it can taken on 

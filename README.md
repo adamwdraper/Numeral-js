@@ -9,6 +9,16 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.4.5
+
+Add zeroFormat() function that accepts a string for custom formating of zeros
+
+Add valueOf() function
+
+Chain functionality to language function
+
+Make all minified files have the same .min.js filename ending
+
 ### 1.4.1
 
 Bug fix: Bytes not formatting correctly
