@@ -150,7 +150,7 @@
                 numeral.language('en');
             }
         });
-        test('All', 10, function() {
+        test('All', 11, function() {
             var tests = [
                 ['10,000.123',10000.123],
                 ['(0.12345)',-.12345],
@@ -161,8 +161,11 @@
                 ['23rd',23],
                 ['$ 10,000.00',10000],
                 ['-76%',-.76],
-                ['2:23:57',8637]
+                ['2:23:57',8637],
+                ['N/A',0]
             ];
+                
+            numeral.zeroFormat('N/A');
 
             for (var i = 0; i < tests.length; i++) {
                 strictEqual(numeral().unformat(tests[i][0]), tests[i][1], tests[i][0]);
@@ -282,6 +285,21 @@
             for (var i = 0; i < tests.length; i++) {
                 num = numeral().set(tests[i][0]);
                 strictEqual(num.value(), tests[i][1], tests[i][0]);
+            }
+        });
+
+        // Custom Zero -----------------------
+        module('Custom Zero');
+        test('', 3, function() {
+            var tests = [
+                    [0,null,'0'],
+                    [0,'N/A','N/A'],
+                    [0,'','']
+                ];
+
+            for (var i = 0; i < tests.length; i++) {
+                numeral.zeroFormat(tests[i][1]);
+                strictEqual(numeral(tests[i][0]).format('0'), tests[i][2], tests[i][1]);
             }
         });
 
