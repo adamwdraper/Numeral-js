@@ -18,18 +18,9 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-    <script src="js/respond-min.js"></script>
-    <script src="js/numeral-min.js"></script>
-    <script src="js/languages/min/fr-min.js"></script>
-    <script src="js/languages/min/en-gb-min.js"></script>
-    <script src="js/languages/min/es-min.js"></script>
-    <script src="js/languages/min/pt-pt-min.js"></script>
-    <script src="js/languages/min/pt-br-min.js"></script>
-    <script src="js/languages/min/ru-min.js"></script>
-    <script src="js/languages/min/cs-min.js"></script>
-    <script src="js/languages/min/de-de-min.js"></script>
-    <script src="js/languages/min/it-min.js"></script>
-    <script src="js/languages/min/tr-min.js"></script>
+    <script src="js/min/respond.min.js"></script>
+    <script src="js/min/numeral.min.js"></script>
+        
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -90,7 +81,11 @@
             <h3>Use it</h3>
             <h4>In the Browser</h4>
 <pre>
-&lt;script src=&quot;numeral-min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;numeral.min.js&quot;&gt;&lt;/script&gt;
+</pre>
+or include from cdnjs.com
+<pre>
+&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.1/numeral.min.js&quot;&gt;&lt;/script&gt;
 </pre>
 <h4>In Node.js</h4>
 <pre>
@@ -106,7 +101,7 @@ var numeral = require('numeral');
             </p>
 <pre>
 var string = numeral(1000).format('0,0');
-// 1,000
+// '1,000'
 </pre>
             <h4>Numbers</h4>
             <table id="format-numbers" class="table striped bordered">
@@ -184,7 +179,7 @@ var string = numeral(1000).format('0,0');
             </p>
 <pre>
 var string = numeral().unformat('($10,000.00)');
-// -10000
+// '-10000'
 </pre>
             <table id="unformat-all" class="table striped bordered">
                 <thead>
@@ -230,7 +225,7 @@ var added = number.add(10);
 var number = numeral(1000);
 
 var string = number.format('0,0');
-// 1,000
+// '1,000'
 
 var value = number.value();
 // 1000
@@ -257,6 +252,18 @@ var number = numeral(1000),
 
 var difference = number.difference(value);
 // 900
+</pre>
+            <h3>Custom Zero Formatting</h3>
+            <p>
+                Set a custom output when formatting numerals with a value of 0
+            </p>
+<pre>
+var number = numeral(0);
+
+numeral.zeroFormat('N/A');
+
+var zero = number.format('0.0')
+// 'N/A'
 </pre>
             <h3>Clone</h3>
             <p>
@@ -322,6 +329,16 @@ numeral.language('fr');
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="js/min/site-min.js"></script>
+    <script src="js/languages/min/fr.min.js"></script>
+    <script src="js/languages/min/en-gb.min.js"></script>
+    <script src="js/languages/min/es.min.js"></script>
+    <script src="js/languages/min/pt-pt.min.js"></script>
+    <script src="js/languages/min/pt-br.min.js"></script>
+    <script src="js/languages/min/ru.min.js"></script>
+    <script src="js/languages/min/cs.min.js"></script>
+    <script src="js/languages/min/de-de.min.js"></script>
+    <script src="js/languages/min/it.min.js"></script>
+    <script src="js/languages/min/tr.min.js"></script>
+    <script src="js/min/site.min.js"></script>
 </body>
 </html>
