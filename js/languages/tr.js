@@ -36,10 +36,10 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'b',
-            million: 'm',
-            billion: 'bi',
-            trillion: 't'
+            thousand: 'bin',
+            million: 'milyon',
+            billion: 'milyar',
+            trillion: 'trilyon'
         },
         ordinal: function (number) {
           if (number === 0) {  // special case for zero
