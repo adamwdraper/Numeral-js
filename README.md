@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.4.6
+
+Bug fix: remove ' from unformatting regex that was causing an error with fr-ch.js
+
 ### 1.4.5
 
 Add zeroFormat() function that accepts a string for custom formating of zeros
