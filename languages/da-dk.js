@@ -9,8 +9,8 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'mio.',
-            billion: 'mia.',
+            million: 'mio',
+            billion: 'mia',
             trillion: 'b'
         },
         ordinal: function (number) {
