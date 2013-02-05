@@ -236,7 +236,7 @@
 
                 if (abs >= Math.pow(10, 12)) {
                     // trillion
-                    abbr = abbr + languages[currentLanguage].abbreviations.tillion;
+                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
                     n._n = n._n / Math.pow(10, 12);
                 } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
                     // billion
