@@ -9,7 +9,7 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
-### 1.4.6
+### 1.4.7
 
 Bug fix: Fix typo for trillion
 
