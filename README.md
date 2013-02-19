@@ -11,6 +11,10 @@ Changelog
 
 ### 1.4.6
 
+Bug fix: Fix typo for trillion
+
+### 1.4.6
+
 Bug fix: remove ' from unformatting regex that was causing an error with fr-ch.js
 
 ### 1.4.5
