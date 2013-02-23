@@ -1,0 +1,20 @@
+/*!
+ * Styles 0.0.2 - https://github.com/adamwdraper/styles
+ *
+ * (c) 2012, Adam Draper - https://github.com/adamwdraper
+ *
+ * MIT & BSD
+ *
+ */
+
+// import global setup
+@import "functions";
+
+@import "mixins";
+
+@import "normalize";
+
+@import "utilities";
+
+// import styles vars
+@import "variables";

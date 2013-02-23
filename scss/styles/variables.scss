@@ -1,0 +1,201 @@
+// Styles - https://github.com/adamwdraper/styles
+// Variables 0.0.1
+// -----------------------------------------------------------------
+
+// Grays
+// -------------------------
+$black: #000;
+$grayDarkest: #111;
+$grayDarker: #333;
+$grayDark: #666;
+$gray: #999;
+$grayLight: #CCC;
+$grayLighter: #DDD;
+$grayLightest: #EFEFEF;
+$white: #fff;
+
+
+// Accent colors
+// -------------------------
+$blue: #049cdb;
+$blueDark: #0064cd;
+$green: #46a546;
+$red: #9d261d;
+$yellow: #ffc40d;
+$orange: #f89406;
+$pink: #c3325f;
+$purple: #7a43b6;
+
+// Types and type colors
+// -------------------------
+$primary: #8DBF02;
+$secondary: #0066CC;
+$alert: $gray;
+$active: #49AFCD;
+$info: #49AFCD;
+$error: #DA4F49;
+$success: #46a546;
+$warning: #FAA732;
+
+$typeList: primary, secondary, active, alert, info, error, success, warning;
+$typeVarsList: $primary, $secondary, $active, $alert, $info, $error, $success, $warning;
+
+// Scaffolding
+// -------------------------
+$bodyBackground: $white;
+$textColor: $grayDarker;
+
+
+$smallBorderRadius: 3px;
+$smallInnerBorderRadius: 2px;
+$borderRadius: 4px;
+$innerBorderRadius: 3px;
+$largeBorderRadius: 5px;
+$largeInnerBorderRadius: 4px;
+
+
+// Links
+// -------------------------
+$link: #0066AA;
+$linkHover: lighten($link, 10%);
+
+
+// Typography
+// -------------------------
+$sansFontFamily: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+$serifFontFamily: Georgia, "Times New Roman", Times, serif;
+$monoFontFamily: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+$baseFontSize: 16px;
+$baseFontSizeNum: 14; // used for px to em conversion
+$baseFontFamily: $sansFontFamily;
+$baseLineHeight: 20px;
+$baseLineHeightNum: 20; // used for px to em conversion
+$altFontFamily: $serifFontFamily;
+
+$headingsFontFamily: inherit; // empty to use BS default, $baseFontFamily
+$headingsFontWeight: bold;    // instead of browser default, bold
+$headingsColor: inherit; // empty to use BS default, $textColor
+
+
+// Disabled
+// ----------------------
+$disabledOpacity: 0.5;
+
+
+// Components
+// ----------------------
+
+// Small
+$smallFontSize: 11;
+$smallLineHeight: 18;
+$smallIconSquare: 12;
+
+// Default
+$defaultFontSize: 14;
+$defaultLineHeight: 26;
+$defaultIconSquare: 16;
+
+// Large
+$largeFontSize: 22;
+$largeLineHeight: 34;
+$largeIconSquare: 24;
+
+// Component Vars
+// -------------------------
+
+// Alert
+// -------------------------
+$alertSmallBorderRadius: $smallInnerBorderRadius;
+$alertBorderRadius: $innerBorderRadius;
+$alertLargeBorderRadius: $largeInnerBorderRadius;
+$alertBackgroundVarient: 35%;
+$alertBorderVarient: 25%;
+$alertColorVarient: 18%;
+
+// Auto Suggest
+// -------------------------
+$autoSuggestBackground: white;
+$autoSuggestBorderVarient: 15%;
+$autoSuggestActiveSuggestionBackground: #EDF4FC;
+$autoSuggestTitleColor: #a1a1a1;
+$autoSuggestTitleBackground: #F9F9F9;
+
+// Box
+// -----------------------
+$boxBorderRadius: $borderRadius;
+$boxBorderInnerRadius: $innerBorderRadius;
+$boxBackground: $white;
+$boxBorderColor: #dfdfdf;
+$boxFooterBackground: $grayLightest;
+
+// Button
+// -------------------------
+$buttonSmallBorderRadius: $smallInnerBorderRadius;
+$buttonBorderRadius: $borderRadius;
+$buttonLargeBorderRadius: $largeInnerBorderRadius;
+$buttonGradientVarient: 6%;
+$buttonBorderVarient: 5%;
+$buttonBackgroundColor: #f6f6f6;
+
+// Close
+// -------------------------
+$closeColor: $grayLight;
+$closeHoverColor: $gray;
+
+// Code
+// -------------------------
+$codeColor: $grayDark;
+$codeBackground: #f8f8f8;
+$codeBorder: 1px solid $grayLight;
+$codeBorderRadius: $borderRadius;
+
+// Dropdown
+// -------------------------
+
+
+// Icon
+// -----------------------
+$iconColor: $gray;
+
+// Input
+// -------------------------
+$inputSmallBorderRadius: $smallInnerBorderRadius;
+$inputBorderRadius: $innerBorderRadius;
+$inputLargeBorderRadius: $largeInnerBorderRadius;
+
+$inputBackgroundColor: $white;
+$inputBorderVarient: 10%;
+$inputDisableVarient: 50%;
+
+// Modal
+// -----------------------
+$modalBorderRadius: $borderRadius;
+$modalBorderInnerRadius: $innerBorderRadius;
+$boxBorderColor: #dfdfdf;
+$boxFooterBackground: $grayLightest;
+$modalOverlayBackground: $black;
+$modalOverlayOpacity: .7;
+
+// Nav Bar
+// -----------------------
+$navBarBackgroundColor: $grayDarker;
+$navBarIconColor: white;
+
+// Tab
+// -------------------------
+
+// Table
+// -------------------------
+$tableBackground: #F8F8F8;
+$tableBorder: 1px solid $grayLight;
+$tableStripedBackground: $grayLightest;
+$tableBorderRadius: $borderRadius;
+
+// Tag Cloud
+// -------------------------
+$tagSmallBorderRadius: $smallInnerBorderRadius;
+$tagBorderRadius: $borderRadius;
+$tagLargeBorderRadius: $largeInnerBorderRadius;
+$tagBorderVarient: 5%;
+$tagBackgroundColor: #EFEFEF;

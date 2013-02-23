@@ -1,0 +1,59 @@
+// Styles - https://github.com/adamwdraper/styles
+// Alerts 0.0.1
+// -----------------------------------------------------------------
+
+@mixin alert-type-color($type) {
+    border: 1px solid lighten($type, $alertBorderVarient);
+    color: darken($type, $alertColorVarient);
+    background: lighten($type, $alertBackgroundVarient);
+}
+
+.alert, .notify {
+    vertical-align: middle;
+    padding: .3em .8em;
+    border: 1px solid lighten($alert, $alertBorderVarient);
+    font-size: pxem($defaultFontSize);
+    line-height: pxem($defaultLineHeight, $defaultFontSize);
+    @include border-radius($alertBorderRadius);
+    color: $alert;
+    background: lighten($alert, $alertBackgroundVarient);
+
+    &.small {
+        font-size: pxem($smallFontSize);
+        line-height: pxem($smallLineHeight, $smallFontSize);
+        @include border-radius($alertSmallBorderRadius);
+    }
+
+    &.large {
+        font-size: pxem($largeFontSize);
+        line-height: pxem($largeLineHeight, $largeFontSize);
+        @include border-radius($alertLargeBorderRadius);
+    }
+
+    @for $i from 1 through length($typeList) {
+        &.#{nth($typeList, $i)} {
+            @include alert-type-color(nth($typeVarsList, $i));
+        }
+    }
+
+    &.is-clickable {
+        cursor: pointer;
+    }
+
+    .i-close {
+        float: right;
+        display: block;
+        font-size: .8em;
+        margin-left: pxem(10);
+        cursor: pointer;
+    }
+}
+
+.notify {
+    display: none;
+    @include border-radius(0);
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+}

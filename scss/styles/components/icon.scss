@@ -1,0 +1,28 @@
+// Styles - https://github.com/adamwdraper/styles
+// Icons 0.0.1
+// -----------------------------------------------------------------
+
+@mixin icon-type-color($type) {
+    color: $type;
+}
+
+i {
+    color: $iconColor;
+    display: inline-block;
+    @include transition(all .3s ease);
+
+    @for $i from 1 through length($typeList) {
+        &.#{nth($typeList, $i)} {
+            @include icon-type-color(nth($typeVarsList, $i));
+        }
+    }
+
+    &.disabled {
+        opacity: 0.5
+    }
+
+    &.shadow {
+        text-shadow: 0 -1px 1px rgba(0,0,0,.6);
+    }
+
+}

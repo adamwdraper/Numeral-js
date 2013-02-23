@@ -1,0 +1,144 @@
+// Styles - https://github.com/adamwdraper/styles
+// Boxes 0.0.1
+// -----------------------------------------------------------------
+
+.box {
+    border: 1px solid $boxBorderColor;
+    @include border-radius($boxBorderRadius);
+    background: $boxBackground;
+
+    .row {
+        display: block;
+
+        @include clearfix();
+    }
+
+    .body {
+        margin: .5em;
+    }
+
+    .title {
+        font-size: 1.2em;
+    }
+
+    .avatar {
+        @include square(50px);
+        @include border-radius(25px);
+        float: left;
+        margin: 0 .5em .5em 0;
+        //border: solid 1px #444;
+        //background: #EFEFEF;
+
+    }
+    .avatar-small {
+        @include square(30px);
+        @include border-radius(15px);
+        float: left;
+        margin: 0 .5em .5em 0;
+    }
+
+    .group {
+
+        p {
+            clear: both;
+        }
+    }
+
+    .icon {
+        float:left;
+        margin: 0 .5em .5em 0;
+        clear:left;
+    }
+    
+    .footer {
+        margin: 0 .2em .2em .2em;
+        font-size: pxem(11);
+
+        color: #666;
+        clear: both;
+        background: $boxFooterBackground;
+        @include border-radius(0 0 $boxBorderInnerRadius $boxBorderInnerRadius);
+        padding: .5em;
+
+        .note {
+            display: block;
+            float: left;
+            margin: 0 0;
+        }
+
+        .date {
+            display: block;
+            font-size: pxem(11);
+            color: #999;
+            margin: 0 0;
+            float: right;
+
+            abbr {
+                border: 0;
+            }
+        }
+
+        .more {
+            clear: both;
+            float: left;
+
+        }
+    }
+    
+    &.in-list {
+        @include border-radius(0);
+        border-bottom: none;
+
+        &:first-child {
+            @include border-radius($boxBorderRadius $boxBorderRadius 0 0);
+        }
+        
+        &:last-child {
+            @include border-radius(0 0 $boxBorderRadius $boxBorderRadius);
+            border-bottom: 1px solid $boxBorderColor;
+        }
+
+        .footer {
+            @include border-radius(0);
+        }
+    }
+
+    &.tabbed {
+
+        .tab {
+            position: absolute;
+            text-align: center;
+            line-height: pxem(25);
+            border: 1px solid $boxBorderColor;
+            background: $boxBackground;
+        }
+
+        &.left-top {
+            margin-left:pxem(26);
+            @include border-radius(0 $boxBorderRadius $boxBorderRadius $boxBorderRadius);
+
+            .tab {
+                top: 0;
+                left: 0;
+                width: pxem(25);
+                line-height: pxem(25);
+                border-right: 1px solid $boxBackground;
+                @include border-radius($boxBorderRadius 0 0 $boxBorderRadius);
+            }
+        }
+
+        &.right-top {
+            margin-right:pxem(26);
+            @include border-radius($boxBorderRadius 0 $boxBorderRadius $boxBorderRadius);
+
+            .tab {
+                top: 0;
+                right: 0;
+                width: pxem(25);
+                line-height: pxem(25);
+                border-left: 1px solid $boxBackground;
+                @include border-radius(0 $boxBorderRadius $boxBorderRadius 0);
+            }
+        }
+    }
+}

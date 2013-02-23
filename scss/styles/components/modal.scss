@@ -1,0 +1,93 @@
+// Styles - https://github.com/adamwdraper/styles
+// Modal 0.0.1
+// -----------------------------------------------------------------
+
+.modal-bg {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: $modalOverlayBackground;
+    @include opacity($modalOverlayOpacity);
+    z-index:  2000;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.modal {
+    background: $white;
+    visibility: hidden;
+    border: none;
+    display: none;
+    top: 100px;
+    left: 50%;
+    margin: 0; // here to override style from bootstrap modal
+    margin-left: -350px;
+    width: 700px;
+    position: absolute;
+    z-index: 2001;
+    padding: 0;
+    @include border-radius($modalBorderRadius);
+
+    *:first-child {
+        margin-top: 0;
+    }
+
+    *:last-child {
+        margin-bottom: 0;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 8px;
+        right: 11px;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+
+    &.small   {
+        width: 30%;
+        margin-left: -10%;
+    }
+    
+    &.large   {
+        width: 60%;
+        margin-left: -30%;
+    }
+    
+    &.center-text {
+        text-align: center;
+    }
+
+    .body {
+        padding: pxem(30);
+    }
+
+    .footer {
+        margin: 0 pxem(5) pxem(5) pxem(5);
+        color: #666;
+        clear: both;
+        background: $boxFooterBackground;
+        @include border-radius(0 0 $boxBorderInnerRadius $boxBorderInnerRadius);
+        padding: .5em;
+        text-align: right;
+    }
+
+}
+
+/* Mobile */
+@media only screen and (max-width:  480px) {
+    .modal-bg {
+        position: absolute;
+    }
+
+    .modal, .modal.small, .modal.large {
+        width: 80%;
+        top: 15px;
+        left: 50%;
+        margin-left: -40%;
+        padding: 20px;
+        height: auto;
+    }
+}

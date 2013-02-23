@@ -1,0 +1,344 @@
+// Styles - https://github.com/adamwdraper/styles
+// This is a convenient boilerplate scss file for starting a project with Styles
+// -----------------------------------------------------------------
+
+// styles bootstrap
+@import "styles/bootstrap";
+
+// styles responcss
+@import "responcss/responcss";
+
+// import project override variables
+@import "variables";
+
+// // import any styles components
+@import "styles/components/button";
+@import "styles/components/icon";
+@import "styles/components/code";
+@import "styles/components/table";
+
+// import any project specific files
+@import "icons";
+
+/*!
+ * 
+ *  Begin Project CSS
+ *
+ */
+
+// Style Defaults ------------------------------
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background: $bodyBackground;
+    padding: 0;
+    margin: 0;
+    font-family: $sansFontFamily;
+    color: $textColor;
+    font-size: $baseFontSize;
+    line-height: $baseLineHeight;
+}
+
+a {
+    color: $link;
+    text-decoration: none;
+    @include transition(color .3s ease);
+
+    &:hover {
+        color: $linkHover;
+        text-decoration: none;
+    }
+
+    &:active {
+
+    }
+
+    &:visited {
+
+    }
+}
+
+h3 {
+    color: $grayDark;
+    font-size: 1.4em;
+}
+
+h4 {
+    color: $gray;
+    font-size: 1.2em;
+    margin-bottom: .4em;
+}
+
+.header-bar {
+    position: fixed;
+    background: $sColor;
+    height: .3em;
+    z-index: 2;
+}
+
+.sidebar {
+
+    .inner {
+        padding: 0 0 0 1em;
+    }
+
+    h1 {
+        display: block;
+        line-height: 2em;
+        color: #999;
+        font-size: 2.7em;
+        margin: 0;
+    }
+
+    .tagline {
+        display: block;
+        line-height: 1.5em;
+        color: #BBB;
+        font-size: 1.3em;
+        margin: 0;
+    }
+
+    .github-links {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .button {
+
+        i {
+            color: $grayDark;
+        }
+
+        &:hover, &:active, &.active {
+            color: white;
+
+            i {
+                color: white;
+            }
+        }
+
+    }
+
+    .download {
+        display: none;
+    }
+
+}
+
+.content {
+    border-top: 1px solid $grayLightest;
+    border-bottom: 1px solid $grayLightest;
+
+    .inner {
+        padding: 0em 1em 2em 1em;
+    }
+}
+
+.footer {
+    background: white;
+
+    .inner {
+        padding: 1em;
+    }
+}
+
+
+// Media Queries ------------------------------
+// Smartphones
+@media (max-width: 480px) {
+
+}
+
+// Smartphone and Tablet Devices
+@media (max-width: 767px) {
+
+    body {
+        padding-top: 0;
+    }
+
+    a {
+        color: $sColor;
+
+        &:hover {
+            color: darken($sColor, 15%);
+        }
+    }
+
+    .sidebar {
+
+        .button {
+
+            &:hover, &.active {
+                border: 1px solid darken($sColor, 8%);
+                background: $sColor;
+            }
+        }
+    }
+
+}
+ 
+// Portrait tablet
+@media (min-width: 768px) {
+
+    a {
+        color: $mColor;
+
+        &:hover {
+            color: darken($mColor, 15%);
+        }
+    }
+
+    .header-bar {
+        background: $mColor;
+    }
+
+    .sidebar {
+
+        .button {
+
+            &:hover, &.active {
+                border: 1px solid darken($mColor, 8%);
+                background: $mColor;
+            }
+        }
+
+        .download {
+            display: inline-block;
+        }
+    }
+
+}
+ 
+// Landscape tablet or desktop
+@media (min-width: 981px) {
+
+    a {
+        color: $lColor;
+
+        &:hover {
+            color: darken($lColor, 15%);
+        }
+    }
+
+    .header-bar {
+        background: $lColor;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+
+        .inner {
+            padding: 0 0 0 2em;
+        }
+
+        h1 {
+            display: block;
+            line-height: 2.5em;
+            color: #999;
+            font-size: 2.7em;
+        }
+
+        .tagline {
+            display: block;
+            line-height: 1.5em;
+            color: #BBB;
+            font-size: 1.3em;
+        }
+
+        .github-links {
+            position: relative;
+            top: auto;
+            right: auto;
+            margin-top: .8em;
+        }
+
+        .nav {
+            display: block;
+        }
+
+        .button {
+
+            &:hover, &.active {
+                border: 1px solid darken($lColor, 8%);
+                background: $lColor;
+            }
+        }
+    }
+
+    .content {
+        border: none;
+
+        .inner {
+            padding: 1.5em 2em 2em 2em;
+        }
+    }
+
+    .footer {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        padding-bottom: 1.5em;
+        
+        .inner {
+            padding: 0 0 0 2em;
+        }
+    }
+}
+ 
+// Large desktop
+@media (min-width: 1210px) {
+
+    a {
+        color: $xlColor;
+
+        &:hover {
+            color: darken($xlColor, 15%);
+        }
+    }
+
+    .header-bar {
+            background: $xlColor;
+    }
+
+    .sidebar {
+
+        .inner {
+            padding: 0 0 0 4em;
+        }
+
+        .button {
+
+            &:hover, &.active {
+                border: 1px solid darken($xlColor, 8%);
+                background: $xlColor;
+            }
+        }
+    }
+
+    .content {
+
+        .inner {
+            padding: 1.5em 4em 2em 2em;
+        }
+    }
+
+    .footer {
+
+        .inner {
+            padding: 0 0 0 4em;
+        }
+    }
+}

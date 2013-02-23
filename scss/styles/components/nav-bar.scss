@@ -1,0 +1,77 @@
+// Styles - https://github.com/adamwdraper/styles
+// Nav Bar 0.0.1
+// -----------------------------------------------------------------
+
+.nav-bar {
+    background: $navBarBackgroundColor;
+    color: #EFEFEF;
+    margin-bottom: pxem(10);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2),
+        0 3px 5px rgba(0,0,0,.1),
+        0 5px 10px rgba(0,0,0,.05);
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;        
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        float: left;
+        margin: 0 pxem(5);
+
+        a {
+            @include inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            line-height: pxem(40);
+            padding:  0 pxem(5);
+            color: $white;
+
+            &:hover, &.active {
+                color: $link;
+            }
+
+        }
+    }
+
+    i {        
+        font-size: pxem(20);
+        line-height: pxem(40, 20);
+        padding: 0 pxem(5);
+        margin: 0 pxem(1);
+
+        &:before {
+            color: $navBarIconColor;
+        }
+
+        &:hover {
+            
+            &:before {
+                color: $link;
+            }
+        }
+
+    }
+
+    .menu {
+        box-shadow: 0 1px 3px rgba(0,0,0,.2),
+            0 3px 5px rgba(0,0,0,.1),
+            0 5px 10px rgba(0,0,0,.05);
+
+        a {
+            line-height: pxem(25);
+            color: $link;            
+
+            &:hover {
+                background: $grayLightest;
+            }
+        }
+    }
+}

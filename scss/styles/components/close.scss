@@ -1,0 +1,18 @@
+// Styles - https://github.com/adamwdraper/styles
+// Close 0.0.2
+// -----------------------------------------------------------------
+
+.close {
+    cursor: pointer;
+
+    i {
+        color: $closeColor;
+        @include transition(color .3s ease);
+    }
+
+    &:hover {
+        i {
+            color: $closeHoverColor;
+        }
+    }
+}

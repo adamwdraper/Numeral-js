@@ -1,0 +1,25 @@
+// Styles - https://github.com/adamwdraper/styles
+// Code 0.0.2
+// -----------------------------------------------------------------
+
+pre {
+    font-size: .9em;
+    color: $codeColor;
+    display: block;
+    padding: pxem(10);
+    margin: pxem(8) 0;
+    line-height: 1.2em;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: pre-wrap;
+    background-color: $codeBackground;
+    border: $codeBorder; // fallback for IE7-8
+    @include border-radius($codeBorderRadius);
+
+    // Enable scrollable blocks of code
+    &.scrollable {
+        max-height: 340px;
+        overflow-y: scroll;
+    }
+}

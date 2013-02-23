@@ -1,0 +1,64 @@
+// Styles - https://github.com/adamwdraper/styles
+// Dropdowns 0.0.1
+// -----------------------------------------------------------------
+
+.dropdown {
+    position: relative;
+
+    .toggle {
+        @include transition(background .3s ease);
+
+        &.active {
+            background: white;
+        }
+    }
+
+    .menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        list-style: none;
+        @include transition(all .3s ease);
+        min-width: pxem(160);
+        @include border-radius(0 0 $borderRadius $borderRadius);
+        padding: pxem(5) 0;
+        background: white;
+        color: $link;
+
+        &.align-right {
+            right: 0;
+            left: auto;
+        }
+
+        li {
+            float: none;
+            white-space: nowrap;
+
+            a {
+                display: block;
+            }
+        }
+
+        &.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hr {
+            line-height: 0;
+            height: 0;
+            border-top: pxem(1) solid $grayLight;
+        }
+    }
+}
+
+.dropup {
+    @extend .dropdown;
+
+    .menu {
+        bottom: 100%;
+    }
+}

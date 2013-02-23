@@ -1,0 +1,7 @@
+// Styles - https://github.com/adamwdraper/styles
+// Functions 0.0.1
+// -----------------------------------------------------------------
+
+@function pxem ($target: $baseFontSizeNum, $context: $baseFontSizeNum) {
+    @return #{$target / $context}em;
+}

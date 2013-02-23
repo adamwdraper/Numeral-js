@@ -1,0 +1,54 @@
+// Styles - https://github.com/adamwdraper/styles
+// Auto Suggest 0.0.2
+// -----------------------------------------------------------------
+
+.auto-suggest {
+    position: relative;
+
+    input {
+        width: 100%;
+    }
+
+    .suggestions {
+        display: none;
+        width: 100%;
+        background: $autoSuggestBackground;
+        border: 1px solid darken($autoSuggestBackground, $autoSuggestBorderVarient);
+        padding: 0;
+        @include border-radius(0 0 $borderRadius $borderRadius);
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        ul {
+            margin: 0;
+            padding-left: 0;
+
+            li {
+                padding: pxem(7) pxem(10);
+
+                &:hover, &.active {
+                    background: $autoSuggestActiveSuggestionBackground;
+                }
+
+                &.title {
+                    font-size: pxem(11);
+                    color: $autoSuggestTitleColor;
+                    cursor: auto;
+                    background: $autoSuggestTitleBackground;
+
+                    &:hover {
+                        background: $autoSuggestTitleBackground;
+                    }
+                }
+            }
+        }
+    }
+
+    &.is-visible {
+
+        .suggestions {
+            display: block;
+        }
+    }
+}
