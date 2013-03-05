@@ -322,7 +322,7 @@
                     d = '';
                 }
 
-                if (optDec && Number(d) === 0) {
+                if (optDec && Number(d.slice(1)) === 0) {
                     d = '';
                 }
             } else {
