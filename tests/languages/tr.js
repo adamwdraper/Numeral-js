@@ -5,7 +5,7 @@ module('Language: tr', {
 });
 
 // Numbers -----------------------
-test('Format Numbers', 15, function() {    
+test('Format Numbers', 16, function() {    
     var tests = [
         [10000,'0,0.0000','10.000,0000'],
         [10000.23,'0,0','10.000'],
@@ -21,7 +21,8 @@ test('Format Numbers', 15, function() {
         [1,'0o','1\'inci'],
         [52,'0o','52\'nci'],
         [23,'0o','23\'üncü'],
-        [100,'0o','100\'üncü']
+        [100,'0o','100\'üncü'],
+        [1,'0[.]0','1']
     ];
 
     for (var i = 0; i < tests.length; i++) {

@@ -5,7 +5,7 @@ module('Language: pt-pt', {
 });
 
 // Numbers -----------------------
-test('Format Numbers', 15, function() {
+test('Format Numbers', 16, function() {
     var tests = [
         [10000,'0,0.0000','10 000,0000'],
         [10000.23,'0,0','10 000'],
@@ -21,7 +21,8 @@ test('Format Numbers', 15, function() {
         [1,'0o','1º'],
         [52,'0o','52º'],
         [23,'0o','23º'],
-        [100,'0o','100º']
+        [100,'0o','100º'],
+        [1,'0[.]0','1']
     ];
 
     for (var i = 0; i < tests.length; i++) {
