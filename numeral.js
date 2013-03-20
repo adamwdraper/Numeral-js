@@ -378,6 +378,9 @@
         }
 
         if (key && !values) {
+            if(!languages[key]) {
+                throw new Error("Unknown language : "+key);
+            }
             currentLanguage = key;
         }
 
