@@ -9,6 +9,10 @@ A javascript library for formatting and manipulating numbers.
 Changelog
 =========
 
+### 1.4.8
+
+Bug fix: Throw error if language is not defined
+
 ### 1.4.7
 
 Bug fix: Fix typo for trillion

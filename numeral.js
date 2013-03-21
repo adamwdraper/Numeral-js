@@ -1,5 +1,5 @@
 // numeral.js
-// version : 1.4.7
+// version : 1.4.8
 // author : Adam Draper
 // license : MIT
 // http://adamwdraper.github.com/Numeral-js/
@@ -11,7 +11,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.4.7',
+        VERSION = '1.4.8',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
@@ -379,7 +379,7 @@
 
         if (key && !values) {
             if(!languages[key]) {
-                throw new Error("Unknown language : "+key);
+                throw new Error('Unknown language : ' + key);
             }
             currentLanguage = key;
         }
