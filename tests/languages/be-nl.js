@@ -1,6 +1,7 @@
 module('Language: be-nl', {
     setup: function() {
         numeral.language('be-nl');
+        numeral.zeroFormat(null);
     }
 });
 
