@@ -14,7 +14,8 @@
             trillion : ' bln'
         },
         ordinal : function (number) {
-            return (number === 1 || number >= 20) ? 'ste' : 'de';
+            var remainder = number % 100;
+            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },
         currency: {
             symbol: '€ '
