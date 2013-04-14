@@ -391,6 +391,44 @@
         return numeral;
     };
 
+    // This function will load locales and then set the global locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // language key. This functions differs from 'language' in that it requires
+    // the key to be in normalized format (such as de-DE), but will fall back
+    // to defaults (such as de) if the locale does not exist.
+    numeral.locale = function (key, values) {
+        var localFormat = /^..(-..)?$/,
+            normalizedKey,
+            resultLocale;
+
+        if (!key) {
+            return currentLanguage;
+        }
+
+        if (!localFormat.test(key)) {
+            throw new Error('Invalid key format : ' + key);
+        }
+
+        normalizedKey = key.substr(0, 2) + key.substr(2).toUpperCase();
+
+        if (!values) {
+            resultLocale = normalizedKey;
+            if (!languages[resultLocale] && resultLocale.length == 5) {
+                resultLocale = resultLocale.substr(0, 2);
+            }
+            if (!languages[resultLocale]) {
+                resultLocale = 'en';
+            }
+            currentLanguage = resultLocale;
+        }
+
+        if (values || !languages[normalizedKey]) {
+            loadLanguage(normalizedKey, values);
+        }
+
+        return numeral;
+    };
+
     numeral.language('en', {
         delimiters: {
             thousands: ',',
