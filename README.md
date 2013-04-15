@@ -9,7 +9,7 @@ A javascript library for formatting and manipulating numbers.
 Travis Build Status
 ===================
 
-Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://api.travis-ci.org/adamwdraper/Numeral-js)
+Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
 
 
 Changelog
