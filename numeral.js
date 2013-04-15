@@ -1,8 +1,10 @@
-// numeral.js
-// version : 1.4.8
-// author : Adam Draper
-// license : MIT
-// http://adamwdraper.github.com/Numeral-js/
+/*!
+ * numeral.js
+ * version : 1.4.8
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
 (function () {
 

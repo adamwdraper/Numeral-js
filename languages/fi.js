@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : Finnish
-// author : Sami Saada : https://github.com/samitheberber
+/*! 
+ * numeral.js language configuration
+ * language : Finnish
+ * author : Sami Saada : https://github.com/samitheberber
+ */
 (function () {
     var language = {
         delimiters: {

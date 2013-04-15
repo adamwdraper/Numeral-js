@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : danish denmark (dk)
-// author : Michael Storgaard : https://github.com/mstorgaard
+/*! 
+ * numeral.js language configuration
+ * language : danish denmark (dk)
+ * author : Michael Storgaard : https://github.com/mstorgaard
+ */
 (function () {
     var language = {
         delimiters: {

@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : german (de-de)
-// author : Marco Krage : https://github.com/sinky
+/*! 
+ * numeral.js language configuration
+ * language : language : german (de-de)
+ * author : Marco Krage : https://github.com/sinky
+ */
 (function () {
     var language = {
         delimiters: {

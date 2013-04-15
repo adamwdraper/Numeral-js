@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : russian (ru)
-// author : Anatoli Papirovski : https://github.com/apapirovski
+/*! 
+ * numeral.js language configuration
+ * language : russian (ru)
+ * author : Anatoli Papirovski : https://github.com/apapirovski
+ */
 (function () {
     var language = {
         delimiters: {

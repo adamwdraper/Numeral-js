@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : italian Italy (it)
-// author : Giacomo Trombi : http://cinquepunti.it
+/*! 
+ * numeral.js language configuration
+ * language : italian Italy (it)
+ * author : Giacomo Trombi : http://cinquepunti.it
+ */
 (function () {
     var language = {
         delimiters: {

@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : belgium-dutch (be-nl)
-// author : Dieter Luypaert : https://github.com/moeriki
+/*! 
+ * numeral.js language configuration
+ * language : belgium-dutch (be-nl)
+ * author : Dieter Luypaert : https://github.com/moeriki
+ */
 (function () {
     var language = {
         delimiters: {

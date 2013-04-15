@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : french (fr-ch)
-// author : Adam Draper : https://github.com/adamwdraper
+/*! 
+ * numeral.js language configuration
+ * language : french (fr-ch)
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
 (function () {
     var language = {
         delimiters: {

@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : spanish
-// author : Hernan Garcia : https://github.com/hgarcia
+/*! 
+ * numeral.js language configuration
+ * language : spanish
+ * author : Hernan Garcia : https://github.com/hgarcia
+ */
 (function () {
     var language = {
         delimiters: {

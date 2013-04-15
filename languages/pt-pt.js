@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : portuguese (pt-pt)
-// author : Diogo Resende : https://github.com/dresende
+/*! 
+ * numeral.js language configuration
+ * language : portuguese (pt-pt)
+ * author : Diogo Resende : https://github.com/dresende
+ */
 (function () {
     var language = {
         delimiters: {

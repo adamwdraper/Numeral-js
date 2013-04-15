@@ -1,6 +1,8 @@
-// numeral.js language configuration
-// language : japanese
-// author : teppeis : https://github.com/teppeis
+/*! 
+ * numeral.js language configuration
+ * language : japanese
+ * author : teppeis : https://github.com/teppeis
+ */
 (function () {
     var language = {
         delimiters: {
