@@ -6,6 +6,12 @@ A javascript library for formatting and manipulating numbers.
 [Website and documentation](http://numeraljs.com/)
 
 
+Travis Build Status
+===================
+
+Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://api.travis-ci.org/adamwdraper/Numeral-js)
+
+
 Changelog
 =========
 
