@@ -8,4 +8,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-qunit');
     
     grunt.registerTask('test', 'qunit:src');
+
+    grunt.registerTask('travis', ['test']);
 };
