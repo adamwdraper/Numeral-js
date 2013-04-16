@@ -23,9 +23,7 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 Steps
 -----
 
-To contribute, fork the library and install grunt.
-
-    npm install grunt -g
+To contribute, fork the library and [install grunt](http://gruntjs.com/getting-started#installing-the-cli). don't forget to npm install after.
 
 You can add tests to the files in `/tests`.
 
