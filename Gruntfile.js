@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         qunit: {
             src: ['tests/**/*.html']
         },
-        uglify : {
+        uglify: {
             my_target: {
                 files: minifiedFiles
             },
@@ -35,18 +35,18 @@ module.exports = function(grunt) {
                 'languages/**/*.js'
             ],
             options: {
-                'node' : true,
-                'browser' : true,
-                'curly' : true,
-                'devel'    : false,
-                'eqeqeq'   : true,
-                'eqnull'   : true,
-                'newcap'   : true,
-                'noarg'    : true,
-                'onevar'   : true,
-                'undef'    : true,
-                'sub'      : true,
-                'strict'   : false
+                'node': true,
+                'browser': true,
+                'curly': true,
+                'devel': false,
+                'eqeqeq': true,
+                'eqnull': true,
+                'newcap': true,
+                'noarg': true,
+                'onevar': true,
+                'undef': true,
+                'sub': true,
+                'strict': false
             }
         }
     });
@@ -58,6 +58,13 @@ module.exports = function(grunt) {
     grunt.registerTask('test', [
         'jshint',
         'qunit:src'
+    ]);
+
+    // P
+    grunt.registerTask('release', [
+        'jshint',
+        'qunit:src',
+        'uglify'
     ]);
 
     // Travis CI task.
