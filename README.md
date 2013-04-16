@@ -12,6 +12,31 @@ Travis Build Status
 Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
 
 
+Contributing
+============
+
+Language translations will not be merged without unit tests.
+============================================================
+
+See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en.js) for an example.
+
+Steps
+=====
+
+To contribute, fork the library and install grunt.
+
+    npm install grunt -g
+
+You can add tests to the files in `/tests`.
+
+To run all tests, do `grunt test`.
+
+To minify all the files, use `grunt release`.
+
+If your code passes the unit tests, submit a pull request.
+
+
+
 Changelog
 =========
 
