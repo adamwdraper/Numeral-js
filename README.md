@@ -16,12 +16,12 @@ Contributing
 ============
 
 Language translations will not be merged without unit tests.
-============================================================
+------------------------------------------------------------
 
 See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en.js) for an example.
 
 Steps
-=====
+-----
 
 To contribute, fork the library and install grunt.
 
