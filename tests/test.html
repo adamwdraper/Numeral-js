@@ -345,6 +345,41 @@
                 strictEqual(numeral.isNumeral(tests[i][0]), tests[i][1], tests[i][0]);
             }
         });
+
+        // locale -----------------------
+        module('Configuring');
+        test('language', 4, function() {
+            equal(numeral.language(), 'en', 'Default is en');
+            numeral.language('it');
+            equal(numeral.language(), 'it', 'Changed to it');
+            throws(function() {
+                numeral.language('english');
+            }, "unknown language causes exception");
+            numeral.language('english', {});
+            numeral.language('english');
+            equal(numeral.language(), 'english', 'Newly defined language');
+        });
+        test('locale', 7, function() {
+            numeral.locale('cs');
+            equal(numeral.locale(), 'cs', 'Changed to cs');
+            throws(function() {
+                numeral.locale('english');
+            }, "wrong format causes exception");
+            throws(function() {
+                numeral.locale('de_DE');
+            }, "wrong format causes exception");
+            
+            numeral.locale('de-CH');
+            equal(numeral.locale(), 'de-CH', 'Changed to de-CH');
+            numeral.locale('de-DE');
+            equal(numeral.locale(), 'de', 'Fall back to de');
+            numeral.locale('hm');
+            equal(numeral.locale(), 'en', 'Fall back to en');
+            
+            numeral.locale('hm-hm', {});
+            numeral.locale('hm-hm');
+            equal(numeral.locale(), 'hm-HM', 'Correct case of arguments');
+        });
     </script>
 
     <!-- include language tests here -->
