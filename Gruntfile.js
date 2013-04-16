@@ -27,13 +27,38 @@ module.exports = function(grunt) {
             options: {
                 preserveComments: 'some'
             }
+        },
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'moment.js',
+                'languages/**/*.js'
+            ],
+            options: {
+                'node' : true,
+                'browser' : true,
+                'curly' : true,
+                'devel'    : false,
+                'eqeqeq'   : true,
+                'eqnull'   : true,
+                'newcap'   : true,
+                'noarg'    : true,
+                'onevar'   : true,
+                'undef'    : true,
+                'sub'      : true,
+                'strict'   : false
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('test', 'qunit:src');
+    grunt.registerTask('test', [
+        'jshint',
+        'qunit:src'
+    ]);
 
     // Travis CI task.
     grunt.registerTask('travis', ['test']);
