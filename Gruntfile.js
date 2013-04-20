@@ -17,8 +17,8 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
-        qunit: {
-            src: ['tests/**/*.html']
+        nodeunit : {
+            all : ['tests/numeral/**/*.js']
         },
         uglify: {
             my_target: {
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     // P
     grunt.registerTask('release', [
         'jshint',
-        'qunit:src',
+        'nodeunit',
         'uglify'
     ]);
 
