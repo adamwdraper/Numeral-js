@@ -1,27 +1,16 @@
-[Numeral.js](http://numeraljs.com/)
-=======================================================
+# [Numeral.js](http://numeraljs.com/)
 
 A javascript library for formatting and manipulating numbers.
 
 [Website and documentation](http://numeraljs.com/)
 
 
-Travis Build Status
-===================
+# Travis Build Status
 
 Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
 
 
-Contributing
-============
-
-Language translations will not be merged without unit tests.
-------------------------------------------------------------
-
-See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en-gb.js) for an example.
-
-Steps
------
+# Contributing
 
 To contribute, fork the library and [install grunt](http://gruntjs.com/getting-started#installing-the-cli). don't forget to npm install after.
 
@@ -34,9 +23,16 @@ To minify all the files, use `grunt release`.
 If your code passes the unit tests, submit a pull request.
 
 
+### Languages 
 
-Changelog
-=========
+When naming language files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
+
+### Language translations will not be merged without unit tests.
+
+See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en-gb.js) for an example.
+
+
+# Changelog
 
 ### 1.4.8
 
@@ -151,14 +147,12 @@ Added abbreviations for thousands and millions using 'a' in the format
 Initial release
 
 
-Acknowlegements
-===============
+# Acknowlegements
 
 Numeral.js, while less complex, was inspired by and heavily borrowed from [Moment.js](http://momentjs.com)
 
 
-License
-=======
+# License
 
 Numeral.js is freely distributable under the terms of the MIT license.
 
