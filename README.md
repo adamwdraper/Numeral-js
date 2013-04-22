@@ -12,15 +12,17 @@ Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](h
 
 # Contributing
 
-To contribute, fork the library and [install grunt](http://gruntjs.com/getting-started#installing-the-cli). don't forget to npm install after.
+1. Fork the library and [install grunt](http://gruntjs.com/getting-started#installing-the-cli)
 
-You can add tests to the files in `/tests`.
+2. Run `npm install` to install dependencies
 
-To run all tests, do `grunt test`.
+3. Add your tests to the files in `/tests`
 
-To minify all the files, use `grunt release`.
+4. To test your tests, run `grunt test`
 
-If your code passes the unit tests, submit a pull request.
+5. When all your tests are passing, run `grunt release` to minify all files
+
+6. Submit a pull request.
 
 
 ### Languages 
