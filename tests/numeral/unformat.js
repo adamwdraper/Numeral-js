@@ -7,12 +7,14 @@ exports.unformat = {
     },
 
     numbers: function (test) {
-        test.expect(4);
+        test.expect(6);
 
         var tests = [
                 ['10,000.123', 10000.123],
                 ['(0.12345)', -0.12345],
                 ['23rd', 23],
+                ['31st', 31],
+                ['1.23t', 1230000000000],
                 ['N/A', 0]
             ];
 
