@@ -34,6 +34,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 1.4.9
+
+Bug fix: Fix bug while unformatting ordinals
+
 ### 1.4.8
 
 Bug fix: Throw error if language is not defined
