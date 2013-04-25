@@ -108,7 +108,7 @@
                 }
 
                 // do some math to create our number
-                n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.-]+/g, ''));
+                n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
 
                 // round if we are talking about bytes
                 n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
@@ -199,7 +199,7 @@
             seconds = seconds + (Number(timeArray[1]) * 60);
             // seconds
             seconds = seconds + Number(timeArray[2]);
-        } else if (timeArray.lenght === 2) {
+        } else if (timeArray.length === 2) {
             // minutes
             seconds = seconds + (Number(timeArray[0]) * 60);
             // seconds
