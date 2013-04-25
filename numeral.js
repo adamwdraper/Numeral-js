@@ -356,8 +356,10 @@
     numeral = function (input) {
         if (numeral.isNumeral(input)) {
             input = input.value();
-        } else if (!Number(input)) {
+        } else if (input == 0 || typeof input == "undefined") {
             input = 0;
+        } else if (!Number(input)) {
+            input = numeral.fn.unformat(input);
         }
 
         return new Numeral(Number(input));

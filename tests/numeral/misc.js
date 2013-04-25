@@ -3,17 +3,20 @@ var numeral = require('../../numeral');
 exports.misc = {
 
     value: function (test) {
-        test.expect(2);
+        test.expect(5);
 
         var tests = [
-                [1000],
-                [0.5]
+                [1000, 1000],
+                [0.5, 0.5],
+                [, 0],
+                ['1,000', 1000],
+                ['not a number', 0]
             ],
             num;
 
         for (var i = 0; i < tests.length; i++) {
             num = numeral(tests[i][0]);
-            test.strictEqual(num.value(), tests[i][0], tests[i][0]);
+            test.strictEqual(num.value(), tests[i][1], tests[i][1]);
         }
 
         test.done();
