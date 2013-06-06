@@ -199,7 +199,7 @@
             seconds = seconds + (Number(timeArray[1]) * 60);
             // seconds
             seconds = seconds + Number(timeArray[2]);
-        } else if (timeArray.lenght === 2) {
+        } else if (timeArray.length === 2) {
             // minutes
             seconds = seconds + (Number(timeArray[0]) * 60);
             // seconds
