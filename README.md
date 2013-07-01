@@ -9,20 +9,26 @@ A javascript library for formatting and manipulating numbers.
 
 Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
 
+Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.png?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
+
 
 # Contributing
 
-1. Fork the library and [install grunt](http://gruntjs.com/getting-started#installing-the-cli)
+Please submit all pull requests to the `develop` branch.
 
-2. Run `npm install` to install dependencies
+1. Fork the library
 
-3. Add your tests to the files in `/tests`
+2. [Install grunt](http://gruntjs.com/getting-started#installing-the-cli)
 
-4. To test your tests, run `grunt test`
+3. Run `npm install` to install dependencies
 
-5. When all your tests are passing, run `grunt release` to minify all files
+4. Add your tests to the files in `/tests`
 
-6. Submit a pull request.
+5. To test your tests, run `grunt test`
+
+6. When all your tests are passing, run `grunt release` to minify all files
+
+7. Submit a pull request.
 
 
 ### Languages 
