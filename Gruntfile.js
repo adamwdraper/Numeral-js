@@ -6,7 +6,9 @@ module.exports = function(grunt) {
             'min/numeral.min.js' : [
                 'numeral.js'
             ],
-            'min/languages.min.js': []
+            'min/languages.min.js': [
+                'languages.js'
+            ]
         };
 
     // all the lang files need to be added manually
@@ -16,7 +18,6 @@ module.exports = function(grunt) {
             src = ['languages/' + path];
 
         minifiedFiles[destination] = src;
-        minifiedFiles['min/languages.min.js'].push(src);
     });
 
     grunt.initConfig({
@@ -29,6 +30,14 @@ module.exports = function(grunt) {
             },
             options: {
                 preserveComments: 'some'
+            }
+        },
+        concat: {
+            languages: {
+                src: [
+                    'languages/**/*.js'
+                ],
+                dest: 'languages.js'
             }
         },
         jshint: {
@@ -57,6 +66,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.registerTask('test', [
         'jshint',
@@ -67,6 +77,7 @@ module.exports = function(grunt) {
     grunt.registerTask('release', [
         'jshint',
         'nodeunit',
+        'concat',
         'uglify'
     ]);
 
