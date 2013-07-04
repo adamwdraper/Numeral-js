@@ -8,12 +8,11 @@ module.exports = function(grunt) {
 
     // all the lang files need to be added manually
     fs.readdirSync('./languages').forEach(function (path) {
-        if (path.indexOf('.js') > -1) {
-            var destination = 'min/languages/' + path,
-                src = ['languages/' + path];
+        var file = path.slice(0, -3),
+            destination = 'min/languages/' + file + '.min.js',
+            src = ['languages/' + path];
 
-            minifiedFiles[destination] = src;
-        }
+        minifiedFiles[destination] = src;
     });
 
     grunt.initConfig({
