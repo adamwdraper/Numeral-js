@@ -3,7 +3,10 @@ var fs = require('fs');
 module.exports = function(grunt) {
 
     var minifiedFiles = {
-            'min/numeral.min.js' : ['numeral.js']
+            'min/numeral.min.js' : [
+                'numeral.js'
+            ],
+            'min/languages.min.js': []
         };
 
     // all the lang files need to be added manually
@@ -13,6 +16,7 @@ module.exports = function(grunt) {
             src = ['languages/' + path];
 
         minifiedFiles[destination] = src;
+        minifiedFiles['min/languages.min.js'].push(src);
     });
 
     grunt.initConfig({
