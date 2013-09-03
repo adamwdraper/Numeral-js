@@ -42,6 +42,20 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 1.5.0
+
+Add defaultFormat(). numeral().format() uses the default to format if no string is provided
+
+.unformat() returns 0 when passed no string
+
+Added languages.js that contains all languages
+
+Bug fix: Fix bug while unformatting ordinals
+
+Add format option to always show signed value
+
+Added ability to instantiate numeral with a string value of a number
+
 ### 1.4.9
 
 Bug fix: Fix bug while unformatting ordinals
