@@ -1,6 +1,6 @@
 /*!
  * numeral.js
- * version : 1.4.9
+ * version : 1.5.0
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,11 +13,12 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.4.9',
+        VERSION = '1.5.0',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
         zeroFormat = null,
+        defaultFormat = '0,0',
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -40,13 +41,14 @@
      */
     function toFixed (value, precision, optionals) {
         var power = Math.pow(10, precision),
+            optionalsRegExp,
             output;
 
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (Math.round(value * power) / power).toFixed(precision);
 
         if (optionals) {
-            var optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+            optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
             output = output.replace(optionalsRegExp, '');
         }
 
@@ -78,29 +80,34 @@
 
     // revert to number
     function unformatNumeral (n, string) {
+        var stringOriginal = string,
+            thousandRegExp,
+            millionRegExp,
+            billionRegExp,
+            trillionRegExp,
+            suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            bytesMultiplier = false,
+            power;
+
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
             if (string === zeroFormat) {
                 n._n = 0;
             } else {
-                var stringOriginal = string;
                 if (languages[currentLanguage].delimiters.decimal !== '.') {
                     string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                var thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                    bytesMultiplier = false;
-
-                for (var power = 0; power <= prefixes.length; power++) {
-                    bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+                for (power = 0; power <= suffixes.length; power++) {
+                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -118,10 +125,9 @@
     }
 
     function formatCurrency (n, format) {
-        var prependSymbol = (format.indexOf('$') <= 1) ? true : false;
-
-        // remove $ for the moment
-        var space = '';
+        var prependSymbol = format.indexOf('$') <= 1 ? true : false,
+            space = '',
+            output;
 
         // check for space before or after currency
         if (format.indexOf(' $') > -1) {
@@ -135,7 +141,7 @@
         }
 
         // format the number
-        var output = formatNumeral(n, format);
+        output = formatNumeral(n, format);
 
         // position the symbol
         if (prependSymbol) {
@@ -160,7 +166,9 @@
     }
 
     function formatPercentage (n, format) {
-        var space = '';
+        var space = '',
+            output;
+
         // check for space before %
         if (format.indexOf(' %') > -1) {
             space = ' ';
@@ -170,7 +178,7 @@
         }
 
         n._n = n._n * 100;
-        var output = formatNumeral(n, format);
+        output = formatNumeral(n, format);
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
@@ -181,7 +189,7 @@
         return output;
     }
 
-    function formatTime (n, format) {
+    function formatTime (n) {
         var hours = Math.floor(n._n/60/60),
             minutes = Math.floor((n._n - (hours * 60 * 60))/60),
             seconds = Math.round(n._n - (hours * 60 * 60) - (minutes * 60));
@@ -210,20 +218,34 @@
 
     function formatNumber (n, format) {
         var negP = false,
+            signed = false,
             optDec = false,
             abbr = '',
             bytes = '',
             ord = '',
-            abs = Math.abs(n._n);
+            abs = Math.abs(n._n),
+            suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            min,
+            max,
+            power,
+            w,
+            precision,
+            thousands,
+            d = '',
+            neg = false;
 
         // check if number is zero and a custom zero format has been set
         if (n._n === 0 && zeroFormat !== null) {
             return zeroFormat;
         } else {
-            // see if we should use parentheses for negative number
+            // see if we should use parentheses for negative number or if we should prefix with a sign
+            // if both are present we default to parentheses
             if (format.indexOf('(') > -1) {
                 negP = true;
                 format = format.slice(1, -1);
+            } else if (format.indexOf('+') > -1) {
+                signed = true;
+                format = format.replace(/\+/g, '');
             }
 
             // see if abbreviation is wanted
@@ -265,16 +287,12 @@
                     format = format.replace('b', '');
                 }
 
-                var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                    min,
-                    max;
-
-                for (var power = 0; power <= prefixes.length; power++) {
+                for (power = 0; power <= suffixes.length; power++) {
                     min = Math.pow(1024, power);
                     max = Math.pow(1024, power+1);
 
                     if (n._n >= min && n._n < max) {
-                        bytes = bytes + prefixes[power];
+                        bytes = bytes + suffixes[power];
                         if (min > 0) {
                             n._n = n._n / min;
                         }
@@ -301,11 +319,9 @@
                 format = format.replace('[.]', '.');
             }
 
-            var w = n._n.toString().split('.')[0],
-                precision = format.split('.')[1],
-                thousands = format.indexOf(','),
-                d = '',
-                neg = false;
+            w = n._n.toString().split('.')[0];
+            precision = format.split('.')[1];
+            thousands = format.indexOf(',');
 
             if (precision) {
                 if (precision.indexOf('[') > -1) {
@@ -345,7 +361,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
@@ -356,7 +372,7 @@
     numeral = function (input) {
         if (numeral.isNumeral(input)) {
             input = input.value();
-        } else if (input == 0 || typeof input == "undefined") {
+        } else if (input === 0 || typeof input === 'undefined') {
             input = 0;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);
@@ -419,11 +435,11 @@
     });
 
     numeral.zeroFormat = function (format) {
-        if (typeof(format) === 'string') {
-            zeroFormat = format;
-        } else {
-            zeroFormat = null;
-        }
+        zeroFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.defaultFormat = function (format) {
+        defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
     /************************************
@@ -447,11 +463,11 @@
         },
 
         format : function (inputString) {
-            return formatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+            return formatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
         unformat : function (inputString) {
-            return unformatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+            return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
         value : function () {

@@ -1,8 +1,17 @@
 var numeral = require('../../numeral');
 
 exports.format = {
+    default: function (test) {
+        test.expect(1);
+
+        numeral.defaultFormat('0,0');
+
+        test.strictEqual(numeral(10000).format(), '10,000', '0.0');
+
+        test.done();
+    },
     numbers: function (test) {
-        test.expect(29);
+        test.expect(31);
 
         var tests = [
                 [10000,'0,0.0000','10,000.0000'],
@@ -17,6 +26,8 @@ exports.format = {
                 [10000.45,'0[.]00[0]','10000.45'],
                 [10000.456,'0[.]00[0]','10000.456'],
                 [-10000,'(0,0.0000)','(10,000.0000)'],
+                [-12300,'+0,0.0000','-12,300.0000'],
+                [1230,'+0,0','+1,230'],
                 [100.78, '0', '101'],
                 [100.28, '0', '100'],
                 [1.932,'0.0','1.9'],
