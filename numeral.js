@@ -218,6 +218,7 @@
 
     function formatNumber (n, format) {
         var negP = false,
+            signed = false,
             optDec = false,
             abbr = '',
             bytes = '',
@@ -237,10 +238,14 @@
         if (n._n === 0 && zeroFormat !== null) {
             return zeroFormat;
         } else {
-            // see if we should use parentheses for negative number
+            // see if we should use parentheses for negative number or if we should prefix with a sign
+            // if both are present we default to parentheses
             if (format.indexOf('(') > -1) {
                 negP = true;
                 format = format.slice(1, -1);
+            } else if (format.indexOf('+') > -1) {
+                signed = true;
+                format = format.replace(/\+/g, '');
             }
 
             // see if abbreviation is wanted
@@ -356,7 +361,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
