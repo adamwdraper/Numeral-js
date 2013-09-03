@@ -258,6 +258,21 @@ var number = numeral(1000),
 var difference = number.difference(value);
 // 900
 </pre>
+            <h3>Default Formatting</h3>
+            <p>
+                Set a default format so you can use .format() without a string.  The default format to '0,0'
+            </p>
+<pre>
+var number = numeral(1000);
+
+number.format();
+// '1,000'
+
+numeral.defaultFormat('$0,0.00');
+
+number.format();
+// '$1,000.00'
+</pre>
             <h3>Custom Zero Formatting</h3>
             <p>
                 Set a custom output when formatting numerals with a value of 0
