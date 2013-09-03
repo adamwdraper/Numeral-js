@@ -18,6 +18,7 @@
         languages = {},
         currentLanguage = 'en',
         zeroFormat = null,
+        defaultFormat = '0,0',
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -419,11 +420,11 @@
     });
 
     numeral.zeroFormat = function (format) {
-        if (typeof(format) === 'string') {
-            zeroFormat = format;
-        } else {
-            zeroFormat = null;
-        }
+        zeroFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.defaultFormat = function (format) {
+        defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
     /************************************
@@ -447,11 +448,11 @@
         },
 
         format : function (inputString) {
-            return formatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+            return formatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
         unformat : function (inputString) {
-            return unformatNumeral(this, inputString ? inputString : numeral.defaultFormat);
+            return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
         value : function () {

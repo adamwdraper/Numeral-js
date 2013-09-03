@@ -1,6 +1,15 @@
 var numeral = require('../../numeral');
 
 exports.format = {
+    default: function (test) {
+        test.expect(1);
+
+        numeral.defaultFormat('0,0');
+
+        test.strictEqual(numeral(10000).format(), '10,000', '0.0');
+
+        test.done();
+    },
     numbers: function (test) {
         test.expect(29);
 
