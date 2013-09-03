@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         jshint: {
             all: [
                 'Gruntfile.js',
-                'moment.js',
+                'numeral.js',
                 'languages/**/*.js'
             ],
             options: {
@@ -58,7 +58,8 @@ module.exports = function(grunt) {
                 'onevar': true,
                 'undef': true,
                 'sub': true,
-                'strict': false
+                'strict': false,
+                'quotmark': 'single'
             }
         }
     });

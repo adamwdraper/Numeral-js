@@ -41,13 +41,14 @@
      */
     function toFixed (value, precision, optionals) {
         var power = Math.pow(10, precision),
+            optionalsRegExp,
             output;
 
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (Math.round(value * power) / power).toFixed(precision);
 
         if (optionals) {
-            var optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+            optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
             output = output.replace(optionalsRegExp, '');
         }
 
@@ -79,29 +80,34 @@
 
     // revert to number
     function unformatNumeral (n, string) {
+        var stringOriginal = string,
+            thousandRegExp,
+            millionRegExp,
+            billionRegExp,
+            trillionRegExp,
+            suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            bytesMultiplier = false,
+            power;
+
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
             if (string === zeroFormat) {
                 n._n = 0;
             } else {
-                var stringOriginal = string;
                 if (languages[currentLanguage].delimiters.decimal !== '.') {
                     string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                var thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                    trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                    bytesMultiplier = false;
-
-                for (var power = 0; power <= prefixes.length; power++) {
-                    bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+                for (power = 0; power <= suffixes.length; power++) {
+                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -119,10 +125,9 @@
     }
 
     function formatCurrency (n, format) {
-        var prependSymbol = (format.indexOf('$') <= 1) ? true : false;
-
-        // remove $ for the moment
-        var space = '';
+        var prependSymbol = format.indexOf('$') <= 1 ? true : false,
+            space = '',
+            output;
 
         // check for space before or after currency
         if (format.indexOf(' $') > -1) {
@@ -136,7 +141,7 @@
         }
 
         // format the number
-        var output = formatNumeral(n, format);
+        output = formatNumeral(n, format);
 
         // position the symbol
         if (prependSymbol) {
@@ -161,7 +166,9 @@
     }
 
     function formatPercentage (n, format) {
-        var space = '';
+        var space = '',
+            output;
+
         // check for space before %
         if (format.indexOf(' %') > -1) {
             space = ' ';
@@ -171,7 +178,7 @@
         }
 
         n._n = n._n * 100;
-        var output = formatNumeral(n, format);
+        output = formatNumeral(n, format);
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
@@ -182,7 +189,7 @@
         return output;
     }
 
-    function formatTime (n, format) {
+    function formatTime (n) {
         var hours = Math.floor(n._n/60/60),
             minutes = Math.floor((n._n - (hours * 60 * 60))/60),
             seconds = Math.round(n._n - (hours * 60 * 60) - (minutes * 60));
@@ -215,7 +222,16 @@
             abbr = '',
             bytes = '',
             ord = '',
-            abs = Math.abs(n._n);
+            abs = Math.abs(n._n),
+            suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            min,
+            max,
+            power,
+            w,
+            precision,
+            thousands,
+            d = '',
+            neg = false;
 
         // check if number is zero and a custom zero format has been set
         if (n._n === 0 && zeroFormat !== null) {
@@ -266,16 +282,12 @@
                     format = format.replace('b', '');
                 }
 
-                var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                    min,
-                    max;
-
-                for (var power = 0; power <= prefixes.length; power++) {
+                for (power = 0; power <= suffixes.length; power++) {
                     min = Math.pow(1024, power);
                     max = Math.pow(1024, power+1);
 
                     if (n._n >= min && n._n < max) {
-                        bytes = bytes + prefixes[power];
+                        bytes = bytes + suffixes[power];
                         if (min > 0) {
                             n._n = n._n / min;
                         }
@@ -302,11 +314,9 @@
                 format = format.replace('[.]', '.');
             }
 
-            var w = n._n.toString().split('.')[0],
-                precision = format.split('.')[1],
-                thousands = format.indexOf(','),
-                d = '',
-                neg = false;
+            w = n._n.toString().split('.')[0];
+            precision = format.split('.')[1];
+            thousands = format.indexOf(',');
 
             if (precision) {
                 if (precision.indexOf('[') > -1) {
@@ -357,7 +367,7 @@
     numeral = function (input) {
         if (numeral.isNumeral(input)) {
             input = input.value();
-        } else if (input == 0 || typeof input == "undefined") {
+        } else if (input === 0 || typeof input === 'undefined') {
             input = 0;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);
