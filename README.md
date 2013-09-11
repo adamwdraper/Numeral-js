@@ -42,6 +42,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 1.5.1
+
+Bug fix: Make sure values aren't changed during formatting
+
 ### 1.5.0
 
 Add defaultFormat(). numeral().format() uses the default to format if no string is provided
