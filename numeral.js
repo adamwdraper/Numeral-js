@@ -145,7 +145,7 @@
 
         // position the symbol
         if (prependSymbol) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+            if (output.indexOf('(') > -1 || (output.indexOf('-') > -1 && output.indexOf('.-') === 0)) {
                 output = output.split('');
                 output.splice(1, 0, languages[currentLanguage].currency.symbol + space);
                 output = output.join('');
@@ -330,6 +330,11 @@
                     precision = precision.replace(']', '');
                     precision = precision.split('[');
                     d = toFixed(value, (precision[0].length + precision[1].length), precision[1].length);
+                } else if (precision.indexOf('-') > -1) {
+                    d = toFixed(n._n, 2);
+                    if (d.indexOf('.00') > -1) {
+                        d = d.replace(/\.00/g, '.-');
+                    }
                 } else {
                     d = toFixed(value, precision.length);
                 }
