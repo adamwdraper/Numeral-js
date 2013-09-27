@@ -1,0 +1,14 @@
+{
+  "name": "Appular-Sites",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-sass": "~0.3.0",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-uglify": "~0.2.4"
+  },
+  "dependencies": {
+    "express": "~3.4.0"
+  }
+}

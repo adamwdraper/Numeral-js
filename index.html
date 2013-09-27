@@ -16,10 +16,7 @@
 
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
-
-    <script src="js/min/respond.min.js"></script>
-    <script src="js/min/numeral.min.js"></script>
+    <link rel="stylesheet" href="css/build/style.css">
         
     <script type="text/javascript">
 
@@ -48,10 +45,7 @@
             <p class="tagline">
                 A javascript library for formatting and manipulating numbers.
             </p> 
-            <p>
-                <script type="text/javascript">
-                    document.write(numeral.version);    
-                </script>
+            <p id="version">
             </p>
             <div id="nav" class="nav"></div>
             <div class="github-links">
@@ -78,6 +72,14 @@
                 <option value="th">Thai</option>
                 <option value="tr">Turkish</option>
             </select>
+            <div id="carbonads-container" class="ad-container">
+                <div class="carbonad">
+                    <div id="azcarbon"></div>
+                    <script type="text/javascript">
+                        var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = "http://engine.carbonads.com/z/51885/azcarbon_2_1_0_HORIZ"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
     <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
@@ -153,7 +155,7 @@ var string = numeral(1000).format('0,0');
                 <tbody></tbody>
             </table>
             <h4>Time</h4>
-            <table class="table striped bordered">
+            <table id="format-time" class="table striped bordered">
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -161,22 +163,7 @@ var string = numeral(1000).format('0,0');
                         <th>String</th>
                     </tr>
                 </thead>
-                <script type="text/javascript">
-                    nums = [
-                        25,
-                        238,
-                        63846
-                    ],
-                    formats = [
-                        '00:00:00',
-                        '00:00:00',
-                        '00:00:00'
-                    ];
-
-                    for (var i = 0; i < nums.length; i++) {
-                        document.write('<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>')
-                    }
-                </script>
+                <tbody></tbody>
             </table>
             <h3>Unformat</h3>
             <p>
@@ -206,7 +193,7 @@ var number = numeral(1000);
 var added = number.add(10);
 // 1010
 </pre>
-            <table class="table striped bordered">
+            <table id="manipulate" class="table striped bordered">
                 <thead>
                     <tr>
                         <th>Before</th>
@@ -214,13 +201,7 @@ var added = number.add(10);
                         <th>After</th>
                     </tr>
                 </thead>
-                <script type="text/javascript">
-                    var num = numeral(1000);
-                    document.write('<tr><td>' + num.value() + '</td><td>.add(100)</td><td>' + num.add(100).value() + '</td></tr>');
-                    document.write('<tr><td>' + num.value() + '</td><td>.subtract(100)</td><td>' + num.subtract(100).value() + '</td></tr>');
-                    document.write('<tr><td>' + num.value() + '</td><td>.multiply(100)</td><td>' + num.multiply(100).value() + '</td></tr>');
-                    document.write('<tr><td>' + num.value() + '</td><td>.divide(100)</td><td>' + num.divide(100).value() + '</td></tr>');
-                </script>
+                <tbody></tbody>
             </table>
             <h3>Value</h3>
             <p>
@@ -351,7 +332,6 @@ numeral.language('fr');
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="js/min/languages.min.js"></script>
     <script src="js/min/site.min.js"></script>
 </body>
 </html>
