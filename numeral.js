@@ -39,13 +39,14 @@
      * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
      * problems for accounting- and finance-related software.
      */
-    function toFixed (value, precision, optionals) {
+    function toFixed (value, precision, roundingFunction, optionals) {
         var power = Math.pow(10, precision),
             optionalsRegExp,
             output;
-
+            
+        //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
-        output = (Math.round(value * power) / power).toFixed(precision);
+        output = (roundingFunction(value * power) / power).toFixed(precision);
 
         if (optionals) {
             optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
@@ -60,18 +61,18 @@
     ************************************/
 
     // determine what type of formatting we need to do
-    function formatNumeral (n, format) {
+    function formatNumeral (n, format, roundingFunction) {
         var output;
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
-            output = formatCurrency(n, format);
+            output = formatCurrency(n, format, roundingFunction);
         } else if (format.indexOf('%') > -1) { // percentage
-            output = formatPercentage(n, format);
+            output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
         } else { // plain ol' numbers or bytes
-            output = formatNumber(n._value, format);
+            output = formatNumber(n._value, format, roundingFunction);
         }
 
         // return string
@@ -124,7 +125,7 @@
         return n._value;
     }
 
-    function formatCurrency (n, format) {
+    function formatCurrency (n, format, roundingFunction) {
         var prependSymbol = format.indexOf('$') <= 1 ? true : false,
             space = '',
             output;
@@ -141,7 +142,7 @@
         }
 
         // format the number
-        output = formatNumber(n._value, format);
+        output = formatNumber(n._value, format, roundingFunction);
 
         // position the symbol
         if (prependSymbol) {
@@ -165,7 +166,7 @@
         return output;
     }
 
-    function formatPercentage (n, format) {
+    function formatPercentage (n, format, roundingFunction) {
         var space = '',
             output,
             value = n._value * 100;
@@ -178,7 +179,7 @@
             format = format.replace('%', '');
         }
 
-        output = formatNumber(value, format);
+        output = formatNumber(value, format, roundingFunction);
         
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
@@ -218,7 +219,7 @@
         return Number(seconds);
     }
 
-    function formatNumber (value, format) {
+    function formatNumber (value, format, roundingFunction) {
         var negP = false,
             signed = false,
             optDec = false,
@@ -259,7 +260,7 @@
                 } else {
                     format = format.replace('a', '');
                 }
-
+                               
                 if (abs >= Math.pow(10, 12)) {
                     // trillion
                     abbr = abbr + languages[currentLanguage].abbreviations.trillion;
@@ -329,9 +330,9 @@
                 if (precision.indexOf('[') > -1) {
                     precision = precision.replace(']', '');
                     precision = precision.split('[');
-                    d = toFixed(value, (precision[0].length + precision[1].length), precision[1].length);
+                    d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
                 } else {
-                    d = toFixed(value, precision.length);
+                    d = toFixed(value, precision.length, roundingFunction);
                 }
 
                 w = d.split('.')[0];
@@ -346,7 +347,7 @@
                     d = '';
                 }
             } else {
-                w = toFixed(value, null);
+                w = toFixed(value, null, roundingFunction);
             }
 
             // format number
@@ -464,8 +465,11 @@
             return numeral(this);
         },
 
-        format : function (inputString) {
-            return formatNumeral(this, inputString ? inputString : defaultFormat);
+        format : function (inputString, roundingFunction) {
+            return formatNumeral(this, 
+                  inputString ? inputString : defaultFormat, 
+                  (roundingFunction !== undefined) ? roundingFunction : Math.round
+              );
         },
 
         unformat : function (inputString) {
