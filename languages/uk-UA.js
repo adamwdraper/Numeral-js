@@ -2,6 +2,8 @@
 // language : Ukrainian for the Ukraine (uk-UA)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -17,7 +19,7 @@
             // not ideal, but since in Ukrainian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return ''; 
+            return '';
         },
         currency: {
             symbol: '\u20B4'

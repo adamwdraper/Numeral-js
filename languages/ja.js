@@ -4,6 +4,8 @@
  * author : teppeis : https://github.com/teppeis
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -15,7 +17,7 @@
             billion: '十億',
             trillion: '兆'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {

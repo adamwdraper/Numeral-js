@@ -4,6 +4,8 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',

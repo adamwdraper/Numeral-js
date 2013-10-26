@@ -4,6 +4,8 @@
  * author : Sami Saada : https://github.com/samitheberber
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -15,7 +17,7 @@
             billion: 'G',
             trillion: 'T'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
