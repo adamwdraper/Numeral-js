@@ -469,6 +469,9 @@
         },
 
         unformat : function (inputString) {
+            if (Object.prototype.toString.call(inputString) === '[object Number]') { 
+                return inputString; 
+            }
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
