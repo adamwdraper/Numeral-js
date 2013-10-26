@@ -4,6 +4,8 @@
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -15,7 +17,7 @@
             billion: 'พันล้าน',
             trillion: 'ล้านล้าน'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {

@@ -4,6 +4,8 @@
  * author : Dan Ristic : https://github.com/dristic
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -17,7 +19,7 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (Math.floor(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
                 (b === 2) ? 'nd' :
                 (b === 3) ? 'rd' : 'th';

@@ -4,6 +4,8 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -19,7 +21,7 @@
             // not ideal, but since in Russian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: 'руб.'

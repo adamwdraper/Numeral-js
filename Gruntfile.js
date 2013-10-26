@@ -1,6 +1,7 @@
 var fs = require('fs');
 
 module.exports = function(grunt) {
+    'use strict';
 
     var minifiedFiles = {
             'min/numeral.min.js' : [
@@ -25,7 +26,7 @@ module.exports = function(grunt) {
             all : ['tests/**/*.js']
         },
         uglify: {
-            my_target: {
+            target: {
                 files: minifiedFiles
             },
             options: {
@@ -41,26 +42,14 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
+            options: {
+                jshintrc : '.jshintrc'
+            },
             all: [
                 'Gruntfile.js',
                 'numeral.js',
                 'languages/**/*.js'
-            ],
-            options: {
-                'node': true,
-                'browser': true,
-                'curly': true,
-                'devel': false,
-                'eqeqeq': true,
-                'eqnull': true,
-                'newcap': true,
-                'noarg': true,
-                'onevar': true,
-                'undef': true,
-                'sub': true,
-                'strict': false,
-                'quotmark': 'single'
-            }
+            ]
         }
     });
 

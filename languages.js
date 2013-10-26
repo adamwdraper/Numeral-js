@@ -4,6 +4,8 @@
  * author : Dieter Luypaert : https://github.com/moeriki
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -39,6 +41,8 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -74,6 +78,8 @@
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: '.',
@@ -85,7 +91,7 @@
             billion: 'mia',
             trillion: 'b'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -106,8 +112,10 @@
  * numeral.js language configuration
  * language : German in Switzerland (de-ch)
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
- */ 
+ */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -119,7 +127,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -142,6 +150,8 @@
  * author : Marco Krage : https://github.com/sinky
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -153,7 +163,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -176,6 +186,8 @@
  * author : Dan Ristic : https://github.com/dristic
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -189,7 +201,7 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (Math.floor(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
                 (b === 2) ? 'nd' :
                 (b === 3) ? 'rd' : 'th';
@@ -214,6 +226,8 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',
@@ -254,6 +268,8 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',
@@ -269,7 +285,7 @@
             var b = number % 10;
             return (b === 1 || b === 3) ? 'er' :
                 (b === 2) ? 'do' :
-                (b === 7 || b === 0) ? 'mo' : 
+                (b === 7 || b === 0) ? 'mo' :
 		(b === 8) ? 'vo' :
 		(b === 9) ? 'no' : 'to';
         },
@@ -294,6 +310,8 @@
  * author : Sami Saada : https://github.com/samitheberber
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -305,7 +323,7 @@
             billion: 'G',
             trillion: 'T'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -329,6 +347,8 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '\'',
@@ -364,6 +384,8 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -398,6 +420,8 @@
  * author : Giacomo Trombi : http://cinquepunti.it
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',
@@ -409,7 +433,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return 'º';
         },
         currency: {
@@ -432,6 +456,8 @@
  * author : teppeis : https://github.com/teppeis
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -443,7 +469,7 @@
             billion: '十億',
             trillion: '兆'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -467,6 +493,8 @@
  * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -478,7 +506,7 @@
             billion: 'mld',
             trillion: 'bln'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -501,6 +529,8 @@
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',
@@ -512,7 +542,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return 'º';
         },
         currency: {
@@ -535,6 +565,8 @@
  * author : Diogo Resende : https://github.com/dresende
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -546,7 +578,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
+        ordinal : function () {
             return 'º';
         },
         currency: {
@@ -568,6 +600,8 @@
 // language : Russian for the Ukraine (ru-UA)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -583,7 +617,7 @@
             // not ideal, but since in Russian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: '\u20B4'
@@ -606,6 +640,8 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -621,7 +657,7 @@
             // not ideal, but since in Russian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: 'руб.'
@@ -644,6 +680,8 @@
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ',',
@@ -655,7 +693,7 @@
             billion: 'พันล้าน',
             trillion: 'ล้านล้าน'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {
@@ -676,9 +714,13 @@
 /*! 
  * numeral.js language configuration
  * language : turkish (tr)
- * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
+ * author : Ecmel Ercan : https://github.com/ecmel, 
+ * Erhan Gundogan : https://github.com/erhangundogan, 
+ * Burak Yiğit Kaya: https://github.com/BYK
  */
 (function () {
+    'use strict';
+    
     var suffixes = {
             1: '\'inci',
             5: '\'inci',
@@ -724,7 +766,7 @@
                     b = number % 100 - a,
                     c = number >= 100 ? 100 : null;
 
-              return suffixes[a] || suffixes[b] || suffixes[c];
+                return suffixes[a] || suffixes[b] || suffixes[c];
             },
             currency: {
                 symbol: '\u20BA'
@@ -745,6 +787,8 @@
 // language : Ukrainian for the Ukraine (uk-UA)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',
@@ -760,7 +804,7 @@
             // not ideal, but since in Ukrainian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return ''; 
+            return '';
         },
         currency: {
             symbol: '\u20B4'

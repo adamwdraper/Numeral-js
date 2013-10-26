@@ -4,6 +4,8 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',

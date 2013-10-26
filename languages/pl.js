@@ -4,6 +4,8 @@
  * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: ' ',
@@ -15,7 +17,7 @@
             billion: 'mld',
             trillion: 'bln'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {

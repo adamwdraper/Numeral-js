@@ -4,6 +4,8 @@
  * author : Dieter Luypaert : https://github.com/moeriki
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: ' ',

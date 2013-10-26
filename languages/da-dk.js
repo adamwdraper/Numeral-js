@@ -4,6 +4,8 @@
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
+    'use strict';
+
     var language = {
         delimiters: {
             thousands: '.',
@@ -15,7 +17,7 @@
             billion: 'mia',
             trillion: 'b'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return '.';
         },
         currency: {

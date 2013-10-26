@@ -4,6 +4,8 @@
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
  */
 (function () {
+    'use strict';
+    
     var language = {
         delimiters: {
             thousands: '.',
@@ -15,7 +17,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function () {
             return 'º';
         },
         currency: {
