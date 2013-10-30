@@ -24,11 +24,11 @@ Please submit all pull requests to the `develop` branch.
 
 4. Add your tests to the files in `/tests`
 
-5. To test your tests, run `grunt test`
+5. To test your tests, run `grunt`
 
-6. When all your tests are passing, run `grunt release` to minify all files
+6. When all your tests are passing, run `grunt build` to minify all files
 
-7. Submit a pull request.
+7. Submit a pull request to the `develop` branch.
 
 
 ### Languages 
@@ -41,6 +41,14 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+
+### 1.5.2
+
+Bug fix: Unformat should pass through if given a number
+
+Added a mechanism to control rounding behaviour
+
+Added languageData() for getting and setting language props at runtime
 
 ### 1.5.1
 

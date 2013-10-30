@@ -1,6 +1,6 @@
 /*!
  * numeral.js
- * version : 1.5.1
+ * version : 1.5.2
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.1',
+        VERSION = '1.5.2',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
