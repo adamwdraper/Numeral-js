@@ -260,7 +260,7 @@
                 } else {
                     format = format.replace('a', '');
                 }
-                               
+
                 if (abs >= Math.pow(10, 12)) {
                     // trillion
                     abbr = abbr + languages[currentLanguage].abbreviations.trillion;
