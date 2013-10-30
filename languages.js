@@ -323,6 +323,40 @@
     }
 }());
 
+/*!
+ * numeral.js language configuration
+ * language : french (Canada) (fr-CA)
+ * author : Léo Renaud-Allaire : https://github.com/renaudleo
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
+        },
+        ordinal : function (number) {
+            return number === 1 ? 'er' : 'e';
+        },
+        currency: {
+            symbol: '$'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('fr-CA', language);
+    }
+}());
 /*! 
  * numeral.js language configuration
  * language : french (fr-ch)
@@ -390,6 +424,40 @@
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('fr', language);
+    }
+}());
+/*!
+ * numeral.js language configuration
+ * language : Hungarian (hu)
+ * author : Peter Bakondy : https://github.com/pbakondy
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'E',  // ezer
+            million: 'M',   // millió
+            billion: 'Mrd', // milliárd
+            trillion: 'T'   // trillió
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: ' Ft'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('hu', language);
     }
 }());
 /*! 
@@ -461,6 +529,41 @@
     }
 }());
 
+/*! 
+ * numeral.js language configuration
+ * language : netherlands-dutch (nl-nl)
+ * author : Dave Clayton : https://github.com/davedx
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: '.',
+            decimal  : ','
+        },
+        abbreviations: {
+            thousand : 'k',
+            million  : 'mln',
+            billion  : 'mrd',
+            trillion : 'bln'
+        },
+        ordinal : function (number) {
+            var remainder = number % 100;
+            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+        },
+        currency: {
+            symbol: '€ '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('nl-nl', language);
+    }
+}());
 /*! 
  * numeral.js language configuration
  * language : polish (pl)
@@ -635,6 +738,41 @@
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ru', language);
+    }
+}());
+
+/*!
+ * numeral.js language configuration
+ * language : slovak (sk)
+ * author : Ahmed Al Hafoudh : http://www.freevision.sk
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'tis.',
+            million: 'mil.',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function () {
+            return '.';
+        },
+        currency: {
+            symbol: '€'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('sk', language);
     }
 }());
 

@@ -7,7 +7,7 @@ exports.unformat = {
     },
 
     numbers: function (test) {
-        test.expect(9);
+        test.expect(15);
 
         var tests = [
                 ['10,000.123', 10000.123],
@@ -18,7 +18,15 @@ exports.unformat = {
                 ['1.23t', 1230000000000],
                 ['N/A', 0],
                 [, 0],
-                ['', 0]
+                ['', 0],
+
+                // Pass Through for Numbers
+                [0, 0],
+                [1, 1],
+                [1.1, 1.1],
+                [-0, 0],
+                [-1, -1],
+                [-1.1, -1.1]
             ];
 
         for (var i = 0; i < tests.length; i++) {
