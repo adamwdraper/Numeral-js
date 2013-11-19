@@ -20,6 +20,16 @@
             return ''; 
         },
         currency: {
+            format: {
+                full: '#,##0.00 $',
+                negative_full: '-#,##0.00 $',
+                abbr: '0.00a $',
+                negative_abbr: '-0.00a $',
+                rounded: '#,### $',
+                negative_rounded: '-#,### $'
+            },
+            exceptions: {AUD: 'AU$', AZN: '\u043C\u0430\u043D.', BRL: 'R$', CAD: 'CA$', CNY: 'CN\u00A5', EUR: '\u20AC', GBP: '\u00A3', HKD: 'HK$', ILS: '\u20AA', INR: '\u20B9', JPY: '\u00A5', KRW: '\u20A9', MXN: 'MX$', NZD: 'NZ$', RSD: '\u0434\u0438\u043D.', RUB: '\u0440\u0443\u0431.', THB: '\u0E3F', TWD: 'NT$', UAH: '\u20B4', UAK: '\u043A\u0440\u0431.', USD: '$', VND: '\u20AB', XAF: 'FCFA', XCD: 'EC$', XOF: 'CFA', XPF: 'CFPF'},
+            localCurrency: 'UAH',
             symbol: '\u20B4'
         }
     };

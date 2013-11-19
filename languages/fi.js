@@ -19,7 +19,17 @@
             return '.';
         },
         currency: {
-            symbol: '€'
+            format: {
+                full: '#,##0.00 $',
+                negative_full: '-#,##0.00 $',
+                abbr: '0.00a $',
+                negative_abbr: '-0.00a $',
+                rounded: '#,### $',
+                negative_rounded: '-#,### $'
+            },
+            exceptions: {EUR: '\u20AC', GBP: '\u00A3', JPY: '\u00A5', USD: '$', XAF: 'FCFA', XOF: 'CFA'},
+            localCurrency: 'EUR',
+            symbol: '\u20AC'
         }
     };
 

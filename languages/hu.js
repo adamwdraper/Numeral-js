@@ -19,7 +19,17 @@
             return '.';
         },
         currency: {
-            symbol: ' Ft'
+            format: {
+                full: '#,##0.00 $',
+                negative_full: '-#,##0.00 $',
+                abbr: '0.00a $',
+                negative_abbr: '-0.00a $',
+                rounded: '#,### $',
+                negative_rounded: '-#,### $'
+            },
+            exceptions: {HUF: 'Ft', JPY: '\u00A5', USD: '$', XAF: 'FCFA', XOF: 'CFA', XPF: 'CFPF'},
+            localCurrency: 'HUF',
+            symbol: 'Ft'
         }
     };
 
