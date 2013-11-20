@@ -44,17 +44,21 @@ exports['language:de-ch'] = {
     },
 
     currency: function (test) {
-        test.expect(4);
+        test.expect(8);
 
         var tests = [
-            [1000.234,'$0,0.00','CHF 1,000.23'],
-            [-1000.234,'($0,0)','CHF-1,000'],
-            [-1000.234,'$0.00','CHF-1,000.23'],
-            [1230974,'($0.00a)','CHF 1.23m']
+            [1000.234,'$0,0.00','full','CHF 1,000.23'],
+            [-1000.234,'($0,0)','rounded','CHF-1,000'],
+            [-1000.234,'$0.00','full','CHF-1,000.23'],
+            [1230974,'($0.00a)','abbr','CHF 1.23m']
         ];
 
         for (var i = 0; i < tests.length; i++) {
-            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][3], tests[i][1]);
+        }
+
+        for (var i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).formatCurrency(tests[i][2]), tests[i][3], tests[i][1]);
         }
 
         test.done();

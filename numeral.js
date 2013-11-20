@@ -136,10 +136,11 @@
         var lang = languages[currentLanguage],
             space = '',
             currencyExceptions = lang.currency.exceptions || defaultCurrencyExceptions,
-            currencyFormat = lang.currency.format[formatType],
             isNegative = n._value < 0,
-            formattedNumber, output, currencySymbol, format;
+            formattedNumber, output, currencyFormat, currencySymbol, format;
 
+        formatType = formatType || 'full';
+        currencyFormat = lang.currency.format[formatType];
         if (isNegative && lang.currency.format['negative_' + formatType]) {
           currencyFormat = lang.currency.format['negative_' + formatType];
         }
@@ -502,7 +503,7 @@
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
-        formatCurrency : function (currency, formatType, roundingFunction) {
+        formatCurrency : function (formatType, currency, roundingFunction) {
           return formatCurrency(this,
                   currency,
                   formatType,
