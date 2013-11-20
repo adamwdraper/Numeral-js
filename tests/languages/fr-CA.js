@@ -44,17 +44,21 @@ exports['language:fr'] = {
     },
 
     currency: function (test) {
-        test.expect(4);
+        test.expect(8);
 
         var tests = [
-            [1000.234,'0,0.00 $','1 000,23 $'],
-            [-1000.234,'(0,0 $)','(1 000 $)'],
-            [-1000.234,'0.00 $','-1000,23 $'],
-            [1230974,'(0.00 a$)','1,23 M$']
+            [1000.234,'0,0.00 $','full','1 000,23 $'],
+            [-1000.234,'(0,0 $)','rounded','(1 000 $)'],
+            [-1000.234,'0.00 $','full','(1 000,23 $)'],
+            [1230974,'(0.00 a$)','abbr','1,23 M$']
         ];
 
         for (var i = 0; i < tests.length; i++) {
-            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][3], tests[i][1]);
+        }
+
+        for (var i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).formatCurrency(tests[i][2]), tests[i][3], tests[i][1]);
         }
 
         test.done();

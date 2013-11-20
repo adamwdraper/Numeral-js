@@ -19,6 +19,8 @@
         currentLanguage = 'en',
         zeroFormat = null,
         defaultFormat = '0,0',
+        defaultCurrencies = ['ADP','AED','AFA','AFN','ALK','ALL','AMD','ANG','AOA','AOK','AON','AOR','ARA','ARL','ARM','ARP','ARS','ATS','AUD','AWG','AZM','AZN','BAD','BAM','BAN','BBD','BDT','BEC','BEF','BEL','BGL','BGM','BGN','BGO','BHD','BIF','BMD','BND','BOB','BOL','BOP','BOV','BRB','BRC','BRE','BRL','BRN','BRR','BRZ','BSD','BTN','BUK','BWP','BYB','BYR','BZD','CAD','CDF','CHE','CHF','CHW','CLE','CLF','CLP','CNX','CNY','COP','COU','CRC','CSD','CSK','CUC','CUP','CVE','CYP','CZK','DDM','DEM','DJF','DKK','DOP','DZD','ECS','ECV','EEK','EGP','ERN','ESA','ESB','ESP','ETB','EUR','FIM','FJD','FKP','FRF','GBP','GEK','GEL','GHC','GHS','GIP','GMD','GNF','GNS','GQE','GRD','GTQ','GWE','GWP','GYD','HKD','HNL','HRD','HRK','HTG','HUF','IDR','IEP','ILP','ILR','ILS','INR','IQD','IRR','ISJ','ISK','ITL','JMD','JOD','JPY','KES','KGS','KHR','KMF','KPW','KRH','KRO','KRW','KWD','KYD','KZT','LAK','LBP','LKR','LRD','LSL','LTL','LTT','LUC','LUF','LUL','LVL','LVR','LYD','MAD','MAF','MCF','MDC','MDL','MGA','MGF','MKD','MKN','MLF','MMK','MNT','MOP','MRO','MTL','MTP','MUR','MVP','MVR','MWK','MXN','MXP','MXV','MYR','MZE','MZM','MZN','NAD','NGN','NIC','NIO','NLG','NOK','NPR','NZD','OMR','PAB','PEI','PEN','PES','PGK','PHP','PKR','PLN','PLZ','PTE','PYG','QAR','RHD','ROL','RON','RSD','RUB','RUR','RWF','SAR','SBD','SCR','SDD','SDG','SDP','SEK','SGD','SHP','SIT','SKK','SLL','SOS','SRD','SRG','SSP','STD','SUR','SVC','SYP','SZL','THB','TJR','TJS','TMM','TMT','TND','TOP','TPE','TRL','TRY','TTD','TWD','TZS','UAH','UAK','UGS','UGX','USD','USN','USS','UYI','UYP','UYU','UZS','VEB','VEF','VND','VNN','VUV','WST','XAF','XAG','XAU','XBA','XBB','XBC','XBD','XCD','XDR','XEU','XFO','XFU','XOF','XPD','XPF','XPT','XRE','XSU','XTS','XUA','XXX','YDD','YER','YUD','YUM','YUN','YUR','ZAL','ZAR','ZMK','ZRN','ZRZ','ZWD','ZWL','ZWR'],
+        defaultCurrencyExceptions = {AUD: 'A$', BRL: 'R$', CAD: 'CA$', CNY: 'CN\u00A5', EUR: '\u20AC', GBP: '\u00A3', HKD: 'HK$', ILS: '\u20AA', INR: '\u20B9', JPY: '\u00A5', KRW: '\u20A9', MXN: 'MX$', NZD: 'NZ$', THB: '\u0E3F', TWD: 'NT$', USD: '$', VND: '\u20AB', XAF: 'FCFA', XCD: 'EC$', XOF: 'CFA', XPF: 'CFPF'},
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -61,12 +63,17 @@
     ************************************/
 
     // determine what type of formatting we need to do
-    function formatNumeral (n, format, roundingFunction) {
-        var output;
+    function formatNumeral (n, format, roundingFunction, config) {
+        var output, currencyType, currencyFormatType;
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
-            output = formatCurrency(n, format, roundingFunction);
+            currencyType = (config && config.currency) || null;
+            currencyFormatType = (config && config.currencyFormatType) || null;
+            if (!currencyFormatType) {
+                currencyFormatType = (/a/.test(format)) ? 'abbr' : (/[\d#]+\.[\d#]+/.test(format)) ? 'full' : 'rounded';
+            }
+            output = formatCurrency(n, currencyType, currencyFormatType, roundingFunction);
         } else if (format.indexOf('%') > -1) { // percentage
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
@@ -101,10 +108,10 @@
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|( ?\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|( ?\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|( ?\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|( ?\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
@@ -125,43 +132,35 @@
         return n._value;
     }
 
-    function formatCurrency (n, format, roundingFunction) {
-        var prependSymbol = format.indexOf('$') <= 1 ? true : false,
+    function formatCurrency (n, currency, formatType, roundingFunction) {
+        var lang = languages[currentLanguage],
             space = '',
-            output;
+            currencyExceptions = lang.currency.exceptions || defaultCurrencyExceptions,
+            isNegative = n._value < 0,
+            formattedNumber, output, currencyFormat, currencySymbol, format;
 
-        // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
-            space = ' ';
-            format = format.replace('$ ', '');
+        formatType = formatType || 'full';
+        currencyFormat = lang.currency.format[formatType];
+        if (isNegative && lang.currency.format['negative_' + formatType]) {
+          currencyFormat = lang.currency.format['negative_' + formatType];
+        }
+
+        format = currencyFormat.replace(/(?: ?\$ ?)|\-/g, '');
+        if (!currency) {
+            currencySymbol = lang.currency.symbol;
+        } else if (defaultCurrencies.indexOf(currency) > -1) {
+            if (currencyExceptions[currency]) {
+                currencySymbol = currencyExceptions[currency];
+            } else {
+                currencySymbol = currency;
+            }
         } else {
-            format = format.replace('$', '');
+            throw new Error(currency + ' is not a valid currency');
         }
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction);
-
-        // position the symbol
-        if (prependSymbol) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-                output = output.split('');
-                output.splice(1, 0, languages[currentLanguage].currency.symbol + space);
-                output = output.join('');
-            } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
-            }
-        } else {
-            if (output.indexOf(')') > -1) {
-                output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
-                output = output.join('');
-            } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
-            }
-        }
+        formattedNumber = formatNumber(n._value, format, roundingFunction).replace(/[\(\-\)]/g,'');
+        output = currencyFormat.replace(/(?:#[,\. ]##0[.,]00|0[,.]00 ?a|#[,. ]###)/, formattedNumber).replace('$', currencySymbol);
 
         return output;
     }
@@ -180,7 +179,7 @@
         }
 
         output = formatNumber(value, format, roundingFunction);
-        
+
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
@@ -448,6 +447,15 @@
                 (b === 3) ? 'rd' : 'th';
         },
         currency: {
+            localCurrency: 'USD',
+            format: {
+                full: '$#,##0.00',
+                negative_full: '($#,##0.00)',
+                abbr: '$0.00a',
+                negative_abbr: '($0.00a)',
+                rounded: '$#,###',
+                negative_rounded: '($#,###)'
+            },
             symbol: '$'
         }
     });
@@ -480,10 +488,11 @@
             return numeral(this);
         },
 
-        format : function (inputString, roundingFunction) {
-            return formatNumeral(this, 
-                  inputString ? inputString : defaultFormat, 
-                  (roundingFunction !== undefined) ? roundingFunction : Math.round
+        format : function (inputString, roundingFunction, currency) {
+            return formatNumeral(this,
+                  inputString ? inputString : defaultFormat,
+                  (roundingFunction !== undefined) ? roundingFunction : Math.round,
+                  currency ? {currency: currency} : null
               );
         },
 
@@ -492,6 +501,14 @@
                 return inputString; 
             }
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
+        },
+
+        formatCurrency : function (formatType, currency, roundingFunction) {
+          return formatCurrency(this,
+                  currency,
+                  formatType,
+                  (roundingFunction !== undefined) ? roundingFunction : Math.round
+            );
         },
 
         value : function () {

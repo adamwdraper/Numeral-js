@@ -44,17 +44,21 @@ exports['language:pl'] = {
     },
 
     currency: function (test) {
-        test.expect(4);
+        test.expect(8);
 
         var tests = [
-            [1000.234,'0,0.00$','1 000,23PLN'],
-            [-1000.234,'(0,0$)','(1 000PLN)'],
-            [-1000.234,'0.00$','-1000,23PLN'],
-            [1230974,'(0.00a$)','1,23mlnPLN']
+            [1000.234,'0,0.00$','full','1 000,23 zł'],
+            [-1000.234,'(0,0$)','rounded','(1 000 zł)'],
+            [-1000.234,'0.00$','full','(1 000,23 zł)'],
+            [1230974,'(0.00a$)','abbr','1,23mln zł']
         ];
 
         for (var i = 0; i < tests.length; i++) {
-            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][3], tests[i][1]);
+        }
+
+        for (var i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).formatCurrency(tests[i][2]), tests[i][3], tests[i][1]);
         }
 
         test.done();
@@ -83,12 +87,12 @@ exports['language:pl'] = {
         var tests = [
             ['10 000,123',10000.123],
             ['(0,12345)',-0.12345],
-            ['(1,23mlnPLN)',-1230000],
-            ['1,23mlnPLN',1230000],
+            ['(1,23mlnz\u0142)',-1230000],
+            ['1,23mlnz\u0142',1230000],
             ['10tys.',10000],
             ['-10tys.',-10000],
             ['23.',23],
-            ['10 000,00PLN',10000],
+            ['10 000,00z\u0142',10000],
             ['-76%',-0.76],
             ['2:23:57',8637]
         ];

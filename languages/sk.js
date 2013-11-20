@@ -19,7 +19,17 @@
             return '.';
         },
         currency: {
-            symbol: '€'
+            format: {
+                full: '#,##0.00 $',
+                negative_full: '-#,##0.00 $',
+                abbr: '0.00a $',
+                negative_abbr: '-0.00a $',
+                rounded: '#,### $',
+                negative_rounded: '-#,### $'
+            },
+            exceptions: {ILS: '\u20AA', MXN: 'Mex$', NZD: 'NZ$', PLN: 'zl', VND: '\u20AB', XAF: 'FCFA', XCD: 'EC$', XOF: 'CFA', XPF: 'CFPF'},
+            localCurrency: 'EUR',
+            symbol: 'EUR'
         }
     };
 
