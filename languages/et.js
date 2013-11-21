@@ -2,6 +2,9 @@
  * numeral.js language configuration
  * language : Estonian
  * author : Illimar Tambek : https://github.com/ragulka
+ *
+ * Note: in Estonian, abbreviations are always separated
+ * from numbers with a space
  */
 (function () {
     var language = {
@@ -10,10 +13,10 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'tuh',
-            million: 'mln',
-            billion: 'mld',
-            trillion: 'T'
+            thousand: ' tuh',
+            million: ' mln',
+            billion: ' mld',
+            trillion: ' trl'
         },
         ordinal: function (number) {
             return '.';
