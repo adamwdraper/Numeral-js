@@ -472,6 +472,9 @@
         Floating-point helpers
     ************************************/
 
+    // The floating-point helper functions and implementation
+    // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
+
     /**
      * Array.prototype.reduce for browsers that don't support it
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Compatibility
