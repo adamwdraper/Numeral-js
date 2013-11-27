@@ -224,6 +224,11 @@
             signed = false,
             optDec = false,
             abbr = '',
+            abbrK = false, // force abbreviation to thousands
+            abbrM = false, // force abbreviation to millions
+            abbrB = false, // force abbreviation to billions
+            abbrT = false, // force abbreviation to trillions
+            abbrForce = false, // force abbreviation
             bytes = '',
             ord = '',
             abs = Math.abs(value),
@@ -253,6 +258,13 @@
 
             // see if abbreviation is wanted
             if (format.indexOf('a') > -1) {
+                // check if abbreviation is specified
+                abbrK = format.indexOf('aK') >= 0;
+                abbrM = format.indexOf('aM') >= 0;
+                abbrB = format.indexOf('aB') >= 0;
+                abbrT = format.indexOf('aT') >= 0;
+                abbrForce = abbrK || abbrM || abbrB || abbrT;
+
                 // check for space before abbreviation
                 if (format.indexOf(' a') > -1) {
                     abbr = ' ';
@@ -261,19 +273,19 @@
                     format = format.replace('a', '');
                 }
 
-                if (abs >= Math.pow(10, 12)) {
+                if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
                     abbr = abbr + languages[currentLanguage].abbreviations.trillion;
                     value = value / Math.pow(10, 12);
-                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
+                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
                     // billion
                     abbr = abbr + languages[currentLanguage].abbreviations.billion;
                     value = value / Math.pow(10, 9);
-                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
+                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
                     // million
                     abbr = abbr + languages[currentLanguage].abbreviations.million;
                     value = value / Math.pow(10, 6);
-                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
+                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
                     // thousand
                     abbr = abbr + languages[currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
