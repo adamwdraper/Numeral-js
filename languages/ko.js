@@ -1,7 +1,7 @@
 /*!
  * numeral.js language configuration
- * language : japanese
- * author : teppeis : https://github.com/teppeis
+ * language : korean
+ * author : gyuha : https://github.com/gyuha
  */
 (function () {
     var language = {
