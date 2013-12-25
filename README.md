@@ -44,6 +44,8 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 ### 1.5.3
 
+Added currency symbol to optionally appear before negative sign / open paren
+
 Added float precision math support
 
 Added specification of abbreviation in thousands, millions, billions
