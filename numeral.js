@@ -126,8 +126,11 @@
     }
 
     function formatCurrency (n, format, roundingFunction) {
-        var prependSymbol = format.indexOf('$') <= 1 ? true : false,
+        var symbolIndex = format.indexOf('$'),
+            openParenIndex = format.indexOf('('),
+            minusSignIndex = format.indexOf('-'),
             space = '',
+            spliceIndex,
             output;
 
         // check for space before or after currency
@@ -145,10 +148,15 @@
         output = formatNumber(n._value, format, roundingFunction);
 
         // position the symbol
-        if (prependSymbol) {
+        if (symbolIndex <= 1) {
             if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
                 output = output.split('');
-                output.splice(1, 0, languages[currentLanguage].currency.symbol + space);
+                spliceIndex = 1;
+                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex){
+                    // the symbol appears before the "(" or "-"
+                    spliceIndex = 0;
+                }
+                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
                 output = output.join('');
             } else {
                 output = languages[currentLanguage].currency.symbol + space + output;
