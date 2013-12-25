@@ -2554,6 +2554,9 @@ table td, table th {
   width: 33%;
   text-align: center; }
 
+.carbonad {
+  border-radius: 4px; }
+
 .sidebar label {
   color: #999999;
   margin-right: .5em; }
