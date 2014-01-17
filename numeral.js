@@ -86,7 +86,8 @@
             millionRegExp,
             billionRegExp,
             trillionRegExp,
-            suffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+            binarySuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+            decimalSuffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             bytesMultiplier = false,
             power;
 
@@ -107,12 +108,10 @@
                 trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                for (power = 0; power <= suffixes.length; power++) {
-                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
-
-                    if (bytesMultiplier) {
-                        break;
-                    }
+                for (power = 0; power <= binarySuffixes.length && !bytesMultiplier; power++) {
+                    if (string.indexOf(binarySuffixes[power]) > -1) { bytesMultiplier = Math.pow(1024, power + 1); }
+                    else if (string.indexOf(decimalSuffixes[power]) > -1) { bytesMultiplier = Math.pow(1000, power + 1); }
+                    else { bytesMultiplier = false; }
                 }
 
                 // do some math to create our number
@@ -240,7 +239,8 @@
             bytes = '',
             ord = '',
             abs = Math.abs(value),
-            suffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+            binarySuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+            decimalSuffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             min,
             max,
             power,
@@ -300,7 +300,7 @@
                 }
             }
 
-            // see if we are formatting bytes
+            // see if we are formatting binary bytes
             if (format.indexOf('b') > -1) {
                 // check for space before
                 if (format.indexOf(' b') > -1) {
@@ -310,12 +310,36 @@
                     format = format.replace('b', '');
                 }
 
-                for (power = 0; power <= suffixes.length; power++) {
+                for (power = 0; power <= binarySuffixes.length; power++) {
                     min = Math.pow(1024, power);
                     max = Math.pow(1024, power+1);
 
                     if (value >= min && value < max) {
-                        bytes = bytes + suffixes[power];
+                        bytes = bytes + binarySuffixes[power];
+                        if (min > 0) {
+                            value = value / min;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // see if we are formatting decimal bytes
+            if (format.indexOf('d') > -1) {
+                // check for space before
+                if (format.indexOf(' d') > -1) {
+                    bytes = ' ';
+                    format = format.replace(' d', '');
+                } else {
+                    format = format.replace('d', '');
+                }
+
+                for (power = 0; power <= decimalSuffixes.length; power++) {
+                    min = Math.pow(1000, power);
+                    max = Math.pow(1000, power+1);
+
+                    if (value >= min && value < max) {
+                        bytes = bytes + decimalSuffixes[power];
                         if (min > 0) {
                             value = value / min;
                         }
