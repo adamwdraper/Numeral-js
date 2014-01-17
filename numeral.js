@@ -87,7 +87,9 @@
             billionRegExp,
             trillionRegExp,
             suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            bit_suffixes = ['Kbits', 'Mbits', 'Gbits', 'Tbits', 'Pbits', 'Ebits', 'Zbits', 'Ybits'],
             bytesMultiplier = false,
+            bitsMultiplier = false,
             power;
 
         if (string.indexOf(':') > -1) {
@@ -115,11 +117,20 @@
                     }
                 }
 
-                // do some math to create our number
-                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+                // see if bits are there so that we can multiply to the correct number
+                for (power = 0; power <= bit_suffixes.length; power++) {
+                    bitsMultiplier = (string.indexOf(bit_suffixes[power]) > -1) ? Math.pow(1000, power + 1) : false;
 
-                // round if we are talking about bytes
-                n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
+                    if (bitsMultiplier) {
+                        break;
+                    }
+                }
+
+                // do some math to create our number
+                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((bitsMultiplier) ? bitsMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+
+                // round if we are talking about bytes or bits
+                n._value = (bytesMultiplier || bitsMultiplier) ? Math.ceil(n._value) : n._value;
             }
         }
         return n._value;
@@ -238,9 +249,11 @@
             abbrT = false, // force abbreviation to trillions
             abbrForce = false, // force abbreviation
             bytes = '',
+            bits = '',
             ord = '',
             abs = Math.abs(value),
             suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            bit_suffixes = ['bits', 'Kbits', 'Mbits', 'Gbits', 'Tbits', 'Pbits', 'Ebits', 'Zbits', 'Ybits'],
             min,
             max,
             power,
@@ -297,6 +310,29 @@
                     // thousand
                     abbr = abbr + languages[currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
+                }
+            }
+
+            // see if we are formatting bits
+            if (format.indexOf('bit') > -1) {
+                // check for space before
+                if (format.indexOf(' bit') > -1) {
+                    bits = ' ';
+                    format = format.replace(' bit', '');
+                } else {
+                    format = format.replace('bit', '');
+                }
+
+                for (power = 0; power <= bit_suffixes.length; power++) {
+                    min = Math.pow(1000, power);
+                    max = Math.pow(1000, power+1);
+                    if (value >= min && value < max) {
+                        bits = bits + bit_suffixes[power];
+                        if (min > 0) {
+                            value = value / min;
+                        }
+                        break;
+                    }
                 }
             }
 
@@ -384,7 +420,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((bits) ? bits : '') + ((negP && neg) ? ')' : '');
         }
     }
 
