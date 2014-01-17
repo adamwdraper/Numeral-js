@@ -66,6 +66,21 @@ exports.unformat = {
         test.done();
     },
 
+    bits: function (test) {
+        test.expect(2);
+
+        var tests = [
+                ['100bits', 100],
+                ['3.154 TBits', 3467859674006]
+            ];
+
+        for (var i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral().unformat(tests[i][0]), tests[i][1], tests[i][0]);
+        }
+
+        test.done();
+    },
+
     percentages: function (test) {
         test.expect(1);
 
