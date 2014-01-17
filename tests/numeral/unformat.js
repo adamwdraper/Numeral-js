@@ -56,7 +56,7 @@ exports.unformat = {
 
         var tests = [
                 ['100B', 100],
-                ['3.154 TB', 3467859674006]
+                ['3.154 TiB', 3467859674006]
             ];
 
         for (var i = 0; i < tests.length; i++) {
