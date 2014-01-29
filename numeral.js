@@ -346,6 +346,10 @@
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
 
+            // check for a negative number before precision rounding, as this may cause a negative
+            // number to become non-negative
+            neg = w.indexOf('-') > -1;
+
             if (precision) {
                 if (precision.indexOf('[') > -1) {
                     precision = precision.replace(']', '');
@@ -370,10 +374,9 @@
                 w = toFixed(value, null, roundingFunction);
             }
 
-            // format number
+            // remove negative sign
             if (w.indexOf('-') > -1) {
                 w = w.slice(1);
-                neg = true;
             }
 
             if (thousands > -1) {
