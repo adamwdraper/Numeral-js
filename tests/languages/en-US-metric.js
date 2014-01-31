@@ -1,11 +1,11 @@
 var numeral = require('../../numeral'),
-    language = require('../../languages/en-US-financial');
+    language = require('../../languages/en-US-metric');
 
-numeral.language('en-US-financial', language);
+numeral.language('en-US-metric', language);
 
-exports['language:en-US-financial'] = {
+exports['language:en-US-metric'] = {
     setUp: function (callback) {
-        numeral.language('en-US-financial');
+        numeral.language('en-US-metric');
         callback();
     },
 
@@ -15,11 +15,7 @@ exports['language:en-US-financial'] = {
     },
 
     format: function (test) {
-<<<<<<< HEAD
-        test.expect(19);
-=======
         test.expect(18);
->>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
 
         var tests = [
             [10000,'0,0.0000','10,000.0000'],
@@ -30,19 +26,11 @@ exports['language:en-US-financial'] = {
             [-0.23,'.00','-.23'],
             [-0.23,'(.00)','(.23)'],
             [0.23,'0.00000','0.23000'],
-            [1230974,'0.0a','1.2MM'],
-<<<<<<< HEAD
-            [1330974333,'0.0a','1.3B'],
+            [1230974,'0.0a','1.2M'],
+            [1343974333,'0.0a','1.3G'],
             [1430974222444,'0.0a','1.4T'],
             [1460,'0a','1k'],
             [-104000,'0a','-104k'],
-            [-1004000,'0a','-1MM'],
-=======
-            [1330974333,'0.0a','1.3BN'],
-            [1430974222444,'0.0a','1.4T'],
-            [1460,'0a','1k'],
-            [-104000,'0a','-104k'],
->>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
             [1,'0o','1st'],
             [52,'0o','52nd'],
             [23,'0o','23rd'],
@@ -64,7 +52,7 @@ exports['language:en-US-financial'] = {
             [1000.234,'$0,0.00','$1,000.23'],
             [-1000.234,'($0,0)','($1,000)'],
             [-1000.234,'$0.00','-$1000.23'],
-            [1230974,'($0.00a)','$1.23MM']
+            [1230974,'($0.00a)','$1.23M']
         ];
 
         for (var i = 0; i < tests.length; i++) {
@@ -97,7 +85,7 @@ exports['language:en-US-financial'] = {
         var tests = [
             ['10,000.123',10000.123],
             ['(0.12345)',-0.12345],
-            ['($1.23MM)',-1230000],
+            ['($1.23M)',-1230000],
             ['10k',10000],
             ['-10k',-10000],
             ['23rd',23],

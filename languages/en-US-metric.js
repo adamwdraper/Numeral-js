@@ -11,12 +11,8 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'MM',
-<<<<<<< HEAD
-            billion: 'B',
-=======
-            billion: 'BN',
->>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
+            million: 'M',
+            billion: 'G',
             trillion: 'T'
         },
         ordinal: function (number) {
@@ -37,6 +33,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('en-US-financial', language);
+        this.numeral.language('en-US-metric', language);
     }
 }());

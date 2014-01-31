@@ -208,7 +208,10 @@
 /*! 
  * numeral.js language configuration
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
  * language : English, US, metric suffixes
  * author : Justin Collum : https://github.com/jcollum
  */
@@ -221,7 +224,11 @@
         abbreviations: {
             thousand: 'k',
             million: 'MM',
+<<<<<<< HEAD
             billion: 'B',
+=======
+            billion: 'BN',
+>>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
             trillion: 'T'
         },
         ordinal: function (number) {
@@ -285,7 +292,10 @@
 }());
 /*! 
  * numeral.js language configuration
+<<<<<<< HEAD
 >>>>>>> 28d1396... removed BN notation for financial context, can't find a real source for this abbreviation
+=======
+>>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
  * language : english united kingdom (uk)
  * author : Dan Ristic : https://github.com/dristic
  */
