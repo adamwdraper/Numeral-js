@@ -219,7 +219,7 @@
         abbreviations: {
             thousand: 'k',
             million: 'MM',
-            billion: 'BN',
+            billion: 'B',
             trillion: 'T'
         },
         ordinal: function (number) {
