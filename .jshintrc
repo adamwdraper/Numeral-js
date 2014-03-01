@@ -1,0 +1,15 @@
+{
+  "node": true,
+  "browser": true,
+  "curly": true,
+  "devel": false,
+  "eqeqeq": true,
+  "eqnull": true,
+  "newcap": true,
+  "noarg": true,
+  "onevar": true,
+  "undef": true,
+  "sub": true,
+  "strict": false,
+  "quotmark": "single"
+}

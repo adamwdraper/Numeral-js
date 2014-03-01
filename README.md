@@ -18,15 +18,15 @@ Please submit all pull requests to the `develop` branch.
 
 1. Fork the library
 
-2. [Install grunt](http://gruntjs.com/getting-started#installing-the-cli)
+2. [Install gulp](http://gulpjs.com/)
 
 3. Run `npm install` to install dependencies
 
 4. Add your tests to the files in `/tests`
 
-5. To test your tests, run `grunt`
+5. To test your tests, run `gulp`
 
-6. When all your tests are passing, run `grunt build` to minify all files
+6. When all your tests are passing, run `gulp build` to minify all files
 
 7. Submit a pull request to the `develop` branch.
 
