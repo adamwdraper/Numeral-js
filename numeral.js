@@ -672,14 +672,14 @@
             }
 
             //if val is empty return false
-            if (val == '') {
+            if (val === '') {
                 return false;
             }
 
             //get the decimal and thousands separator from numeral.languageData
             try {
                 //check if the culture is understood by numeral. if not, default it to current language
-                numeral.languageData(culture).delimiters;
+                numeral.languageData(culture);
             } catch (e) {
                 culture = numeral.language();
             }
@@ -687,7 +687,7 @@
             //setup the delimiters and currency symbol based on culture/language
             _currSymbol = numeral.languageData(culture).currency.symbol;
             _decimalSep = numeral.languageData(culture).delimiters.decimal;
-            if (numeral.languageData(culture).delimiters.thousands == '.') {
+            if (numeral.languageData(culture).delimiters.thousands === '.') {
                 _thousandSep = '\\.';
             } else {
                 _thousandSep = numeral.languageData(culture).delimiters.thousands;
