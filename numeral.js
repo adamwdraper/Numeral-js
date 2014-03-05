@@ -550,18 +550,18 @@
 
         _thousandRegEx = new RegExp(_thousandSep + '{2}');
 
-        if ( !! !val.match(/[^\d.,]/g)) {
+        if ( !val.match(/[^\d.,]/g)) {
             _valArray = val.split(_decimalSep);
             if (_valArray.length > 2) {
                 return false;
             } else {
                 if (_valArray.length < 2) {
-                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx));
+                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
                 } else {
                     if (_valArray[0].length === 1) {
-                        return ( !! _valArray[0].match(/^\d+$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
                     } else {
-                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
                     }
                 }
             }
