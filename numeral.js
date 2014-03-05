@@ -480,6 +480,83 @@
         defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
+    numeral.validate = function(val, culture) {
+
+        var _decimalSep,
+            _thousandSep,
+            _currSymbol,
+            _valArray,
+            _thousandRegEx,
+            temp;
+
+        //coerce val to string
+        if (typeof val !== 'string') {
+            if (console.warn){
+                console.warn('Numeral.js: Value is not string. It has been co-erced to: ',val);
+            }
+            val += '';
+        }
+
+        val = val.trim();
+
+        //if val is just digits return true
+        if ( !! val.match(/^\d+$/)) {
+            return true;
+        }
+
+        //if val is empty return false
+        if (val === '') {
+            return false;
+        }
+
+        //get the decimal and thousands separator from numeral.languageData
+        try {
+            //check if the culture is understood by numeral. if not, default it to current language
+            numeral.languageData(culture);
+        } catch (e) {
+            culture = numeral.language();
+        }
+
+        //setup the delimiters and currency symbol based on culture/language
+        _currSymbol = numeral.languageData(culture).currency.symbol;
+        _decimalSep = numeral.languageData(culture).delimiters.decimal;
+        if (numeral.languageData(culture).delimiters.thousands === '.') {
+            _thousandSep = '\\.';
+        } else {
+            _thousandSep = numeral.languageData(culture).delimiters.thousands;
+        }
+
+        // validating currency symbol
+        temp = val.match(/^[^\d]/);
+        if (temp !== null) {
+            val = val.substr(1);
+            if (temp[0] !== _currSymbol) {
+                return false;
+            }
+        }
+
+        _thousandRegEx = new RegExp(_thousandSep + '{2}');
+
+        if ( !! !val.match(/[^\d.,]/g)) {
+            _valArray = val.split(_decimalSep);
+            if (_valArray.length > 2) {
+                return false;
+            } else {
+                if (_valArray.length < 2) {
+                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx));
+                } else {
+                    if (_valArray[0].length === 1) {
+                        return ( !! _valArray[0].match(/^\d+$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    } else {
+                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
+
     /************************************
         Helpers
     ************************************/
@@ -650,78 +727,6 @@
 
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
-        },
-
-        validate: function(val, culture) {
-
-            var _decimalSep,
-                _thousandSep,
-                _currSymbol,
-                _valArray,
-                _thousandRegEx,
-                temp;
-
-            //coerce val to string
-            if (typeof val !== 'string') {
-                val += '';
-            }
-
-            //if val is just digits return true
-            if ( !! val.match(/^\d+$/)) {
-                return true;
-            }
-
-            //if val is empty return false
-            if (val === '') {
-                return false;
-            }
-
-            //get the decimal and thousands separator from numeral.languageData
-            try {
-                //check if the culture is understood by numeral. if not, default it to current language
-                numeral.languageData(culture);
-            } catch (e) {
-                culture = numeral.language();
-            }
-
-            //setup the delimiters and currency symbol based on culture/language
-            _currSymbol = numeral.languageData(culture).currency.symbol;
-            _decimalSep = numeral.languageData(culture).delimiters.decimal;
-            if (numeral.languageData(culture).delimiters.thousands === '.') {
-                _thousandSep = '\\.';
-            } else {
-                _thousandSep = numeral.languageData(culture).delimiters.thousands;
-            }
-
-            // validating currency symbol
-            temp = val.match(/^[^\d]/);
-            if (temp !== null) {
-                val = val.substr(1);
-                if (temp[0] !== _currSymbol) {
-                    return false;
-                }
-            }
-
-            _thousandRegEx = new RegExp(_thousandSep + '{2}');
-
-            if ( !! !val.match(/[^\d.,]/g)) {
-                _valArray = val.split(_decimalSep);
-                if (_valArray.length > 2) {
-                    return false;
-                } else {
-                    if (_valArray.length < 2) {
-                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx));
-                    } else {
-                        if (_valArray[0].length === 1) {
-                            return ( !! _valArray[0].match(/^\d+$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
-                        } else {
-                            return ( !! _valArray[0].match(/^\d+.*\d$/) && !! !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
-                        }
-                    }
-                }
-            }
-
-            return false;
         }
 
     };
