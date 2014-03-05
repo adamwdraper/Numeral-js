@@ -486,17 +486,20 @@
             _thousandSep,
             _currSymbol,
             _valArray,
+            _abbrObj,
             _thousandRegEx,
+            languageData,
             temp;
 
         //coerce val to string
         if (typeof val !== 'string') {
-            if (console.warn){
-                console.warn('Numeral.js: Value is not string. It has been co-erced to: ',val);
-            }
             val += '';
+            if (console.warn) {
+                console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
+            }
         }
 
+        //trim whitespaces from either sides
         val = val.trim();
 
         //if val is just digits return true
@@ -512,25 +515,35 @@
         //get the decimal and thousands separator from numeral.languageData
         try {
             //check if the culture is understood by numeral. if not, default it to current language
-            numeral.languageData(culture);
+            languageData = numeral.languageData(culture);
         } catch (e) {
-            culture = numeral.language();
+            languageData = numeral.languageData(numeral.language());
         }
 
         //setup the delimiters and currency symbol based on culture/language
-        _currSymbol = numeral.languageData(culture).currency.symbol;
-        _decimalSep = numeral.languageData(culture).delimiters.decimal;
-        if (numeral.languageData(culture).delimiters.thousands === '.') {
+        _currSymbol = languageData.currency.symbol;
+        _abbrObj = languageData.abbreviations;
+        _decimalSep = languageData.delimiters.decimal;
+        if (languageData.delimiters.thousands === '.') {
             _thousandSep = '\\.';
         } else {
-            _thousandSep = numeral.languageData(culture).delimiters.thousands;
+            _thousandSep = languageData.delimiters.thousands;
         }
 
         // validating currency symbol
-        temp = val.match(/^[^\d]/);
+        temp = val.match(/^[^\d]+/);
         if (temp !== null) {
             val = val.substr(1);
             if (temp[0] !== _currSymbol) {
+                return false;
+            }
+        }
+
+        //validating abbreviation symbol
+        temp = val.match(/[^\d]+$/);
+        if (temp !== null) {
+            val = val.slice(0, -1);
+            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
                 return false;
             }
         }

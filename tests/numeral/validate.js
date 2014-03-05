@@ -1,6 +1,7 @@
 var numeral = require('../../numeral'),
 	language = 'en';
 
+//All the tests are for en or en-US
 exports.validate = {
 	numbers: function(test) {
 		var tests = [
@@ -41,12 +42,24 @@ exports.validate = {
 			[' $1000 ', true],
 			[' $1000', true],
 			[' $1000,100.123', true],
+			['$100.123k', true],
+			['$100.123m', true],
+			['$100.123b', true],
+			['$100.123t', true],
+			['100,456.123k', true],
+			[' 100,456.123t ', true],
+			['$1,00.123k', true],
 			['%100', false],
 			[' %1.0.00', false],
 			[' ^1 000 ', false],
 			['^1.000 ', false],
 			['$ 1000.', false],
-			['%1000', false]
+			['%1000', false],
+			['100,456.123z', false],
+			['$100$', false],
+			['$100,213.456l', false],
+			['aa100,213.456l', false],
+			['$100,213.456kk', false]
 		];
 		test.expect(tests.length);
 		for(var i=0; i<tests.length; i++){
