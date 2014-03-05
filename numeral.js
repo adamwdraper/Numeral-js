@@ -662,15 +662,15 @@
                 temp;
 
             //coerce val to string
-            if (typeof val !== "string")
-                val += "";
+            if (typeof val !== 'string')
+                val += '';
 
             //if val is just digits return true
             if ( !! val.match(/^\d+$/))
                 return true;
 
             //if val is empty return false
-            if (val == "")
+            if (val == '')
                 return false;
 
             //get the decimal and thousands separator from numeral.languageData
@@ -684,8 +684,8 @@
             //setup the delimiters and currency symbol based on culture/language
             _currSymbol = numeral.languageData(culture).currency.symbol;
             _decimalSep = numeral.languageData(culture).delimiters.decimal;
-            if (numeral.languageData(culture).delimiters.thousands == ".")
-                _thousandSep = "\\.";
+            if (numeral.languageData(culture).delimiters.thousands == '.')
+                _thousandSep = '\\.';
             else
                 _thousandSep = numeral.languageData(culture).delimiters.thousands;
 
@@ -697,7 +697,7 @@
                     return false;
             }
 
-            _thousandRegEx = new RegExp(_thousandSep + "{2}");
+            _thousandRegEx = new RegExp(_thousandSep + '{2}');
 
             if ( !! !val.match(/[^\d.,]/g)) {
                 _valArray = val.split(_decimalSep);
