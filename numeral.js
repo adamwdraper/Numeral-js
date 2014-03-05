@@ -550,7 +550,7 @@
 
         _thousandRegEx = new RegExp(_thousandSep + '{2}');
 
-        if ( !val.match(/[^\d.,]/g)) {
+        if (!val.match(/[^\d.,]/g)) {
             _valArray = val.split(_decimalSep);
             if (_valArray.length > 2) {
                 return false;
