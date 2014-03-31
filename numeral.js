@@ -419,6 +419,8 @@
         if (!key) {
             return currentLanguage;
         }
+        
+        key = key.toLowerCase();
 
         if (key && !values) {
             if(!languages[key]) {
