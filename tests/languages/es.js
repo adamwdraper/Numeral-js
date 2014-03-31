@@ -1,4 +1,4 @@
-var numeral = require('../../numeral'),
+﻿var numeral = require('../../numeral'),
     language = require('../../languages/es');
 
 numeral.language('es', language);
@@ -47,10 +47,10 @@ exports['language:es'] = {
         test.expect(4);
 
         var tests = [
-            [1000.234,'$0,0.00','$1.000,23'],
-            [-1000.234,'($0,0)','($1.000)'],
-            [-1000.234,'$0.00','-$1000,23'],
-            [1230974,'($0.00a)','$1,23mm']
+            [1000.234,'$0,0.00','€1.000,23'],
+            [-1000.234,'($0,0)','(€1.000)'],
+            [-1000.234,'$0.00','-€1000,23'],
+            [1230974,'($0.00a)','€1,23mm']
         ];
 
         for (var i = 0; i < tests.length; i++) {
