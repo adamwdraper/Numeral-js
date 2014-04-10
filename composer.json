@@ -1,5 +1,5 @@
 {
-    "name": "zardo/Numeral-js",
+    "name": "zardo/numeral-js",
     "type": "library",
     "description": "A javascript library for formatting and manipulating numbers",
     "keywords": ["numeral", "numbers", "javascript"],
