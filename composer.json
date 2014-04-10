@@ -1,0 +1,22 @@
+{
+    "name": "zardo/Numeral-js",
+    "type": "library",
+    "description": "A javascript library for formatting and manipulating numbers",
+    "keywords": ["numeral", "numbers", "javascript"],
+    "homepage": "http://numeraljs.com/",
+    "require": {},
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Draper",
+            "homepage": "https://github.com/adamwdraper",
+            "role": "Developer"
+        },
+        {
+            "name": "Lucas Zardo",
+            "email": "lucas@deliverymuch.com.br",
+            "homepage": "https://deliverymuch.com.br",
+            "role": "Packagist Editor"
+        }
+    ]
+}
