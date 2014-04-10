@@ -62,21 +62,41 @@
 
     // determine what type of formatting we need to do
     function formatNumeral (n, format, roundingFunction) {
-        var output;
+        var output_tokens;
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
-            output = formatCurrency(n, format, roundingFunction);
+            output_tokens = formatCurrency(n, format, roundingFunction);
         } else if (format.indexOf('%') > -1) { // percentage
-            output = formatPercentage(n, format, roundingFunction);
+            output_tokens = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
-            output = formatTime(n, format);
+            output_tokens = formatTime(n, format);
         } else { // plain ol' numbers or bytes
-            output = formatNumber(n._value, format, roundingFunction);
+            output_tokens = formatNumber(n._value, format, roundingFunction);
         }
 
         // return string
-        return output;
+        var output = '';
+        var wrap = (format.indexOf('h') > -1);
+
+        for (var i in output_tokens) {
+            output += token_to_string(output_tokens[i], wrap);
+        }
+
+        if (wrap) {
+            return '<span class="numeral">'+output+'</span>';
+        }
+        else {
+            return output;
+        }
+    }
+
+    // Return the value of the given token, wrapped in HTML if wrap is true
+    function token_to_string (token, wrap) {
+        if (wrap) {
+            return '<span class="numeral-'+token[0]+'">'+token[1]+'</span>';
+        }
+        return token[1];
     }
 
     // revert to number
@@ -131,7 +151,8 @@
             minusSignIndex = format.indexOf('-'),
             space = '',
             spliceIndex,
-            output;
+            output_tokens,
+            symbol;
 
         // check for space before or after currency
         if (format.indexOf(' $') > -1) {
@@ -145,38 +166,36 @@
         }
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction);
+        output_tokens = formatNumber(n._value, format, roundingFunction);
+        symbol = languages[currentLanguage].currency.symbol;
 
         // position the symbol
         if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-                output = output.split('');
+            if (output_tokens[0] && output_tokens[0][0] === 'sign') {
                 spliceIndex = 1;
                 if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex){
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
-                output = output.join('');
+                output_tokens.splice(spliceIndex, 0, ['currency', symbol + space]);
             } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+                output_tokens.unshift(['currency', symbol + space]);
             }
         } else {
-            if (output.indexOf(')') > -1) {
-                output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
-                output = output.join('');
+            if (output_tokens[output_tokens.length - 1] && 
+                output_tokens[output_tokens.length - 1][0] === 'sign') {
+                output_tokens.splice(-1, 0, ['currency', space + symbol]);
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                output_tokens.push(['currency', space + symbol]);
             }
         }
 
-        return output;
+        return output_tokens;
     }
 
     function formatPercentage (n, format, roundingFunction) {
         var space = '',
-            output,
+            output_tokens,
             value = n._value * 100;
 
         // check for space before %
@@ -187,24 +206,34 @@
             format = format.replace('%', '');
         }
 
-        output = formatNumber(value, format, roundingFunction);
+        output_tokens = formatNumber(value, format, roundingFunction);
+
+        var new_token = ['percent', space+'%'];
         
-        if (output.indexOf(')') > -1 ) {
-            output = output.split('');
-            output.splice(-1, 0, space + '%');
-            output = output.join('');
-        } else {
-            output = output + space + '%';
+        // If there's a sign at the end, we need to insert directly
+        // before the sign
+        if (output_tokens[output_tokens.length - 1] && 
+            output_tokens[output_tokens.length - 1][0] === 'sign') {
+            output_tokens.splice(-1, 0, new_token);
+        }
+        else {
+            output_tokens.push(new_token);
         }
 
-        return output;
+        return output_tokens;
     }
 
     function formatTime (n) {
         var hours = Math.floor(n._value/60/60),
             minutes = Math.floor((n._value - (hours * 60 * 60))/60),
             seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
-        return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+        var output_tokens = [];
+        output_tokens.push(['hours', hours]);
+        output_tokens.push(['time-sep', ':']);
+        output_tokens.push(['minutes', (minutes < 10) ? '0' + minutes : minutes]);
+        output_tokens.push(['time-sep', ':']);
+        output_tokens.push(['seconds', (seconds < 10) ? '0' + seconds : seconds]);
+        return output_tokens;
     }
 
     function unformatTime (string) {
@@ -248,11 +277,12 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            output_tokens = [];
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
-            return zeroFormat;
+            return [['numeral', zeroFormat]];
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
@@ -384,7 +414,27 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            if (neg) {
+                output_tokens.push(['sign', (negP ? '(' : '-')]);
+            }
+            else if (signed) {
+                output_tokens.push(['sign', '+']);
+            }
+            output_tokens.push(['numeral', w+d]);
+            if (ord) {
+                output_tokens.push(['ord', ord]);
+            }
+            if (abbr) {
+                output_tokens.push(['abbr', abbr]);
+            }
+            if (bytes) {
+                output_tokens.push(['bytes', bytes]);
+            }
+            if (negP && neg) {
+                output_tokens.push(['sign', ')']);
+            }
+
+            return output_tokens;
         }
     }
 
