@@ -62,7 +62,14 @@
 
     // determine what type of formatting we need to do
     function formatNumeral (n, format, roundingFunction) {
-        var output_tokens;
+        var output_tokens, 
+            wrap = false;
+
+        // 'h' in the format string means to wrap all tokens in an HTML span
+        if (format.indexOf('h') > -1) {
+            wrap = true;
+            format = format.replace('h', '');
+        }
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
@@ -77,7 +84,6 @@
 
         // return string
         var output = '';
-        var wrap = (format.indexOf('h') > -1);
 
         for (var i in output_tokens) {
             output += token_to_string(output_tokens[i], wrap);
@@ -282,7 +288,7 @@
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
-            return [['numeral', zeroFormat]];
+            return [['number', zeroFormat]];
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
@@ -420,7 +426,7 @@
             else if (signed) {
                 output_tokens.push(['sign', '+']);
             }
-            output_tokens.push(['numeral', w+d]);
+            output_tokens.push(['number', w+d]);
             if (ord) {
                 output_tokens.push(['ord', ord]);
             }
