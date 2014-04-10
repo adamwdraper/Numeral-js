@@ -12,8 +12,8 @@
         abbreviations: {
             thousand: 'tis.',
             million: 'mil.',
-            billion: 'b',
-            trillion: 't'
+            billion: 'mld.',
+            trillion: 'bil.'
         },
         ordinal: function () {
             return '.';
