@@ -85,7 +85,7 @@
         // return string
         var output = '';
 
-        for (var i in output_tokens) {
+        for (var i=0; i < output_tokens.length; i++) {
             output += token_to_string(output_tokens[i], wrap);
         }
 
