@@ -1,7 +1,7 @@
 /*!
  * numeral.js language configuration
  * language : czech (cs)
- * author : Anatoli Papirovski : https://github.com/apapirovski
+ * author : Jan Peša : https://github.com/smajl
  */
 (function () {
     var language = {
