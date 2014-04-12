@@ -248,6 +248,7 @@
             precision,
             thousands,
             d = '',
+            f,
             neg = false;
 
         // check if number is zero and a custom zero format has been set
@@ -355,10 +356,11 @@
                     d = toFixed(value, precision.length, roundingFunction);
                 }
 
-                w = d.split('.')[0];
+                f = d.split('.');
+                w = f[0];
 
-                if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                if (f[1] && f[1].length) {
+                    d = languages[currentLanguage].delimiters.decimal + f[1];
                 } else {
                     d = '';
                 }
