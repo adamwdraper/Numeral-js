@@ -30,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('ru-UA', language);
+        this.numeral.language('ru-ua', language);
     }
 }());

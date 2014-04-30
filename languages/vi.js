@@ -21,7 +21,7 @@
         },
         currency: {
           // Should really go after the number
-          symbol: '₫'
+          symbol: '₫ '
         }
     };
 
