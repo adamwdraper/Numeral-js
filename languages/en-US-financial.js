@@ -36,3 +36,4 @@
         this.numeral.language('en-US-financial', language);
     }
 }());
+
