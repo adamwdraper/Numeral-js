@@ -12,11 +12,7 @@
         abbreviations: {
             thousand: 'k',
             million: 'MM',
-<<<<<<< HEAD
             billion: 'B',
-=======
-            billion: 'BN',
->>>>>>> 58b07a0... added en-US-financial and en-US-metric languages
             trillion: 'T'
         },
         ordinal: function (number) {
