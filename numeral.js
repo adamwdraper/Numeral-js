@@ -377,7 +377,12 @@
             }
 
             if (thousands > -1) {
-                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
+                // if custom replace function is defined in the language file
+                if (languages[currentLanguage].delimiters.replaceFunction && "function" === typeof languages[currentLanguage].delimiters.replaceFunction) {
+                    w = languages[currentLanguage].delimiters.replaceFunction(w.toString(), languages[currentLanguage]);
+                } else {
+                    w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
+                }
             }
 
             if (format.indexOf('.') === 0) {
