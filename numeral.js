@@ -502,9 +502,6 @@
         },
         currency: {
             symbol: '$'
-        },
-        number: {
-            percentSign: 'wee'
         }
     });
 
