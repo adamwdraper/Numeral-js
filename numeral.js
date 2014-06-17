@@ -63,6 +63,8 @@
     // determine what type of formatting we need to do
     function formatNumeral (n, format, roundingFunction) {
         var output;
+        
+        
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
@@ -177,24 +179,55 @@
     function formatPercentage (n, format, roundingFunction) {
         var space = '',
             output,
+            isBefore = false,
+            negBefore = false,
+            negAfter = false,
             value = n._value * 100;
+        
+        //check for negative before or after the number
+        if (format.indexOf('-') === 0) {
+            negBefore = true;
+        }
+        else if (format.indexOf('-') === format.length - 1) {
+            negAfter = true;
+        }
 
-        // check for space before %
-        if (format.indexOf(' %') > -1) {
+        format = format.replace('-', '');
+
+        // check for space before % and check if % is before or after number
+        if (format.indexOf('% ') === 0) { 
             space = ' ';
             format = format.replace(' %', '');
-        } else {
+            isBefore = true;
+        }
+        else if (format.indexOf('%') === 0) {
+            format = format.replace('%', '');
+            isBefore = true;
+        }
+        else if (format.indexOf(' %') > 0) {
+            space = ' ';
+            format = format.replace(' %', '');
+        } 
+        else {
             format = format.replace('%', '');
         }
 
         output = formatNumber(value, format, roundingFunction);
         
-        if (output.indexOf(')') > -1 ) {
-            output = output.split('');
-            output.splice(-1, 0, space + '%');
-            output = output.join('');
-        } else {
+        if (isBefore) {
+            output = '%' + space + output;
+        }
+        else {
             output = output + space + '%';
+        }
+        
+        if (negBefore) {
+            output = output.replace('-', '');
+            output = '-' + output;
+        }
+        else if (negAfter) {
+            output = output.replace('-', '');
+            output = output + '-';
         }
 
         return output;
@@ -469,6 +502,9 @@
         },
         currency: {
             symbol: '$'
+        },
+        number: {
+            percentSign: 'wee'
         }
     });
 
