@@ -19,12 +19,19 @@ var toIndianNumeral = function (numberString, lang) {
 }
 exports.format = {
     default: function (test) {
-        test.expect(1);
+        test.expect(8);
 
         
-		numeral.languageData().delimiters.replaceFunction = toIndianNumeral;
-        test.strictEqual(numeral(100000).format(), '1,00,000', '0.0');
-		numeral.languageData().delimiters.replaceFunction = null;
+	numeral.languageData().delimiters.replaceFunction = toIndianNumeral;
+        test.strictEqual(numeral(1.50).format('0,0.00'), '1.50', '0.0');
+        test.strictEqual(numeral(10.50).format('0,0.00'), '10.50', '0.0');
+        test.strictEqual(numeral(100.50).format('0,0.00'), '100.50', '0.0');
+        test.strictEqual(numeral(1000.50).format('0,0.00'), '1,000.50', '0.0');
+        test.strictEqual(numeral(10000.50).format('0,0.00'), '10,000.50', '0.0');
+        test.strictEqual(numeral(100000.50).format('0,0.00'), '1,00,000.50', '0.0');
+        test.strictEqual(numeral(1000000.50).format('0,0.00'), '10,00,000.50', '0.0');
+        test.strictEqual(numeral(10000000.50).format('0,0.00'), '1,00,00,000.50', '0.0');
+	numeral.languageData().delimiters.replaceFunction = null;
 
         test.done();
     }
