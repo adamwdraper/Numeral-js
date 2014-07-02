@@ -30,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('be-nl', language);
+        this.numeral.language('nl-be', language);
     }
 }());
