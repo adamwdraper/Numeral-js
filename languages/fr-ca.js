@@ -1,26 +1,25 @@
-/*! 
+/*!
  * numeral.js language configuration
- * language : belgium-dutch (be-nl)
- * author : Dieter Luypaert : https://github.com/moeriki
+ * language : french (Canada) (fr-CA)
+ * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
     var language = {
         delimiters: {
             thousands: ' ',
-            decimal  : ','
+            decimal: ','
         },
         abbreviations: {
-            thousand : 'k',
-            million  : ' mln',
-            billion  : ' mld',
-            trillion : ' bln'
+            thousand: 'k',
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
         ordinal : function (number) {
-            var remainder = number % 100;
-            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+            return number === 1 ? 'er' : 'e';
         },
         currency: {
-            symbol: '€ '
+            symbol: '$'
         }
     };
 
@@ -30,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('be-nl', language);
+        this.numeral.language('fr-ca', language);
     }
 }());

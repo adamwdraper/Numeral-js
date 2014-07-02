@@ -1,25 +1,25 @@
-/*!
+/*! 
  * numeral.js language configuration
- * language : french (Canada) (fr-CA)
- * author : Léo Renaud-Allaire : https://github.com/renaudleo
+ * language : indonesian (id)
+ * author : Rich Daley : http://github.com/pedantic-git
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'M',
-            billion: 'G',
-            trillion: 'T'
+            thousand: 'rb',
+            million: 'jt',
+            billion: 'ml',
+            trillion: 't'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+            return 'ke';
         },
         currency: {
-            symbol: '$'
+            symbol: 'Rp'
         }
     };
 
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr-CA', language);
+        this.numeral.language('id', language);
     }
 }());

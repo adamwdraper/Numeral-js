@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : simplified chinese
- * author : badplum : https://github.com/badplum
+ * language : chinese China (cn)
+ * author : Rich Daley : https://github.com/pedantic-git
  */
 (function () {
     var language = {
@@ -16,10 +16,12 @@
             trillion: '兆'
         },
         ordinal: function (number) {
-            return '.';
+          // Should go before number but numeral.js doesn't currently
+          // support this
+          return '第';
         },
         currency: {
-            symbol: '¥'
+            symbol: '¥ '
         }
     };
 
@@ -29,6 +31,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('chs', language);
+        this.numeral.language('zh-cn', language);
     }
 }());

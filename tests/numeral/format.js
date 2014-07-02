@@ -201,4 +201,61 @@ exports.format = {
       test.done();
       
     },
+
+    html: function (test) {
+        var tests = [
+                [10000,'0,0.0000h',
+                 '<span class="numeral"><span class="numeral-number">10,000.0000</span></span>'],
+                [-10000,'0,0.0h',
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-number">10,000.0</span></span>'],
+                [-10000,'(0,0.0000h)',
+                 '<span class="numeral"><span class="numeral-sign">(</span><span class="numeral-number">10,000.0000</span><span class="numeral-sign">)</span></span>'],
+                [1230,'+0,0h',
+                 '<span class="numeral"><span class="numeral-sign">+</span><span class="numeral-number">1,230</span></span>'],
+                [-0.23,'.00h',
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-number">.23</span></span>'],
+                [2000000000,'0.0ah',
+                 '<span class="numeral"><span class="numeral-number">2.0</span><span class="numeral-abbr">b</span></span>'],
+                [-104000,'0 ah',
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-number">104</span><span class="numeral-abbr"> k</span></span>'],
+                [1,'0oh','<span class="numeral"><span class="numeral-number">1</span><span class="numeral-ord">st</span></span>'],
+                [-5444333222111, '0,0 aKh', 
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-number">5,444,333,222</span><span class="numeral-abbr"> k</span></span>'],
+                [1000.234,'$0,0.00h',
+                 '<span class="numeral"><span class="numeral-currency">$</span><span class="numeral-number">1,000.23</span></span>'],
+                [1000.234,'0,0.00 $h',
+                 '<span class="numeral"><span class="numeral-number">1,000.23</span><span class="numeral-currency"> $</span></span>'],
+                [-1000.234,'($0,0h)',
+                 '<span class="numeral"><span class="numeral-sign">(</span><span class="numeral-currency">$</span><span class="numeral-number">1,000</span><span class="numeral-sign">)</span></span>'],
+                [-1000.234,'(0,0$h)',
+                 '<span class="numeral"><span class="numeral-sign">(</span><span class="numeral-number">1,000</span><span class="numeral-currency">$</span><span class="numeral-sign">)</span></span>'],
+                [-1000.234,'$0.00h',
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-currency">$</span><span class="numeral-number">1000.23</span></span>'],
+                [1230974,'($0.00 ah)',
+                 '<span class="numeral"><span class="numeral-currency">$</span><span class="numeral-number">1.23</span><span class="numeral-abbr"> m</span></span>'],
+                [-1000.234,'$ (0,0)h',
+                 '<span class="numeral"><span class="numeral-currency">$ </span><span class="numeral-sign">(</span><span class="numeral-number">1,000</span><span class="numeral-sign">)</span></span>'],
+                [100,'0bh',
+                 '<span class="numeral"><span class="numeral-number">100</span><span class="numeral-bytes">B</span></span>'],
+                [1024*1024*1024*7.343,'0.[0] bh',
+                 '<span class="numeral"><span class="numeral-number">7.3</span><span class="numeral-bytes"> GB</span></span>'],
+                [0.974878234,'0.000%h',
+                 '<span class="numeral"><span class="numeral-number">97.488</span><span class="numeral-percent">%</span></span>'],
+                [-0.43,'0 %h',
+                 '<span class="numeral"><span class="numeral-sign">-</span><span class="numeral-number">43</span><span class="numeral-percent"> %</span></span>'],
+                [25,'00:00:00h',
+                 '<span class="numeral"><span class="numeral-hours">0</span><span class="numeral-time-sep">:</span><span class="numeral-minutes">00</span><span class="numeral-time-sep">:</span><span class="numeral-seconds">25</span></span>'],
+                [63846,'00:00:00h',
+                 '<span class="numeral"><span class="numeral-hours">17</span><span class="numeral-time-sep">:</span><span class="numeral-minutes">44</span><span class="numeral-time-sep">:</span><span class="numeral-seconds">06</span></span>']
+        ],
+        i;
+
+        test.expect(tests.length);
+
+        for (i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+        }
+
+        test.done();
+    },
 };
