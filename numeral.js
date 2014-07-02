@@ -351,7 +351,11 @@
                     max = Math.pow(1024, power + 1);
 
                     if (value >= min && value < max) {
-                        bytes = bytes + suffixes[power];
+                        var sfx = suffixes[power];
+                        if ('suffixes' in languages[currentLanguage]) {
+                          sfx = languages[currentLanguage].suffixes[sfx];
+                        }
+                        bytes = bytes + sfx;
                         if (min > 0) {
                             value = value / min;
                         }
