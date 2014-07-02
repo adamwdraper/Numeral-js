@@ -1,6 +1,6 @@
 /*! 
  * numeral.js language configuration
- * language : english australia
+ * language : english US
  * author : Rich Daley : https://github.com/pedantic-git
  */
 (function () {
