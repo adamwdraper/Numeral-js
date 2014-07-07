@@ -60,6 +60,26 @@ exports['language:fr-ch'] = {
         test.done();
     },
 
+    bytes: function (test) {
+        var tests = [
+                [100,'0b','100o'],
+                [1024*2,'0 b','2 Ko'],
+                [1024*1024*5,'0b','5Mo'],
+                [1024*1024*1024*7.343,'0.[0] b','7.3 Go'],
+                [1024*1024*1024*1024*3.1536544,'0.000b','3.154To'],
+                [1024*1024*1024*1024*1024*2.953454534534,'0b','3Po']
+            ],
+            i;
+
+        test.expect(tests.length);
+
+        for (i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+        }
+
+        test.done();
+    },
+
     percentages: function (test) {
         test.expect(4);
 

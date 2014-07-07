@@ -426,6 +426,17 @@
         },
         currency: {
             symbol: '$'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -461,6 +472,17 @@
         },
         currency: {
             symbol: 'CHF'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -496,6 +518,17 @@
         },
         currency: {
             symbol: '€'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -508,6 +541,7 @@
         this.numeral.language('fr', language);
     }
 }());
+
 /*!
  * numeral.js language configuration
  * language : Hungarian (hu)
