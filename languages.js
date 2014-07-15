@@ -179,7 +179,7 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
@@ -205,6 +205,7 @@
         this.numeral.language('de', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : english united kingdom (uk)
