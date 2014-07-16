@@ -111,8 +111,8 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
-            decimal: ','
+            thousands: '\'',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
@@ -137,6 +137,7 @@
         this.numeral.language('de-ch', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
@@ -145,7 +146,7 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
@@ -171,6 +172,7 @@
         this.numeral.language('de', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : english Australia (au)

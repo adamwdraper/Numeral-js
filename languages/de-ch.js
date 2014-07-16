@@ -6,8 +6,8 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
-            decimal: ','
+            thousands: '\'',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
