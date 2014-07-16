@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : indonesian (id)
+ * author : Rich Daley : http://github.com/pedantic-git
  */
 (function () {
     var language = {
@@ -10,16 +10,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
+            thousand: 'rb',
+            million: 'jt',
+            billion: 'ml',
             trillion: 't'
         },
-        ordinal: function (number) {
-            return '.';
+        ordinal : function (number) {
+            return 'ke';
         },
         currency: {
-            symbol: '€'
+            symbol: 'Rp'
         }
     };
 
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('id', language);
     }
 }());

@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : vietnamese (vi)
+ * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
     var language = {
@@ -15,11 +15,13 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
-            return '.';
+        ordinal : function (number) {
+          // Should really go before the number
+          return ' thứ';
         },
         currency: {
-            symbol: '€'
+          // Should really go after the number
+          symbol: '₫ '
         }
     };
 
@@ -29,6 +31,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('vi', language);
     }
 }());

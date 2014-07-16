@@ -1,13 +1,13 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : english australia
+ * author : Rich Daley : https://github.com/pedantic-git
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '.',
-            decimal: ','
+            thousands: ',',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
@@ -16,10 +16,14 @@
             trillion: 't'
         },
         ordinal: function (number) {
-            return '.';
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
         },
         currency: {
-            symbol: '€'
+            symbol: '$'
         }
     };
 
@@ -29,6 +33,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('en-us', language);
     }
 }());

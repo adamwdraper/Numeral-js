@@ -1,25 +1,25 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : korean (ko)
+ * author : Rich Daley : https://github.com/pedantic-git
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '.',
-            decimal: ','
+            thousands: ',',
+            decimal: '.'
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            thousand: '천',
+            million: '백만',
+            billion: '십억',
+            trillion: '일조'
         },
         ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: '€'
+            symbol: '₩'
         }
     };
 
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('ko', language);
     }
 }());

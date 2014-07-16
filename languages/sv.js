@@ -1,12 +1,12 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : swedish (sv)
+ * author : Rich Daley : https://github.com/pedantic-git
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '.',
+            thousands: ' ',
             decimal: ','
         },
         abbreviations: {
@@ -19,7 +19,8 @@
             return '.';
         },
         currency: {
-            symbol: '€'
+          // Should go after number but Numeral doesn't support this
+          symbol: 'kr '
         }
     };
 
@@ -29,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('sv', language);
     }
 }());

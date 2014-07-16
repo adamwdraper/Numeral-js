@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
+ * language : danish denmark (dk)
+ * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
     var language = {
@@ -11,15 +11,15 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'mio',
+            billion: 'mia',
+            trillion: 'b'
         },
         ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: '€'
+            symbol: 'DKK'
         }
     };
 
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('de', language);
+        this.numeral.language('da', language);
     }
 }());
