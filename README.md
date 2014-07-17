@@ -11,6 +11,9 @@ Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](h
 
 Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.png?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
 
+# NPM
+
+[![NPM](https://nodei.co/npm/numeral.png?downloads=true)](https://nodei.co/npm/numeral/)
 
 # Contributing
 
