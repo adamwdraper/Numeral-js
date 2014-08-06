@@ -414,13 +414,12 @@
             trillion: 'T'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+            return number === 1 ? 'er' : 'ème';
         },
         currency: {
             symbol: '$'
         }
     };
-
     // Node
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = language;
@@ -430,7 +429,8 @@
         this.numeral.language('fr-CA', language);
     }
 }());
-/*! 
+
+/*!
  * numeral.js language configuration
  * language : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
@@ -443,18 +443,17 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+            return number === 1 ? 'er' : 'ème';
         },
         currency: {
             symbol: 'CHF'
         }
     };
-
     // Node
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = language;
@@ -465,7 +464,7 @@
     }
 }());
 
-/*! 
+/*!
  * numeral.js language configuration
  * language : french (fr)
  * author : Adam Draper : https://github.com/adamwdraper
@@ -478,12 +477,12 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+            return number === 1 ? 'er' : 'ème';
         },
         currency: {
             symbol: '€'
@@ -499,6 +498,7 @@
         this.numeral.language('fr', language);
     }
 }());
+
 /*!
  * numeral.js language configuration
  * language : Hungarian (hu)
