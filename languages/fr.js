@@ -1,4 +1,4 @@
-/*! 
+/*!
  * numeral.js language configuration
  * language : french (fr)
  * author : Adam Draper : https://github.com/adamwdraper
@@ -11,12 +11,12 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
         ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+            return number === 1 ? 'er' : 'ème';
         },
         currency: {
             symbol: '€'
