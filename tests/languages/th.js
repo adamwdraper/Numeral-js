@@ -60,6 +60,26 @@ exports['language:th'] = {
         test.done();
     },
 
+    bytes: function (test) {
+        var tests = [
+                [100,'0b','100ไบต์'],
+                [1024*2,'0 b','2 กิโลไบต์'],
+                [1024*1024*5,'0b','5เมกะไบต์'],
+                [1024*1024*1024*7.343,'0.[0] b','7.3 กิกะไบต์'],
+                [1024*1024*1024*1024*3.1536544,'0.000b','3.154เทราไบต์'],
+                [1024*1024*1024*1024*1024*2.953454534534,'0b','3เพตะไบต์']
+            ],
+            i;
+
+        test.expect(tests.length);
+
+        for (i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+        }
+
+        test.done();
+    },
+
     percentages: function (test) {
         test.expect(4);
 
