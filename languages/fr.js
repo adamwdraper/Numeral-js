@@ -20,6 +20,17 @@
         },
         currency: {
             symbol: '€'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 

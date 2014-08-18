@@ -1,73 +1,3 @@
-/*! 
- * numeral.js language configuration
- * language : belgium-dutch (be-nl)
- * author : Dieter Luypaert : https://github.com/moeriki
- */
-(function () {
-    var language = {
-        delimiters: {
-            thousands: ' ',
-            decimal  : ','
-        },
-        abbreviations: {
-            thousand : 'k',
-            million  : ' mln',
-            billion  : ' mld',
-            trillion : ' bln'
-        },
-        ordinal : function (number) {
-            var remainder = number % 100;
-            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
-        },
-        currency: {
-            symbol: '€ '
-        }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = language;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('be-nl', language);
-    }
-}());
-/*! 
- * numeral.js language configuration
- * language : simplified chinese
- * author : badplum : https://github.com/badplum
- */
-(function () {
-    var language = {
-        delimiters: {
-            thousands: ',',
-            decimal: '.'
-        },
-        abbreviations: {
-            thousand: '千',
-            million: '百万',
-            billion: '十亿',
-            trillion: '兆'
-        },
-        ordinal: function (number) {
-            return '.';
-        },
-        currency: {
-            symbol: '¥'
-        }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = language;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('chs', language);
-    }
-}());
-
 /*!
  * numeral.js language configuration
  * language : czech (cs)
@@ -134,9 +64,10 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('da-dk', language);
+        this.numeral.language('da', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : German in Switzerland (de-ch)
@@ -145,8 +76,8 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
-            decimal: ','
+            thousands: '\'',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
@@ -171,6 +102,7 @@
         this.numeral.language('de-ch', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
@@ -179,7 +111,7 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
@@ -205,6 +137,46 @@
         this.numeral.language('de', language);
     }
 }());
+
+/*! 
+ * numeral.js language configuration
+ * language : english Australia (au)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('en-au', language);
+    }
+}());
+
 /*! 
  * numeral.js language configuration
  * language : english united kingdom (uk)
@@ -245,6 +217,45 @@
 }());
 /*! 
  * numeral.js language configuration
+ * language : english US
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('en-us', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
  * language : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
  */
@@ -279,7 +290,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('es', language);
+        this.numeral.language('es-es', language);
     }
 }());
 
@@ -418,6 +429,17 @@
         },
         currency: {
             symbol: '$'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -427,9 +449,10 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr-CA', language);
+        this.numeral.language('fr-ca', language);
     }
 }());
+
 /*! 
  * numeral.js language configuration
  * language : french (fr-ch)
@@ -452,6 +475,17 @@
         },
         currency: {
             symbol: 'CHF'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -487,6 +521,17 @@
         },
         currency: {
             symbol: '€'
+        },
+        suffixes: {
+          'B':  'o',
+          'KB': 'Ko',
+          'MB': 'Mo',
+          'GB': 'Go',
+          'TB': 'To',
+          'PB': 'Po',
+          'EB': 'Eo',
+          'ZB': 'Zo',
+          'YB': 'Yo'
         }
     };
 
@@ -499,6 +544,7 @@
         this.numeral.language('fr', language);
     }
 }());
+
 /*!
  * numeral.js language configuration
  * language : Hungarian (hu)
@@ -533,6 +579,41 @@
         this.numeral.language('hu', language);
     }
 }());
+/*! 
+ * numeral.js language configuration
+ * language : indonesian (id)
+ * author : Rich Daley : http://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'rb',
+            million: 'jt',
+            billion: 'ml',
+            trillion: 't'
+        },
+        ordinal : function (number) {
+            return 'ke';
+        },
+        currency: {
+            symbol: 'Rp'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('id', language);
+    }
+}());
+
 /*! 
  * numeral.js language configuration
  * language : italian Italy (it)
@@ -602,6 +683,41 @@
     }
 }());
 
+/*! 
+ * numeral.js language configuration
+ * language : korean (ko)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: '천',
+            million: '백만',
+            billion: '십억',
+            trillion: '일조'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: '₩'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('ko', language);
+    }
+}());
+
 /*!
  * numeral.js language configuration
  * language : Latvian (lv)
@@ -633,6 +749,77 @@
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('lv', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : norwegian bokmål Norway (no)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'kr '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('nb-no', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : belgium-dutch (be-nl)
+ * author : Dieter Luypaert : https://github.com/moeriki
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal  : ','
+        },
+        abbreviations: {
+            thousand : 'k',
+            million  : ' mln',
+            billion  : ' mld',
+            trillion : ' bln'
+        },
+        ordinal : function (number) {
+            var remainder = number % 100;
+            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+        },
+        currency: {
+            symbol: '€ '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('nl-be', language);
     }
 }());
 
@@ -797,6 +984,17 @@
         },
         currency: {
             symbol: '\u20B4'
+        },
+        suffixes: {
+          'B':  'Б',
+          'KB': 'кБ',
+          'MB': 'МБ',
+          'GB': 'ГБ',
+          'TB': 'ТБ',
+          'PB': 'ПБ',
+          'EB': 'ЭБ',
+          'ZB': 'ZБ',
+          'YB': 'YБ'
         }
     };
 
@@ -806,7 +1004,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('ru-UA', language);
+        this.numeral.language('ru-ua', language);
     }
 }());
 
@@ -835,6 +1033,17 @@
         },
         currency: {
             symbol: 'руб.'
+        },
+        suffixes: {
+          'B':  'Б',
+          'KB': 'кБ',
+          'MB': 'МБ',
+          'GB': 'ГБ',
+          'TB': 'ТБ',
+          'PB': 'ПБ',
+          'EB': 'ЭБ',
+          'ZB': 'ZБ',
+          'YB': 'YБ'
         }
     };
 
@@ -885,6 +1094,42 @@
 
 /*! 
  * numeral.js language configuration
+ * language : swedish (sv)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+          // Should go after number but Numeral doesn't support this
+          symbol: 'kr '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('sv', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
  * language : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
@@ -905,6 +1150,17 @@
         },
         currency: {
             symbol: '฿'
+        },
+        suffixes: {
+          'B':  'ไบต์',
+          'KB': 'กิโลไบต์',
+          'MB': 'เมกะไบต์',
+          'GB': 'กิกะไบต์',
+          'TB': 'เทราไบต์',
+          'PB': 'เพตะไบต์',
+          'EB': 'เอกซะไบต์',
+          'ZB': 'เซตตะไบต์',
+          'YB': 'ยอตตะไบต์'
         }
     };
 
@@ -1018,6 +1274,154 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('uk-UA', language);
+        this.numeral.language('uk-ua', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : vietnamese (vi)
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal : function (number) {
+          // Should really go before the number
+          return ' thứ';
+        },
+        currency: {
+          // Should really go after the number
+          symbol: '₫ '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('vi', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : chinese China (cn)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: '千',
+            million: '百万',
+            billion: '十亿',
+            trillion: '兆'
+        },
+        ordinal: function (number) {
+          // Should go before number but numeral.js doesn't currently
+          // support this
+          return '第';
+        },
+        currency: {
+            symbol: '¥ '
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('zh-cn', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : chinese Hong Kong (hk)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: '千',
+            million: '百萬',
+            billion: '十億',
+            trillion: '兆'
+        },
+        ordinal: function (number) {
+          // Should go before number but numeral.js doesn't currently
+          // support this
+          return '第';
+        },
+        currency: {
+            symbol: '$'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('zh-hk', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
+ * language : chinese Taiwan (tw)
+ * author : Rich Daley : https://github.com/pedantic-git
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: '千',
+            million: '百萬',
+            billion: '十億',
+            trillion: '兆'
+        },
+        ordinal: function (number) {
+          // Should go before number but numeral.js doesn't currently
+          // support this
+          return '第';
+        },
+        currency: {
+            symbol: 'NT$'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('zh-tw', language);
     }
 }());
