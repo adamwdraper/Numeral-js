@@ -14,7 +14,8 @@
     "format",
     "time",
     "money",
-    "percentage"
+    "percentage",
+    "ordinal"
   ],
   "main": "./numeral.js",
   "engines": {
