@@ -124,7 +124,7 @@
             return '.';
         },
         currency: {
-            symbol: 'DKK'
+            symbol: 'kr'
         }
     };
 
