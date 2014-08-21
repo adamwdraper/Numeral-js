@@ -43,7 +43,7 @@
         var power = Math.pow(10, precision),
             optionalsRegExp,
             output;
-            
+
         //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (roundingFunction(value * power) / power).toFixed(precision);
@@ -88,6 +88,8 @@
             trillionRegExp,
             suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             bytesMultiplier = false,
+            abbreviations,
+            selectedLanguage,
             power;
 
         if (string.indexOf(':') > -1) {
@@ -96,29 +98,48 @@
             if (string === zeroFormat) {
                 n._value = 0;
             } else {
-                if (languages[currentLanguage].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
+                selectedLanguage = languages[currentLanguage];
+                abbreviations = selectedLanguage.abbreviations;
+
+                if (selectedLanguage.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g,'').replace(selectedLanguage.delimiters.decimal, '.');
                 }
 
-                // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                var makeRegexp = function (abbr) {
+                    // Ensure that abbreviation instance is not part of a larger word.
+                    // The unicode code points are for Japanese characters (based on http://www.localizingjapan.com/blog/2012/01/20/regular-expressions-for-japanese-text/)
+                    return new RegExp('[^a-zA-Z\u3041-\u3096\u30A0-\u30FF\u3400-\u4DB5\u4E00-\u9FCB\uF900-\uFA6A\u2E80-\u2FD5\uFF5F-\uFF9F\uFF01-\uFF5E]' + abbr + '(?:\\)|(\\' + selectedLanguage.currency.symbol + ')?(?:\\))?)?$');
+                };
+
+                var value = ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+
+                if (Array.isArray(abbreviations)) {
+                    for (var i = 0; i < abbreviations.length; i++) {
+                        var regexp = makeRegexp(abbreviations[i].string);
+                        if (stringOriginal.match(regexp)) {
+                            value *= abbreviations[i].limits[0];
+                            break;
+                        }
+                    }
+                } else {
+                    // see if abbreviations are there so that we can multiply to the correct number
+                    thousandRegExp = makeRegexp(abbreviations.thousand);
+                    millionRegExp = makeRegexp(abbreviations.million);
+                    billionRegExp = makeRegexp(abbreviations.billion);
+                    trillionRegExp = makeRegexp(abbreviations.trillion);
+                    value *= ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1);
+                }
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
                     bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
-
                     if (bytesMultiplier) {
                         break;
                     }
                 }
 
-              // TODO (darora) : refactor this logic
-
                 // do some math to create our number
-                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * value;
 
                 // round if we are talking about bytes
                 n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
