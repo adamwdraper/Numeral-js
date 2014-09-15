@@ -19,6 +19,7 @@
         currentLanguage = 'en',
         zeroFormat = null,
         defaultFormat = '0,0',
+		defaultCurrencyFormat = '0$',
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -125,51 +126,107 @@
         return n._value;
     }
 
-    function formatCurrency(n, format, roundingFunction) {
-        var symbolIndex = format.indexOf('$'),
+    function formatCurrency(n, originalFormat, roundingFunction) {
+        var format = originalFormat,
+			symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
             space = '',
+			decimalSeparator = '',
             spliceIndex,
             output;
 
-        // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
-            space = ' ';
-            format = format.replace('$ ', '');
-        } else {
-            format = format.replace('$', '');
-        }
 
-        // format the number
-        output = formatNumber(n._value, format, roundingFunction);
+		if(format.indexOf('$') === -1){
+			// Use defaults instead of the format provided
+			switch (languages[currentLanguage].currency.position){
+				case 'postfix':
+					symbolIndex = 2;
+					break;
+				case 'infix':
+					decimalSeparator = languages[currentLanguage].currency.symbol;
+					if (languages[currentLanguage].currency.spaceSeparated) {
+						decimalSeparator = ' ' + decimalSeparator + ' ';
+					}
+					break;
+				default:
+					symbolIndex = 0;
+					break;
+			}
+			if (languages[currentLanguage].currency.spaceSeparated) {
+				space = ' ';
+			}
 
-        // position the symbol
-        if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-                output = output.split('');
-                spliceIndex = 1;
-                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                    // the symbol appears before the "(" or "-"
-                    spliceIndex = 0;
-                }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
-                output = output.join('');
-            } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
-            }
-        } else {
-            if (output.indexOf(')') > -1) {
-                output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
-                output = output.join('');
-            } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
-            }
-        }
+		} else {
+			// check for space before or after currency
+			if (format.indexOf(' $') > -1) {
+				space = ' ';
+				format = format.replace(' $', '');
+			} else if (format.indexOf('$ ') > -1) {
+				space = ' ';
+				format = format.replace('$ ', '');
+			} else {
+				format = format.replace('$', '');
+			}
+		}
+
+        // Format The Number
+        output = formatNumber(n._value, format, roundingFunction, decimalSeparator);
+
+		if (originalFormat.indexOf('$') === -1) {
+			// Use defaults instead of the format provided
+			switch (languages[currentLanguage].currency.position) {
+				case 'postfix':
+					if (output.indexOf(')') > -1) {
+						output = output.split('');
+						output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+						output = output.join('');
+					} else {
+						output = output + space + languages[currentLanguage].currency.symbol;
+					}
+					break;
+				case 'infix':
+					break;
+				default:
+					if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+						output = output.split('');
+						spliceIndex = 1;
+						if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
+							// the symbol appears before the "(" or "-"
+							spliceIndex = 0;
+						}
+						output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+						output = output.join('');
+					} else {
+						output = languages[currentLanguage].currency.symbol + space + output;
+					}
+					break;
+			}
+		} else {
+			// position the symbol
+			if (symbolIndex <= 1) {
+				if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+					output = output.split('');
+					spliceIndex = 1;
+					if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
+						// the symbol appears before the "(" or "-"
+						spliceIndex = 0;
+					}
+					output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+					output = output.join('');
+				} else {
+					output = languages[currentLanguage].currency.symbol + space + output;
+				}
+			} else {
+				if (output.indexOf(')') > -1) {
+					output = output.split('');
+					output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+					output = output.join('');
+				} else {
+					output = output + space + languages[currentLanguage].currency.symbol;
+				}
+			}
+		}
 
         return output;
     }
@@ -226,8 +283,8 @@
         }
         return Number(seconds);
     }
-
-    function formatNumber(value, format, roundingFunction) {
+	
+    function formatNumber (value, format, roundingFunction, sep) {
         var negP = false,
             signed = false,
             optDec = false,
@@ -248,6 +305,7 @@
             precision,
             thousands,
             d = '',
+			forcedNeg = false,
             neg = false;
 
         // check if number is zero and a custom zero format has been set
@@ -256,6 +314,9 @@
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
+			if(format.indexOf('-') !== -1){
+				forcedNeg = true;
+			}
             if (format.indexOf('(') > -1) {
                 negP = true;
                 format = format.slice(1, -1);
@@ -358,7 +419,8 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+					var prefix = sep ? abbr + sep : languages[currentLanguage].delimiters.decimal;
+                    d = prefix + d.split('.')[1];
                 } else {
                     d = '';
                 }
@@ -384,7 +446,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + (((forcedNeg && neg)|| (!negP && neg)) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr && !sep) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
@@ -419,14 +481,19 @@
         if (!key) {
             return currentLanguage;
         }
-        
-        key = key.toLowerCase();
 
         if (key && !values) {
             if (!languages[key]) {
                 throw new Error('Unknown language : ' + key);
             }
             currentLanguage = key;
+			var defaults = languages[key].defaults;
+			if(defaults && defaults.format){
+				numeral.defaultFormat(defaults.format);
+			}
+			if(defaults && defaults.currencyFormat){
+				numeral.defaultCurrencyFormat(defaults.currencyFormat);
+			}
         }
 
         if (values || !languages[key]) {
@@ -471,7 +538,10 @@
         },
         currency: {
             symbol: '$'
-        }
+        },
+		defaults: {
+			currencyFormat: '$0[.]00'
+		}
     });
 
     numeral.zeroFormat = function(format) {
@@ -480,6 +550,10 @@
 
     numeral.defaultFormat = function(format) {
         defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    };
+
+    numeral.defaultCurrencyFormat = function (format) {
+		defaultCurrencyFormat = typeof(format) === 'string' ? format : '0$';
     };
 
     numeral.validate = function(val, culture) {
@@ -680,6 +754,13 @@
                 inputString ? inputString : defaultFormat, (roundingFunction !== undefined) ? roundingFunction : Math.round
             );
         },
+
+		formatCurrency: function(inputString, roundingFunction) {
+			return formatCurrency(this,
+				inputString ? inputString : defaultCurrencyFormat,
+				(roundingFunction !== undefined) ? roundingFunction : Math.round
+			);
+		},
 
         unformat: function(inputString) {
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
