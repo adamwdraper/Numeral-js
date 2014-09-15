@@ -122,267 +122,267 @@ exports.format = {
         test.done();
     },
 
-	formatPostfixedCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatPostfixedCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test1', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'postfix',
-				spaceSeparated: false
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test1', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'postfix',
+                spaceSeparated: false
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test1');
+        numeral.language('test1');
 
 
         var tests = [
-			[100.23, '100.23$'],
-			[-100.23, '(100.23$)'],
-			[100000.23, '100.00k$']
-		];
+            [100.23, '100.23$'],
+            [-100.23, '(100.23$)'],
+            [100000.23, '100.00k$']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
 
-	formatPostfixedWithSpaceCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatPostfixedWithSpaceCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test2', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'postfix',
-				spaceSeparated: true
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test2', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'postfix',
+                spaceSeparated: true
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test2');
+        numeral.language('test2');
 
 
         var tests = [
-			[100.23, '100.23 $'],
-			[100000.23, '100.00k $'],
-			[-100.23, '(100.23 $)']
-		];
+            [100.23, '100.23 $'],
+            [100000.23, '100.00k $'],
+            [-100.23, '(100.23 $)']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
 
-	formatInfixedCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatInfixedCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test3', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'infix',
-				spaceSeparated: false
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test3', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'infix',
+                spaceSeparated: false
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test3');
+        numeral.language('test3');
 
 
         var tests = [
-			[100.23, '100$23'],
-			[100000.23, '100k$00'],
-			[-100.23, '(100$23)']
-		];
+            [100.23, '100$23'],
+            [100000.23, '100k$00'],
+            [-100.23, '(100$23)']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
 
-	formatInfixedWithSpaceCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatInfixedWithSpaceCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test4', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'infix',
-				spaceSeparated: true
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test4', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'infix',
+                spaceSeparated: true
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test4');
+        numeral.language('test4');
 
 
         var tests = [
-			[100.23, '100 $ 23'],
-			[100000.23, '100k $ 00'],
-			[-100.23, '(100 $ 23)']
-		];
+            [100.23, '100 $ 23'],
+            [100000.23, '100k $ 00'],
+            [-100.23, '(100 $ 23)']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
-	formatPrefixedCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatPrefixedCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test5', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'prefix',
-				spaceSeparated: false
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test5', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'prefix',
+                spaceSeparated: false
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test5');
+        numeral.language('test5');
 
 
         var tests = [
-			[100.23, '$100.23'],
-			[100000.23, '$100.00k'],
-			[-100.23, '($100.23)']
-		];
+            [100.23, '$100.23'],
+            [100000.23, '$100.00k'],
+            [-100.23, '($100.23)']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
 
-	formatPrefixedWithSpaceCurrency: function (test) {
-		var i;
-		var currentLanguage = numeral.language();
+    formatPrefixedWithSpaceCurrency: function (test) {
+        var i;
+        var currentLanguage = numeral.language();
 
-		numeral.language('test6', {
-			delimiters: {
-				thousands: ',',
-				decimal: '.'
-			},
-			abbreviations: {
-				thousand: 'k',
-				million: 'm',
-				billion: 'b',
-				trillion: 't'
-			},
-			currency: {
-				symbol: '$',
-				position: 'prefix',
-				spaceSeparated: true
-			},
-			defaults: {
-				currencyFormat: '(0.00a)'
-			}
-		});
+        numeral.language('test6', {
+            delimiters: {
+                thousands: ',',
+                decimal: '.'
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '$',
+                position: 'prefix',
+                spaceSeparated: true
+            },
+            defaults: {
+                currencyFormat: '(0.00a)'
+            }
+        });
 
-		numeral.language('test6');
+        numeral.language('test6');
 
 
         var tests = [
-			[100.23, '$ 100.23'],
-			[100000.23, '$ 100.00k'],
-			[-100.23, '($ 100.23)']
-		];
+            [100.23, '$ 100.23'],
+            [100000.23, '$ 100.00k'],
+            [-100.23, '($ 100.23)']
+        ];
 
-		test.expect(tests.length);
+        test.expect(tests.length);
 
-		for (i = 0; i < tests.length; i++) {
+        for (i = 0; i < tests.length; i++) {
             test.strictEqual(numeral(tests[i][0]).formatCurrency(), tests[i][1], tests[i][1]);
         }
 
-		numeral.language(currentLanguage);
-		test.done();
+        numeral.language(currentLanguage);
+        test.done();
     },
 
     bytes: function (test) {
