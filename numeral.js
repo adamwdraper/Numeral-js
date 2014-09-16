@@ -19,6 +19,7 @@
         currentLanguage = 'en',
         zeroFormat = null,
         defaultFormat = '0,0',
+        defaultCurrencyFormat = '0$',
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -125,49 +126,92 @@
         return n._value;
     }
 
-    function formatCurrency(n, format, roundingFunction) {
-        var symbolIndex = format.indexOf('$'),
+    function formatCurrency(n, originalFormat, roundingFunction) {
+        var format = originalFormat,
+            symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
             space = '',
+            decimalSeparator = '',
             spliceIndex,
             output;
 
-        // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
-            space = ' ';
-            format = format.replace('$ ', '');
+
+        if(format.indexOf('$') === -1){
+            // Use defaults instead of the format provided
+            if (languages[currentLanguage].currency.position === 'infix') {
+				decimalSeparator = languages[currentLanguage].currency.symbol;
+				if (languages[currentLanguage].currency.spaceSeparated) {
+					decimalSeparator = ' ' + decimalSeparator + ' ';
+				}
+            } else if (languages[currentLanguage].currency.spaceSeparated) {
+				space = ' ';
+			}
         } else {
-            format = format.replace('$', '');
+            // check for space before or after currency
+            if (format.indexOf(' $') > -1) {
+                space = ' ';
+                format = format.replace(' $', '');
+            } else if (format.indexOf('$ ') > -1) {
+                space = ' ';
+                format = format.replace('$ ', '');
+            } else {
+                format = format.replace('$', '');
+            }
         }
 
-        // format the number
-        output = formatNumber(n._value, format, roundingFunction);
+        // Format The Number
+        output = formatNumber(n._value, format, roundingFunction, decimalSeparator);
 
-        // position the symbol
-        if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-                output = output.split('');
-                spliceIndex = 1;
-                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                    // the symbol appears before the "(" or "-"
-                    spliceIndex = 0;
-                }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
-                output = output.join('');
-            } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+        if (originalFormat.indexOf('$') === -1) {
+            // Use defaults instead of the format provided
+            switch (languages[currentLanguage].currency.position) {
+                case 'postfix':
+                    if (output.indexOf(')') > -1) {
+                        output = output.split('');
+                        output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                        output = output.join('');
+                    } else {
+                        output = output + space + languages[currentLanguage].currency.symbol;
+                    }
+                    break;
+                case 'infix':
+                    break;
+                default:
+                    if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+                        output = output.split('');
+                        spliceIndex = Math.max(openParenIndex, minusSignIndex) + 1;
+
+                        output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                        output = output.join('');
+                    } else {
+                        output = languages[currentLanguage].currency.symbol + space + output;
+                    }
+                    break;
             }
         } else {
-            if (output.indexOf(')') > -1) {
-                output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
-                output = output.join('');
+            // position the symbol
+            if (symbolIndex <= 1) {
+                if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+                    output = output.split('');
+                    spliceIndex = 1;
+                    if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
+                        // the symbol appears before the "(" or "-"
+                        spliceIndex = 0;
+                    }
+                    output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                    output = output.join('');
+                } else {
+                    output = languages[currentLanguage].currency.symbol + space + output;
+                }
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                if (output.indexOf(')') > -1) {
+                    output = output.split('');
+                    output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                    output = output.join('');
+                } else {
+                    output = output + space + languages[currentLanguage].currency.symbol;
+                }
             }
         }
 
@@ -227,7 +271,7 @@
         return Number(seconds);
     }
 
-    function formatNumber(value, format, roundingFunction) {
+    function formatNumber (value, format, roundingFunction, sep) {
         var negP = false,
             signed = false,
             optDec = false,
@@ -246,9 +290,14 @@
             power,
             w,
             precision,
+			prefix,
             thousands,
             d = '',
-            neg = false;
+            forcedNeg = false,
+            neg = false,
+			indexOpenP = -1,
+			indexMinus = -1,
+			paren = '';
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
@@ -256,6 +305,9 @@
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
+            if(format.indexOf('-') !== -1){
+                forcedNeg = true;
+            }
             if (format.indexOf('(') > -1) {
                 negP = true;
                 format = format.slice(1, -1);
@@ -358,7 +410,8 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                    prefix = sep ? abbr + sep : languages[currentLanguage].delimiters.decimal;
+                    d = prefix + d.split('.')[1];
                 } else {
                     d = '';
                 }
@@ -384,7 +437,17 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+			indexOpenP = format.indexOf('(');
+			indexMinus = format.indexOf('-');
+
+			if(indexOpenP < indexMinus) {
+				paren = ((negP && neg) ? '(' : '') + (((forcedNeg && neg) || (!negP && neg)) ? '-' : '');
+			} else {
+				paren = (((forcedNeg && neg) || (!negP && neg)) ? '-' : '') + ((negP && neg) ? '(' : '');
+			}
+
+
+            return paren + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr && !sep) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
@@ -419,14 +482,19 @@
         if (!key) {
             return currentLanguage;
         }
-        
-        key = key.toLowerCase();
 
         if (key && !values) {
             if (!languages[key]) {
                 throw new Error('Unknown language : ' + key);
             }
             currentLanguage = key;
+            var defaults = languages[key].defaults;
+            if(defaults && defaults.format){
+                numeral.defaultFormat(defaults.format);
+            }
+            if(defaults && defaults.currencyFormat){
+                numeral.defaultCurrencyFormat(defaults.currencyFormat);
+            }
         }
 
         if (values || !languages[key]) {
@@ -471,6 +539,9 @@
         },
         currency: {
             symbol: '$'
+        },
+        defaults: {
+            currencyFormat: '$0[.]00'
         }
     });
 
@@ -480,6 +551,10 @@
 
     numeral.defaultFormat = function(format) {
         defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    };
+
+    numeral.defaultCurrencyFormat = function (format) {
+        defaultCurrencyFormat = typeof(format) === 'string' ? format : '0$';
     };
 
     numeral.validate = function(val, culture) {
@@ -678,6 +753,13 @@
         format: function(inputString, roundingFunction) {
             return formatNumeral(this,
                 inputString ? inputString : defaultFormat, (roundingFunction !== undefined) ? roundingFunction : Math.round
+            );
+        },
+
+        formatCurrency: function(inputString, roundingFunction) {
+            return formatCurrency(this,
+                inputString ? inputString : defaultCurrencyFormat,
+                (roundingFunction !== undefined) ? roundingFunction : Math.round
             );
         },
 
