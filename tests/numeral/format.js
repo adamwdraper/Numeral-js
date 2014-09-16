@@ -318,7 +318,7 @@ exports.format = {
                 spaceSeparated: false
             },
             defaults: {
-                currencyFormat: '(0.00a)'
+                currencyFormat: '-(0.00a)'
             }
         });
 
@@ -328,7 +328,7 @@ exports.format = {
         var tests = [
             [100.23, '$100.23'],
             [100000.23, '$100.00k'],
-            [-100.23, '($100.23)']
+            [-100.23, '-($100.23)']
         ];
 
         test.expect(tests.length);

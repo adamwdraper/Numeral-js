@@ -139,24 +139,14 @@
 
         if(format.indexOf('$') === -1){
             // Use defaults instead of the format provided
-            switch (languages[currentLanguage].currency.position){
-                case 'postfix':
-                    symbolIndex = 2;
-                    break;
-                case 'infix':
-                    decimalSeparator = languages[currentLanguage].currency.symbol;
-                    if (languages[currentLanguage].currency.spaceSeparated) {
-                        decimalSeparator = ' ' + decimalSeparator + ' ';
-                    }
-                    break;
-                default:
-                    symbolIndex = 0;
-                    break;
-            }
-            if (languages[currentLanguage].currency.spaceSeparated) {
-                space = ' ';
-            }
-
+            if (languages[currentLanguage].currency.position === 'infix') {
+				decimalSeparator = languages[currentLanguage].currency.symbol;
+				if (languages[currentLanguage].currency.spaceSeparated) {
+					decimalSeparator = ' ' + decimalSeparator + ' ';
+				}
+            } else if (languages[currentLanguage].currency.spaceSeparated) {
+				space = ' ';
+			}
         } else {
             // check for space before or after currency
             if (format.indexOf(' $') > -1) {
@@ -190,11 +180,8 @@
                 default:
                     if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
                         output = output.split('');
-                        spliceIndex = 1;
-                        if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                            // the symbol appears before the "(" or "-"
-                            spliceIndex = 0;
-                        }
+                        spliceIndex = Math.max(openParenIndex, minusSignIndex) + 1;
+
                         output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
                         output = output.join('');
                     } else {
@@ -303,10 +290,14 @@
             power,
             w,
             precision,
+			prefix,
             thousands,
             d = '',
             forcedNeg = false,
-            neg = false;
+            neg = false,
+			indexOpenP = -1,
+			indexMinus = -1,
+			paren = '';
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
@@ -419,7 +410,7 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    var prefix = sep ? abbr + sep : languages[currentLanguage].delimiters.decimal;
+                    prefix = sep ? abbr + sep : languages[currentLanguage].delimiters.decimal;
                     d = prefix + d.split('.')[1];
                 } else {
                     d = '';
@@ -446,7 +437,17 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + (((forcedNeg && neg)|| (!negP && neg)) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr && !sep) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+			indexOpenP = format.indexOf('(');
+			indexMinus = format.indexOf('-');
+
+			if(indexOpenP < indexMinus) {
+				paren = ((negP && neg) ? '(' : '') + (((forcedNeg && neg) || (!negP && neg)) ? '-' : '');
+			} else {
+				paren = (((forcedNeg && neg) || (!negP && neg)) ? '-' : '') + ((negP && neg) ? '(' : '');
+			}
+
+
+            return paren + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr && !sep) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
