@@ -11,8 +11,8 @@
         },
         abbreviations: {
             thousand: '천',
-            million: '백만',
-            billion: '십억',
+            tenthousand: '만',
+            hundredmillion: '억',
             trillion: '경'
         },
         ordinal: function (number) {
