@@ -83,7 +83,9 @@
     function unformatNumeral(n, string) {
         var stringOriginal = string,
             thousandRegExp,
+            tenthousandRegExp,
             millionRegExp,
+            hundredmillionRegExp,
             billionRegExp,
             trillionRegExp,
             suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -102,7 +104,9 @@
 
                 // see if abbreviations are there so that we can multiply to the correct number
                 thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                tenthousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.tenthousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
                 millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                hundredmillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.hundredmillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
                 billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
                 trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
@@ -116,7 +120,16 @@
                 }
 
                 // do some math to create our number
-                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+                n._value = ((bytesMultiplier) ? bytesMultiplier : 1)
+                    * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1)
+                    * ((stringOriginal.match(tenthousandRegExp)) ? Math.pow(10, 4) : 1)
+                    * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1)
+                    * ((stringOriginal.match(hundredmillionRegExp)) ? Math.pow(10, 8) : 1)
+                    * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1)
+                    * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1)
+                    * ((string.indexOf('%') > -1) ? 0.01 : 1)
+                    * (((string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1)
+                    * Number(string.replace(/[^0-9\.]+/g, ''));
 
                 // round if we are talking about bytes
                 n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
@@ -248,7 +261,8 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            abbreviations = languages[currentLanguage].abbreviations;
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
@@ -283,19 +297,32 @@
 
                 if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
-                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
+                    abbr = abbr + abbreviations.trillion;
                     value = value / Math.pow(10, 12);
-                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
+                } else if ((abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) &&
+                           !!abbreviations.billion) {
                     // billion
-                    abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                    abbr = abbr + abbreviations.billion;
                     value = value / Math.pow(10, 9);
-                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
+                } else if ((abs < Math.pow(10, 12) && abs >= Math.pow(10, 8) && !abbrForce) &&
+                           !!abbreviations.hundredmillion) {
+                    // hundred-million
+                    abbr = abbr + abbreviations.hundredmillion;
+                    value = value / Math.pow(10, 8);
+                } else if ((abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) &&
+                           !!abbreviations.million) {
                     // million
-                    abbr = abbr + languages[currentLanguage].abbreviations.million;
+                    abbr = abbr + abbreviations.million;
                     value = value / Math.pow(10, 6);
-                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
+                } else if ((abs < Math.pow(10, 9) && abs >= Math.pow(10, 4) && !abbrForce) &&
+                           !!abbreviations.tenthousand) {
+                    // ten-thousand
+                    abbr = abbr + abbreviations.tenthousand;
+                    value = value / Math.pow(10, 4);
+                } else if ((abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) &&
+                           !!abbreviations.thousand) {
                     // thousand
-                    abbr = abbr + languages[currentLanguage].abbreviations.thousand;
+                    abbr = abbr + abbreviations.thousand;
                     value = value / Math.pow(10, 3);
                 }
             }

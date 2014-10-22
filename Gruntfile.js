@@ -59,7 +59,8 @@ module.exports = function(grunt) {
                 'undef': true,
                 'sub': true,
                 'strict': false,
-                'quotmark': 'single'
+                'quotmark': 'single',
+                'laxbreak': true
             }
         }
     });
