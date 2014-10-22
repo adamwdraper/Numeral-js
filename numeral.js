@@ -116,7 +116,14 @@
                 }
 
                 // do some math to create our number
-                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+                n._value = ((bytesMultiplier) ? bytesMultiplier : 1)
+                    * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1)
+                    * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1)
+                    * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1)
+                    * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1)
+                    * ((string.indexOf('%') > -1) ? 0.01 : 1)
+                    * (((string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1)
+                    * Number(string.replace(/[^0-9\.]+/g, ''));
 
                 // round if we are talking about bytes
                 n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
