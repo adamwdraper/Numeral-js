@@ -61,12 +61,12 @@
     ************************************/
 
     // determine what type of formatting we need to do
-    function formatNumeral (n, format, roundingFunction) {
+    function formatNumeral (n, format, roundingFunction, currencySymbol) {
         var output;
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) { // currency!!!!!
-            output = formatCurrency(n, format, roundingFunction);
+            output = formatCurrency(n, format, roundingFunction, currencySymbol);
         } else if (format.indexOf('%') > -1) { // percentage
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
@@ -125,13 +125,14 @@
         return n._value;
     }
 
-    function formatCurrency (n, format, roundingFunction) {
+    function formatCurrency (n, format, roundingFunction, currencySymbol) {
         var symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
             space = '',
             spliceIndex,
-            output;
+            output,
+            symbol = currencySymbol?currencySymbol:languages[currentLanguage].currency.symbol;
 
         // check for space before or after currency
         if (format.indexOf(' $') > -1) {
@@ -156,18 +157,18 @@
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                output.splice(spliceIndex, 0, symbol + space);
                 output = output.join('');
             } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+                output = symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + symbol);
                 output = output.join('');
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                output = output + space + symbol;
             }
         }
 
@@ -583,10 +584,11 @@
             return numeral(this);
         },
 
-        format : function (inputString, roundingFunction) {
+        format : function (inputString, roundingFunction, currencySymbol) {
             return formatNumeral(this, 
                   inputString ? inputString : defaultFormat, 
-                  (roundingFunction !== undefined) ? roundingFunction : Math.round
+                  (roundingFunction !== undefined) ? roundingFunction : Math.round,
+                  currencySymbol ? currencySymbol : null
               );
         },
 

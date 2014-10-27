@@ -108,14 +108,18 @@ exports.format = {
                 [1000.234,'$(0,0.00)','$1,000.23'],
                 [1000.238,'$(0,0.00)','$1,000.24'],
                 [1000.234,'$-0,0)','$1,000'],
-                [1000.234,'$ -0,0','$ 1,000']
+                [1000.234,'$ -0,0','$ 1,000'],
+
+                // test symbol override
+                [1000.234,'$0,0.00','€1,000.23', '€']
+
             ],
             i;
 
         test.expect(tests.length);
 
         for (i = 0; i < tests.length; i++) {
-            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1], Math.round, tests[i][3]), tests[i][2], tests[i][1]);
         }
 
         test.done();
