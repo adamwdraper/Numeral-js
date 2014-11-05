@@ -500,45 +500,31 @@
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Compatibility
      */
     if ('function' !== typeof Array.prototype.reduce) {
-        Array.prototype.reduce = function (callback, opt_initialValue) {
-            'use strict';
-            
-            if (null === this || 'undefined' === typeof this) {
-                // At the moment all modern browsers, that support strict mode, have
-                // native implementation of Array.prototype.reduce. For instance, IE8
-                // does not support strict mode, so this check is actually useless.
+        Array.prototype.reduce = function(callback /*, initialValue*/) {
+		    'use strict';
+            if (this == null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
             }
-            
-            if ('function' !== typeof callback) {
+            if (typeof callback !== 'function') {
                 throw new TypeError(callback + ' is not a function');
             }
-
-            var index,
-                value,
-                length = this.length >>> 0,
-                isValueSet = false;
-
-            if (1 < arguments.length) {
-                value = opt_initialValue;
-                isValueSet = true;
+            var t = Object(this), len = t.length >>> 0, k = 0, value;
+            if (arguments.length == 2) {
+                value = arguments[1];
+            } else {
+                while (k < len && ! k in t) {
+                    k++; 
+                }
+                if (k >= len) {
+                    throw new TypeError('Reduce of empty array with no initial value');
+                }
+                value = t[k++];
             }
-
-            for (index = 0; length > index; ++index) {
-                if (this.hasOwnProperty(index)) {
-                    if (isValueSet) {
-                        value = callback(value, this[index], index, this);
-                    } else {
-                        value = this[index];
-                        isValueSet = true;
-                    }
+            for (; k < len; k++) {
+                if (k in t) {
+                    value = callback(value, t[k], k, t);
                 }
             }
-
-            if (!isValueSet) {
-                throw new TypeError('Reduce of empty array with no initial value');
-            }
-
             return value;
         };
     }
