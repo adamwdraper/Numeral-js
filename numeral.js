@@ -504,15 +504,15 @@
         //trim whitespaces from either sides
         val = val.trim();
 
-        //if val is just digits return true
-        if ( !! val.match(/^\d+$/)) {
-            return true;
-        }
 
         //if val is empty return false
         if (val === '') {
             return false;
         }
+
+        //replace the initial '+' or '-' sign if present
+        val = val.replace(/^[+-]?/, '');
+
 
         //get the decimal and thousands separator from numeral.languageData
         try {
@@ -532,15 +532,16 @@
             _thousandSep = languageData.delimiters.thousands;
         }
 
-        // validating currency symbol
+        //validating currency symbol
         temp = val.match(/^[^\d]+/);
         if (temp !== null) {
+            //chuck the currency symbol away
             val = val.substr(1);
             if (temp[0] !== _currSymbol) {
                 return false;
             }
         }
-
+        
         //validating abbreviation symbol
         temp = val.match(/[^\d]+$/);
         if (temp !== null) {
@@ -549,7 +550,11 @@
                 return false;
             }
         }
-
+        
+        //if val is just digits the return true
+        if ( !! val.match(/^\d+$/)) {
+            return true;
+        }
         _thousandRegEx = new RegExp(_thousandSep + '{2}');
 
         if (!val.match(/[^\d.,]/g)) {

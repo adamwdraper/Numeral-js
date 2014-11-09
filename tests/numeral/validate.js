@@ -23,7 +23,11 @@ exports.validate = {
 			['1000,', false],
 			['10..00', false],			
 			['10,,00', false],
-			['10, 00', false]
+			['10, 00', false],
+      ['-1000', true],
+      ['+-1000', false],
+      ['+100012', true],
+      ['-asad123123', false]
 		];
 		test.expect(tests.length);
 		for(var i=0; i<tests.length; i++){
@@ -46,6 +50,8 @@ exports.validate = {
 			['$100.123m', true],
 			['$100.123b', true],
 			['$100.123t', true],
+			['$100.123tt', false],
+			['$100.123mt', false],
 			['100,456.123k', true],
 			[' 100,456.123t ', true],
 			['$1,00.123k', true],
@@ -59,7 +65,15 @@ exports.validate = {
 			['$100$', false],
 			['$100,213.456l', false],
 			['aa100,213.456l', false],
-			['$100,213.456kk', false]
+			['$100,213.456kk', false],
+      ['$-1000', false],
+      ['-$1000', true],
+      ['$-100,200,012.123', false],
+      ['-$100,200,012.123', true],
+      ['$-as123', false],
+      ['-$123', true],
+      ['-$123,123.123', true],
+      ['$-123', false]
 		];
 		test.expect(tests.length);
 		for(var i=0; i<tests.length; i++){
