@@ -473,7 +473,7 @@
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '\u00A0',
             decimal: ','
         },
         abbreviations: {
@@ -499,6 +499,7 @@
         this.numeral.language('fr', language);
     }
 }());
+
 /*!
  * numeral.js language configuration
  * language : Hungarian (hu)
