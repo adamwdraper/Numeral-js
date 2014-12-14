@@ -16,7 +16,7 @@
     "money",
     "percentage"
   ],
-  "main": "./numeral.js",
+  "main": "./index.js",
   "engines": {
     "node": "*"
   },
@@ -33,12 +33,20 @@
     }
   ],
   "devDependencies": {
-    "uglify-js": "latest",
+    "browserify": "^7.0.1",
     "grunt": "latest",
-    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-uglify": "latest",
+    "gulp": "^3.8.10",
+    "gulp-concat": "^2.4.2",
+    "gulp-jshint": "^1.9.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-minify": "0.0.5",
+    "gulp-uglify": "^1.0.2",
+    "jshint-stylish": "^1.0.0",
+    "uglify-js": "latest"
   },
   "scripts": {
     "test": "grunt"
