@@ -1,6 +1,6 @@
-/*! 
+/*!
  * numeral.js language configuration
- * language : russian (ru)
+ * language : czech (cs)
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
@@ -10,19 +10,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'тыс.',
-            million: 'млн',
+            thousand: 'tis.',
+            million: 'mil.',
             billion: 'b',
             trillion: 't'
         },
         ordinal: function () {
-            // not ideal, but since in Russian it can taken on 
-            // different forms (masculine, feminine, neuter)
-            // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
-            symbol: 'руб.'
+            symbol: 'Kč'
         }
     };
 
@@ -31,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('ru', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('cs', language);
     }
 }());
