@@ -1,25 +1,25 @@
-/*! 
+/*!
  * numeral.js language configuration
- * language : french (fr-ch)
- * author : Adam Draper : https://github.com/adamwdraper
+ * language : french (Canada) (fr-CA)
+ * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '\'',
-            decimal: '.'
+            thousands: ' ',
+            decimal: ','
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
         ordinal : function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {
-            symbol: 'CHF'
+            symbol: '$'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr-ch', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('fr-CA', language);
     }
 }());

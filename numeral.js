@@ -13,10 +13,10 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.3',
-        // internal storage for language config files
-        languages = {},
-        currentLanguage = 'en',
+        VERSION = '1.5.4',
+        // internal storage for locale config files
+        locales = {},
+        currentLocale = 'en',
         zeroFormat = null,
         defaultFormat = '0,0',
         // check for nodeJS
@@ -43,7 +43,7 @@
         var power = Math.pow(10, precision),
             optionalsRegExp,
             output;
-            
+
         //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (roundingFunction(value * power) / power).toFixed(precision);
@@ -96,15 +96,15 @@
             if (string === zeroFormat) {
                 n._value = 0;
             } else {
-                if (languages[currentLanguage].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
+                if (locales[currentLocale].delimiters.decimal !== '.') {
+                    string = string.replace(/\./g,'').replace(locales[currentLocale].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + locales[currentLocale].abbreviations.thousand + '(?:\\)|(\\' + locales[currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + locales[currentLocale].abbreviations.million + '(?:\\)|(\\' + locales[currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + locales[currentLocale].abbreviations.billion + '(?:\\)|(\\' + locales[currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + locales[currentLocale].abbreviations.trillion + '(?:\\)|(\\' + locales[currentLocale].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
@@ -156,18 +156,18 @@
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                output.splice(spliceIndex, 0, locales[currentLocale].currency.symbol + space);
                 output = output.join('');
             } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+                output = locales[currentLocale].currency.symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + locales[currentLocale].currency.symbol);
                 output = output.join('');
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                output = output + space + locales[currentLocale].currency.symbol;
             }
         }
 
@@ -188,7 +188,7 @@
         }
 
         output = formatNumber(value, format, roundingFunction);
-        
+
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
@@ -283,19 +283,19 @@
 
                 if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
-                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
+                    abbr = abbr + locales[currentLocale].abbreviations.trillion;
                     value = value / Math.pow(10, 12);
                 } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
                     // billion
-                    abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                    abbr = abbr + locales[currentLocale].abbreviations.billion;
                     value = value / Math.pow(10, 9);
                 } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
                     // million
-                    abbr = abbr + languages[currentLanguage].abbreviations.million;
+                    abbr = abbr + locales[currentLocale].abbreviations.million;
                     value = value / Math.pow(10, 6);
                 } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
                     // thousand
-                    abbr = abbr + languages[currentLanguage].abbreviations.thousand;
+                    abbr = abbr + locales[currentLocale].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
                 }
             }
@@ -334,7 +334,7 @@
                     format = format.replace('o', '');
                 }
 
-                ord = ord + languages[currentLanguage].ordinal(value);
+                ord = ord + locales[currentLocale].ordinal(value);
             }
 
             if (format.indexOf('[.]') > -1) {
@@ -358,7 +358,7 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                    d = locales[currentLocale].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
                 }
@@ -377,7 +377,7 @@
             }
 
             if (thousands > -1) {
-                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
+                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[currentLocale].delimiters.thousands);
             }
 
             if (format.indexOf('.') === 0) {
@@ -412,44 +412,58 @@
         return obj instanceof Numeral;
     };
 
-    // This function will load languages and then set the global language.  If
+    // This function will load locales and then set the global locale.  If
     // no arguments are passed in, it will simply return the current global
-    // language key.
-    numeral.language = function (key, values) {
+    // locale key.
+    numeral.locale = function (key, values) {
         if (!key) {
-            return currentLanguage;
+            return currentLocale;
         }
 
         if (key && !values) {
-            if(!languages[key]) {
-                throw new Error('Unknown language : ' + key);
+            if(!locales[key]) {
+                throw new Error('Unknown locale : ' + key);
             }
-            currentLanguage = key;
+            currentLocale = key;
         }
 
-        if (values || !languages[key]) {
-            loadLanguage(key, values);
+
+        if (!locales[key]) {
+          if (values) {
+            locales[key] = values;
+          } else {
+            loadLocale(key);
+          }
         }
 
         return numeral;
     };
-    
-    // This function provides access to the loaded language data.  If
+
+    // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
-    // global language object.
-    numeral.languageData = function (key) {
+    // global locale object.
+    numeral.localeData = function (key) {
         if (!key) {
-            return languages[currentLanguage];
+            return locales[currentLocale];
         }
-        
-        if (!languages[key]) {
-            throw new Error('Unknown language : ' + key);
+
+        if (!locales[key]) {
+            var offset = key.indexOf('-');
+            if (offset > -1) {
+                var dkey = key.substr(0,offset);
+                if (!locales[dkey]) {
+                    throw new Error('Unknown locale : ' + key);
+                }
+                key = dkey;
+            } else {
+                throw new Error('Unknown locale : ' + key);
+            }
         }
-        
-        return languages[key];
+
+        return locales[key];
     };
 
-    numeral.language('en', {
+    numeral.locale('en', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -484,8 +498,17 @@
         Helpers
     ************************************/
 
-    function loadLanguage(key, values) {
-        languages[key] = values;
+    function loadLocale(key) {
+      var oldLocale = null;
+      if (!locales[name] && hasModule) {
+        try {
+          oldLocale = numeral.locale();
+          require('./locale/' + name);
+          // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
+          numeral.locale(oldLocale);
+        } catch (e) { }
+      }
+      return locales[name];
     }
 
     /************************************
@@ -502,14 +525,14 @@
     if ('function' !== typeof Array.prototype.reduce) {
         Array.prototype.reduce = function (callback, opt_initialValue) {
             'use strict';
-            
+
             if (null === this || 'undefined' === typeof this) {
                 // At the moment all modern browsers, that support strict mode, have
                 // native implementation of Array.prototype.reduce. For instance, IE8
                 // does not support strict mode, so this check is actually useless.
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
             }
-            
+
             if ('function' !== typeof callback) {
                 throw new TypeError(callback + ' is not a function');
             }
@@ -543,7 +566,7 @@
         };
     }
 
-    
+
     /**
      * Computes the multiplier necessary to make x >= 1,
      * effectively eliminating miscalculations caused by
@@ -569,7 +592,7 @@
                 mn = multiplier(next);
         return mp > mn ? mp : mn;
         }, -Infinity);
-    }        
+    }
 
 
     /************************************
@@ -584,15 +607,15 @@
         },
 
         format : function (inputString, roundingFunction) {
-            return formatNumeral(this, 
-                  inputString ? inputString : defaultFormat, 
+            return formatNumeral(this,
+                  inputString ? inputString : defaultFormat,
                   (roundingFunction !== undefined) ? roundingFunction : Math.round
               );
         },
 
         unformat : function (inputString) {
-            if (Object.prototype.toString.call(inputString) === '[object Number]') { 
-                return inputString; 
+            if (Object.prototype.toString.call(inputString) === '[object Number]') {
+                return inputString;
             }
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
@@ -624,7 +647,7 @@
             function cback(accum, curr, currI, O) {
                 return accum - corrFactor * curr;
             }
-            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;            
+            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
             return this;
         },
 
@@ -643,7 +666,7 @@
                 var corrFactor = correctionFactor(accum, curr);
                 return (accum * corrFactor) / (curr * corrFactor);
             }
-            this._value = [this._value, value].reduce(cback);            
+            this._value = [this._value, value].reduce(cback);
             return this;
         },
 

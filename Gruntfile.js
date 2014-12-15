@@ -6,16 +6,16 @@ module.exports = function(grunt) {
             'min/numeral.min.js' : [
                 'numeral.js'
             ],
-            'min/languages.min.js': [
-                'languages.js'
+            'min/locales.min.js': [
+                'locales.js'
             ]
         };
 
     // all the lang files need to be added manually
-    fs.readdirSync('./languages').forEach(function (path) {
+    fs.readdirSync('./locale').forEach(function (path) {
         var file = path.slice(0, -3),
-            destination = 'min/languages/' + file + '.min.js',
-            src = ['languages/' + path];
+            destination = 'min/locale/' + file + '.min.js',
+            src = ['locale/' + path];
 
         minifiedFiles[destination] = src;
     });
@@ -35,16 +35,16 @@ module.exports = function(grunt) {
         concat: {
             languages: {
                 src: [
-                    'languages/**/*.js'
+                    'locale/**/*.js'
                 ],
-                dest: 'languages.js'
+                dest: 'locales.js'
             }
         },
         jshint: {
             all: [
                 'Gruntfile.js',
                 'numeral.js',
-                'languages/**/*.js'
+                'locale/**/*.js'
             ],
             options: {
                 'node': true,

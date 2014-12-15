@@ -1,7 +1,7 @@
-/*!
+/*! 
  * numeral.js language configuration
- * language : french (Canada) (fr-CA)
- * author : Léo Renaud-Allaire : https://github.com/renaudleo
+ * language : french (fr)
+ * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
     var language = {
@@ -11,15 +11,15 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'M',
-            billion: 'G',
-            trillion: 'T'
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal : function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {
-            symbol: '$'
+            symbol: '€'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr-CA', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('fr', language);
     }
 }());

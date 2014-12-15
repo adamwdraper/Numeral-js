@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : french (fr)
- * author : Adam Draper : https://github.com/adamwdraper
+ * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
+ * author : Marco Krage : https://github.com/sinky
  */
 (function () {
     var language = {
@@ -15,8 +15,8 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
+        ordinal: function (number) {
+            return '.';
         },
         currency: {
             symbol: '€'
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('de', language);
     }
 }());

@@ -1,4 +1,4 @@
-/*! 
+/*!
  * numeral.js language configuration
  * language : simplified chinese
  * author : badplum : https://github.com/badplum
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('chs', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('chs', language);
     }
 }());

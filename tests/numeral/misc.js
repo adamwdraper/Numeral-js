@@ -89,35 +89,68 @@ exports.misc = {
 
         test.done();
     },
-    
-    languageData: function(test) {
+
+    localeData: function(test) {
         test.expect(10);
-        
+
         var cOld = '$',
             cNew = '!',
             formatTestVal = function() { return numeral('100').format('$0,0') },
             oldCurrencyVal = cOld + '100',
             newCurrencyVal = cNew + '100';
-        
-        test.strictEqual(numeral.languageData().currency.symbol, cOld, 'Current language currency is ' + cOld);
-        test.strictEqual(numeral.languageData('en').currency.symbol, cOld, 'English language currency is ' + cOld);
-        
-        numeral.languageData().currency.symbol = cNew;
-        test.strictEqual(numeral.languageData().currency.symbol, cNew, 'Current language currency is changed to ' + cNew);
+
+        test.strictEqual(numeral.localeData().currency.symbol, cOld, 'Current language currency is ' + cOld);
+        test.strictEqual(numeral.localeData('en').currency.symbol, cOld, 'English language currency is ' + cOld);
+
+        numeral.localeData().currency.symbol = cNew;
+        test.strictEqual(numeral.localeData().currency.symbol, cNew, 'Current language currency is changed to ' + cNew);
         test.strictEqual(formatTestVal(), newCurrencyVal, 'Format uses new currency');
-        
-        numeral.languageData().currency.symbol = cOld;
-        test.strictEqual(numeral.languageData().currency.symbol, '$', 'Current language currency is reset to ' + cOld);
+
+        numeral.localeData().currency.symbol = cOld;
+        test.strictEqual(numeral.localeData().currency.symbol, '$', 'Current language currency is reset to ' + cOld);
         test.strictEqual(formatTestVal(), oldCurrencyVal, 'Format uses old currency');
-        
-        numeral.languageData('en').currency.symbol = cNew;
-        test.strictEqual(numeral.languageData().currency.symbol, cNew, 'English language currency is changed to ' + cNew);
+
+        numeral.localeData('en').currency.symbol = cNew;
+        test.strictEqual(numeral.localeData().currency.symbol, cNew, 'English language currency is changed to ' + cNew);
         test.strictEqual(formatTestVal(), newCurrencyVal, 'Format uses new currency');
-        
-        numeral.languageData('en').currency.symbol = cOld;
-        test.strictEqual(numeral.languageData().currency.symbol, cOld, 'English language currency is reset to ' + cOld);
+
+        numeral.localeData('en').currency.symbol = cOld;
+        test.strictEqual(numeral.localeData().currency.symbol, cOld, 'English language currency is reset to ' + cOld);
         test.strictEqual(formatTestVal(), oldCurrencyVal, 'Format uses old currency');
-        
+
         test.done();
+    },
+
+    locale: function(test) {
+      numeral.locale('es');
+
+      test.expect(16);
+
+      var tests = [
+          [10000,'0,0.0000','10.000,0000'],
+          [10000.23,'0,0','10.000'],
+          [-10000,'0,0.0','-10.000,0'],
+          [10000.1234,'0.000','10000,123'],
+          [-10000,'(0,0.0000)','(10.000,0000)'],
+          [-0.23,'.00','-,23'],
+          [-0.23,'(.00)','(,23)'],
+          [0.23,'0.00000','0,23000'],
+          [1230974,'0.0a','1,2mm'],
+          [1460,'0a','1k'],
+          [-104000,'0a','-104k'],
+          [1,'0o','1er'],
+          [52,'0o','52do'],
+          [23,'0o','23er'],
+          [100,'0o','100mo'],
+          [1,'0[.]0','1']
+      ];
+
+      for (var i = 0; i < tests.length; i++) {
+          test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+      }
+
+      numeral.locale('en');
+
+      test.done();
     }
 };
