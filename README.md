@@ -11,6 +11,9 @@ Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](h
 
 Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.png?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
 
+# NPM
+
+[![NPM](https://nodei.co/npm/numeral.png?downloads=true)](https://nodei.co/npm/numeral/)
 
 # Contributing
 
@@ -31,7 +34,7 @@ Please submit all pull requests to the `develop` branch.
 7. Submit a pull request to the `develop` branch.
 
 
-### Languages 
+### Languages
 
 When naming language files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
 
@@ -41,6 +44,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+
+### 1.5.4
+
+Renamed language() to locale() (improved compatibility with momentjs)
 
 ### 1.5.3
 

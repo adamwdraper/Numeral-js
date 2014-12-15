@@ -1,10 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : Estonian
- * author : Illimar Tambek : https://github.com/ragulka
- *
- * Note: in Estonian, abbreviations are always separated
- * from numbers with a space
+ * language : polish (pl)
+ * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
 (function () {
     var language = {
@@ -13,16 +10,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: ' tuh',
-            million: ' mln',
-            billion: ' mld',
-            trillion: ' trl'
+            thousand: 'tys.',
+            million: 'mln',
+            billion: 'mld',
+            trillion: 'bln'
         },
         ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: '€'
+            symbol: 'PLN'
         }
     };
 
@@ -31,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('et', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('pl', language);
     }
 }());

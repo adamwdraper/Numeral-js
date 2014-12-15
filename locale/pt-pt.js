@@ -1,21 +1,21 @@
 /*! 
  * numeral.js language configuration
- * language : italian Italy (it)
- * author : Giacomo Trombi : http://cinquepunti.it
+ * language : portuguese (pt-pt)
+ * author : Diogo Resende : https://github.com/dresende
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '.',
+            thousands: ' ',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'mila',
-            million: 'mil',
+            thousand: 'k',
+            million: 'm',
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal : function (number) {
             return 'º';
         },
         currency: {
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('it', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('pt-pt', language);
     }
 }());

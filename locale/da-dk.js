@@ -1,25 +1,25 @@
-/*! 
+/*!
  * numeral.js language configuration
- * language : polish (pl)
- * author : Dominik Bulaj : https://github.com/dominikbulaj
+ * language : danish denmark (dk)
+ * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'tys.',
-            million: 'mln',
-            billion: 'mld',
-            trillion: 'bln'
+            thousand: 'k',
+            million: 'mio',
+            billion: 'mia',
+            trillion: 'b'
         },
         ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: 'PLN'
+            symbol: 'DKK'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('pl', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('da-dk', language);
     }
 }());

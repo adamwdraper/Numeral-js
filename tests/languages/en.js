@@ -2,12 +2,12 @@ var numeral = require('../../numeral');
 
 exports['language:en'] = {
     setUp: function (callback) {
-        numeral.language('en');
+        numeral.locale('en');
         callback();
     },
 
     tearDown: function (callback) {
-        numeral.language('en');
+        numeral.locale('en');
         callback();
     },
 
