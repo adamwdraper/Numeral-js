@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : danish denmark (dk)
- * author : Michael Storgaard : https://github.com/mstorgaard
+ * language : portuguese brazil (pt-br)
+ * author : Ramiro Varandas Jr : https://github.com/ramirovjr
  */
 (function () {
     var language = {
@@ -10,16 +10,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'mio',
-            billion: 'mia',
-            trillion: 'b'
+            thousand: 'mil',
+            million: 'milhões',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function (number) {
-            return '.';
+            return 'º';
         },
         currency: {
-            symbol: 'DKK'
+            symbol: 'R$'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('da-dk', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('pt-br', language);
     }
 }());
