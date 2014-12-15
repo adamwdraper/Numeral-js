@@ -1,13 +1,13 @@
 /*! 
  * numeral.js language configuration
- * language : portuguese (pt-pt)
- * author : Diogo Resende : https://github.com/dresende
+ * language : french (fr-ch)
+ * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: ' ',
-            decimal: ','
+            thousands: '\'',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
@@ -16,10 +16,10 @@
             trillion: 't'
         },
         ordinal : function (number) {
-            return 'º';
+            return number === 1 ? 'er' : 'e';
         },
         currency: {
-            symbol: '€'
+            symbol: 'CHF'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('pt-pt', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('fr-ch', language);
     }
 }());

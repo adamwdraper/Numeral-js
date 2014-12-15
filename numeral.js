@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.3',
+        VERSION = '1.5.4',
         // internal storage for locale config files
         locales = {},
         currentLocale = 'en',
@@ -427,8 +427,13 @@
             currentLocale = key;
         }
 
-        if (values || !locales[key]) {
-            loadLocale(key, values);
+
+        if (!locales[key]) {
+          if (values) {
+            locales[key] = values;
+          } else {
+            loadLocale(key);
+          }
         }
 
         return numeral;
@@ -493,8 +498,17 @@
         Helpers
     ************************************/
 
-    function loadLocale(key, values) {
-        locales[key] = values;
+    function loadLocale(key) {
+      var oldLocale = null;
+      if (!locales[name] && hasModule) {
+        try {
+          oldLocale = numeral.locale();
+          require('./locale/' + name);
+          // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
+          numeral.locale(oldLocale);
+        } catch (e) { }
+      }
+      return locales[name];
     }
 
     /************************************

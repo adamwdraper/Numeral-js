@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
- * language : portuguese brazil (pt-br)
- * author : Ramiro Varandas Jr : https://github.com/ramirovjr
+ * language : italian Italy (it)
+ * author : Giacomo Trombi : http://cinquepunti.it
  */
 (function () {
     var language = {
@@ -10,8 +10,8 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'mil',
-            million: 'milhões',
+            thousand: 'mila',
+            million: 'mil',
             billion: 'b',
             trillion: 't'
         },
@@ -19,7 +19,7 @@
             return 'º';
         },
         currency: {
-            symbol: 'R$'
+            symbol: '€'
         }
     };
 
@@ -28,7 +28,7 @@
         module.exports = language;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('pt-br', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('it', language);
     }
 }());
