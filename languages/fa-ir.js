@@ -13,7 +13,7 @@
             thousand: 'هزار',
             million: 'میلیون',
             billion: 'میلیارد',
-            trillion: 'ترلیون'
+            trillion: 'تریلیون'
         },
         ordinal: function (number) {
             return 'ام';
