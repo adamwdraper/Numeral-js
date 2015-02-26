@@ -649,9 +649,9 @@
         },
         abbreviations: {
             thousand : 'k',
-            million  : 'mln',
-            billion  : 'mrd',
-            trillion : 'bln'
+            million  : ' mln.',
+            billion  : ' mld.',
+            trillion : ' bln.'
         },
         ordinal : function (number) {
             var remainder = number % 100;
