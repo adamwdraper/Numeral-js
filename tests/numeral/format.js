@@ -121,7 +121,27 @@ exports.format = {
         test.done();
     },
 
-    bytes: function (test) {
+    metricBytes: function (test) {
+        var tests = [
+                [100,'0b','100B'],
+                [1000*2,'0 b','2 KB'],
+                [1000*1000*5,'0b','5MB'],
+                [1000*1000*1000*7.343,'0.[0] b','7.3 GB'],
+                [1000*1000*1000*1000*3.1536544,'0.000b','3.154TB'],
+                [1000*1000*1000*1000*1000*2.953454534534,'0b','3PB']
+            ],
+            i;
+
+        test.expect(tests.length);
+
+        for (i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).metricBytes().format(tests[i][1]), tests[i][2], tests[i][1]);
+        }
+
+        test.done();
+    },
+
+    binaryBytes: function (test) {
         var tests = [
                 [100,'0b','100B'],
                 [1024*2,'0 b','2 KB'],
