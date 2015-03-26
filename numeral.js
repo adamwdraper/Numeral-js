@@ -19,6 +19,7 @@
         currentLanguage = 'en',
         zeroFormat = null,
         defaultFormat = '0,0',
+        bytesBase = 1024,
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -108,7 +109,7 @@
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
-                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(bytesBase, power + 1) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -311,8 +312,8 @@
                 }
 
                 for (power = 0; power <= suffixes.length; power++) {
-                    min = Math.pow(1024, power);
-                    max = Math.pow(1024, power+1);
+                    min = Math.pow(bytesBase, power);
+                    max = Math.pow(bytesBase, power+1);
 
                     if (value >= min && value < max) {
                         bytes = bytes + suffixes[power];
@@ -471,6 +472,16 @@
             symbol: '$'
         }
     });
+
+    numeral.metricBytes = function () {
+        bytesBase = 1000;
+        return this;
+    };
+
+    numeral.binaryBytes = function () {
+        bytesBase = 1024;
+        return this;
+    };
 
     numeral.zeroFormat = function (format) {
         zeroFormat = typeof(format) === 'string' ? format : null;
