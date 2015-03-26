@@ -475,10 +475,12 @@
 
     numeral.metricBytes = function () {
         bytesBase = 1000;
+        return this;
     };
 
     numeral.binaryBytes = function () {
         bytesBase = 1024;
+        return this;
     };
 
     numeral.zeroFormat = function (format) {
