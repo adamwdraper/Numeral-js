@@ -44,7 +44,6 @@
             optionalsRegExp,
             output;
             
-        //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (roundingFunction(value * power) / power).toFixed(precision);
 
@@ -357,7 +356,7 @@
 
                 w = d.split('.')[0];
 
-                if (d.split('.')[1].length) {
+                if (d !== 'Infinity' && d.split('.')[1].length) {
                     d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
