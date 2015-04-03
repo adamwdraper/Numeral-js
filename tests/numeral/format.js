@@ -73,9 +73,9 @@ exports.format = {
                 [-5444333222111, '0,0 aT', '-5 t'],
 
                 // Non-finite numbers
-                [Infinity, '0,0', 'Infinity'],
-                [-Infinity, '0,0', '-Infinity'],
-                [NaN, '0,0', 'NaN']
+                [Infinity, '0.0', 'Infinity'],
+                [-Infinity, '0.0', '-Infinity'],
+                [NaN, '0.0', 'NaN']
             ],
             i;
 
