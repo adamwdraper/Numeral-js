@@ -27,11 +27,7 @@
   "bugs": {
     "url": "https://github.com/adamwdraper/Numeral-js/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
     "uglify-js": "latest",
     "grunt": "latest",
