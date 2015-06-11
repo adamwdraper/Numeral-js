@@ -32,4 +32,4 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('uk-UA', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);

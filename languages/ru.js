@@ -34,4 +34,4 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ru', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
