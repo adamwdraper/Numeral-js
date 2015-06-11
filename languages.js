@@ -32,7 +32,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('be-nl', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : simplified chinese
@@ -66,7 +67,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('chs', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*!
  * numeral.js language configuration
@@ -101,7 +102,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('cs', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -136,7 +137,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('da-dk', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : German in Switzerland (de-ch)
@@ -170,7 +172,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('de-ch', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
@@ -204,7 +207,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('de', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : english united kingdom (uk)
@@ -242,7 +246,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('en-gb', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : spanish Spain
@@ -281,7 +286,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('es', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -321,7 +326,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('es', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -359,7 +364,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('et', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -394,7 +399,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('fi', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*!
  * numeral.js language configuration
@@ -429,7 +434,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('fr-CA', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : french (fr-ch)
@@ -463,7 +469,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('fr-ch', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -498,7 +504,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('fr', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*!
  * numeral.js language configuration
  * language : Hungarian (hu)
@@ -532,7 +539,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('hu', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : italian Italy (it)
@@ -566,7 +574,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('it', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : japanese
@@ -600,7 +609,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ja', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*!
  * numeral.js language configuration
@@ -634,7 +643,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('lv', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -670,7 +679,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('nl-nl', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : polish (pl)
@@ -704,7 +714,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('pl', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : portuguese brazil (pt-br)
@@ -738,7 +749,8 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('pt-br', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
+
 /*! 
  * numeral.js language configuration
  * language : portuguese (pt-pt)
@@ -772,7 +784,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('pt-pt', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 // numeral.js language configuration
 // language : Russian for the Ukraine (ru-UA)
@@ -808,7 +820,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ru-UA', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -846,7 +858,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ru', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*!
  * numeral.js language configuration
@@ -881,7 +893,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('sk', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -916,7 +928,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('th', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 /*! 
  * numeral.js language configuration
@@ -984,7 +996,7 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('tr', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);
 
 // numeral.js language configuration
 // language : Ukrainian for the Ukraine (uk-UA)
@@ -1020,4 +1032,4 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('uk-UA', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);

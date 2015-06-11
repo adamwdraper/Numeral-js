@@ -31,4 +31,4 @@
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('pt-br', language);
     }
-}());
+}).call(typeof window === 'undefined' ? this : window);

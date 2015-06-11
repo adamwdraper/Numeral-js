@@ -769,4 +769,4 @@
             return numeral;
         });
     }
-}).call(this);
+}).call(typeof window === 'undefined' ? this : window);

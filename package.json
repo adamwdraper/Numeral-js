@@ -33,12 +33,12 @@
     }
   ],
   "devDependencies": {
-    "uglify-js": "latest",
     "grunt": "latest",
-    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-uglify": "latest",
+    "uglify-js": "latest"
   },
   "scripts": {
     "test": "grunt"
