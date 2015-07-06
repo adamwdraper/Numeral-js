@@ -7,9 +7,9 @@ A javascript library for formatting and manipulating numbers.
 
 # Travis Build Status
 
-Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
+Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.svg)](https://travis-ci.org/adamwdraper/Numeral-js)
 
-Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.png?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
+Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
 
 # NPM
 
