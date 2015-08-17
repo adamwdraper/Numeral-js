@@ -248,12 +248,21 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            unit = "";
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
             return zeroFormat;
         } else {
+            // get the customized unit in the 0.000[0] {%unit}
+            if (format.indexOf('{') > -1&&format.indexOf('}') > -1)
+            {
+                arr = format.replace('}','').split('{');
+                format = arr[0];
+                unit = arr[1];
+            }
+
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
             if (format.indexOf('(') > -1) {
@@ -384,7 +393,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '') + unit;
         }
     }
 
