@@ -1,6 +1,6 @@
 // numeral.js language configuration
-// language : Ukrainian for the Ukraine (uk-UA)
-// author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
+// language : Russian for the Ukraine (ru-ua)
+// author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
     var language = {
         delimiters: {
@@ -8,16 +8,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'тис.',
+            thousand: 'тыс.',
             million: 'млн',
-            billion: 'млрд',
-            trillion: 'блн'
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function () {
-            // not ideal, but since in Ukrainian it can taken on 
+            // not ideal, but since in Russian it can taken on 
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return ''; 
+            return '.'; 
         },
         currency: {
             symbol: '\u20B4'
@@ -30,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('uk-UA', language);
+        this.numeral.language('ru-ua', language);
     }
 }());

@@ -1,26 +1,25 @@
-/*! 
+/*!
  * numeral.js language configuration
- * language : spanish Spain
- * author : Hernan Garcia : https://github.com/hgarcia
-            Jaume sala : https://github.com/jaumesala
+ * language : french (Canada) (fr-ca)
+ * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: '.',
+            thousands: ' ',
             decimal: ','
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            million: 'M',
+            billion: 'G',
+            trillion: 'T'
         },
-        ordinal: function (number) {
-            return 'º';
+        ordinal : function (number) {
+            return number === 1 ? 'er' : 'e';
         },
         currency: {
-            symbol: '€'
+            symbol: '$'
         }
     };
 
@@ -30,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('es-ES', language);
+        this.numeral.language('fr-ca', language);
     }
 }());
