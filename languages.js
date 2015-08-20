@@ -35,6 +35,45 @@
 }());
 /*! 
  * numeral.js language configuration
+ * language : catalan Spain
+ * author : Jaume sala : https://github.com/jaumesala
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'mm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var r = number % 10;
+            return (number >= 10 ) ? 'è' : 
+                (r === 1 || r === 3) ? 'r' :
+                    (r === 2) ? 'n' :
+                        (r === 4) ? 't' : 'è';
+        },
+        currency: {
+            symbol: '€'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('ca-es', language);
+    }
+}());
+
+/*! 
+ * numeral.js language configuration
  * language : simplified chinese
  * author : badplum : https://github.com/badplum
  */
@@ -247,6 +286,7 @@
  * numeral.js language configuration
  * language : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
+            Jaume sala : https://github.com/jaumesala
  */
 (function () {
     var language = {
@@ -256,17 +296,12 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'mm',
+            million: 'm',
             billion: 'b',
             trillion: 't'
         },
         ordinal: function (number) {
-            var b = number % 10;
-            return (b === 1 || b === 3) ? 'er' :
-                (b === 2) ? 'do' :
-                    (b === 7 || b === 0) ? 'mo' :
-                        (b === 8) ? 'vo' :
-                            (b === 9) ? 'no' : 'to';
+            return 'º';
         },
         currency: {
             symbol: '€'
@@ -279,7 +314,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('es', language);
+        this.numeral.language('es-es', language);
     }
 }());
 
@@ -398,7 +433,7 @@
 
 /*!
  * numeral.js language configuration
- * language : french (Canada) (fr-CA)
+ * language : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
@@ -427,7 +462,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('fr-CA', language);
+        this.numeral.language('fr-ca', language);
     }
 }());
 /*! 
@@ -741,7 +776,7 @@
 }());
 
 // numeral.js language configuration
-// language : Russian for the Ukraine (ru-UA)
+// language : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
     var language = {
@@ -772,7 +807,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('ru-UA', language);
+        this.numeral.language('ru-ua', language);
     }
 }());
 
@@ -953,7 +988,7 @@
 }());
 
 // numeral.js language configuration
-// language : Ukrainian for the Ukraine (uk-UA)
+// language : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
     var language = {
@@ -984,6 +1019,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('uk-UA', language);
+        this.numeral.language('uk-ua', language);
     }
 }());
