@@ -420,6 +420,8 @@
             return currentLanguage;
         }
 
+        key = key.toLowerCase();
+
         if (key && !values) {
             if(!languages[key]) {
                 throw new Error('Unknown language : ' + key);

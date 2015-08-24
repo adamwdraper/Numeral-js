@@ -119,5 +119,16 @@ exports.misc = {
         test.strictEqual(formatTestVal(), oldCurrencyVal, 'Format uses old currency');
         
         test.done();
+    },
+
+    language: function(test) {
+      // Should ignore the case of the language code
+      numeral.language('en-gb')
+      test.strictEqual(numeral.language(), "en-gb")
+
+      numeral.language('en-GB')
+      test.strictEqual(numeral.language(), "en-gb")
+
+      test.done()
     }
 };
