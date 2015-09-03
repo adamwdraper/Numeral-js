@@ -1,7 +1,7 @@
 /*! 
  * numeral.js language configuration
  * language : korean
- * author : lukefly
+ * author : lukefly https://github.com/lukefly
  */
 (function () {
     var language = {
