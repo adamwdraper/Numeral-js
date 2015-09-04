@@ -248,7 +248,8 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            absValue = Math.abs(value);
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
@@ -314,7 +315,7 @@
                     min = Math.pow(1024, power);
                     max = Math.pow(1024, power+1);
 
-                    if (value >= min && value < max) {
+                    if (absValue >= min && absValue < max) {
                         bytes = bytes + suffixes[power];
                         if (min > 0) {
                             value = value / min;

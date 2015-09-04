@@ -129,7 +129,11 @@ exports.format = {
                 [1024*1024*1024*7.343,'0.[0] b','7.3 GB'],
                 [1024*1024*1024*1024*3.1536544,'0.000b','3.154TB'],
                 [1024*1024*1024*1024*1024*2.953454534534,'0b','3PB']
-            ],
+            ].reduce(function (tests, test) {
+              tests.push(test);
+              tests.push([test[0] * -1, test[1], '-' + test[2]]);
+              return tests;
+            }, []),
             i;
 
         test.expect(tests.length);
