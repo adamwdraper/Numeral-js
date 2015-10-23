@@ -2,6 +2,8 @@
 
 A javascript library for formatting and manipulating numbers.
 
+This library is not maintained anymore. Please move to [numbro](https://github.com/foretagsplatsen/numbro/tree/master).
+
 [Website and documentation](http://numeraljs.com/)
 
 
