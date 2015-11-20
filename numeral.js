@@ -388,7 +388,7 @@
 			var sufOrd = '';
 			
 			if(ord){
-				if((typeof ord) == 'string'){
+				if((typeof ord) === 'string'){
 					sufOrd = ord;
 				} else {
 					preOrd = ord.prefix || '';
