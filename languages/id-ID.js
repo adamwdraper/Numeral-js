@@ -17,8 +17,7 @@
         },
         ordinal: function (number) {
 			// In Indonesian, ordinal is written as 'ke-' at the front of the number
-			// So, '3rd' is translated as 'ke-3'
-            return '';
+            return { prefix : 'ke-', suffix : '' };
         },
         currency: {
             symbol: 'Rp'
