@@ -1,6 +1,6 @@
 /*! 
  * numeral.js language configuration
- * language : persian iran (fa-ir)
+ * language : persian iran  (fa-ir)
  * author : Ali Abdollahzade : https://github.com/aliabdzad
  */
 (function () {
