@@ -31,6 +31,7 @@
     // Numeral prototype object
     function Numeral(number) {
         this._value = number;
+        this._currentLanguage = currentLanguage;
     }
 
     /**
@@ -72,11 +73,16 @@
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
         } else { // plain ol' numbers or bytes
-            output = formatNumber(n._value, format, roundingFunction);
+            output = formatNumber.call(n, n._value, format, roundingFunction);
         }
 
-        // return string
         return output;
+    }
+
+    // get the current language setting whether it be from the global `currentLanguage` variable
+    // or the instance variable `_currentLanguage`
+    function getCurrentLanguage() {
+      return this._currentLanguage || currentLanguage;
     }
 
     // revert to number
@@ -96,15 +102,15 @@
             if (string === zeroFormat) {
                 n._value = 0;
             } else {
-                if (languages[currentLanguage].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(languages[currentLanguage].delimiters.decimal, '.');
+                if (languages[getCurrentLanguage.call(n)].delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(languages[getCurrentLanguage.call(n)].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[getCurrentLanguage.call(n)].abbreviations.thousand + '(?:\\)|(\\' + languages[getCurrentLanguage.call(n)].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + languages[getCurrentLanguage.call(n)].abbreviations.million + '(?:\\)|(\\' + languages[getCurrentLanguage.call(n)].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + languages[getCurrentLanguage.call(n)].abbreviations.billion + '(?:\\)|(\\' + languages[getCurrentLanguage.call(n)].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[getCurrentLanguage.call(n)].abbreviations.trillion + '(?:\\)|(\\' + languages[getCurrentLanguage.call(n)].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
@@ -145,7 +151,7 @@
         }
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction);
+        output = formatNumber.call(n, n._value, format, roundingFunction);
 
         // position the symbol
         if (symbolIndex <= 1) {
@@ -156,18 +162,18 @@
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                output.splice(spliceIndex, 0, languages[getCurrentLanguage.call(n)].currency.symbol + space);
                 output = output.join('');
             } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+                output = languages[getCurrentLanguage.call(n)].currency.symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + languages[getCurrentLanguage.call(n)].currency.symbol);
                 output = output.join('');
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                output = output + space + languages[getCurrentLanguage.call(n)].currency.symbol;
             }
         }
 
@@ -187,7 +193,7 @@
             format = format.replace('%', '');
         }
 
-        output = formatNumber(value, format, roundingFunction);
+        output = formatNumber.call(n, value, format, roundingFunction);
 
         if (output.indexOf(')') > -1) {
             output = output.split('');
@@ -283,19 +289,19 @@
 
                 if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
-                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
+                    abbr = abbr + languages[getCurrentLanguage.call(this)].abbreviations.trillion;
                     value = value / Math.pow(10, 12);
                 } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
                     // billion
-                    abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                    abbr = abbr + languages[getCurrentLanguage.call(this)].abbreviations.billion;
                     value = value / Math.pow(10, 9);
                 } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
                     // million
-                    abbr = abbr + languages[currentLanguage].abbreviations.million;
+                    abbr = abbr + languages[getCurrentLanguage.call(this)].abbreviations.million;
                     value = value / Math.pow(10, 6);
                 } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
                     // thousand
-                    abbr = abbr + languages[currentLanguage].abbreviations.thousand;
+                    abbr = abbr + languages[getCurrentLanguage.call(this)].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
                 }
             }
@@ -334,7 +340,7 @@
                     format = format.replace('o', '');
                 }
 
-                ord = ord + languages[currentLanguage].ordinal(value);
+                ord = ord + languages[getCurrentLanguage.call(this)].ordinal(value);
             }
 
             if (format.indexOf('[.]') > -1) {
@@ -358,7 +364,7 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                    d = languages[getCurrentLanguage.call(this)].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
                 }
@@ -377,7 +383,7 @@
             }
 
             if (thousands > -1) {
-                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
+                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[getCurrentLanguage.call(this)].delimiters.thousands);
             }
 
             if (format.indexOf('.') === 0) {
@@ -419,7 +425,7 @@
         if (!key) {
             return currentLanguage;
         }
-        
+
         key = key.toLowerCase();
 
         if (key && !values) {
@@ -742,8 +748,25 @@
 
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
-        }
+        },
 
+        language : function(key) {
+            if (!key) {
+              throw new Error('Language key must be provided');
+            }
+
+            // Make sure the language has already been loaded.
+            // Does not support loading a language, only defining a predefined language for use.
+            if(!languages[key]) {
+                throw new Error('Unknown language : ' + key);
+            }
+
+            // set the curernt language instance var
+            this._currentLanguage = key;
+
+            // return `this` to continue the call chain
+            return this;
+        }
     };
 
     /************************************
