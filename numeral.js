@@ -297,6 +297,8 @@
                     // thousand
                     abbr = abbr + languages[currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
+                }else{
+                    abbr = abbr + languages[currentLanguage].abbreviations.default;
                 }
             }
 
@@ -455,6 +457,7 @@
             decimal: '.'
         },
         abbreviations: {
+            default: '',
             thousand: 'k',
             million: 'm',
             billion: 'b',
