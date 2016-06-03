@@ -43,7 +43,7 @@
         var power = Math.pow(10, precision),
             optionalsRegExp,
             output;
-            
+
         //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
         output = (roundingFunction(value * power) / power).toFixed(precision);
@@ -71,6 +71,8 @@
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
+        } else if (format.indexOf('x') > -1) { // factor
+            output = formatFactor(n, format, roundingFunction);
         } else { // plain ol' numbers or bytes
             output = formatNumber(n._value, format, roundingFunction);
         }
@@ -188,7 +190,7 @@
         }
 
         output = formatNumber(value, format, roundingFunction);
-        
+
         if (output.indexOf(')') > -1 ) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
@@ -205,6 +207,48 @@
             minutes = Math.floor((n._value - (hours * 60 * 60))/60),
             seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
         return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+    }
+
+    function formatFactor (n, format, roundingFunction) {
+        var symbolIndex = format.indexOf('x'),
+            minusSignIndex = format.indexOf('-'),
+            space = '',
+            spliceIndex,
+            output;
+
+        // check for space before or after x
+        if (format.indexOf(' x') > -1) {
+            space = ' ';
+            format = format.replace(' x', '');
+        } else if (format.indexOf('x ') > -1) {
+            space = ' ';
+            format = format.replace('x ', '');
+        } else {
+            format = format.replace('x', '');
+        }
+
+        // format the number
+        output = formatNumber(n._value, format, roundingFunction);
+
+        // position the symbol
+        if (symbolIndex <= 1) {
+            if (output.indexOf('-') > -1) {
+                output = output.split('');
+                spliceIndex = 1;
+                if (symbolIndex < minusSignIndex){
+                    // the symbol appears before the "-"
+                    spliceIndex = 0;
+                }
+                output.splice(spliceIndex, 0, 'x' + space);
+                output = output.join('');
+            } else {
+                output = 'x' + space + output;
+            }
+        } else {
+            output = output + space + 'x';
+        }
+
+        return output;
     }
 
     function unformatTime (string) {
@@ -433,7 +477,7 @@
 
         return numeral;
     };
-    
+
     // This function provides access to the loaded language data.  If
     // no arguments are passed in, it will simply return the current
     // global language object.
@@ -441,11 +485,11 @@
         if (!key) {
             return languages[currentLanguage];
         }
-        
+
         if (!languages[key]) {
             throw new Error('Unknown language : ' + key);
         }
-        
+
         return languages[key];
     };
 
@@ -502,14 +546,14 @@
     if ('function' !== typeof Array.prototype.reduce) {
         Array.prototype.reduce = function (callback, opt_initialValue) {
             'use strict';
-            
+
             if (null === this || 'undefined' === typeof this) {
                 // At the moment all modern browsers, that support strict mode, have
                 // native implementation of Array.prototype.reduce. For instance, IE8
                 // does not support strict mode, so this check is actually useless.
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
             }
-            
+
             if ('function' !== typeof callback) {
                 throw new TypeError(callback + ' is not a function');
             }
@@ -543,7 +587,7 @@
         };
     }
 
-    
+
     /**
      * Computes the multiplier necessary to make x >= 1,
      * effectively eliminating miscalculations caused by
@@ -569,7 +613,7 @@
                 mn = multiplier(next);
         return mp > mn ? mp : mn;
         }, -Infinity);
-    }        
+    }
 
 
     /************************************
@@ -584,15 +628,15 @@
         },
 
         format : function (inputString, roundingFunction) {
-            return formatNumeral(this, 
-                  inputString ? inputString : defaultFormat, 
+            return formatNumeral(this,
+                  inputString ? inputString : defaultFormat,
                   (roundingFunction !== undefined) ? roundingFunction : Math.round
               );
         },
 
         unformat : function (inputString) {
-            if (Object.prototype.toString.call(inputString) === '[object Number]') { 
-                return inputString; 
+            if (Object.prototype.toString.call(inputString) === '[object Number]') {
+                return inputString;
             }
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
@@ -624,7 +668,7 @@
             function cback(accum, curr, currI, O) {
                 return accum - corrFactor * curr;
             }
-            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;            
+            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
             return this;
         },
 
@@ -643,7 +687,7 @@
                 var corrFactor = correctionFactor(accum, curr);
                 return (accum * corrFactor) / (curr * corrFactor);
             }
-            this._value = [this._value, value].reduce(cback);            
+            this._value = [this._value, value].reduce(cback);
             return this;
         },
 
