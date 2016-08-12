@@ -231,6 +231,17 @@
         var negP = false,
             signed = false,
             optDec = false,
+            si = '',
+            sip = false, // force SI to piko-
+            sin = false, // force SI to nano-
+            siu = false, // force SI to micro-
+            sim = false, // force SI to mili-
+            siK = false, // force SI to kilo-
+            siM = false, // force SI to Mega-
+            siG = false, // force SI to Giga-
+            siT = false, // force SI to Tera-
+            siP = false, // force SI to Peta-
+            siForce = false, // force SI
             abbr = '',
             abbrK = false, // force abbreviation to thousands
             abbrM = false, // force abbreviation to millions
@@ -262,6 +273,67 @@
             } else if (format.indexOf('+') > -1) {
                 signed = true;
                 format = format.replace(/\+/g, '');
+            }
+
+            // see if SI prefix is wanted
+            if (format.indexOf('s') > -1) {
+                // check if SI prefix is specified
+                sip = format.indexOf('sp') >= 0;
+                sin = format.indexOf('sn') >= 0;
+                siu = format.indexOf('su') >= 0;
+                sim = format.indexOf('sm') >= 0;
+                siK = format.indexOf('sK') >= 0;
+                siM = format.indexOf('sM') >= 0;
+                siG = format.indexOf('sG') >= 0;
+                siT = format.indexOf('sT') >= 0;
+                siP = format.indexOf('sP') >= 0;
+                siForce = sip || sin || siu || sim || siK || siM || siG || siT || siP;
+
+                // check for space before SI prefix
+                if (format.indexOf(' s') > -1) {
+                    si = ' ';
+                    format = format.replace(/ s[pnumKMGTP]?/, '');
+                } else {
+                    format = format.replace(/s[pnumKMGTP]?/, '');
+                }
+
+                if (abs >= Math.pow(10, 15) && !siForce || siP) {
+                    // Peta-
+                    si = si + 'P';
+                    value = value / Math.pow(10, 15);
+                } else if (abs < Math.pow(10, 15) && abs >= Math.pow(10, 12) && !siForce || siT) {
+                    // Tera-
+                    si = si + 'T';
+                    value = value / Math.pow(10, 12);
+                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !siForce || siG) {
+                    // Giga-
+                    si = si + 'G';
+                    value = value / Math.pow(10, 9);
+                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !siForce || siM) {
+                    // Mega-
+                    si = si + 'M';
+                    value = value / Math.pow(10, 6);
+                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !siForce || siK) {
+                    // kilo-
+                    si = si + 'k';
+                    value = value / Math.pow(10, 3);
+                } else if (abs < 1 && abs >= Math.pow(10, -3) && !siForce || sim) {
+                    // mili-
+                    si = si + 'm';
+                    value = value / Math.pow(10, -3);
+                } else if (abs < Math.pow(10, -3) && abs >= Math.pow(10, -6) && !siForce || siu) {
+                    // micro-
+                    si = si + 'µ';
+                    value = value / Math.pow(10, -6);
+                } else if (abs < Math.pow(10, -6) && abs >= Math.pow(10, -9) && !siForce || sin) {
+                    // nano-
+                    si = si + 'n';
+                    value = value / Math.pow(10, -9);
+                } else if (abs < Math.pow(10, -9) && !siForce || sip) {
+                    // piko-
+                    si = si + 'p';
+                    value = value / Math.pow(10, -12);
+                }
             }
 
             // see if abbreviation is wanted
@@ -384,7 +456,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((si) ? si : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
