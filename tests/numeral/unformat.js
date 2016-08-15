@@ -3,6 +3,7 @@ var numeral = require('../../numeral');
 exports.unformat = {
     setUp: function (callback) {
         numeral.zeroFormat('N/A');
+        numeral.nullFormat('N/A');
         callback();
     },
 
