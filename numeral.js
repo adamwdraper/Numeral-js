@@ -354,10 +354,12 @@
                 } else {
                     d = toFixed(value, precision.length, roundingFunction);
                 }
+                
+                var dSplitted = d.split('.');
+                
+                w = dSplitted[0];
 
-                w = d.split('.')[0];
-
-                if (d.split('.')[1].length) {
+                if (dSplitted[1] && dSplitted[1].length) {
                     d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
