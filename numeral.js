@@ -87,6 +87,7 @@
             billionRegExp,
             trillionRegExp,
             suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            iecSuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             bytesMultiplier = false,
             power;
 
@@ -108,7 +109,7 @@
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
-                    bytesMultiplier = (string.indexOf(suffixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+                    bytesMultiplier = ((string.indexOf(suffixes[power]) > -1) || (string.indexOf(iecSuffixes[power]) > -1))? Math.pow(1024, power + 1) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -241,6 +242,7 @@
             ord = '',
             abs = Math.abs(value),
             suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            iecSuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             min,
             max,
             power,
@@ -248,7 +250,8 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            iecBinary = false;
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && zeroFormat !== null) {
@@ -302,12 +305,18 @@
 
             // see if we are formatting bytes
             if (format.indexOf('b') > -1) {
+
+                // check for IEC Binary byte notation
+                if (format.indexOf('ib') > -1) {
+                    iecBinary = true;
+                }
+
                 // check for space before
-                if (format.indexOf(' b') > -1) {
+                if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
                     bytes = ' ';
-                    format = format.replace(' b', '');
+                    format = format.replace(' ib', '').replace(' b', '');
                 } else {
-                    format = format.replace('b', '');
+                    format = format.replace('ib', '').replace('b', '');
                 }
 
                 for (power = 0; power <= suffixes.length; power++) {
@@ -315,7 +324,7 @@
                     max = Math.pow(1024, power+1);
 
                     if (value >= min && value < max) {
-                        bytes = bytes + suffixes[power];
+                        bytes = bytes + (iecBinary ? iecSuffixes[power] : suffixes[power]);
                         if (min > 0) {
                             value = value / min;
                         }

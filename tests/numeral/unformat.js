@@ -52,11 +52,13 @@ exports.unformat = {
     },
 
     bytes: function (test) {
-        test.expect(2);
+        test.expect(4);
 
         var tests = [
                 ['100B', 100],
-                ['3.154 TB', 3467859674006]
+                ['3.154 TB', 3467859674006],
+                ['100B', 100],
+                ['3.154 TiB', 3467859674006]
             ];
 
         for (var i = 0; i < tests.length; i++) {
