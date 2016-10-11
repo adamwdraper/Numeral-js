@@ -27,7 +27,7 @@ Please submit all pull requests to the `develop` branch.
 
 4. Add your tests to the files in `/tests`
 
-5. To test your tests, run `grunt`
+5. To test your tests, run `npm run test`
 
 6. When all your tests are passing, run `grunt build` to minify all files
 

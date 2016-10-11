@@ -21,9 +21,6 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
-        nodeunit : {
-            all : ['tests/**/*.js']
-        },
         uglify: {
             my_target: {
                 files: minifiedFiles
@@ -64,7 +61,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -74,14 +70,12 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'jshint',
-        'nodeunit'
+        'jshint'
     ]);
 
     // P
     grunt.registerTask('build', [
         'jshint',
-        'nodeunit',
         'concat',
         'uglify'
     ]);
