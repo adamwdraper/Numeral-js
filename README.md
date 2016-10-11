@@ -44,6 +44,8 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+### 1.6.0
+Added support for IEC Binary byte notation 
 
 ### 1.5.3
 
