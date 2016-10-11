@@ -27,7 +27,7 @@ Please submit all pull requests to the `develop` branch.
 
 4. Add your tests to the files in `/tests`
 
-5. To test your tests, run `grunt`
+5. To test your tests, run `npm run test`
 
 6. When all your tests are passing, run `grunt build` to minify all files
 
@@ -44,6 +44,8 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+### 1.6.0
+Added support for IEC Binary byte notation 
 
 ### 1.5.3
 
