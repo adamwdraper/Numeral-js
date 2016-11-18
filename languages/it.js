@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : italian Italy (it)
  * author : Giacomo Trombi : http://cinquepunti.it

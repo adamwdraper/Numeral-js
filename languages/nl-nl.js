@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : netherlands-dutch (nl-nl)
  * author : Dave Clayton : https://github.com/davedx
