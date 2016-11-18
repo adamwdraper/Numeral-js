@@ -1,4 +1,4 @@
-/*!
+/*! @preserve
  * numeral.js language configuration
  * language : slovak (sk)
  * author : Ahmed Al Hafoudh : http://www.freevision.sk

@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : portuguese (pt-pt)
  * author : Diogo Resende : https://github.com/dresende
