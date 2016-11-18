@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia

@@ -37,8 +37,8 @@
     "grunt": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-jshint": "latest",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt-contrib-nodeunit": "1.0.0",
+    "grunt-contrib-concat": "1.0.1"
   },
   "scripts": {
     "test": "grunt"
