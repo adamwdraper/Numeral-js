@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : Finnish
  * author : Sami Saada : https://github.com/samitheberber

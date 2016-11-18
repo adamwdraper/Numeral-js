@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
