@@ -71,6 +71,8 @@
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
+        } else if (format.indexOf('x') > -1) { // factor
+            output = formatFactor(n, format, roundingFunction);
         } else { // plain ol' numbers or bytes
             output = formatNumber(n._value, format, roundingFunction);
         }
@@ -205,6 +207,48 @@
             minutes = Math.floor((n._value - (hours * 60 * 60))/60),
             seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
         return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+    }
+
+    function formatFactor (n, format, roundingFunction) {
+        var symbolIndex = format.indexOf('x'),
+            minusSignIndex = format.indexOf('-'),
+            space = '',
+            spliceIndex,
+            output;
+
+        // check for space before or after x
+        if (format.indexOf(' x') > -1) {
+            space = ' ';
+            format = format.replace(' x', '');
+        } else if (format.indexOf('x ') > -1) {
+            space = ' ';
+            format = format.replace('x ', '');
+        } else {
+            format = format.replace('x', '');
+        }
+
+        // format the number
+        output = formatNumber(n._value, format, roundingFunction);
+
+        // position the symbol
+        if (symbolIndex <= 1) {
+            if (output.indexOf('-') > -1) {
+                output = output.split('');
+                spliceIndex = 1;
+                if (symbolIndex < minusSignIndex){
+                    // the symbol appears before the "-"
+                    spliceIndex = 0;
+                }
+                output.splice(spliceIndex, 0, 'x' + space);
+                output = output.join('');
+            } else {
+                output = 'x' + space + output;
+            }
+        } else {
+            output = output + space + 'x';
+        }
+
+        return output;
     }
 
     function unformatTime (string) {
