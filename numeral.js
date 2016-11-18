@@ -1,4 +1,4 @@
-/*! @preserve
+/*!
  * numeral.js
  * version : 1.5.3
  * author : Adam Draper
@@ -189,11 +189,7 @@
 
         output = formatNumber(value, format, roundingFunction);
 
-<<<<<<< HEAD
         if (output.indexOf(')') > -1) {
-=======
-        if (output.indexOf(')') > -1 ) {
->>>>>>> master
             output = output.split('');
             output.splice(-1, 0, space + '%');
             output = output.join('');
@@ -679,7 +675,6 @@
             return numeral(this);
         },
 
-<<<<<<< HEAD
         format: function(inputString, roundingFunction) {
             return formatNumeral(this,
                 inputString ? inputString : defaultFormat, (roundingFunction !== undefined) ? roundingFunction : Math.round
@@ -687,16 +682,6 @@
         },
 
         unformat: function(inputString) {
-=======
-        format : function (inputString, roundingFunction) {
-            return formatNumeral(this,
-                  inputString ? inputString : defaultFormat,
-                  (roundingFunction !== undefined) ? roundingFunction : Math.round
-              );
-        },
-
-        unformat : function (inputString) {
->>>>>>> master
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
                 return inputString;
             }
