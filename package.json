@@ -33,12 +33,24 @@
     }
   ],
   "devDependencies": {
-    "uglify-js": "latest",
+    "chai": "^3.5.0",
     "grunt": "latest",
-    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "1.0.1",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-nodeunit": "1.0.0",
-    "grunt-contrib-concat": "1.0.1"
+    "grunt-contrib-uglify": "latest",
+    "grunt-karma": "^2.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-saucelabs": "*",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.1",
+    "karma-sauce-launcher": "^1.1.0",
+    "mocha": "^3.1.2",
+    "uglify-js": "latest"
   },
   "scripts": {
     "test": "grunt"
