@@ -14,7 +14,7 @@ describe('Misc', function() {
             var tests = [
                 [1000, 1000],
                 [0.5, 0.5],
-                [null, 0],
+                [null, null],
                 ['1,000', 1000],
                 ['not a number', 0]
             ],
@@ -47,13 +47,27 @@ describe('Misc', function() {
     describe('Custom Zero', function() {
         it('should change zero value', function() {
             var tests = [
-                [0,null,'0'],
                 [0,'N/A','N/A'],
                 [0,'','']
             ];
 
             for (var i = 0; i < tests.length; i++) {
                 numeral.zeroFormat(tests[i][1]);
+
+                expect(numeral(tests[i][0]).format('0')).to.equal(tests[i][2]);
+            }
+        });
+    });
+
+    describe('Custom Null', function() {
+        it('should change null value', function() {
+            var tests = [
+                [null,'N/A','N/A'],
+                [null,'','']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                numeral.nullFormat(tests[i][1]);
 
                 expect(numeral(tests[i][0]).format('0')).to.equal(tests[i][2]);
             }

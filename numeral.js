@@ -19,11 +19,13 @@
         defaults = {
             currentLanguage: 'en',
             zeroFormat: null,
+            nullFormat: null,
             defaultFormat: '0,0'
         },
         options = {
             currentLanguage: defaults.currentLanguage,
             zeroFormat: defaults.zeroFormat,
+            nullFormat: defaults.nullFormat,
             defaultFormat: defaults.defaultFormat
         };
 
@@ -98,7 +100,7 @@
         if (string.indexOf(':') > -1) {
             n._value = unformatTime(string);
         } else {
-            if (string === options.zeroFormat) {
+            if (string === options.zeroFormat || string === options.nullFormat) {
                 n._value = 0;
             } else {
                 if (languages[options.currentLanguage].delimiters.decimal !== '.') {
@@ -258,6 +260,8 @@
         // check if number is zero and a custom zero format has been set
         if (value === 0 && options.zeroFormat !== null) {
             return options.zeroFormat;
+        } else if (value === null && options.nullFormat !== null) {
+            return options.nullFormat;
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
@@ -402,11 +406,13 @@
             input = input.value();
         } else if (input === 0 || typeof input === 'undefined') {
             input = 0;
+        } else if (input === null) {
+            input = null;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);
         }
 
-        return new Numeral(Number(input));
+        return new Numeral(input);
     };
 
     // version number
@@ -489,6 +495,10 @@
 
     numeral.zeroFormat = function(format) {
         options.zeroFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.nullFormat = function (format) {
+        options.nullFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.defaultFormat = function(format) {
