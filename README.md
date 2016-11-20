@@ -25,13 +25,15 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 3. Run `npm install` to install dependencies
 
-4. Add your tests to the files in `/tests`
+4. Create a new branch from `develop`
 
-5. To test your tests, run `grunt`
+5. Add your tests to the files in `/tests`
 
-6. When all your tests are passing, run `grunt build` to minify all files
+6. To test your tests, run `grunt`
 
-7. Submit a pull request to the `develop` branch.
+7. When all your tests are passing, run `grunt build` to minify all files
+
+8. Submit a pull request to the `develop` branch.
 
 
 ### Languages
@@ -44,6 +46,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+
+### 1.5.4
+
+Added reset function to reset numeral to default options
 
 ### 1.5.3
 
