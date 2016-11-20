@@ -17,7 +17,7 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 # Contributing
 
-Please submit all pull requests to the `develop` branch.
+#### Please submit all pull requests to the `develop` branch.
 
 1. Fork the library
 

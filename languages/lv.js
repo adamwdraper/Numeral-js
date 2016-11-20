@@ -1,4 +1,4 @@
-/*!
+/*! @preserve
  * numeral.js language configuration
  * language : Latvian (lv)
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
