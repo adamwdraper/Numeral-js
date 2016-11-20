@@ -25,23 +25,26 @@ module.exports = function(grunt) {
             all: ['tests/numeral/*.js']
         },
         karma: {
-            ci: {
-                options: {
-                    files: [
-                        'numeral.js',
-                        'tests/numeral/*.js'
-                    ],
-                },
+            options: {
+                files: [
+                    'numeral.js',
+                    'tests/numeral/*.js'
+                ],
                 frameworks: [
                     'mocha',
                     'chai'
                 ],
+                singleRun: true,
+                autoWatch: false
+            },
+            local: {
                 browsers: [
                     'Chrome',
                     'Firefox'
-                ],
-                singleRun: true,
-                autoWatch: false
+                ]
+            },
+            ci: {
+                configFile: 'karma-ci.conf.js'
             }
         },
         uglify: {
@@ -97,7 +100,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', [
         'jshint',
         'mochaTest',
-        'karma'
+        'karma:local'
     ]);
 
     grunt.registerTask('test:npm', [
@@ -107,7 +110,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test:browser', [
         'jshint',
-        'karma'
+        'karma:local'
     ]);
 
     // P
@@ -120,6 +123,8 @@ module.exports = function(grunt) {
 
     // Travis CI task.
     grunt.registerTask('travis', [
-        'test'
+        'jshint',
+        'mochaTest',
+        'karma:ci'
     ]);
 };
