@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+    - "6"
+before_install:
+  - gem install sass
+before_script:
+  - npm install -g grunt-cli
+script: grunt travis --verbose
