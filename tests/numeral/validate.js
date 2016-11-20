@@ -1,6 +1,12 @@
-var numeral = require('../../numeral');
+if (!numeral) {
+  var numeral = require('../../numeral');
+}
+
+if (!expect) {
+    var expect = require('chai').expect;
+}
+
 var language = 'en';
-var expect = require('chai').expect;
 
 describe('Validate', function() {
     describe('Numbers', function() {

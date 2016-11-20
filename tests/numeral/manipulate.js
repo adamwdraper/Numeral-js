@@ -1,5 +1,10 @@
-var numeral = require('../../numeral');
-var expect = require('chai').expect;
+if (!numeral) {
+  var numeral = require('../../numeral');
+}
+
+if (!expect) {
+    var expect = require('chai').expect;
+}
 
 describe('Manipulate', function() {
 
@@ -99,7 +104,7 @@ describe('Manipulate', function() {
                 [0.3,0.2,0.1]
             ],
             num;
-            
+
             for (var i = 0; i < tests.length; i++) {
                 num = numeral(tests[i][0]);
 

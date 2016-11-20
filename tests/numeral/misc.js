@@ -1,5 +1,10 @@
-var numeral = require('../../numeral');
-var expect = require('chai').expect;
+if (!numeral) {
+  var numeral = require('../../numeral');
+}
+
+if (!expect) {
+    var expect = require('chai').expect;
+}
 
 describe('Misc', function() {
     describe('Add', function() {
