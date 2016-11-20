@@ -19,10 +19,6 @@ table {
     }
 }
 
-.carbonad {
-    border-radius: 4px;
-}
-
 .sidebar {
 
     .inner {
@@ -59,10 +55,35 @@ table {
     .download {
     }
 
-    .ad-container {
-        margin: 1em 0;
+}
+
+#carbonads {
+    margin-top: 1em;
+
+    .carbon-wrap {
+        @include clearfix;
+        display: block;
+        padding: .5em;
+        border: $tableBorder;
+        border-radius: $tableBorderRadius;
     }
 
+    .carbon-img {
+        display: block;
+        float: left;
+        margin-right: .5em;
+    }
+
+    .carbon-poweredby {
+        display: block;
+        text-align: right;
+        font-size: .8em;
+        color: $textColor;
+
+        &:hover {
+            color: $link;
+        }
+    }
 }
 
 .content {
@@ -96,7 +117,7 @@ table {
     }
 
 }
- 
+
 // Portrait tablet
 @media (min-width: 768px) {
 
@@ -113,7 +134,7 @@ table {
     }
 
 }
- 
+
 // Landscape tablet or desktop
 @media (min-width: 981px) {
 
@@ -154,12 +175,12 @@ table {
     }
 
     .footer {
-        
+
         .inner {
         }
     }
 }
- 
+
 // Large desktop
 @media (min-width: 1210px) {
 

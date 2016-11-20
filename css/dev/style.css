@@ -1,4 +1,4 @@
-/*
+/*!
  * Styles 0.0.2 - https://github.com/adamwdraper/styles
  *
  * (c) 2012, Adam Draper - https://github.com/adamwdraper
@@ -6,7 +6,7 @@
  * MIT & BSD
  *
  */
-/* normalize.css v1.0.1 | MIT License | git.io/normalize */
+/*! normalize.css v1.0.1 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
    ========================================================================== */
@@ -449,7 +449,7 @@ table {
   background-color: transparent;
   border: 0; }
 
-/*
+/*!
  * ResponCSS v2.8 - Responsive fluid CSS layout framework
  *
  * (c) 2012, Adam Draper - https://github.com/adamwdraper
@@ -518,7 +518,7 @@ table {
   .fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -598,7 +598,7 @@ table {
   .s-fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .s-fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -710,7 +710,7 @@ table {
   .fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -790,7 +790,7 @@ table {
   .m-fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .m-fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -1190,7 +1190,7 @@ table {
   .fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -1270,7 +1270,7 @@ table {
   .xl-fth3 {
     float: left;
     display: block;
-    width: 60.0%; }
+    width: 60%; }
     .xl-fth3.center {
       margin-right: 20.0%;
       margin-left: 20.0%; }
@@ -1451,7 +1451,7 @@ table {
     margin-left: 50%; }
 
   .over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .over-thrd2 {
     margin-left: 66.66667%; }
@@ -1478,7 +1478,7 @@ table {
     margin-left: 50%; }
 
   .s-over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .s-over-thrd2 {
     margin-left: 66.66667%; }
@@ -1514,7 +1514,7 @@ table {
     margin-left: 50%; }
 
   .over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .over-thrd2 {
     margin-left: 66.66667%; }
@@ -1541,7 +1541,7 @@ table {
     margin-left: 50%; }
 
   .m-over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .m-over-thrd2 {
     margin-left: 66.66667%; }
@@ -1676,7 +1676,7 @@ table {
     margin-left: 50%; }
 
   .over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .over-thrd2 {
     margin-left: 66.66667%; }
@@ -1703,7 +1703,7 @@ table {
     margin-left: 50%; }
 
   .xl-over-fth3 {
-    margin-left: 60.0%; }
+    margin-left: 60%; }
 
   .xl-over-thrd2 {
     margin-left: 66.66667%; }
@@ -1818,7 +1818,7 @@ table {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
-  color: #666666; }
+  color: #666; }
   .button:hover, .button:active {
     background-position: 0 -15px;
     text-decoration: none; }
@@ -1839,7 +1839,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #7aa602; }
     .button.primary.flat {
-      background: #8dbf02; }
+      background: #8DBF02; }
       .button.primary.flat:hover, .button.primary.flat:active {
         background: #77a102; }
     .button.primary i:before {
@@ -1856,7 +1856,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #0059b3; }
     .button.secondary.flat {
-      background: #0066cc; }
+      background: #0066CC; }
       .button.secondary.flat:hover, .button.secondary.flat:active {
         background: #0057ad; }
     .button.secondary i:before {
@@ -1873,7 +1873,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #36a5c6; }
     .button.active.flat {
-      background: #49afcd; }
+      background: #49AFCD; }
       .button.active.flat:hover, .button.active.flat:active {
         background: #35a2c2; }
     .button.active i:before {
@@ -1890,7 +1890,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #8c8c8c; }
     .button.alert.flat {
-      background: #999999; }
+      background: #999; }
       .button.alert.flat:hover, .button.alert.flat:active {
         background: #8a8a8a; }
     .button.alert i:before {
@@ -1907,7 +1907,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #36a5c6; }
     .button.info.flat {
-      background: #49afcd; }
+      background: #49AFCD; }
       .button.info.flat:hover, .button.info.flat:active {
         background: #35a2c2; }
     .button.info i:before {
@@ -1924,7 +1924,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #d63b34; }
     .button.error.flat {
-      background: #da4f49; }
+      background: #DA4F49; }
       .button.error.flat:hover, .button.error.flat:active {
         background: #d53630; }
     .button.error i:before {
@@ -1958,7 +1958,7 @@ table {
     background-repeat: repeat-x;
     border: 1px solid #f99c19; }
     .button.warning.flat {
-      background: #faa732; }
+      background: #FAA732; }
       .button.warning.flat:hover, .button.warning.flat:active {
         background: #f99a14; }
     .button.warning i:before {
@@ -2050,7 +2050,7 @@ table {
       border-radius: 0 0 4px 4px; }
 
 i {
-  color: #999999;
+  color: #999;
   display: inline-block;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -2058,21 +2058,21 @@ i {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease; }
   i.primary {
-    color: #8dbf02; }
+    color: #8DBF02; }
   i.secondary {
-    color: #0066cc; }
+    color: #0066CC; }
   i.active {
-    color: #49afcd; }
+    color: #49AFCD; }
   i.alert {
-    color: #999999; }
+    color: #999; }
   i.info {
-    color: #49afcd; }
+    color: #49AFCD; }
   i.error {
-    color: #da4f49; }
+    color: #DA4F49; }
   i.success {
     color: #46a546; }
   i.warning {
-    color: #faa732; }
+    color: #FAA732; }
   i.disabled {
     opacity: 0.5; }
   i.shadow {
@@ -2080,7 +2080,7 @@ i {
 
 pre {
   font-size: .9em;
-  color: #666666;
+  color: #666;
   display: block;
   padding: 0.71429em;
   margin: 0.57143em 0;
@@ -2090,7 +2090,7 @@ pre {
   white-space: pre;
   white-space: pre-wrap;
   background-color: #f8f8f8;
-  border: 1px solid #cccccc;
+  border: 1px solid #CCC;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px; }
@@ -2100,8 +2100,8 @@ pre {
 
 table {
   width: 100%;
-  background: #f8f8f8;
-  border: 1px solid #cccccc;
+  background: #F8F8F8;
+  border: 1px solid #CCC;
   border-collapse: collapse;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -2112,23 +2112,23 @@ table {
     line-height: 1em;
     text-align: left;
     vertical-align: top;
-    border-top: 1px solid #cccccc; }
+    border-top: 1px solid #CCC; }
   table th {
     font-weight: bold; }
   table thead th {
     vertical-align: bottom; }
   table.striped tbody tr:nth-child(odd) td,
   table.striped tbody tr:nth-child(odd) th {
-    background-color: #efefef; }
+    background-color: #EFEFEF; }
   table.bordered {
-    border: 1px solid #cccccc;
+    border: 1px solid #CCC;
     border-collapse: separate;
     border-left: 0;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px; }
     table.bordered th, table.bordered td {
-      border-left: 1px solid #cccccc; }
+      border-left: 1px solid #CCC; }
     table.bordered caption + thead tr:first-child th,
     table.bordered caption + tbody tr:first-child th,
     table.bordered caption + tbody tr:first-child td,
@@ -2182,7 +2182,6 @@ table {
   src: url("/fonts/icomoon.eot?#iefix") format("embedded-opentype"), url("/fonts/icomoon.svg#icomoon") format("svg"), url("/fonts/icomoon.woff") format("woff"), url("/fonts/icomoon.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
-
 /* Use the following CSS code if you want to have a class per icon */
 i {
   font-family: 'icomoon';
@@ -2368,7 +2367,7 @@ i {
 .icon-download:before {
   content: "\31"; }
 
-/*
+/*!
  * 
  *  Begin Project CSS
  *
@@ -2379,16 +2378,16 @@ html, body {
   height: 100%; }
 
 body {
-  background: white;
+  background: #fff;
   padding: 0;
   margin: 0;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  color: #333333;
+  color: #333;
   font-size: 16px;
   line-height: 20px; }
 
 a {
-  color: #0066aa;
+  color: #0066AA;
   text-decoration: none;
   -webkit-transition: color 0.3s ease;
   -moz-transition: color 0.3s ease;
@@ -2400,17 +2399,17 @@ a {
     text-decoration: none; }
 
 h3 {
-  color: #666666;
+  color: #666;
   font-size: 1.4em; }
 
 h4 {
-  color: #999999;
+  color: #999;
   font-size: 1.2em;
   margin-bottom: .4em; }
 
 .header-bar {
   position: fixed;
-  background: #e34c26;
+  background: #E34C26;
   height: .3em;
   z-index: 2; }
 
@@ -2435,7 +2434,7 @@ h4 {
 .sidebar .nav {
   display: none; }
 .sidebar .button i {
-  color: #666666; }
+  color: #666; }
 .sidebar .button:hover, .sidebar .button:active, .sidebar .button.active {
   color: white; }
   .sidebar .button:hover i, .sidebar .button:active i, .sidebar .button.active i {
@@ -2444,8 +2443,8 @@ h4 {
   display: none; }
 
 .content {
-  border-top: 1px solid #f3f3f3;
-  border-bottom: 1px solid #f3f3f3; }
+  border-top: 1px solid #F3F3F3;
+  border-bottom: 1px solid #F3F3F3; }
   .content .inner {
     padding: 0em 1em 2em 1em; }
 
@@ -2459,35 +2458,35 @@ h4 {
     padding-top: 0; }
 
   a {
-    color: #e34c26; }
+    color: #E34C26; }
     a:hover {
       color: #a73316; }
 
   .sidebar .button:hover, .sidebar .button.active {
     border: 1px solid #c73c1a;
-    background: #e34c26; } }
+    background: #E34C26; } }
 @media (min-width: 768px) {
   a {
-    color: #f06529; }
+    color: #F06529; }
     a:hover {
       color: #bf430d; }
 
   .header-bar {
-    background: #f06529; }
+    background: #F06529; }
 
   .sidebar .button:hover, .sidebar .button.active {
     border: 1px solid #e04f10;
-    background: #f06529; }
+    background: #F06529; }
   .sidebar .download {
     display: inline-block; } }
 @media (min-width: 981px) {
   a {
-    color: #6fbf4d; }
+    color: #6FBF4D; }
     a:hover {
       color: #4e8d33; }
 
   .header-bar {
-    background: #6fbf4d; }
+    background: #6FBF4D; }
 
   .sidebar {
     position: fixed;
@@ -2516,7 +2515,7 @@ h4 {
       display: block; }
     .sidebar .button:hover, .sidebar .button.active {
       border: 1px solid #5ca73c;
-      background: #6fbf4d; }
+      background: #6FBF4D; }
 
   .content {
     border: none; }
@@ -2532,18 +2531,18 @@ h4 {
       padding: 0 0 0 2em; } }
 @media (min-width: 1210px) {
   a {
-    color: #0092bf; }
+    color: #0092BF; }
     a:hover {
       color: #005873; }
 
   .header-bar {
-    background: #0092bf; }
+    background: #0092BF; }
 
   .sidebar .inner {
     padding: 0 0 0 4em; }
   .sidebar .button:hover, .sidebar .button.active {
     border: 1px solid #007396;
-    background: #0092bf; }
+    background: #0092BF; }
 
   .content .inner {
     padding: 1.5em 4em 2em 2em; }
@@ -2558,9 +2557,23 @@ table td, table th {
   border-radius: 4px; }
 
 .sidebar label {
-  color: #999999;
+  color: #999;
   margin-right: .5em; }
 .sidebar select {
   margin: 1.2em 0; }
-.sidebar .ad-container {
-  margin: 1em 0; }
+.sidebar #carbonads {
+  padding: .5em;
+  border: 1px solid #CCC;
+  border-radius: 4px; }
+  .sidebar #carbonads .carbon-wrap {
+    zoom: 1; }
+    .sidebar #carbonads .carbon-wrap:before, .sidebar #carbonads .carbon-wrap:after {
+      display: table;
+      content: ""; }
+    .sidebar #carbonads .carbon-wrap:after {
+      clear: both; }
+  .sidebar #carbonads .carbon-img {
+    display: block;
+    float: left; }
+
+/*# sourceMappingURL=style.css.map */
