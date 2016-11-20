@@ -24,17 +24,16 @@ module.exports = function(grunt) {
         mochaTest : {
             all: [
                 'tests/numeral/*.js',
-                'tests/languages/be-nl.js',
-                'tests/languages/chs.js'
+                'tests/languages/*.js'
             ]
         },
         karma: {
             options: {
                 files: [
                     'numeral.js',
-                    'languages/**/*.js',
+                    'languages/*.js',
                     'tests/numeral/*.js',
-                    'tests/languages/be-nl.js'
+                    'tests/languages/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -64,7 +63,7 @@ module.exports = function(grunt) {
         concat: {
             languages: {
                 src: [
-                    'languages/**/*.js'
+                    'languages/*.js'
                 ],
                 dest: 'languages.js'
             }
@@ -73,7 +72,7 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 'numeral.js',
-                'languages/**/*.js'
+                'languages/*.js'
             ],
             options: {
                 'node': true,
@@ -121,8 +120,6 @@ module.exports = function(grunt) {
 
     // P
     grunt.registerTask('build', [
-        'jshint',
-        'nodeunit',
         'concat',
         'uglify'
     ]);
