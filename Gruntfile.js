@@ -22,13 +22,18 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         mochaTest : {
-            all: ['tests/numeral/*.js']
+            all: [
+                'tests/numeral/*.js',
+                'tests/languages/be-nl.js'
+            ]
         },
         karma: {
             options: {
                 files: [
                     'numeral.js',
-                    'tests/numeral/*.js'
+                    'languages/**/*.js',
+                    'tests/numeral/*.js',
+                    'tests/languages/be-nl.js'
                 ],
                 frameworks: [
                     'mocha',

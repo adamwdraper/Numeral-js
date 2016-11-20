@@ -1,14 +1,16 @@
-if (!numeral) {
-  var numeral = require('../../numeral');
-}
-
-if (!expect) {
+// Node
+if (typeof module !== 'undefined' && module.exports) {
+    var numeral = require('../../numeral');
     var expect = require('chai').expect;
 }
 
 describe('Unformat', function() {
     beforeEach(function() {
         numeral.zeroFormat('N/A');
+    });
+
+    after(function() {
+        numeral.reset();
     });
 
     describe('Numbers', function() {

@@ -1,14 +1,16 @@
-if (!numeral) {
-  var numeral = require('../../numeral');
-}
-
-if (!expect) {
+// Node
+if (typeof module !== 'undefined' && module.exports) {
+    var numeral = require('../../numeral');
     var expect = require('chai').expect;
 }
 
-var language = 'en';
-
 describe('Validate', function() {
+    var language = 'en';
+
+    after(function() {
+        numeral.reset();
+    });
+
     describe('Numbers', function() {
         it('should validate numbers', function() {
             var tests = [

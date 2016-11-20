@@ -1,12 +1,14 @@
-if (!numeral) {
-  var numeral = require('../../numeral');
-}
-
-if (!expect) {
+// Node
+if (typeof module !== 'undefined' && module.exports) {
+    var numeral = require('../../numeral');
     var expect = require('chai').expect;
 }
 
 describe('Misc', function() {
+    after(function() {
+        numeral.reset();
+    });
+
     describe('Add', function() {
         it('should return a value', function() {
             var tests = [

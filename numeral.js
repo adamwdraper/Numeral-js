@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 1.5.3
+ * version : 1.5.4
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -9,18 +9,23 @@
 (function() {
 
     /************************************
-        Constants
+        Variables
     ************************************/
 
     var numeral,
-        VERSION = '1.5.3',
+        VERSION = '1.5.4',
         // internal storage for language config files
         languages = {},
-        currentLanguage = 'en',
-        zeroFormat = null,
-        defaultFormat = '0,0',
-        // check for nodeJS
-        hasModule = (typeof module !== 'undefined' && module.exports);
+        defaults = {
+            currentLanguage: 'en',
+            zeroFormat: null,
+            defaultFormat: '0,0'
+        },
+        options = {
+            currentLanguage: defaults.currentLanguage,
+            zeroFormat: defaults.zeroFormat,
+            defaultFormat: defaults.defaultFormat
+        };
 
 
     /************************************
@@ -93,18 +98,18 @@
         if (string.indexOf(':') > -1) {
             n._value = unformatTime(string);
         } else {
-            if (string === zeroFormat) {
+            if (string === options.zeroFormat) {
                 n._value = 0;
             } else {
-                if (languages[currentLanguage].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(languages[currentLanguage].delimiters.decimal, '.');
+                if (languages[options.currentLanguage].delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(languages[options.currentLanguage].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 0; power <= suffixes.length; power++) {
@@ -156,18 +161,18 @@
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[currentLanguage].currency.symbol + space);
+                output.splice(spliceIndex, 0, languages[options.currentLanguage].currency.symbol + space);
                 output = output.join('');
             } else {
-                output = languages[currentLanguage].currency.symbol + space + output;
+                output = languages[options.currentLanguage].currency.symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, space + languages[currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + languages[options.currentLanguage].currency.symbol);
                 output = output.join('');
             } else {
-                output = output + space + languages[currentLanguage].currency.symbol;
+                output = output + space + languages[options.currentLanguage].currency.symbol;
             }
         }
 
@@ -251,8 +256,8 @@
             neg = false;
 
         // check if number is zero and a custom zero format has been set
-        if (value === 0 && zeroFormat !== null) {
-            return zeroFormat;
+        if (value === 0 && options.zeroFormat !== null) {
+            return options.zeroFormat;
         } else {
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
@@ -283,19 +288,19 @@
 
                 if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
-                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
+                    abbr = abbr + languages[options.currentLanguage].abbreviations.trillion;
                     value = value / Math.pow(10, 12);
                 } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
                     // billion
-                    abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                    abbr = abbr + languages[options.currentLanguage].abbreviations.billion;
                     value = value / Math.pow(10, 9);
                 } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
                     // million
-                    abbr = abbr + languages[currentLanguage].abbreviations.million;
+                    abbr = abbr + languages[options.currentLanguage].abbreviations.million;
                     value = value / Math.pow(10, 6);
                 } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
                     // thousand
-                    abbr = abbr + languages[currentLanguage].abbreviations.thousand;
+                    abbr = abbr + languages[options.currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
                 }
             }
@@ -334,7 +339,7 @@
                     format = format.replace('o', '');
                 }
 
-                ord = ord + languages[currentLanguage].ordinal(value);
+                ord = ord + languages[options.currentLanguage].ordinal(value);
             }
 
             if (format.indexOf('[.]') > -1) {
@@ -358,7 +363,7 @@
                 w = d.split('.')[0];
 
                 if (d.split('.')[1].length) {
-                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                    d = languages[options.currentLanguage].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
                 }
@@ -377,7 +382,7 @@
             }
 
             if (thousands > -1) {
-                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
+                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[options.currentLanguage].delimiters.thousands);
             }
 
             if (format.indexOf('.') === 0) {
@@ -412,12 +417,13 @@
         return obj instanceof Numeral;
     };
 
+
     // This function will load languages and then set the global language.  If
     // no arguments are passed in, it will simply return the current global
     // language key.
     numeral.language = function(key, values) {
         if (!key) {
-            return currentLanguage;
+            return options.currentLanguage;
         }
 
         key = key.toLowerCase();
@@ -426,7 +432,8 @@
             if (!languages[key]) {
                 throw new Error('Unknown language : ' + key);
             }
-            currentLanguage = key;
+
+            options.currentLanguage = key;
         }
 
         if (values || !languages[key]) {
@@ -436,12 +443,18 @@
         return numeral;
     };
 
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
+        }
+    };
+
     // This function provides access to the loaded language data.  If
     // no arguments are passed in, it will simply return the current
     // global language object.
     numeral.languageData = function(key) {
         if (!key) {
-            return languages[currentLanguage];
+            return languages[options.currentLanguage];
         }
 
         if (!languages[key]) {
@@ -475,11 +488,11 @@
     });
 
     numeral.zeroFormat = function(format) {
-        zeroFormat = typeof(format) === 'string' ? format : null;
+        options.zeroFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.defaultFormat = function(format) {
-        defaultFormat = typeof(format) === 'string' ? format : '0.0';
+        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
     numeral.validate = function(val, culture) {
@@ -677,7 +690,7 @@
 
         format : function (inputString, roundingFunction) {
             return formatNumeral(this,
-                  inputString ? inputString : defaultFormat,
+                  inputString ? inputString : options.defaultFormat,
                   (roundingFunction !== undefined) ? roundingFunction : Math.round
               );
         },
@@ -686,7 +699,7 @@
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
                 return inputString;
             }
-            return unformatNumeral(this, inputString ? inputString : defaultFormat);
+            return unformatNumeral(this, inputString ? inputString : options.defaultFormat);
         },
 
         value: function() {
@@ -752,7 +765,7 @@
     ************************************/
 
     // CommonJS module is defined
-    if (hasModule) {
+    if (typeof module !== 'undefined' && module.exports) {
         module.exports = numeral;
     }
 
