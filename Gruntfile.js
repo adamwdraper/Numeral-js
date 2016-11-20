@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         mochaTest : {
-            all : ['tests/numeral/format.js']
+            all : ['tests/numeral/*.js']
         },
         uglify: {
             my_target: {
