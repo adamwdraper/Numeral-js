@@ -21,8 +21,8 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
-        nodeunit : {
-            all : ['tests/**/*.js']
+        mochaTest : {
+            all : ['tests/numeral/format.js']
         },
         uglify: {
             my_target: {
@@ -64,10 +64,10 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.registerTask('default', [
         'test'
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', [
         'jshint',
-        'nodeunit'
+        'mochaTest'
     ]);
 
     // P

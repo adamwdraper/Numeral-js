@@ -33,12 +33,15 @@
     }
   ],
   "devDependencies": {
-    "uglify-js": "latest",
+    "chai": "^3.5.0",
     "grunt": "latest",
-    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "1.0.1",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-nodeunit": "1.0.0",
-    "grunt-contrib-concat": "1.0.1"
+    "grunt-contrib-uglify": "latest",
+    "grunt-mocha-test": "^0.13.2",
+    "mocha": "^3.1.2",
+    "uglify-js": "latest"
   },
   "scripts": {
     "test": "grunt"
