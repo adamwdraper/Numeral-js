@@ -74,4 +74,8 @@ module.exports = function(grunt) {
         'jshint',
         'uglify:build'
     ]);
+
+    grunt.registerTask('travis', [
+        'build'
+    ]);
 };
