@@ -17,8 +17,8 @@ describe('Language: be-nl', function() {
         numeral.reset();
     });
 
-    describe('Format', function() {
-        it('should format be-nl', function() {
+    describe('Number', function() {
+        it('should format a number', function() {
             var tests = [
                 [10000,'0,0.0000','10 000,0000'],
                 [10000.23,'0,0','10 000'],
