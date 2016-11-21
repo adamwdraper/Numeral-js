@@ -1,34 +1,33 @@
 /*! @preserve
  * numeral.js language configuration
- * language : japanese
- * author : teppeis : https://github.com/teppeis
+ * language : Latvian (lv)
+ * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
     var language = {
         delimiters: {
-            thousands: ',',
-            decimal: '.'
+            thousands: ' ',
+            decimal: ','
         },
         abbreviations: {
-            thousand: '千',
-            million: '百万',
-            billion: '十億',
-            trillion: '兆'
+            thousand: ' tūkst.',
+            million: ' milj.',
+            billion: ' mljrd.',
+            trillion: ' trilj.'
         },
         ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: '¥'
+            symbol: '€'
         }
     };
-
     // Node
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = language;
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('ja', language);
+        this.numeral.language('lv', language);
     }
 }());

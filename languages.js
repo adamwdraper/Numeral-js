@@ -243,7 +243,45 @@
         this.numeral.language('en-gb', language);
     }
 }());
-/*! @preserve 
+/*!
+ * numeral.js language configuration
+ * language : english south africa (uk)
+ * author : Etienne Boshoff : etienne@zailab.com
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: 'R'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('en-za', language);
+    }
+}());
+/*! @preserve
  * numeral.js language configuration
  * language : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
@@ -279,7 +317,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('es', language);
+        this.numeral.language('es-ES', language);
     }
 }());
 
@@ -567,7 +605,7 @@
         this.numeral.language('it', language);
     }
 }());
-/*! @preserve 
+/*! @preserve
  * numeral.js language configuration
  * language : japanese
  * author : teppeis : https://github.com/teppeis
@@ -599,6 +637,40 @@
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('ja', language);
+    }
+}());
+
+/*! @preserve
+ * numeral.js language configuration
+ * language : Latvian (lv)
+ * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: ' tūkst.',
+            million: ' milj.',
+            billion: ' mljrd.',
+            trillion: ' trilj.'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: '€'
+        }
+    };
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('lv', language);
     }
 }());
 
@@ -635,6 +707,44 @@
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
         this.numeral.language('nl-nl', language);
+    }
+}());
+/*! 
+ * numeral.js language configuration
+ * language : norwegian (bokmål)
+ * author : Ove Andersen : https://github.com/azzlack
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'kr'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('nb-no', language);
+        this.numeral.language('nn-no', language);
+        this.numeral.language('no', language);
+        this.numeral.language('nb', language);
+        this.numeral.language('nn', language);
     }
 }());
 /*! @preserve 
@@ -776,7 +886,7 @@
     }
 }());
 
-/*! @preserve 
+/*! @preserve
  * numeral.js language configuration
  * language : russian (ru)
  * author : Anatoli Papirovski : https://github.com/apapirovski
@@ -789,15 +899,15 @@
         },
         abbreviations: {
             thousand: 'тыс.',
-            million: 'млн',
-            billion: 'b',
-            trillion: 't'
+            million: 'млн.',
+            billion: 'млрд.',
+            trillion: 'трлн.'
         },
         ordinal: function () {
-            // not ideal, but since in Russian it can taken on 
+            // not ideal, but since in Russian it can taken on
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: 'руб.'
