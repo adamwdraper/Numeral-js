@@ -49,9 +49,19 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 ### 1.5.4
 
+Tests: Changed all tests to use Mocha and Chai
+
+Tests: Added browser tests for Chrome, Firefox, and IE using saucelabs 
+
 Added reset function to reset numeral to default options
 
 Added nullFormat option
+
+Update reduce polyfill
+
+Added Binary bytes
+
+Bug fix: Fixes problem with many optional decimals
 
 ### 1.5.3
 
