@@ -15,7 +15,7 @@ exports['language:es'] = {
     },
 
     format: function (test) {
-        test.expect(16);
+        test.expect(18);
 
         var tests = [
             [10000,'0,0.0000','10.000,0000'],
@@ -29,6 +29,8 @@ exports['language:es'] = {
             [1230974,'0.0a','1,2mm'],
             [1460,'0a','1k'],
             [-104000,'0a','-104k'],
+            [1023,'0b','1023B'],
+            [1025,'0b','1KB'],
             [1,'0o','1er'],
             [52,'0o','52do'],
             [23,'0o','23er'],

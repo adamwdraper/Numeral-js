@@ -22,6 +22,7 @@
                 (b === 2) ? 'nd' :
                 (b === 3) ? 'rd' : 'th';
         },
+        byteSuffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         currency: {
             symbol: '£'
         }

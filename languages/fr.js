@@ -18,6 +18,7 @@
         ordinal : function (number) {
             return number === 1 ? 'er' : 'e';
         },
+        byteSuffixes: ['o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'],
         currency: {
             symbol: '€'
         }

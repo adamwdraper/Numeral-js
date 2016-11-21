@@ -15,7 +15,7 @@ exports['language:be-nl'] = {
     },
 
     format: function (test) {
-        test.expect(22);
+        test.expect(24);
 
         var tests = [
             [10000,'0,0.0000','10 000,0000'],
@@ -29,6 +29,8 @@ exports['language:be-nl'] = {
             [1230974,'0.0a','1,2 mln'],
             [1460,'0a','1k'],
             [-104000,'0a','-104k'],
+            [1023,'0b','1023B'],
+            [1025,'0b','1KB'],
             [0,'0o','0de'],
             [1,'0o','1ste'],
             [2,'0o','2de'],

@@ -302,6 +302,11 @@
 
             // see if we are formatting bytes
             if (format.indexOf('b') > -1) {
+
+                if(languages[currentLanguage].byteSuffixes) {
+                    suffixes = languages[currentLanguage].byteSuffixes;
+                }
+
                 // check for space before
                 if (format.indexOf(' b') > -1) {
                     bytes = ' ';
