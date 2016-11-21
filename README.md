@@ -47,11 +47,15 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 1.5.5
+
+Bug fix: Switch bytes back to `b` and change iecBinary to `ib`, and calculate both using 1024 for backwards compatibility
+
 ### 1.5.4
 
 Tests: Changed all tests to use Mocha and Chai
 
-Tests: Added browser tests for Chrome, Firefox, and IE using saucelabs 
+Tests: Added browser tests for Chrome, Firefox, and IE using saucelabs
 
 Added reset function to reset numeral to default options
 

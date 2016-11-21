@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 1.5.4
+ * version : 1.5.5
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.4',
+        VERSION = '1.5.5',
         // internal storage for language config files
         languages = {},
         defaults = {
@@ -105,8 +105,8 @@
             millionRegExp,
             billionRegExp,
             trillionRegExp,
-            binarySuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
-            decimalSuffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            iecSuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             bytesMultiplier = false,
             power;
 
@@ -127,10 +127,12 @@
                 trillionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                for (power = 0; power <= binarySuffixes.length && !bytesMultiplier; power++) {
-                    if (string.indexOf(binarySuffixes[power]) > -1) { bytesMultiplier = Math.pow(1024, power + 1); }
-                    else if (string.indexOf(decimalSuffixes[power]) > -1) { bytesMultiplier = Math.pow(1000, power + 1); }
-                    else { bytesMultiplier = false; }
+                for (power = 0; power <= suffixes.length; power++) {
+                    bytesMultiplier = ((string.indexOf(suffixes[power]) > -1) || (string.indexOf(iecSuffixes[power]) > -1))? Math.pow(1024, power + 1) : false;
+
+                    if (bytesMultiplier) {
+                        break;
+                    }
                 }
 
                 // do some math to create our number
@@ -245,6 +247,12 @@
         return Number(seconds);
     }
 
+    /*  format keys:
+     *  a - abbreviation
+     *  ib - binary bytes
+     *  b - decimal bytes
+     *  o - ordinal
+     */
     function formatNumber(value, format, roundingFunction) {
         var negP = false,
             signed = false,
@@ -258,8 +266,8 @@
             bytes = '',
             ord = '',
             abs = Math.abs(value),
-            binarySuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
-            decimalSuffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            iecSuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+            suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             min,
             max,
             power,
@@ -267,7 +275,8 @@
             precision,
             thousands,
             d = '',
-            neg = false;
+            neg = false,
+            iecBinary = false;
 
         // check if number is zero and a custom zero format has been set
         if (value === 0 && options.zeroFormat !== null) {
@@ -320,46 +329,28 @@
                 }
             }
 
-            // see if we are formatting binary bytes
+            // see if we are formatting bytes
             if (format.indexOf('b') > -1) {
-                // check for space before
-                if (format.indexOf(' b') > -1) {
-                    bytes = ' ';
-                    format = format.replace(' b', '');
-                } else {
-                    format = format.replace('b', '');
+
+                // check for IEC Binary byte notation
+                if (format.indexOf('ib') > -1) {
+                    iecBinary = true;
                 }
 
-                for (power = 0; power <= binarySuffixes.length; power++) {
+                // check for space before
+                if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
+                    bytes = ' ';
+                    format = format.replace(' ib', '').replace(' b', '');
+                } else {
+                    format = format.replace('ib', '').replace('b', '');
+                }
+
+                for (power = 0; power <= suffixes.length; power++) {
                     min = Math.pow(1024, power);
-                    max = Math.pow(1024, power + 1);
+                    max = Math.pow(1024, power+1);
 
                     if (value >= min && value < max) {
-                        bytes = bytes + binarySuffixes[power];
-                        if (min > 0) {
-                            value = value / min;
-                        }
-                        break;
-                    }
-                }
-            }
-
-            // see if we are formatting decimal bytes
-            if (format.indexOf('d') > -1) {
-                // check for space before
-                if (format.indexOf(' d') > -1) {
-                    bytes = ' ';
-                    format = format.replace(' d', '');
-                } else {
-                    format = format.replace('d', '');
-                }
-
-                for (power = 0; power <= decimalSuffixes.length; power++) {
-                    min = Math.pow(1000, power);
-                    max = Math.pow(1000, power+1);
-
-                    if (value >= min && value < max) {
-                        bytes = bytes + decimalSuffixes[power];
+                        bytes = bytes + (iecBinary ? iecSuffixes[power] : suffixes[power]);
                         if (min > 0) {
                             value = value / min;
                         }
