@@ -7,6 +7,8 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Unformat', function() {
     beforeEach(function() {
         numeral.zeroFormat('N/A');
+        
+        numeral.nullFormat('N/A');
     });
 
     after(function() {
