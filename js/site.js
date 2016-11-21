@@ -109,14 +109,18 @@ function formatBytes () {
         $body = $('#format-bytes tbody'),
         nums = [
             100,
+            1000,
             1024*2,
+            1000000,
             7884486213,
             3467479682787
         ],
         formats = [
             '0b',
+            '0d',
             '0 b',
-            '0.0b',
+            '0.0 d',
+            '0.00b',
             '0.000 b'
         ];
 
@@ -189,7 +193,7 @@ function unformatAll () {
     for (var i = 0; i < formats.length; i++) {
         html += '<tr><td>\'' + formats[i] + '\'</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>';
     }
-    
+
     $body.empty().html(html);
 }
 
