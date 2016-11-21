@@ -46,17 +46,29 @@
      * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
      * problems for accounting- and finance-related software.
      */
-    function toFixed(value, precision, roundingFunction, optionals) {
-        var power = Math.pow(10, precision),
+    function toFixed (value, maxDecimals, roundingFunction, optionals) {
+        var splitValue = value.toString().split('.'),
+            minDecimals = maxDecimals - (optionals || 0),
+            boundedPrecision,
             optionalsRegExp,
+            power,
             output;
+
+        // Use the smallest precision value possible to avoid errors from floating point representation
+        if (splitValue.length === 2) {
+          boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+        } else {
+          boundedPrecision = minDecimals;
+        }
+
+        power = Math.pow(10, boundedPrecision);
 
         //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
         // Multiply up by precision, round accurately, then divide and use native toFixed():
-        output = (roundingFunction(value * power) / power).toFixed(precision);
+        output = (roundingFunction(value * power) / power).toFixed(boundedPrecision);
 
-        if (optionals) {
-            optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+        if (optionals > maxDecimals - boundedPrecision) {
+            optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
             output = output.replace(optionalsRegExp, '');
         }
 
@@ -285,10 +297,9 @@
                 // check for space before abbreviation
                 if (format.indexOf(' a') > -1) {
                     abbr = ' ';
-                    format = format.replace(' a', '');
-                } else {
-                    format = format.replace('a', '');
                 }
+
+                format = format.replace(new RegExp(abbr + 'a[KMBT]?'), '');
 
                 if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                     // trillion
@@ -390,7 +401,7 @@
 
                 w = d.split('.')[0];
 
-                if (d.split('.')[1].length) {
+                if (d.indexOf('.') > -1) {
                     d = languages[options.currentLanguage].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
