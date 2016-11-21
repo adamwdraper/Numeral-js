@@ -133,5 +133,16 @@ describe('Misc', function() {
             expect(numeral.languageData().currency.symbol).to.equal(cOld);
             expect(formatTestVal()).to.equal(oldCurrencyVal);
         });
+        it('should key properly on custom language data', function () {
+            var customformat = { format: '0,0.00 $' , currency: { symbol: '^'} };
+
+            numeral.language('en-XX', customformat);
+
+            expect(numeral.languageData('en-XX').format).to.equal('0,0.00 $');
+            expect(numeral.languageData('en-XX').currency.symbol).to.equal('^');
+
+            expect(numeral.languageData('en-xx').format).to.equal('0,0.00 $');
+            expect(numeral.languageData('en-xx').currency.symbol).to.equal('^');
+        });
     });
 });
