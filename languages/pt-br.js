@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : portuguese brazil (pt-br)
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
