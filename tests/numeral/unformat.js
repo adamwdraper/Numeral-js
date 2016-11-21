@@ -7,7 +7,7 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Unformat', function() {
     beforeEach(function() {
         numeral.zeroFormat('N/A');
-        
+
         numeral.nullFormat('N/A');
     });
 
@@ -59,7 +59,8 @@ describe('Unformat', function() {
         it('should unformat bytes', function() {
             var tests = [
                 ['100B', 100],
-                ['3.154 TB', 3467859674006]
+                ['3.154 TiB', 3467859674006],
+                ['3.154 TB', 3154000000000]
             ];
 
             for (var i = 0; i < tests.length; i++) {
