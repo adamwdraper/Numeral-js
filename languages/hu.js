@@ -1,4 +1,4 @@
-/*!
+/*! @preserve
  * numeral.js language configuration
  * language : Hungarian (hu)
  * author : Peter Bakondy : https://github.com/pbakondy

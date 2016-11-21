@@ -2,15 +2,15 @@
 if (typeof module !== 'undefined' && module.exports) {
     var numeral = require('../../numeral');
     var expect = require('chai').expect;
-    var language = require('../../languages/es');
+    var language = require('../../languages/en-za');
 }
 
-describe('Language: es', function() {
+describe('Language: en-za', function() {
 
     before(function() {
-        numeral.language('es', language);
+        numeral.language('en-za', language);
 
-        numeral.language('es');
+        numeral.language('en-za');
     });
 
     after(function() {
@@ -20,21 +20,21 @@ describe('Language: es', function() {
     describe('Number', function() {
         it('should format a number', function() {
             var tests = [
-                [10000,'0,0.0000','10.000,0000'],
-                [10000.23,'0,0','10.000'],
-                [-10000,'0,0.0','-10.000,0'],
+                [10000,'0,0.0000','10 000,0000'],
+                [10000.23,'0,0','10 000'],
+                [-10000,'0,0.0','-10 000,0'],
                 [10000.1234,'0.000','10000,123'],
-                [-10000,'(0,0.0000)','(10.000,0000)'],
+                [-10000,'(0,0.0000)','(10 000,0000)'],
                 [-0.23,'.00','-,23'],
                 [-0.23,'(.00)','(,23)'],
                 [0.23,'0.00000','0,23000'],
-                [1230974,'0.0a','1,2mm'],
+                [1230974,'0.0a','1,2m'],
                 [1460,'0a','1k'],
                 [-104000,'0a','-104k'],
-                [1,'0o','1er'],
-                [52,'0o','52do'],
-                [23,'0o','23er'],
-                [100,'0o','100mo'],
+                [1,'0o','1st'],
+                [52,'0o','52nd'],
+                [23,'0o','23rd'],
+                [100,'0o','100th'],
                 [1,'0[.]0','1']
             ];
 
@@ -47,10 +47,10 @@ describe('Language: es', function() {
     describe('Currency', function() {
         it('should format a currency', function() {
             var tests = [
-                [1000.234,'$0,0.00','$1.000,23'],
-                [-1000.234,'($0,0)','($1.000)'],
-                [-1000.234,'$0.00','-$1000,23'],
-                [1230974,'($0.00a)','$1,23mm']
+                [1000.234,'$0,0.00','R1 000,23'],
+                [-1000.234,'($0,0)','(R1 000)'],
+                [-1000.234,'$0.00','-R1000,23'],
+                [1230974,'($0.00a)','R1,23m']
             ];
 
             for (var i = 0; i < tests.length; i++) {
@@ -77,13 +77,13 @@ describe('Language: es', function() {
     describe('Unformat', function() {
         it('should unformat', function() {
             var tests = [
-                ['10.000,123',10000.123],
+                ['10 000,123',10000.123],
                 ['(0,12345)',-0.12345],
-                ['($1,23mm)',-1230000],
+                ['(R1,23m)',-1230000],
                 ['10k',10000],
                 ['-10k',-10000],
-                ['23er',23],
-                ['$10.000,00',10000],
+                ['23rd',23],
+                ['R10 000,00',10000],
                 ['-76%',-0.76],
                 ['2:23:57',8637]
             ];
