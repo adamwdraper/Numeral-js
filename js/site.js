@@ -109,19 +109,19 @@ function formatBytes () {
         $body = $('#format-bytes tbody'),
         nums = [
             100,
-            1000,
+            1024,
             1024*2,
-            1000000,
+            1024*3,
             7884486213,
             3467479682787
         ],
         formats = [
             '0b',
-            '0d',
-            '0 b',
-            '0.0 d',
+            '0b',
+            '0 ib',
+            '0.0 b',
             '0.00b',
-            '0.000 b'
+            '0.000 ib'
         ];
 
     for (var i = 0; i < nums.length; i++) {
