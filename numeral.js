@@ -418,8 +418,20 @@
             if (format.indexOf('.') === 0) {
                 w = '';
             }
-
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+			
+			var preOrd = '';
+			var sufOrd = '';
+			
+			if(ord){
+				if((typeof ord) === 'string'){
+					sufOrd = ord;
+				} else {
+					preOrd = ord.prefix || '';
+					sufOrd = ord.suffix || '';
+				}
+			}
+			
+            return preOrd + ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + sufOrd + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
         }
     }
 
