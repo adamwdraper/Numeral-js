@@ -94,7 +94,7 @@
 </pre>
 or include from cdnjs.com
 <pre>
-&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.3/numeral.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.4/numeral.min.js&quot;&gt;&lt;/script&gt;
 </pre>
 <h4>In Node.js</h4>
 <pre>
@@ -256,16 +256,21 @@ numeral.defaultFormat('$0,0.00');
 number.format();
 // '$1,000.00'
 </pre>
-            <h3>Custom Zero Formatting</h3>
+            <h3>Custom Zero and Null Formatting</h3>
             <p>
-                Set a custom output when formatting numerals with a value of 0
+                Set a custom output when formatting numerals with a value of 0 or null
             </p>
 <pre>
 var number = numeral(0);
+var nullNumber = numeral(null);
 
 numeral.zeroFormat('N/A');
+numeral.nullFormat('N/A');
 
 var zero = number.format('0.0')
+// 'N/A'
+
+var na = nullNumber.format('0.0')
 // 'N/A'
 </pre>
             <h3>Clone</h3>
