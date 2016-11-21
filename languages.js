@@ -243,6 +243,44 @@
         this.numeral.language('en-gb', language);
     }
 }());
+/*!
+ * numeral.js language configuration
+ * language : english south africa (uk)
+ * author : Etienne Boshoff : etienne@zailab.com
+ */
+(function () {
+    var language = {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: 'R'
+        }
+    };
+
+    // Node
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = language;
+    }
+    // Browser
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
+        this.numeral.language('en-za', language);
+    }
+}());
 /*! @preserve
  * numeral.js language configuration
  * language : spanish Spain
@@ -810,7 +848,7 @@
     }
 }());
 
-/*! @preserve 
+/*! @preserve
  * numeral.js language configuration
  * language : russian (ru)
  * author : Anatoli Papirovski : https://github.com/apapirovski
@@ -823,15 +861,15 @@
         },
         abbreviations: {
             thousand: 'тыс.',
-            million: 'млн',
-            billion: 'b',
-            trillion: 't'
+            million: 'млн.',
+            billion: 'млрд.',
+            trillion: 'трлн.'
         },
         ordinal: function () {
-            // not ideal, but since in Russian it can taken on 
+            // not ideal, but since in Russian it can taken on
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: 'руб.'

@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         mochaTest : {
             all: [
                 'tests/numeral/*.js',
-                // 'tests/languages/*.js'
+                'tests/languages/*.js'
             ]
         },
         karma: {
