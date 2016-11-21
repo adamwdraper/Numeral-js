@@ -380,6 +380,7 @@
             w = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
+            thousands_spaces = format.indexOf(' ');
 
             if (precision) {
                 if (precision.indexOf('[') > -1) {
@@ -413,6 +414,10 @@
 
             if (thousands > -1) {
                 w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[options.currentLanguage].delimiters.thousands);
+            }
+            
+            if (thousands_spaces > -1) {
+                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, ' ');
             }
 
             if (format.indexOf('.') === 0) {
