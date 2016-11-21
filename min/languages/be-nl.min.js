@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve 
  * numeral.js language configuration
  * language : belgium-dutch (be-nl)
  * author : Dieter Luypaert : https://github.com/moeriki

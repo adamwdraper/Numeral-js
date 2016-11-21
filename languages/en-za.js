@@ -1,7 +1,7 @@
-/*! @preserve
+/*!
  * numeral.js language configuration
- * language : czech (cs)
- * author : Anatoli Papirovski : https://github.com/apapirovski
+ * language : english south africa (uk)
+ * author : Etienne Boshoff : etienne@zailab.com
  */
 (function () {
     var language = {
@@ -10,16 +10,20 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'tis.',
-            million: 'mil.',
+            thousand: 'k',
+            million: 'm',
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function () {
-            return '.';
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
-            symbol: 'Kč'
+            symbol: 'R'
         }
     };
 
@@ -29,6 +33,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('cs', language);
+        this.numeral.language('en-za', language);
     }
 }());
