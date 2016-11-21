@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve
  * numeral.js language configuration
  * language : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
@@ -34,6 +34,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('es', language);
+        this.numeral.language('es-ES', language);
     }
 }());

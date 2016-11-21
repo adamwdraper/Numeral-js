@@ -1,4 +1,4 @@
-/*! 
+/*! @preserve
  * numeral.js language configuration
  * language : japanese
  * author : teppeis : https://github.com/teppeis

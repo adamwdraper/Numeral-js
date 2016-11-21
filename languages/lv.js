@@ -1,7 +1,7 @@
 /*! @preserve
  * numeral.js language configuration
- * language : czech (cs)
- * author : Anatoli Papirovski : https://github.com/apapirovski
+ * language : Latvian (lv)
+ * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
     var language = {
@@ -10,25 +10,24 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'tis.',
-            million: 'mil.',
-            billion: 'b',
-            trillion: 't'
+            thousand: ' tūkst.',
+            million: ' milj.',
+            billion: ' mljrd.',
+            trillion: ' trilj.'
         },
-        ordinal: function () {
+        ordinal: function (number) {
             return '.';
         },
         currency: {
-            symbol: 'Kč'
+            symbol: '€'
         }
     };
-
     // Node
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = language;
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('cs', language);
+        this.numeral.language('lv', language);
     }
 }());

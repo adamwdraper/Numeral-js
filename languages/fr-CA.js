@@ -1,4 +1,4 @@
-/*!
+/*! @preserve
  * numeral.js language configuration
  * language : french (Canada) (fr-CA)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
