@@ -241,25 +241,24 @@
 
     function formatBytes(n, format, roundingFunction) {
         var output,
-            bytes = '',
+            suffixes = format.indexOf('ib') > -1 ? byteSuffixes.iec : byteSuffixes.bytes,
             value = n._value,
-            suffixes = format.indexOf('ib') > -1 ? byteSuffixes.iec : byteSuffixes.bytes;
+            suffix = '';
 
         // check for space before
         if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
-            bytes = ' ';
+            suffix = ' ';
             format = format.replace(' ib', '').replace(' b', '');
         } else {
             format = format.replace('ib', '').replace('b', '');
         }
 
-
         for (power = 0; power <= suffixes.length; power++) {
             min = Math.pow(1024, power);
             max = Math.pow(1024, power + 1);
 
-            if (value >= min && value < max) {
-                bytes = bytes + suffixes[power];
+            if (value === null || value === 0 || value >= min && value < max) {
+                suffix += suffixes[power];
 
                 if (min > 0) {
                     value = value / min;
@@ -271,7 +270,7 @@
 
         output = formatNumber(value, format, roundingFunction);
 
-        return output + bytes;
+        return output + suffix;
     }
 
     function formatOrdinal(n, format, roundingFunction) {
