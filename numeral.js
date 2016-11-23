@@ -243,7 +243,10 @@
         var output,
             suffixes = format.indexOf('ib') > -1 ? byteSuffixes.iec : byteSuffixes.bytes,
             value = n._value,
-            suffix = '';
+            suffix = '',
+            power,
+            min,
+            max;
 
         // check for space before
         if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
