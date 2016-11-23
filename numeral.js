@@ -91,19 +91,16 @@
 
         // figure out what kind of format we are dealing with
         if (format.indexOf('$') > -1) {
-            // currency!!!!!
             output = formatCurrency(n, format, roundingFunction);
         } else if (format.indexOf('%') > -1) {
-            // percentage
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) {
-            // time
             output = formatTime(n, format);
         } else if (format.indexOf('b') > -1 || format.indexOf('ib') > -1) {
-            // bytes
             output = formatBytes(n, format, roundingFunction);
+        } else if (format.indexOf('o') > -1) {
+            output = formatOrdinal(n, format, roundingFunction);
         } else {
-            // plain ol' numbers
             output = formatNumber(n._value, format, roundingFunction);
         }
 
@@ -280,6 +277,21 @@
         return output + bytes;
     }
 
+    function formatOrdinal(n, format, roundingFunction) {
+        var output,
+            space = '';
+
+        // check for space before
+        if (format.indexOf(' o') > -1) {
+            space = ' ';
+            format = format.replace(' o', '');
+        } else {
+            format = format.replace('o', '');
+        }
+
+        return n._value + space + languages[options.currentLanguage].ordinal(n._value);
+    }
+
     function formatTime(n) {
         var hours = Math.floor(n._value / 60 / 60),
             minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
@@ -307,12 +319,6 @@
         return Number(seconds);
     }
 
-    /*  format keys:
-     *  a - abbreviation
-     *  ib - binary bytes
-     *  b - decimal bytes
-     *  o - ordinal
-     */
     function formatNumber(value, format, roundingFunction, useZeroDefault) {
         var negP = false,
             signed = false,
@@ -323,8 +329,6 @@
             abbrB = false, // force abbreviation to billions
             abbrT = false, // force abbreviation to trillions
             abbrForce = false, // force abbreviation
-            bytes = '',
-            ord = '',
             abs = Math.abs(value),
             min,
             max,
@@ -391,18 +395,6 @@
                 }
             }
 
-            // see if ordinal is wanted
-            if (format.indexOf('o') > -1) {
-                // check for space before
-                if (format.indexOf(' o') > -1) {
-                    ord = ' ';
-                    format = format.replace(' o', '');
-                } else {
-                    format = format.replace('o', '');
-                }
-
-                ord = ord + languages[options.currentLanguage].ordinal(value);
-            }
 
             if (format.indexOf('[.]') > -1) {
                 optDec = true;
@@ -451,7 +443,7 @@
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
         }
     }
 
