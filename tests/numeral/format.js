@@ -19,23 +19,17 @@ describe('Format', function() {
     });
 
     describe('Value', function() {
-        it('should return a value', function() {
+        it('should return a value as correct type', function() {
             var tests = [
-                    '0,0.00',
-                    '$0,0.00',
-                    '0b',
-                    '0,0%',
-                    '00:00:00'
+                    [1234.56,'number'],
+                    ['1234.56','number'],
+                    [0,'number'],
+                    [null,'object']
                 ],
-                value = 12345.6,
-                n = numeral(value),
-                format,
-                test;
+                i;
 
             for (i = 0; i < tests.length; i++) {
-                format = n.format(tests[i]);
-
-                expect(n.value()).to.equal(value);
+                expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });
     });
@@ -43,6 +37,9 @@ describe('Format', function() {
     describe('Numbers', function() {
         it('should format to a number', function() {
             var tests = [
+                    [0, null, '0'],
+                    [0, '0.00', '0.00'],
+                    [null, null, '0'],
                     [10000,'0,0.0000','10,000.0000'],
                     [10000.23,'0,0','10,000'],
                     [-10000,'0,0.0','-10,000.0'],
@@ -69,26 +66,35 @@ describe('Format', function() {
                     [3162.63,'0.0[00000000000000]','3162.63'],
                     [1.99,'0.[0]','2'],
                     [1.0501,'0.00[0]','1.05'],
-                    [2000000000,'0.0a','2.0b'],
-                    [1230974,'0.0a','1.2m'],
-                    [1460,'0a','1k'],
-                    [-104000,'0 a','-104 k'],
+                    // ordinals
                     [1,'0o','1st'],
                     [52,'0 o','52 nd'],
                     [23,'0o','23rd'],
                     [100,'0o','100th'],
-
-                    // specified abbreviations
+                    [1234,'0,0o','1,234th'],
+                    // abbreviations
+                    [2000000000,'0.0a','2.0b'],
+                    [1230974,'0.0a','1.2m'],
+                    [1460,'0a','1k'],
+                    [-104000,'0 a','-104 k'],
+                    // forced abbreviations
                     [-5444333222111, '0,0 aK', '-5,444,333,222 k'],
-                    [-5444333222111, '0,0 aM', '-5,444,333 m'],
+                    [5444333222111, '0,0 aM', '5,444,333 m'],
                     [-5444333222111, '0,0 aB', '-5,444 b'],
                     [-5444333222111, '0,0 aT', '-5 t'],
                     [123456, '0.0[0] aK', '123.46 k']
                 ],
-                i;
+                i,
+                n,
+                output;
 
             for (i = 0; i < tests.length; i++) {
-                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+                n = numeral(tests[i][0]);
+                output = n.format(tests[i][1]);
+
+                expect(output).to.equal(tests[i][2]);
+
+                expect(typeof output).to.equal('string');
             }
         });
     });
@@ -96,6 +102,9 @@ describe('Format', function() {
     describe('Currency', function() {
         it('should format to currency', function() {
             var tests = [
+                    [0,'$0.00','$0.00'],
+                    [null,'$0.00','$0.00'],
+                    [0.99,'$0,0.00','$0.99'],
                     [1000.234,'$0,0.00','$1,000.23'],
                     [1001,'$ 0,0.[00]','$ 1,001'],
                     [1000.234,'0,0.00 $','1,000.23 $'],
@@ -132,6 +141,8 @@ describe('Format', function() {
     describe('Bytes', function() {
         it('should format to bytes', function() {
             var tests = [
+                    [0,'0b','0B'],
+                    [null,'0 b','0 B'],
                     [100,'0b','100B'],
                     [1024*2,'0 ib','2 KiB'],
                     [1024*1024*5,'0ib','5MiB'],
@@ -155,6 +166,8 @@ describe('Format', function() {
     describe('Percentages', function() {
         it('should format to percentages', function() {
             var tests = [
+                    [0,'0%','0%'],
+                    [null,'0 %','0 %'],
                     [1,'0%','100%'],
                     [0.974878234,'0.000%','97.488%'],
                     [-0.43,'0 %','-43 %'],
@@ -171,6 +184,8 @@ describe('Format', function() {
     describe('Times', function() {
         it('should format to times', function() {
             var tests = [
+                    [0,'00:00:00','0:00:00'],
+                    [null,'00:00:00','0:00:00'],
                     [25,'00:00:00','0:00:25'],
                     [238,'00:00:00','0:03:58'],
                     [63846,'00:00:00','17:44:06']
@@ -187,14 +202,14 @@ describe('Format', function() {
     describe('Rounding', function() {
         it('should format with rounding', function() {
             var tests = [
-                // value, format string, expected w/ floor, expected w/ ceil
-                [2280002, '0.00a', '2.28m', '2.29m'],
-                [10000.23,'0,0','10,000', '10,001'],
-                [1000.234,'$0,0.00','$1,000.23', '$1,000.24'],
-                [0.974878234,'0.000%','97.487%','97.488%'],
-                [-0.433,'0 %','-44 %', '-43 %']
-            ],
-            i;
+                    // value, format string, expected w/ floor, expected w/ ceil
+                    [2280002, '0.00a', '2.28m', '2.29m'],
+                    [10000.23,'0,0','10,000', '10,001'],
+                    [1000.234,'$0,0.00','$1,000.23', '$1,000.24'],
+                    [0.974878234,'0.000%','97.487%','97.488%'],
+                    [-0.433,'0 %','-44 %', '-43 %']
+                ],
+                i;
 
             for (i = 0; i < tests.length; i++) {
                 // floor
