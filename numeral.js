@@ -19,7 +19,7 @@
         defaults = {
             currentLanguage: 'en',
             zeroFormat: null,
-            nullFormat: null,
+            nullFormat: '0',
             defaultFormat: '0,0'
         },
         options = {
@@ -27,6 +27,11 @@
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
             defaultFormat: defaults.defaultFormat
+        },
+        byteSuffixes = {
+            regexp: /(B|KB|MB|GB|TB|PB|EB|ZB|YB|KiB|MiB|GiB|TiB|PiB|EiB|ZiB|YiB)/,
+            bytes: ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            iec: ['B','KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
 
 
@@ -83,18 +88,25 @@
     function formatNumeral(n, format, roundingFunction) {
         var output;
 
+
         // figure out what kind of format we are dealing with
-        if (format.indexOf('$') > -1) { // currency!!!!!
+        if (format.indexOf('$') > -1) {
+            // currency!!!!!
             output = formatCurrency(n, format, roundingFunction);
-        } else if (format.indexOf('%') > -1) { // percentage
+        } else if (format.indexOf('%') > -1) {
+            // percentage
             output = formatPercentage(n, format, roundingFunction);
-        } else if (format.indexOf(':') > -1) { // time
+        } else if (format.indexOf(':') > -1) {
+            // time
             output = formatTime(n, format);
-        } else { // plain ol' numbers or bytes
+        } else if (format.indexOf('b') > -1 || format.indexOf('ib') > -1) {
+            // bytes
+            output = formatBytes(n, format, roundingFunction);
+        } else {
+            // plain ol' numbers
             output = formatNumber(n._value, format, roundingFunction);
         }
 
-        // return string
         return output;
     }
 
@@ -108,13 +120,14 @@
             suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             iecSuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             bytesMultiplier = false,
-            power;
+            power,
+            value;
 
         if (string.indexOf(':') > -1) {
-            n._value = unformatTime(string);
+            value = unformatTime(string);
         } else {
             if (string === options.zeroFormat || string === options.nullFormat) {
-                n._value = 0;
+                value = 0;
             } else {
                 if (languages[options.currentLanguage].delimiters.decimal !== '.') {
                     string = string.replace(/\./g, '').replace(languages[options.currentLanguage].delimiters.decimal, '.');
@@ -136,12 +149,24 @@
                 }
 
                 // do some math to create our number
-                n._value = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1) * Number(string.replace(/[^0-9\.]+/g, ''));
-
+                value = bytesMultiplier ? bytesMultiplier : 1;
+                value *= stringOriginal.match(thousandRegExp) ? Math.pow(10, 3) : 1;
+                value *= stringOriginal.match(millionRegExp) ? Math.pow(10, 6) : 1;
+                value *= stringOriginal.match(billionRegExp) ? Math.pow(10, 9) : 1;
+                value *= stringOriginal.match(trillionRegExp) ? Math.pow(10, 12) : 1;
+                // check for percentage
+                value *= string.indexOf('%') > -1 ? 0.01 : 1;
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+                // remove non numbers
+                value *= Number(string.replace(/[^0-9\.]+/g, ''));
                 // round if we are talking about bytes
-                n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
+                value = bytesMultiplier ? Math.ceil(value) : value;
             }
         }
+
+        n._value = value;
+
         return n._value;
     }
 
@@ -165,7 +190,7 @@
         }
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction);
+        output = formatNumber(n._value, format, roundingFunction, false);
 
         // position the symbol
         if (symbolIndex <= 1) {
@@ -220,6 +245,41 @@
         return output;
     }
 
+    function formatBytes(n, format, roundingFunction) {
+        var output,
+            bytes = '',
+            value = n._value,
+            suffixes = format.indexOf('ib') > -1 ? byteSuffixes.iec : byteSuffixes.bytes;
+
+        // check for space before
+        if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
+            bytes = ' ';
+            format = format.replace(' ib', '').replace(' b', '');
+        } else {
+            format = format.replace('ib', '').replace('b', '');
+        }
+
+
+        for (power = 0; power <= suffixes.length; power++) {
+            min = Math.pow(1024, power);
+            max = Math.pow(1024, power + 1);
+
+            if (value >= min && value < max) {
+                bytes = bytes + suffixes[power];
+
+                if (min > 0) {
+                    value = value / min;
+                }
+
+                break;
+            }
+        }
+
+        output = formatNumber(value, format, roundingFunction);
+
+        return output + bytes;
+    }
+
     function formatTime(n) {
         var hours = Math.floor(n._value / 60 / 60),
             minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
@@ -253,7 +313,7 @@
      *  b - decimal bytes
      *  o - ordinal
      */
-    function formatNumber(value, format, roundingFunction) {
+    function formatNumber(value, format, roundingFunction, useZeroDefault) {
         var negP = false,
             signed = false,
             optDec = false,
@@ -266,8 +326,6 @@
             bytes = '',
             ord = '',
             abs = Math.abs(value),
-            iecSuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
-            suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             min,
             max,
             power,
@@ -275,11 +333,15 @@
             precision,
             thousands,
             d = '',
-            neg = false,
-            iecBinary = false;
+            neg = false;
+
+
+        if (useZeroDefault === undefined) {
+            useZeroDefault = true;
+        }
 
         // check if number is zero and a custom zero format has been set
-        if (value === 0 && options.zeroFormat !== null) {
+        if (value === 0 && useZeroDefault && options.zeroFormat !== null) {
             return options.zeroFormat;
         } else if (value === null && options.nullFormat !== null) {
             return options.nullFormat;
@@ -326,36 +388,6 @@
                     // thousand
                     abbr = abbr + languages[options.currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
-                }
-            }
-
-            // see if we are formatting bytes
-            if (format.indexOf('b') > -1) {
-
-                // check for IEC Binary byte notation
-                if (format.indexOf('ib') > -1) {
-                    iecBinary = true;
-                }
-
-                // check for space before
-                if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
-                    bytes = ' ';
-                    format = format.replace(' ib', '').replace(' b', '');
-                } else {
-                    format = format.replace('ib', '').replace('b', '');
-                }
-
-                for (power = 0; power <= suffixes.length; power++) {
-                    min = Math.pow(1024, power);
-                    max = Math.pow(1024, power+1);
-
-                    if (value >= min && value < max) {
-                        bytes = bytes + (iecBinary ? iecSuffixes[power] : suffixes[power]);
-                        if (min > 0) {
-                            value = value / min;
-                        }
-                        break;
-                    }
                 }
             }
 
@@ -436,6 +468,8 @@
             input = null;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);
+        } else {
+            input = Number(input);
         }
 
         return new Numeral(input);
@@ -532,7 +566,6 @@
     };
 
     numeral.validate = function(val, culture) {
-
         var _decimalSep,
             _thousandSep,
             _currSymbol,
@@ -712,17 +745,18 @@
             return numeral(this);
         },
 
-        format : function (inputString, roundingFunction) {
+        format: function (inputString, roundingFunction) {
             return formatNumeral(this,
-                  inputString ? inputString : options.defaultFormat,
-                  (roundingFunction !== undefined) ? roundingFunction : Math.round
-              );
+                inputString ? inputString : options.defaultFormat,
+                roundingFunction !== undefined ? roundingFunction : Math.round
+            );
         },
 
-        unformat : function (inputString) {
+        unformat: function (inputString) {
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
                 return inputString;
             }
+
             return unformatNumeral(this, inputString ? inputString : options.defaultFormat);
         },
 
