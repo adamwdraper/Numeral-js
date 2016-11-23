@@ -29,7 +29,6 @@
             defaultFormat: defaults.defaultFormat
         },
         byteSuffixes = {
-            regexp: /(B|KB|MB|GB|TB|PB|EB|ZB|YB|KiB|MiB|GiB|TiB|PiB|EiB|ZiB|YiB)/,
             bytes: ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             iec: ['B','KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
@@ -114,8 +113,6 @@
             millionRegExp,
             billionRegExp,
             trillionRegExp,
-            suffixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            iecSuffixes = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             bytesMultiplier = false,
             power,
             value;
@@ -137,8 +134,8 @@
                 trillionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                for (power = 0; power <= suffixes.length; power++) {
-                    bytesMultiplier = ((string.indexOf(suffixes[power]) > -1) || (string.indexOf(iecSuffixes[power]) > -1))? Math.pow(1024, power + 1) : false;
+                for (power = 1; power <= byteSuffixes.bytes.length; power++) {
+                    bytesMultiplier = ((string.indexOf(byteSuffixes.bytes[power]) > -1) || (string.indexOf(byteSuffixes.iec[power]) > -1))? Math.pow(1024, power) : false;
 
                     if (bytesMultiplier) {
                         break;
