@@ -726,11 +726,10 @@
      */
     function correctionFactor() {
         var args = Array.prototype.slice.call(arguments);
-        return args.reduce(function(prev, next) {
-            var mp = multiplier(prev),
-                mn = multiplier(next);
-            return mp > mn ? mp : mn;
-        }, -Infinity);
+        return args.reduce(function(accum, next) {
+            var mn = multiplier(next);
+            return accum > mn ? accum : mn;
+        }, 1);
     }
 
 
@@ -775,9 +774,9 @@
 
         add: function(value) {
             var corrFactor = correctionFactor.call(null, this._value, value);
-
+            
             function cback(accum, curr, currI, O) {
-                return accum + corrFactor * curr;
+                return accum + Math.round(corrFactor * curr);
             }
             this._value = [this._value, value].reduce(cback, 0) / corrFactor;
             return this;
@@ -787,17 +786,17 @@
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
-                return accum - corrFactor * curr;
+                return accum - Math.round(corrFactor * curr);
             }
-            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
+            this._value = [value].reduce(cback, Math.round(this._value * corrFactor)) / corrFactor;
             return this;
         },
 
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) * (curr * corrFactor) /
-                    (corrFactor * corrFactor);
+                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) /
+                    Math.round(corrFactor * corrFactor);
             }
             this._value = [this._value, value].reduce(cback, 1);
             return this;
@@ -806,7 +805,7 @@
         divide: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) / (curr * corrFactor);
+                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
             this._value = [this._value, value].reduce(cback);
             return this;
