@@ -504,6 +504,7 @@
 
         if (values || !languages[key]) {
             loadLanguage(key, values);
+            currentLanguage = key;
         }
 
         return numeral;
