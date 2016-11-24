@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.5',
+        VERSION = '1.5.6',
         // internal storage for language config files
         languages = {},
         defaults = {

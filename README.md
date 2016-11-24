@@ -47,11 +47,21 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 1.5.6
+
+Bug fix: numeral converts strings to numbers
+
+Bug fix: Null values return same as 0
+
 ### 1.5.5
+
+Contained breaking changes, recommended to use 1.5.6
 
 Bug fix: Switch bytes back to `b` and change iecBinary to `ib`, and calculate both using 1024 for backwards compatibility
 
 ### 1.5.4
+
+Contained breaking changes, recommended to use 1.5.6
 
 Tests: Changed all tests to use Mocha and Chai
 
