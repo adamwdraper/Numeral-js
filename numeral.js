@@ -519,9 +519,12 @@
     // no arguments are passed in, it will simply return the current
     // global language object.
     numeral.languageData = function(key) {
+
         if (!key) {
             return languages[options.currentLanguage];
         }
+
+        key = key.toLowerCase();
 
         if (!languages[key]) {
             throw new Error('Unknown language : ' + key);
