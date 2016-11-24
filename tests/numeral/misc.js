@@ -47,14 +47,21 @@ describe('Misc', function() {
     describe('Custom Zero', function() {
         it('should change zero value', function() {
             var tests = [
-                [0,'N/A','N/A'],
-                [0,'','']
+                [0,null,'0','0'],
+                [0,null,'$0.00','$0.00'],
+                [0,null,'0 b','0 B'],
+                [0,null,'0:00','0:00:00'],
+                [0,'N/A','0','N/A'],
+                [0,'N/A','$0.00','N/A'],
+                [0,'N/A','0 b','N/A'],
+                [0,'N/A','0:00','N/A'],
+                [0,'','','']
             ];
 
             for (var i = 0; i < tests.length; i++) {
                 numeral.zeroFormat(tests[i][1]);
 
-                expect(numeral(tests[i][0]).format('0')).to.equal(tests[i][2]);
+                expect(numeral(tests[i][0]).format(tests[i][2])).to.equal(tests[i][3]);
             }
         });
     });
@@ -62,14 +69,21 @@ describe('Misc', function() {
     describe('Custom Null', function() {
         it('should change null value', function() {
             var tests = [
-                [null,'N/A','N/A'],
-                [null,'','']
+                [null,null,'0','0'],
+                [null,null,'$0.00','$0.00'],
+                [null,null,'0 b','0 B'],
+                [null,null,'0:00','0:00:00'],
+                [null,'N/A','0','N/A'],
+                [null,'N/A','$0.00','N/A'],
+                [null,'N/A','0 b','N/A'],
+                [null,'N/A','0:00','N/A'],
+                [null,'','','']
             ];
 
             for (var i = 0; i < tests.length; i++) {
                 numeral.nullFormat(tests[i][1]);
 
-                expect(numeral(tests[i][0]).format('0')).to.equal(tests[i][2]);
+                expect(numeral(tests[i][0]).format(tests[i][2])).to.equal(tests[i][3]);
             }
         });
     });
