@@ -1,5 +1,5 @@
 $(function() {
-    $('#language-select').on('change', function() {
+    $('#locale-select').on('change', function() {
         updateFormats();
     });
 
@@ -13,8 +13,8 @@ function addVersion () {
 }
 
 function updateFormats () {
-    // get language
-    numeral.language($('#language-select').val());
+    // get locale
+    numeral.locale($('#locale-select').val());
 
     formatNumbers();
     formatCurrency();
