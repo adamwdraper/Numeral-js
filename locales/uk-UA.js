@@ -1,5 +1,5 @@
 // numeral.js locale configuration
-// locale : Ukrainian for the Ukraine (uk-UA)
+// locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
     var locale = {
@@ -30,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('uk-UA', locale);
+        this.numeral.locale('uk-ua', locale);
     }
 }());

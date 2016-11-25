@@ -2,15 +2,15 @@
 if (typeof module !== 'undefined' && module.exports) {
     var numeral = require('../../numeral');
     var expect = require('chai').expect;
-    var locale = require('../../locales/fr-CA');
+    var locale = require('../../locales/fr-ca');
 }
 
-describe('Locale: fr-CA', function() {
+describe('Locale: fr-ca', function() {
 
     before(function() {
-        numeral.locale('fr-CA', locale);
+        numeral.locale('fr-ca', locale);
 
-        numeral.locale('fr-CA');
+        numeral.locale('fr-ca');
     });
 
     after(function() {

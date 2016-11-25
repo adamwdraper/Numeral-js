@@ -318,7 +318,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('es-ES', locale);
+        this.numeral.locale('es-es', locale);
     }
 }());
 
@@ -437,7 +437,7 @@
 
 /*! @preserve
  * numeral.js locale configuration
- * locale : french (Canada) (fr-CA)
+ * locale : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
@@ -466,7 +466,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr-CA', locale);
+        this.numeral.locale('fr-ca', locale);
     }
 }());
 /*! @preserve 
@@ -852,7 +852,7 @@
 }());
 
 // numeral.js locale configuration
-// locale : Russian for the Ukraine (ru-UA)
+// locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
     var locale = {
@@ -883,7 +883,7 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ru-UA', locale);
+        this.numeral.locale('ru-ua', locale);
     }
 }());
 
@@ -1064,7 +1064,7 @@
 }());
 
 // numeral.js locale configuration
-// locale : Ukrainian for the Ukraine (uk-UA)
+// locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
     var locale = {
@@ -1095,6 +1095,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('uk-UA', locale);
+        this.numeral.locale('uk-ua', locale);
     }
 }());

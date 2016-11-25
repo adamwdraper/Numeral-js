@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js locale configuration
- * locale : french (Canada) (fr-CA)
+ * locale : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
@@ -29,6 +29,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr-CA', locale);
+        this.numeral.locale('fr-ca', locale);
     }
 }());

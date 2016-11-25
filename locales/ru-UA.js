@@ -1,5 +1,5 @@
 // numeral.js locale configuration
-// locale : Russian for the Ukraine (ru-UA)
+// locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
     var locale = {
@@ -30,6 +30,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ru-UA', locale);
+        this.numeral.locale('ru-ua', locale);
     }
 }());

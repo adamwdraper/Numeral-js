@@ -34,6 +34,6 @@
     }
     // Browser
     if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('es-ES', locale);
+        this.numeral.locale('es-es', locale);
     }
 }());
