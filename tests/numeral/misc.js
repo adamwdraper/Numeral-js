@@ -164,5 +164,22 @@ describe('Misc', function() {
             expect(numeral.localeData().currency.symbol).to.equal(cOld);
             expect(formatTestVal()).to.equal(oldCurrencyVal);
         });
+
+        it('should key properly on custom locale data', function () {
+            var customformat = {
+                    format: '0,0.00 $',
+                    currency: {
+                        symbol: '^'
+                    }
+                };
+
+            numeral.locale('en-XX', customformat);
+
+            expect(numeral.localeData('en-XX').format).to.equal('0,0.00 $');
+            expect(numeral.localeData('en-XX').currency.symbol).to.equal('^');
+
+            expect(numeral.localeData('en-xx').format).to.equal('0,0.00 $');
+            expect(numeral.localeData('en-xx').currency.symbol).to.equal('^');
+        });
     });
 });

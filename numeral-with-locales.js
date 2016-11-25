@@ -500,6 +500,7 @@
             return options.currentLocale;
         }
 
+        // standardize to lowercase
         key = key.toLowerCase();
 
         if (key && !values) {
@@ -530,6 +531,8 @@
         if (!key) {
             return locales[options.currentLocale];
         }
+
+        key = key.toLowerCase();
 
         if (!locales[key]) {
             throw new Error('Unknown locale : ' + key);
