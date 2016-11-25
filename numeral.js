@@ -677,6 +677,11 @@
     // The floating-point helper functions and implementation
     // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
 
+    Number.isNaN = Number.isNaN || function(value) {
+        return typeof value === "number" && isNaN(value);
+    }
+
+
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
     if (!Array.prototype.reduce) {
