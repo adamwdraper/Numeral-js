@@ -28,9 +28,17 @@
             nullFormat: defaults.nullFormat,
             defaultFormat: defaults.defaultFormat
         },
-        byteSuffixes = {
-            bytes: ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            iec: ['B','KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+        config = {
+            bytes: {
+                decimal: {
+                    base: 1000,
+                    suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+                },
+                binary: {
+                    base: 1024,
+                    suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+                }
+            }
         };
 
 
@@ -188,7 +196,7 @@
 
     function formatBytes(n, format, roundingFunction) {
         var output,
-            suffixes = format.indexOf('ib') > -1 ? byteSuffixes.iec : byteSuffixes.bytes,
+            bytes = format.indexOf('ib') > -1 ? config.bytes.binary : config.bytes.decimal,
             value = n._value,
             suffix = '',
             power,
@@ -203,12 +211,12 @@
             format = format.replace('ib', '').replace('b', '');
         }
 
-        for (power = 0; power <= suffixes.length; power++) {
-            min = Math.pow(1024, power);
-            max = Math.pow(1024, power + 1);
+        for (power = 0; power <= bytes.suffixes.length; power++) {
+            min = Math.pow(bytes.base, power);
+            max = Math.pow(bytes.base, power + 1);
 
             if (value === null || value === 0 || value >= min && value < max) {
-                suffix += suffixes[power];
+                suffix += bytes.suffixes[power];
 
                 if (min > 0) {
                     value = value / min;
@@ -405,8 +413,8 @@
                 trillionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
-                for (power = 1; power <= byteSuffixes.bytes.length; power++) {
-                    bytesMultiplier = ((string.indexOf(byteSuffixes.bytes[power]) > -1) || (string.indexOf(byteSuffixes.iec[power]) > -1))? Math.pow(1024, power) : false;
+                for (power = 1; power <= config.bytes.decimal.suffixes.length; power++) {
+                    bytesMultiplier = ((string.indexOf(config.bytes.decimal.suffixes[power]) > -1) || (string.indexOf(config.bytes.binary.suffixes[power]) > -1))? Math.pow(1024, power) : false;
 
                     if (bytesMultiplier) {
                         break;
