@@ -464,7 +464,7 @@
             input = input.value();
         } else if (input === 0 || typeof input === 'undefined') {
             input = 0;
-        } else if (input === null) {
+        } else if (input === null || Number.isNaN(input)) {
             input = null;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);

@@ -18,28 +18,13 @@ describe('Format', function() {
         });
     });
 
-    describe('Value', function() {
-        it('should return a value as correct type', function() {
-            var tests = [
-                    [1234.56,'number'],
-                    ['1234.56','number'],
-                    [0,'number'],
-                    [null,'object']
-                ],
-                i;
-
-            for (i = 0; i < tests.length; i++) {
-                expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
-            }
-        });
-    });
-
     describe('Numbers', function() {
         it('should format to a number', function() {
             var tests = [
                     [0, null, '0'],
                     [0, '0.00', '0.00'],
                     [null, null, '0'],
+                    [NaN, '0.0', '0.0'],
                     [10000,'0,0.0000','10,000.0000'],
                     [10000.23,'0,0','10,000'],
                     [-10000,'0,0.0','-10,000.0'],
