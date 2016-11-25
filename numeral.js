@@ -14,16 +14,16 @@
 
     var numeral,
         VERSION = '1.5.6',
-        // internal storage for language config files
-        languages = {},
+        // internal storage for locale config files
+        locales = {},
         defaults = {
-            currentLanguage: 'en',
+            currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
             defaultFormat: '0,0'
         },
         options = {
-            currentLanguage: defaults.currentLanguage,
+            currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
             defaultFormat: defaults.defaultFormat
@@ -150,18 +150,18 @@
                     // the symbol appears before the "(" or "-"
                     spliceIndex = 0;
                 }
-                output.splice(spliceIndex, 0, languages[options.currentLanguage].currency.symbol + space);
+                output.splice(spliceIndex, 0, locales[options.currentLocale].currency.symbol + space);
                 output = output.join('');
             } else {
-                output = languages[options.currentLanguage].currency.symbol + space + output;
+                output = locales[options.currentLocale].currency.symbol + space + output;
             }
         } else {
             if (output.indexOf(')') > -1) {
                 output = output.split('');
-                output.splice(-1, 0, space + languages[options.currentLanguage].currency.symbol);
+                output.splice(-1, 0, space + locales[options.currentLocale].currency.symbol);
                 output = output.join('');
             } else {
-                output = output + space + languages[options.currentLanguage].currency.symbol;
+                output = output + space + locales[options.currentLocale].currency.symbol;
             }
         }
 
@@ -243,7 +243,7 @@
             format = format.replace('o', '');
         }
 
-        ordinal += languages[options.currentLanguage].ordinal(n._value);
+        ordinal += locales[options.currentLocale].ordinal(n._value);
 
         output = formatNumber(n._value, format, roundingFunction);
 
@@ -312,19 +312,19 @@
 
             if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
                 // trillion
-                abbr = abbr + languages[options.currentLanguage].abbreviations.trillion;
+                abbr = abbr + locales[options.currentLocale].abbreviations.trillion;
                 value = value / Math.pow(10, 12);
             } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
                 // billion
-                abbr = abbr + languages[options.currentLanguage].abbreviations.billion;
+                abbr = abbr + locales[options.currentLocale].abbreviations.billion;
                 value = value / Math.pow(10, 9);
             } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
                 // million
-                abbr = abbr + languages[options.currentLanguage].abbreviations.million;
+                abbr = abbr + locales[options.currentLocale].abbreviations.million;
                 value = value / Math.pow(10, 6);
             } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
                 // thousand
-                abbr = abbr + languages[options.currentLanguage].abbreviations.thousand;
+                abbr = abbr + locales[options.currentLocale].abbreviations.thousand;
                 value = value / Math.pow(10, 3);
             }
         }
@@ -351,7 +351,7 @@
             w = d.split('.')[0];
 
             if (d.indexOf('.') > -1) {
-                d = languages[options.currentLanguage].delimiters.decimal + d.split('.')[1];
+                d = locales[options.currentLocale].delimiters.decimal + d.split('.')[1];
             } else {
                 d = '';
             }
@@ -370,7 +370,7 @@
         }
 
         if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[options.currentLanguage].delimiters.thousands);
+            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
         }
 
         if (format.indexOf('.') === 0) {
@@ -402,15 +402,15 @@
             if (string === options.zeroFormat || string === options.nullFormat) {
                 value = 0;
             } else {
-                if (languages[options.currentLanguage].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(languages[options.currentLanguage].delimiters.decimal, '.');
+                if (locales[options.currentLocale].delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locales[options.currentLocale].delimiters.decimal, '.');
                 }
 
                 // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + languages[options.currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[options.currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+                thousandRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.thousand + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                millionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.million + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                billionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.billion + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                trillionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.trillion + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 1; power <= config.bytes.decimal.suffixes.length; power++) {
@@ -492,26 +492,26 @@
     };
 
 
-    // This function will load languages and then set the global language.  If
+    // This function will load locales and then set the global locale.  If
     // no arguments are passed in, it will simply return the current global
-    // language key.
-    numeral.language = function(key, values) {
+    // locale key.
+    numeral.locale = function(key, values) {
         if (!key) {
-            return options.currentLanguage;
+            return options.currentLocale;
         }
 
         key = key.toLowerCase();
 
         if (key && !values) {
-            if (!languages[key]) {
-                throw new Error('Unknown language : ' + key);
+            if (!locales[key]) {
+                throw new Error('Unknown locale : ' + key);
             }
 
-            options.currentLanguage = key;
+            options.currentLocale = key;
         }
 
-        if (values || !languages[key]) {
-            loadLanguage(key, values);
+        if (values || !locales[key]) {
+            loadLocale(key, values);
         }
 
         return numeral;
@@ -523,22 +523,22 @@
         }
     };
 
-    // This function provides access to the loaded language data.  If
+    // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
-    // global language object.
-    numeral.languageData = function(key) {
+    // global locale object.
+    numeral.localeData = function(key) {
         if (!key) {
-            return languages[options.currentLanguage];
+            return locales[options.currentLocale];
         }
 
-        if (!languages[key]) {
-            throw new Error('Unknown language : ' + key);
+        if (!locales[key]) {
+            throw new Error('Unknown locale : ' + key);
         }
 
-        return languages[key];
+        return locales[key];
     };
 
-    numeral.language('en', {
+    numeral.locale('en', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -580,7 +580,7 @@
             _valArray,
             _abbrObj,
             _thousandRegEx,
-            languageData,
+            localeData,
             temp;
 
         //coerce val to string
@@ -604,22 +604,22 @@
             return false;
         }
 
-        //get the decimal and thousands separator from numeral.languageData
+        //get the decimal and thousands separator from numeral.localeData
         try {
-            //check if the culture is understood by numeral. if not, default it to current language
-            languageData = numeral.languageData(culture);
+            //check if the culture is understood by numeral. if not, default it to current locale
+            localeData = numeral.localeData(culture);
         } catch (e) {
-            languageData = numeral.languageData(numeral.language());
+            localeData = numeral.localeData(numeral.locale());
         }
 
-        //setup the delimiters and currency symbol based on culture/language
-        _currSymbol = languageData.currency.symbol;
-        _abbrObj = languageData.abbreviations;
-        _decimalSep = languageData.delimiters.decimal;
-        if (languageData.delimiters.thousands === '.') {
+        //setup the delimiters and currency symbol based on culture/locale
+        _currSymbol = localeData.currency.symbol;
+        _abbrObj = localeData.abbreviations;
+        _decimalSep = localeData.delimiters.decimal;
+        if (localeData.delimiters.thousands === '.') {
             _thousandSep = '\\.';
         } else {
-            _thousandSep = languageData.delimiters.thousands;
+            _thousandSep = localeData.delimiters.thousands;
         }
 
         // validating currency symbol
@@ -666,8 +666,8 @@
         Helpers
     ************************************/
 
-    function loadLanguage(key, values) {
-        languages[key] = values;
+    function loadLocale(key, values) {
+        locales[key] = values;
     }
 
     /************************************
