@@ -8,6 +8,9 @@ module.exports = function(grunt) {
             ],
             'min/locales.min.js': [
                 'locales.js'
+            ],
+            'min/numeral-with-locales.min.js': [
+                'numeral-with-locales.js'
             ]
         };
 
@@ -66,6 +69,13 @@ module.exports = function(grunt) {
                     'locales/*.js'
                 ],
                 dest: 'locales.js'
+            },
+            numeralWithLocales: {
+                src: [
+                    'numeral.js',
+                    'locales/*.js'
+                ],
+                dest: 'numeral-with-locales.js'
             }
         },
         jshint: {
