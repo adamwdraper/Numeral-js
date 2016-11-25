@@ -9,16 +9,33 @@ describe('Misc', function() {
         numeral.reset();
     });
 
-    describe('Add', function() {
+    describe('Types', function() {
+        it('should return a value as correct type', function() {
+            var tests = [
+                    [1234.56,'number'],
+                    ['1234.56','number'],
+                    [0,'number'],
+                    [NaN,'object'],
+                    [null,'object']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+            }
+        });
+    });
+
+    describe('Value', function() {
         it('should return a value', function() {
             var tests = [
-                [1000, 1000],
-                [0.5, 0.5],
-                [null, null],
-                ['1,000', 1000],
-                ['not a number', 0]
-            ],
-            num;
+                    [1000, 1000],
+                    [0.5, 0.5],
+                    [null, null],
+                    ['1,000', 1000],
+                    ['not a number', 0]
+                ],
+                num;
 
             for (var i = 0; i < tests.length; i++) {
                 num = numeral(tests[i][0]);
@@ -31,10 +48,10 @@ describe('Misc', function() {
     describe('Set', function() {
         it('should set a value', function() {
             var tests = [
-                [1000,1000],
-                [-0.25,-0.25]
-            ],
-            num;
+                    [1000,1000],
+                    [-0.25,-0.25]
+                ],
+                num;
 
             for (var i = 0; i < tests.length; i++) {
                 num = numeral().set(tests[i][0]);
@@ -47,16 +64,16 @@ describe('Misc', function() {
     describe('Custom Zero', function() {
         it('should change zero value', function() {
             var tests = [
-                [0,null,'0','0'],
-                [0,null,'$0.00','$0.00'],
-                [0,null,'0 b','0 B'],
-                [0,null,'0:00','0:00:00'],
-                [0,'N/A','0','N/A'],
-                [0,'N/A','$0.00','N/A'],
-                [0,'N/A','0 b','N/A'],
-                [0,'N/A','0:00','N/A'],
-                [0,'','','']
-            ];
+                    [0,null,'0','0'],
+                    [0,null,'$0.00','$0.00'],
+                    [0,null,'0 b','0 B'],
+                    [0,null,'0:00','0:00:00'],
+                    [0,'N/A','0','N/A'],
+                    [0,'N/A','$0.00','N/A'],
+                    [0,'N/A','0 b','N/A'],
+                    [0,'N/A','0:00','N/A'],
+                    [0,'','','']
+                ];
 
             for (var i = 0; i < tests.length; i++) {
                 numeral.zeroFormat(tests[i][1]);
@@ -69,16 +86,16 @@ describe('Misc', function() {
     describe('Custom Null', function() {
         it('should change null value', function() {
             var tests = [
-                [null,null,'0','0'],
-                [null,null,'$0.00','$0.00'],
-                [null,null,'0 b','0 B'],
-                [null,null,'0:00','0:00:00'],
-                [null,'N/A','0','N/A'],
-                [null,'N/A','$0.00','N/A'],
-                [null,'N/A','0 b','N/A'],
-                [null,'N/A','0:00','N/A'],
-                [null,'','','']
-            ];
+                    [null,null,'0','0'],
+                    [null,null,'$0.00','$0.00'],
+                    [null,null,'0 b','0 B'],
+                    [null,null,'0:00','0:00:00'],
+                    [null,'N/A','0','N/A'],
+                    [null,'N/A','$0.00','N/A'],
+                    [null,'N/A','0 b','N/A'],
+                    [null,'N/A','0:00','N/A'],
+                    [null,'','','']
+                ];
 
             for (var i = 0; i < tests.length; i++) {
                 numeral.nullFormat(tests[i][1]);
@@ -91,12 +108,12 @@ describe('Misc', function() {
     describe('Clone', function() {
         it('should clone', function() {
             var a = numeral(1000),
-            b = numeral(a),
-            c = a.clone(),
-            aVal = a.value(),
-            aSet = a.set(2000).value(),
-            bVal = b.value(),
-            cVal = c.add(10).value();
+                b = numeral(a),
+                c = a.clone(),
+                aVal = a.value(),
+                aSet = a.set(2000).value(),
+                bVal = b.value(),
+                cVal = c.add(10).value();
 
             expect(aVal).to.equal(1000);
             expect(aSet).to.equal(2000);
@@ -108,9 +125,9 @@ describe('Misc', function() {
     describe('isNumeral', function() {
         it('should return boolean', function() {
             var tests = [
-                [numeral(),true],
-                [1,false]
-            ];
+                    [numeral(),true],
+                    [1,false]
+                ];
 
             for (var i = 0; i < tests.length; i++) {
                 expect(numeral.isNumeral(tests[i][0])).to.equal(tests[i][1]);

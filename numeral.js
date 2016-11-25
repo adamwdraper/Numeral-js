@@ -472,7 +472,7 @@
             input = input.value();
         } else if (input === 0 || typeof input === 'undefined') {
             input = 0;
-        } else if (input === null) {
+        } else if (input === null || Number.isNaN(input)) {
             input = null;
         } else if (!Number(input)) {
             input = numeral.fn.unformat(input);
@@ -676,6 +676,11 @@
 
     // The floating-point helper functions and implementation
     // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
+
+    Number.isNaN = Number.isNaN || function(value) {
+        return typeof value === 'number' && isNaN(value);
+    };
+
 
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
