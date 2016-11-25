@@ -678,8 +678,8 @@
     // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
 
     Number.isNaN = Number.isNaN || function(value) {
-        return typeof value === "number" && isNaN(value);
-    }
+        return typeof value === 'number' && isNaN(value);
+    };
 
 
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
