@@ -47,6 +47,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.0
+
+Breaking change: Bytes are now formatted as: `b` (base 1000)  and `ib` (base 1024)
+
 ### 1.5.6
 
 Bug fix: numeral converts strings to numbers
