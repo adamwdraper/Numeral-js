@@ -111,6 +111,8 @@
                 output = formatBytes(n, format, roundingFunction);
             } else if (format.indexOf('o') > -1) {
                 output = formatOrdinal(n, format, roundingFunction);
+            } else if (format.indexOf('e+') > -1) {
+                output = formatExponential(n, format, roundingFunction);
             } else {
                 output = formatNumber(n._value, format, roundingFunction);
             }
@@ -248,6 +250,18 @@
         output = formatNumber(n._value, format, roundingFunction);
 
         return output + ordinal;
+    }
+
+    function formatExponential(n, format, roundingFunction) {
+        var output,
+            exponential = typeof n._value === 'number' && !Number.isNaN(n._value) ? n._value.toExponential() : '0e+0',
+            parts = exponential.split('e+');
+
+        format = format.replace('e+0', '');
+
+        output = formatNumber(Number(parts[0]), format, roundingFunction);
+
+        return output + 'e+' + parts[1];
     }
 
     function formatTime(n) {
