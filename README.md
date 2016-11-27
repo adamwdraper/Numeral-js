@@ -55,6 +55,10 @@ Breaking change: Bytes are now formatted as: `b` (base 1000)  and `ib` (base 102
 
 Breaking change: `numeral(NaN)` is now treated the same as `numeral(null)` and no longer throws an error
 
+Feature: Exponential format using `e+` or `e-`
+
+Bug fix: Update to floating point helpers (Note: Numeral does not fix JS floating point errors, but look to our tests to see that it covers quite a few cases.)
+
 ### 1.5.6
 
 Bug fix: numeral converts strings to numbers
