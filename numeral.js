@@ -532,6 +532,8 @@
         if (!key) {
             return options.currentLocale;
         }
+        
+        key = key.toLowerCase();
 
         // standardize to lowercase
         key = key.toLowerCase();
