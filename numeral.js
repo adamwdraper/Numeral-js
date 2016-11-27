@@ -828,7 +828,7 @@
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
-                return accum - corrFactor * curr;
+                return accum - Math.round(corrFactor * curr);
             }
             this._value = [value].reduce(cback, Math.round(this._value * corrFactor)) / corrFactor;
             return this;
