@@ -1,10 +1,10 @@
 /*! @preserve 
- * numeral.js language configuration
- * language : English Australia
+ * numeral.js locale configuration
+ * locale : English Australia
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var language = {
+    var locale = {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -29,10 +29,10 @@
 
     // Node
     if (typeof module !== 'undefined' && module.exports) {
-        module.exports = language;
+        module.exports = locale;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('en-au', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('en-au', locale);
     }
 }());

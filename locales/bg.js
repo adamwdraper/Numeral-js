@@ -1,10 +1,10 @@
-/*! @preserve 
- * numeral.js language configuration
- * language : Bulgarian
+/*! @preserve
+ * numeral.js locale configuration
+ * locale : Bulgarian
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var language = {
+    var locale = {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -17,14 +17,14 @@
         },
         ordinal: function (number) {
             // google translate suggests:
-            // 1st=1-ви; 2nd=2-ри; 7th=7-ми; 
-            // 8th=8-ми and many others end with -ти 
+            // 1st=1-ви; 2nd=2-ри; 7th=7-ми;
+            // 8th=8-ми and many others end with -ти
             // for example 3rd=3-ти
-            // However since I've seen suggestions that in 
+            // However since I've seen suggestions that in
             // Bulgarian the ordinal can be taken in
             // different forms (masculine, feminine, neuter)
             // I've opted to wimp out on commiting that to code
-            return ''; 
+            return '';
         },
         currency: {
             symbol: 'лв'
@@ -33,10 +33,10 @@
 
     // Node
     if (typeof module !== 'undefined' && module.exports) {
-        module.exports = language;
+        module.exports = locale;
     }
     // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.language) {
-        this.numeral.language('bg', language);
+    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
+        this.numeral.locale('bg', locale);
     }
 }());
