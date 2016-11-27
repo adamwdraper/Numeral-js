@@ -111,7 +111,7 @@
                 output = formatBytes(n, format, roundingFunction);
             } else if (format.indexOf('o') > -1) {
                 output = formatOrdinal(n, format, roundingFunction);
-            } else if (format.indexOf('e+') > -1) {
+            } else if (format.indexOf('e+') > -1 || format.indexOf('e-') > -1) {
                 output = formatExponential(n, format, roundingFunction);
             } else {
                 output = formatNumber(n._value, format, roundingFunction);
@@ -255,13 +255,13 @@
     function formatExponential(n, format, roundingFunction) {
         var output,
             exponential = typeof n._value === 'number' && !Number.isNaN(n._value) ? n._value.toExponential() : '0e+0',
-            parts = exponential.split('e+');
+            parts = exponential.split('e');
 
-        format = format.replace('e+0', '');
+        format = format.indexOf('e+') > -1 ? format.replace('e+0', '') : format.replace('e-0', '');
 
         output = formatNumber(Number(parts[0]), format, roundingFunction);
 
-        return output + 'e+' + parts[1];
+        return output + 'e' + parts[1];
     }
 
     function formatTime(n) {
@@ -412,6 +412,8 @@
 
         if (string.indexOf(':') > -1) {
             value = unformatTime(string);
+        } else if (string.indexOf('e+') > -1 || string.indexOf('e-') > -1) {
+            value = unformatExponential(string);
         } else {
             if (string === options.zeroFormat || string === options.nullFormat) {
                 value = 0;
@@ -456,6 +458,7 @@
 
         return n._value;
     }
+
     function unformatTime(string) {
         var timeArray = string.split(':'),
             seconds = 0;
@@ -474,6 +477,20 @@
             seconds = seconds + Number(timeArray[1]);
         }
         return Number(seconds);
+    }
+
+    function unformatExponential(string) {
+        var parts = string.indexOf('e+') > -1 ? string.split('e+') : string.split('e-'),
+            value = Number(parts[0]),
+            power = Number(parts[1]);
+
+        function cback(accum, curr, currI, O) {
+            var corrFactor = correctionFactor(accum, curr),
+                num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+            return num;
+        }
+
+        return [value, Math.pow(10, power)].reduce(cback, 1);
     }
 
 
@@ -687,17 +704,10 @@
         locales[key] = values;
     }
 
-    /************************************
-        Floating-point helpers
-    ************************************/
-
-    // The floating-point helper functions and implementation
-    // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
-
+    // isNaN polyfill
     Number.isNaN = Number.isNaN || function(value) {
         return typeof value === 'number' && isNaN(value);
     };
-
 
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
@@ -756,11 +766,10 @@
      */
     function correctionFactor() {
         var args = Array.prototype.slice.call(arguments);
-        return args.reduce(function(prev, next) {
-            var mp = multiplier(prev),
-                mn = multiplier(next);
-            return mp > mn ? mp : mn;
-        }, -Infinity);
+        return args.reduce(function(accum, next) {
+            var mn = multiplier(next);
+            return accum > mn ? accum : mn;
+        }, 1);
     }
 
 
@@ -807,7 +816,7 @@
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
-                return accum + corrFactor * curr;
+                return accum + Math.round(corrFactor * curr);
             }
             this._value = [this._value, value].reduce(cback, 0) / corrFactor;
             return this;
@@ -819,15 +828,14 @@
             function cback(accum, curr, currI, O) {
                 return accum - corrFactor * curr;
             }
-            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
+            this._value = [value].reduce(cback, Math.round(this._value * corrFactor)) / corrFactor;
             return this;
         },
 
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) * (curr * corrFactor) /
-                    (corrFactor * corrFactor);
+                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
             this._value = [this._value, value].reduce(cback, 1);
             return this;
@@ -836,7 +844,7 @@
         divide: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) / (curr * corrFactor);
+                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
             this._value = [this._value, value].reduce(cback);
             return this;

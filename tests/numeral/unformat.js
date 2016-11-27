@@ -92,4 +92,22 @@ describe('Unformat', function() {
             }
         });
     });
+
+    describe('Exponential', function() {
+        it('should unformat exponential notation', function() {
+            var tests = [
+                ['0e+0',0],
+                ['1e+0',1],
+                ['7.7e+1',77],
+                ['7.7e-3',0.0077],
+                ['7.712e+2',771.2],
+                ['-1.0008e+9',-1000800000],
+                ['-1.0008e-5',-0.000010008]
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                expect(numeral().unformat(tests[i][0])).to.equal(tests[i][1]);
+            }
+        });
+    });
 });
