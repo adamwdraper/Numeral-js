@@ -484,6 +484,8 @@
             value = Number(parts[0]),
             power = Number(parts[1]);
 
+        power = string.indexOf('e-') > -1 ? power *= -1 : power;
+
         function cback(accum, curr, currI, O) {
             var corrFactor = correctionFactor(accum, curr),
                 num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
