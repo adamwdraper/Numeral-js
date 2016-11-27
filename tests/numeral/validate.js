@@ -5,7 +5,7 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 describe('Validate', function() {
-    var language = 'en';
+    var locale = 'en';
 
     after(function() {
         numeral.reset();
@@ -36,7 +36,7 @@ describe('Validate', function() {
             ];
 
             for (var i = 0; i < tests.length; i++) {
-                expect(numeral.validate(tests[i][0], language)).to.equal(tests[i][1]);
+                expect(numeral.validate(tests[i][0], locale)).to.equal(tests[i][1]);
             }
         });
     });
@@ -73,7 +73,7 @@ describe('Validate', function() {
             ];
 
             for (var i = 0; i < tests.length; i++) {
-                expect(numeral.validate(tests[i][0], language)).to.equal(tests[i][1]);
+                expect(numeral.validate(tests[i][0], locale)).to.equal(tests[i][1]);
             }
         });
     });

@@ -17,7 +17,7 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 # Contributing
 
-#### Please submit all pull requests to the `develop` branch.
+#### Important: Please create your branch from and submit pull requests to the `develop` branch.
 
 1. Fork the library
 
@@ -47,11 +47,33 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.0
+
+Breaking change: All `language` now renamed to `locale` and standardized to all lowercase filenames
+
+Breaking change: Bytes are now formatted as: `b` (base 1000)  and `ib` (base 1024)
+
+Breaking change: `numeral(NaN)` is now treated the same as `numeral(null)` and no longer throws an error
+
+Feature: Exponential format using `e+` or `e-`
+
+Bug fix: Update to floating point helpers (Note: Numeral does not fix JS floating point errors, but look to our tests to see that it covers quite a few cases.)
+
+### 1.5.6
+
+Bug fix: numeral converts strings to numbers
+
+Bug fix: Null values return same as 0
+
 ### 1.5.5
+
+Contained breaking changes, recommended to use 1.5.6
 
 Bug fix: Switch bytes back to `b` and change iecBinary to `ib`, and calculate both using 1024 for backwards compatibility
 
 ### 1.5.4
+
+Contained breaking changes, recommended to use 1.5.6
 
 Tests: Changed all tests to use Mocha and Chai
 
