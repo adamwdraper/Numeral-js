@@ -6,16 +6,19 @@ module.exports = function(grunt) {
             'min/numeral.min.js' : [
                 'numeral.js'
             ],
-            'min/languages.min.js': [
-                'languages.js'
+            'min/locales.min.js': [
+                'locales.js'
+            ],
+            'min/numeral-with-locales.min.js': [
+                'numeral-with-locales.js'
             ]
         };
 
     // all the lang files need to be added manually
-    fs.readdirSync('./languages').forEach(function (path) {
+    fs.readdirSync('./locales').forEach(function (path) {
         var file = path.slice(0, -3),
-            destination = 'min/languages/' + file + '.min.js',
-            src = ['languages/' + path];
+            destination = 'min/locales/' + file + '.min.js',
+            src = ['locales/' + path];
 
         minifiedFiles[destination] = src;
     });
@@ -24,16 +27,16 @@ module.exports = function(grunt) {
         mochaTest : {
             all: [
                 'tests/numeral/*.js',
-                'tests/languages/*.js'
+                'tests/locales/*.js'
             ]
         },
         karma: {
             options: {
                 files: [
                     'numeral.js',
-                    'languages/*.js',
+                    'locales/*.js',
                     'tests/numeral/*.js',
-                    'tests/languages/*.js'
+                    'tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -61,18 +64,25 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            languages: {
+            locales: {
                 src: [
-                    'languages/*.js'
+                    'locales/*.js'
                 ],
-                dest: 'languages.js'
+                dest: 'locales.js'
+            },
+            numeralWithLocales: {
+                src: [
+                    'numeral.js',
+                    'locales/*.js'
+                ],
+                dest: 'numeral-with-locales.js'
             }
         },
         jshint: {
             all: [
                 'Gruntfile.js',
                 'numeral.js',
-                'languages/*.js'
+                'locales/*.js'
             ],
             options: {
                 'node': true,

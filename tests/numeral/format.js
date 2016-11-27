@@ -18,28 +18,13 @@ describe('Format', function() {
         });
     });
 
-    describe('Value', function() {
-        it('should return a value as correct type', function() {
-            var tests = [
-                    [1234.56,'number'],
-                    ['1234.56','number'],
-                    [0,'number'],
-                    [null,'object']
-                ],
-                i;
-
-            for (i = 0; i < tests.length; i++) {
-                expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
-            }
-        });
-    });
-
     describe('Numbers', function() {
         it('should format to a number', function() {
             var tests = [
                     [0, null, '0'],
                     [0, '0.00', '0.00'],
                     [null, null, '0'],
+                    [NaN, '0.0', '0.0'],
                     [10000,'0,0.0000','10,000.0000'],
                     [10000.23,'0,0','10,000'],
                     [-10000,'0,0.0','-10,000.0'],
@@ -140,20 +125,22 @@ describe('Format', function() {
 
     describe('Bytes', function() {
         it('should format to bytes', function() {
+            var decimal = 1000;
+            var binary = 1024;
             var tests = [
                     [0,'0b','0B'],
                     [null,'0 b','0 B'],
                     [100,'0b','100B'],
-                    [1024*2,'0 ib','2 KiB'],
-                    [1024*1024*5,'0ib','5MiB'],
-                    [1024*1024*1024*7.343,'0.[0] ib','7.3 GiB'],
-                    [1024*1024*1024*1024*3.1536544,'0.000ib','3.154TiB'],
-                    [1024*1024*1024*1024*1024*2.953454534534,'0ib','3PiB'],
-                    [1024*2,'0 b','2 KB'],
-                    [1024*1024*5,'0b','5MB'],
-                    [1024*1024*1024*7.343,'0.[0] b','7.3 GB'],
-                    [1024*1024*1024*1024*3.1536544,'0.000b','3.154TB'],
-                    [1024*1024*1024*1024*1024*2.953454534534,'0b','3PB']
+                    [binary * 2,'0 ib','2 KiB'],
+                    [Math.pow(binary, 2) * 5,'0ib','5MiB'],
+                    [Math.pow(binary, 3) * 7.343,'0.[0] ib','7.3 GiB'],
+                    [Math.pow(binary, 4) * 3.1536544,'0.000ib','3.154TiB'],
+                    [Math.pow(binary, 5) * 2.953454534534,'0ib','3PiB'],
+                    [decimal * 2,'0 b','2 KB'],
+                    [Math.pow(decimal, 2) * 5,'0b','5MB'],
+                    [Math.pow(decimal, 3) * 7.343,'0.[0] b','7.3 GB'],
+                    [Math.pow(decimal, 4) * 3.1536544,'0.000b','3.154TB'],
+                    [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB']
                 ],
                 i;
 
@@ -189,6 +176,27 @@ describe('Format', function() {
                     [25,'00:00:00','0:00:25'],
                     [238,'00:00:00','0:03:58'],
                     [63846,'00:00:00','17:44:06']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+            }
+
+        });
+    });
+
+    describe('Exponential', function() {
+        it('should format to exponential notation', function() {
+            var tests = [
+                    [0,'0e+0','0e+0'],
+                    [null,'0e+0','0e+0'],
+                    [1,'0e+0','1e+0'],
+                    [77.1234,'0.0e+0','7.7e+1'],
+                    [0.000000771234,'0.0e-0','7.7e-7'],
+                    [-0.000000771234,'0.00e-0','-7.71e-7'],
+                    [77.1234,'0.000e+0','7.712e+1'],
+                    [-1000830298,'0.0[000]e+0','-1.0008e+9']
                 ],
                 i;
 
