@@ -93,26 +93,42 @@
 
     // determine what type of formatting we need to do
     function formatNumeral(n, format, roundingFunction) {
-        var output;
+        var output,
+            kind,
+            formatFunction;
 
         if (n._value === 0 && options.zeroFormat !== null) {
             output = options.zeroFormat;
         } else if (n._value === null && options.nullFormat !== null) {
             output = options.nullFormat;
         } else {
-            // figure out what kind of format we are dealing with
-            if (format.indexOf('$') > -1) {
-                output = formatCurrency(n, format, roundingFunction);
-            } else if (format.indexOf('%') > -1) {
-                output = formatPercentage(n, format, roundingFunction);
-            } else if (format.indexOf(':') > -1) {
-                output = formatTime(n, format);
-            } else if (format.indexOf('b') > -1 || format.indexOf('ib') > -1) {
-                output = formatBytes(n, format, roundingFunction);
-            } else if (format.indexOf('o') > -1) {
-                output = formatOrdinal(n, format, roundingFunction);
-            } else if (format.indexOf('e+') > -1 || format.indexOf('e-') > -1) {
-                output = formatExponential(n, format, roundingFunction);
+            kind = format.match(/(\$|%|:|ib|b|o|e\+|e-)/);
+
+            if (kind) {
+                switch (kind[0]) {
+                    case '$':
+                        formatFunction = formatCurrency;
+                        break;
+                    case '%':
+                        formatFunction = formatPercentage;
+                        break;
+                    case ':':
+                        formatFunction = formatTime;
+                        break;
+                    case 'b':
+                    case 'ib':
+                        formatFunction = formatBytes;
+                        break;
+                    case 'o':
+                        formatFunction = formatOrdinal;
+                        break;
+                    case 'e+':
+                    case 'e-':
+                        formatFunction = formatExponential;
+                        break;
+                }
+
+                output = formatFunction(n, format, roundingFunction);
             } else {
                 output = formatNumber(n._value, format, roundingFunction);
             }
