@@ -93,51 +93,50 @@
 
     // determine what type of formatting we need to do
     function formatNumeral(n, format, roundingFunction) {
-        var output,
+        var value = n._value,
             kind,
+            output,
             formatFunction;
 
-        if (n._value === 0 && options.zeroFormat !== null) {
+        if (value === 0 && options.zeroFormat !== null) {
             output = options.zeroFormat;
-        } else if (n._value === null && options.nullFormat !== null) {
+        } else if (value === null && options.nullFormat !== null) {
             output = options.nullFormat;
         } else {
-            kind = format.match(/(\$|%|:|ib|b|o|e\+|e-)/);
+            kind = format.match(/(\$|%|:|[ai]?b|o|e\+|e-)/);
 
-            if (kind) {
-                switch (kind[0]) {
-                    case '$':
-                        formatFunction = formatCurrency;
-                        break;
-                    case '%':
-                        formatFunction = formatPercentage;
-                        break;
-                    case ':':
-                        formatFunction = formatTime;
-                        break;
-                    case 'b':
-                    case 'ib':
-                        formatFunction = formatBytes;
-                        break;
-                    case 'o':
-                        formatFunction = formatOrdinal;
-                        break;
-                    case 'e+':
-                    case 'e-':
-                        formatFunction = formatExponential;
-                        break;
-                }
-
-                output = formatFunction(n, format, roundingFunction);
-            } else {
-                output = formatNumber(n._value, format, roundingFunction);
+            switch (kind ? kind[0] : '') {
+                case '$':
+                    formatFunction = formatCurrency;
+                    break;
+                case '%':
+                    formatFunction = formatPercentage;
+                    break;
+                case ':':
+                    formatFunction = formatTime;
+                    break;
+                case 'b':
+                case 'ib':
+                    formatFunction = formatBytes;
+                    break;
+                case 'o':
+                    formatFunction = formatOrdinal;
+                    break;
+                case 'e+':
+                case 'e-':
+                    formatFunction = formatExponential;
+                    break;
+                default:
+                    formatFunction = formatNumber;
             }
+
+            output = formatFunction(value, format, roundingFunction);
         }
 
         return output;
     }
 
-    function formatCurrency(n, format, roundingFunction) {
+    function formatCurrency(value, format, roundingFunction) {
         var symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
@@ -157,7 +156,7 @@
         }
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction, false);
+        output = formatNumber(value, format, roundingFunction);
 
         // position the symbol
         if (symbolIndex <= 1) {
@@ -186,10 +185,11 @@
         return output;
     }
 
-    function formatPercentage(n, format, roundingFunction) {
+    function formatPercentage(value, format, roundingFunction) {
         var space = '',
-            output,
-            value = n._value * 100;
+            output;
+
+        value = value * 100;
 
         // check for space before %
         if (format.indexOf(' %') > -1) {
@@ -212,10 +212,9 @@
         return output;
     }
 
-    function formatBytes(n, format, roundingFunction) {
+    function formatBytes(value, format, roundingFunction) {
         var output,
             bytes = format.indexOf('ib') > -1 ? config.bytes.binary : config.bytes.decimal,
-            value = n._value,
             suffix = '',
             power,
             min,
@@ -249,7 +248,7 @@
         return output + suffix;
     }
 
-    function formatOrdinal(n, format, roundingFunction) {
+    function formatOrdinal(value, format, roundingFunction) {
         var output,
             ordinal = '';
 
@@ -261,16 +260,16 @@
             format = format.replace('o', '');
         }
 
-        ordinal += locales[options.currentLocale].ordinal(n._value);
+        ordinal += locales[options.currentLocale].ordinal(value);
 
-        output = formatNumber(n._value, format, roundingFunction);
+        output = formatNumber(value, format, roundingFunction);
 
         return output + ordinal;
     }
 
-    function formatExponential(n, format, roundingFunction) {
+    function formatExponential(value, format, roundingFunction) {
         var output,
-            exponential = typeof n._value === 'number' && !Number.isNaN(n._value) ? n._value.toExponential() : '0e+0',
+            exponential = typeof value === 'number' && !Number.isNaN(value) ? value.toExponential() : '0e+0',
             parts = exponential.split('e');
 
         format = format.indexOf('e+') > -1 ? format.replace('e+0', '') : format.replace('e-0', '');
@@ -280,10 +279,10 @@
         return output + 'e' + parts[1];
     }
 
-    function formatTime(n) {
-        var hours = Math.floor(n._value / 60 / 60),
-            minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
-            seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
+    function formatTime(value) {
+        var hours = Math.floor(value / 60 / 60),
+            minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+            seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
 
         return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
     }
@@ -298,6 +297,10 @@
             abbrB = false, // force abbreviation to billions
             abbrT = false, // force abbreviation to trillions
             abbrForce = false, // force abbreviation
+            trillion = 1000000000000,
+            billion = 1000000000,
+            million = 1000000,
+            thousand = 1000,
             abs,
             min,
             max,
@@ -308,9 +311,8 @@
             d = '',
             neg = false;
 
-        if (value === null) {
-            value = 0;
-        }
+        // make sure we never format a null value
+        value = value || 0;
 
         abs = Math.abs(value);
 
@@ -327,10 +329,10 @@
         // see if abbreviation is wanted
         if (format.indexOf('a') > -1) {
             // check if abbreviation is specified
-            abbrK = format.indexOf('aK') >= 0;
-            abbrM = format.indexOf('aM') >= 0;
-            abbrB = format.indexOf('aB') >= 0;
-            abbrT = format.indexOf('aT') >= 0;
+            abbrK = format.indexOf('ak') > -1;
+            abbrM = format.indexOf('am') > -1;
+            abbrB = format.indexOf('ab') > -1;
+            abbrT = format.indexOf('at') > -1;
             abbrForce = abbrK || abbrM || abbrB || abbrT;
 
             // check for space before abbreviation
@@ -338,24 +340,24 @@
                 abbr = ' ';
             }
 
-            format = format.replace(new RegExp(abbr + 'a[KMBT]?'), '');
+            format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
 
-            if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
+            if (abs >= trillion && !abbrForce || abbrT) {
                 // trillion
-                abbr = abbr + locales[options.currentLocale].abbreviations.trillion;
-                value = value / Math.pow(10, 12);
-            } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
+                abbr += locales[options.currentLocale].abbreviations.trillion;
+                value = value / trillion;
+            } else if (abs < trillion && abs >= billion && !abbrForce || abbrB) {
                 // billion
-                abbr = abbr + locales[options.currentLocale].abbreviations.billion;
-                value = value / Math.pow(10, 9);
-            } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
+                abbr += locales[options.currentLocale].abbreviations.billion;
+                value = value / billion;
+            } else if (abs < billion && abs >= million && !abbrForce || abbrM) {
                 // million
-                abbr = abbr + locales[options.currentLocale].abbreviations.million;
-                value = value / Math.pow(10, 6);
-            } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
+                abbr += locales[options.currentLocale].abbreviations.million;
+                value = value / million;
+            } else if (abs < million && abs >= thousand && !abbrForce || abbrK) {
                 // thousand
-                abbr = abbr + locales[options.currentLocale].abbreviations.thousand;
-                value = value / Math.pow(10, 3);
+                abbr += locales[options.currentLocale].abbreviations.thousand;
+                value = value / thousand;
             }
         }
 
