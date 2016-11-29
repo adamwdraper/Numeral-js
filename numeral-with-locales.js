@@ -145,10 +145,10 @@
             output;
 
         // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
+        if (format.includes(' $')) {
             space = ' ';
             format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
+        } else if (format.includes('$ ')) {
             space = ' ';
             format = format.replace('$ ', '');
         } else {
@@ -160,7 +160,7 @@
 
         // position the symbol
         if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+            if (output.includes('(') || output.includes('-')) {
                 output = output.split('');
                 spliceIndex = 1;
                 if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
@@ -173,7 +173,7 @@
                 output = locales[options.currentLocale].currency.symbol + space + output;
             }
         } else {
-            if (output.indexOf(')') > -1) {
+            if (output.includes(')')) {
                 output = output.split('');
                 output.splice(-1, 0, space + locales[options.currentLocale].currency.symbol);
                 output = output.join('');
@@ -192,7 +192,7 @@
         value = value * 100;
 
         // check for space before %
-        if (format.indexOf(' %') > -1) {
+        if (format.includes(' %')) {
             space = ' ';
             format = format.replace(' %', '');
         } else {
@@ -201,7 +201,7 @@
 
         output = formatNumber(value, format, roundingFunction);
 
-        if (output.indexOf(')') > -1) {
+        if (output.includes(')')) {
             output = output.split('');
             output.splice(-1, 0, space + '%');
             output = output.join('');
@@ -214,14 +214,14 @@
 
     function formatBytes(value, format, roundingFunction) {
         var output,
-            bytes = format.indexOf('ib') > -1 ? config.bytes.binary : config.bytes.decimal,
+            bytes = format.includes('ib') ? config.bytes.binary : config.bytes.decimal,
             suffix = '',
             power,
             min,
             max;
 
         // check for space before
-        if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
+        if (format.includes(' b') || format.includes(' ib')) {
             suffix = ' ';
             format = format.replace(' ib', '').replace(' b', '');
         } else {
@@ -253,7 +253,7 @@
             ordinal = '';
 
         // check for space before
-        if (format.indexOf(' o') > -1) {
+        if (format.includes(' o')) {
             ordinal = ' ';
             format = format.replace(' o', '');
         } else {
@@ -272,7 +272,7 @@
             exponential = typeof value === 'number' && !Number.isNaN(value) ? value.toExponential() : '0e+0',
             parts = exponential.split('e');
 
-        format = format.indexOf('e+') > -1 ? format.replace('e+0', '') : format.replace('e-0', '');
+        format = format.includes('e+') ? format.replace('e+0', '') : format.replace('e-0', '');
 
         output = formatNumber(Number(parts[0]), format, roundingFunction);
 
@@ -318,25 +318,25 @@
 
         // see if we should use parentheses for negative number or if we should prefix with a sign
         // if both are present we default to parentheses
-        if (format.indexOf('(') > -1) {
+        if (format.includes('(')) {
             negP = true;
             format = format.slice(1, -1);
-        } else if (format.indexOf('+') > -1) {
+        } else if (format.includes('+')) {
             signed = true;
             format = format.replace(/\+/g, '');
         }
 
         // see if abbreviation is wanted
-        if (format.indexOf('a') > -1) {
+        if (format.includes('a')) {
             // check if abbreviation is specified
-            abbrK = format.indexOf('ak') > -1;
-            abbrM = format.indexOf('am') > -1;
-            abbrB = format.indexOf('ab') > -1;
-            abbrT = format.indexOf('at') > -1;
+            abbrK = format.includes('ak');
+            abbrM = format.includes('am');
+            abbrB = format.includes('ab');
+            abbrT = format.includes('at');
             abbrForce = abbrK || abbrM || abbrB || abbrT;
 
             // check for space before abbreviation
-            if (format.indexOf(' a') > -1) {
+            if (format.includes(' a')) {
                 abbr = ' ';
             }
 
@@ -362,7 +362,7 @@
         }
 
 
-        if (format.indexOf('[.]') > -1) {
+        if (format.includes('[.]')) {
             optDec = true;
             format = format.replace('[.]', '.');
         }
@@ -372,7 +372,7 @@
         thousands = format.indexOf(',');
 
         if (precision) {
-            if (precision.indexOf('[') > -1) {
+            if (precision.includes('[')) {
                 precision = precision.replace(']', '');
                 precision = precision.split('[');
                 d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
@@ -382,7 +382,7 @@
 
             w = d.split('.')[0];
 
-            if (d.indexOf('.') > -1) {
+            if (d.includes('.')) {
                 d = locales[options.currentLocale].delimiters.decimal + d.split('.')[1];
             } else {
                 d = '';
@@ -396,7 +396,7 @@
         }
 
         // format number
-        if (w.indexOf('-') > -1) {
+        if (w.includes('-')) {
             w = w.slice(1);
             neg = true;
         }
@@ -428,9 +428,9 @@
             power,
             value;
 
-        if (string.indexOf(':') > -1) {
+        if (string.includes(':')) {
             value = unformatTime(string);
-        } else if (string.indexOf('e+') > -1 || string.indexOf('e-') > -1) {
+        } else if (string.includes('e+') || string.includes('e-')) {
             value = unformatExponential(string);
         } else {
             if (string === options.zeroFormat || string === options.nullFormat) {
@@ -448,7 +448,7 @@
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 1; power <= config.bytes.decimal.suffixes.length; power++) {
-                    bytesMultiplier = ((string.indexOf(config.bytes.decimal.suffixes[power]) > -1) || (string.indexOf(config.bytes.binary.suffixes[power]) > -1))? Math.pow(1024, power) : false;
+                    bytesMultiplier = ((string.includes(config.bytes.decimal.suffixes[power])) || (string.includes(config.bytes.binary.suffixes[power])))? Math.pow(1024, power) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -462,7 +462,7 @@
                 value *= stringOriginal.match(billionRegExp) ? Math.pow(10, 9) : 1;
                 value *= stringOriginal.match(trillionRegExp) ? Math.pow(10, 12) : 1;
                 // check for percentage
-                value *= string.indexOf('%') > -1 ? 0.01 : 1;
+                value *= string.includes('%') ? 0.01 : 1;
                 // check for negative number
                 value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
                 // remove non numbers
@@ -498,11 +498,11 @@
     }
 
     function unformatExponential(string) {
-        var parts = string.indexOf('e+') > -1 ? string.split('e+') : string.split('e-'),
+        var parts = string.includes('e+') ? string.split('e+') : string.split('e-'),
             value = Number(parts[0]),
             power = Number(parts[1]);
 
-        power = string.indexOf('e-') > -1 ? power *= -1 : power;
+        power = string.includes('e-') ? power *= -1 : power;
 
         function cback(accum, curr, currI, O) {
             var corrFactor = correctionFactor(accum, curr),
@@ -728,6 +728,13 @@
     Number.isNaN = Number.isNaN || function(value) {
         return typeof value === 'number' && isNaN(value);
     };
+
+    // String includes polyfill
+    if (!String.prototype.includes) {
+        String.prototype.includes = function(search, start) {
+            return this.indexOf(search, start) !== -1;
+        };
+    }
 
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
