@@ -144,7 +144,7 @@
             spliceIndex,
             output;
 
-        // check for space before or after currency
+        // strip format of spaces and $
         format = format.replace(/\s?\$\s?/, '');
 
         // format the number
@@ -154,12 +154,11 @@
         if (symbolIndex <= 1) {
             if (output.includes('(') || output.includes('-')) {
                 output = output.split('');
-                spliceIndex = 1;
-                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                    // the symbol appears before the "(" or "-"
-                    spliceIndex = 0;
-                }
+
+                spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
+
                 output.splice(spliceIndex, 0, locales[options.currentLocale].currency.symbol + space);
+
                 output = output.join('');
             } else {
                 output = locales[options.currentLocale].currency.symbol + space + output;
@@ -167,7 +166,9 @@
         } else {
             if (output.includes(')')) {
                 output = output.split('');
+
                 output.splice(-1, 0, space + locales[options.currentLocale].currency.symbol);
+
                 output = output.join('');
             } else {
                 output = output + space + locales[options.currentLocale].currency.symbol;
@@ -190,7 +191,9 @@
 
         if (output.includes(')')) {
             output = output.split('');
+
             output.splice(-1, 0, space + '%');
+
             output = output.join('');
         } else {
             output = output + space + '%';
@@ -261,7 +264,7 @@
             minutes = Math.floor((value - (hours * 60 * 60)) / 60),
             seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
 
-        return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+        return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
     }
 
     function formatNumber(value, format, roundingFunction) {
@@ -490,7 +493,6 @@
         return [value, Math.pow(10, power)].reduce(cback, 1);
     }
 
-
     /************************************
         Top Level Functions
     ************************************/
@@ -546,12 +548,6 @@
         return numeral;
     };
 
-    numeral.reset = function() {
-        for (var property in defaults) {
-            options[property] = defaults[property];
-        }
-    };
-
     // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
     // global locale object.
@@ -592,15 +588,33 @@
         }
     });
 
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
+        }
+    };
+
     numeral.zeroFormat = function(format) {
+        if (!format) {
+            return options.zeroFormat;
+        }
+
         options.zeroFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.nullFormat = function (format) {
+        if (!format) {
+            return options.nullFormat;
+        }
+
         options.nullFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.defaultFormat = function(format) {
+        if (!format) {
+            return options.defaultFormat;
+        }
+
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
@@ -617,6 +631,7 @@
         //coerce val to string
         if (typeof val !== 'string') {
             val += '';
+
             if (console.warn) {
                 console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
             }
@@ -626,7 +641,7 @@
         val = val.trim();
 
         //if val is just digits return true
-        if ( !! val.match(/^\d+$/)) {
+        if (!!val.match(/^\d+$/)) {
             return true;
         }
 
@@ -755,10 +770,8 @@
      */
     function multiplier(x) {
         var parts = x.toString().split('.');
-        if (parts.length < 2) {
-            return 1;
-        }
-        return Math.pow(10, parts[1].length);
+
+        return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
     }
 
     /**
@@ -768,6 +781,7 @@
      */
     function correctionFactor() {
         var args = Array.prototype.slice.call(arguments);
+
         return args.reduce(function(accum, next) {
             var mn = multiplier(next);
             return accum > mn ? accum : mn;
@@ -781,18 +795,15 @@
 
 
     numeral.fn = Numeral.prototype = {
-
         clone: function() {
             return numeral(this);
         },
-
         format: function (inputString, roundingFunction) {
             return formatNumeral(this,
                 inputString ? inputString : options.defaultFormat,
                 roundingFunction !== undefined ? roundingFunction : Math.round
             );
         },
-
         unformat: function (inputString) {
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
                 return inputString;
@@ -800,62 +811,62 @@
 
             return unformatNumeral(this, inputString ? inputString : options.defaultFormat);
         },
-
         value: function() {
             return this._value;
         },
-
         valueOf: function() {
             return this._value;
         },
-
         set: function(value) {
             this._value = Number(value);
+
             return this;
         },
-
         add: function(value) {
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum + Math.round(corrFactor * curr);
             }
+
             this._value = [this._value, value].reduce(cback, 0) / corrFactor;
+
             return this;
         },
-
         subtract: function(value) {
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum - Math.round(corrFactor * curr);
             }
+
             this._value = [value].reduce(cback, Math.round(this._value * corrFactor)) / corrFactor;
+
             return this;
         },
-
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
+
             this._value = [this._value, value].reduce(cback, 1);
+
             return this;
         },
-
         divide: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
+
             this._value = [this._value, value].reduce(cback);
+
             return this;
         },
-
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
         }
-
     };
 
     /************************************
