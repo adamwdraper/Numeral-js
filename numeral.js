@@ -140,20 +140,12 @@
         var symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
-            space = '',
+            space = format.includes(' $') || format.includes('$ ') ? ' ' : '',
             spliceIndex,
             output;
 
         // check for space before or after currency
-        if (format.includes(' $')) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.includes('$ ')) {
-            space = ' ';
-            format = format.replace('$ ', '');
-        } else {
-            format = format.replace('$', '');
-        }
+        format = format.replace(/\s?\$\s?/, '');
 
         // format the number
         output = formatNumber(value, format, roundingFunction);
@@ -186,18 +178,13 @@
     }
 
     function formatPercentage(value, format, roundingFunction) {
-        var space = '',
+        var space = format.includes(' %') ? ' ' : '',
             output;
 
         value = value * 100;
 
         // check for space before %
-        if (format.includes(' %')) {
-            space = ' ';
-            format = format.replace(' %', '');
-        } else {
-            format = format.replace('%', '');
-        }
+        format = format.replace(/\s?\%/, '');
 
         output = formatNumber(value, format, roundingFunction);
 
@@ -215,18 +202,13 @@
     function formatBytes(value, format, roundingFunction) {
         var output,
             bytes = format.includes('ib') ? config.bytes.binary : config.bytes.decimal,
-            suffix = '',
+            suffix = format.includes(' b') || format.includes(' ib') ? ' ' : '',
             power,
             min,
             max;
 
         // check for space before
-        if (format.includes(' b') || format.includes(' ib')) {
-            suffix = ' ';
-            format = format.replace(' ib', '').replace(' b', '');
-        } else {
-            format = format.replace('ib', '').replace('b', '');
-        }
+        format = format.replace(/\s?i?b/, '');
 
         for (power = 0; power <= bytes.suffixes.length; power++) {
             min = Math.pow(bytes.base, power);
@@ -250,15 +232,10 @@
 
     function formatOrdinal(value, format, roundingFunction) {
         var output,
-            ordinal = '';
+            ordinal = format.includes(' o') ? ' ' : '';
 
         // check for space before
-        if (format.includes(' o')) {
-            ordinal = ' ';
-            format = format.replace(' o', '');
-        } else {
-            format = format.replace('o', '');
-        }
+        format = format.replace(/\s?o/, '');
 
         ordinal += locales[options.currentLocale].ordinal(value);
 
