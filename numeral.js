@@ -249,7 +249,7 @@
             exponential = typeof value === 'number' && !Number.isNaN(value) ? value.toExponential() : '0e+0',
             parts = exponential.split('e');
 
-        format = format.includes('e+') ? format.replace('e+0', '') : format.replace('e-0', '');
+        format = format.replace(/e[\+|\-]{1}0/, '');
 
         output = formatNumber(Number(parts[0]), format, roundingFunction);
 
