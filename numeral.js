@@ -285,10 +285,10 @@
             min,
             max,
             power,
-            w,
+            int,
             precision,
             thousands,
-            d = '',
+            decimal = '',
             neg = false;
 
         // make sure we never format a null value
@@ -347,7 +347,7 @@
             format = format.replace('[.]', '.');
         }
 
-        w = value.toString().split('.')[0];
+        int = value.toString().split('.')[0];
         precision = format.split('.')[1];
         thousands = format.indexOf(',');
 
@@ -355,41 +355,41 @@
             if (precision.includes('[')) {
                 precision = precision.replace(']', '');
                 precision = precision.split('[');
-                d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                decimal = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
             } else {
-                d = toFixed(value, precision.length, roundingFunction);
+                decimal = toFixed(value, precision.length, roundingFunction);
             }
 
-            w = d.split('.')[0];
+            int = decimal.split('.')[0];
 
-            if (d.includes('.')) {
-                d = locales[options.currentLocale].delimiters.decimal + d.split('.')[1];
+            if (decimal.includes('.')) {
+                decimal = locales[options.currentLocale].delimiters.decimal + decimal.split('.')[1];
             } else {
-                d = '';
+                decimal = '';
             }
 
-            if (optDec && Number(d.slice(1)) === 0) {
-                d = '';
+            if (optDec && Number(decimal.slice(1)) === 0) {
+                decimal = '';
             }
         } else {
-            w = toFixed(value, null, roundingFunction);
+            int = toFixed(value, null, roundingFunction);
         }
 
         // format number
-        if (w.includes('-')) {
-            w = w.slice(1);
+        if (int.includes('-')) {
+            int = int.slice(1);
             neg = true;
         }
 
         if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
+            int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
         }
 
         if (format.indexOf('.') === 0) {
-            w = '';
+            int = '';
         }
 
-        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
+        return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
     }
 
 
@@ -595,26 +595,14 @@
     };
 
     numeral.zeroFormat = function(format) {
-        if (!format) {
-            return options.zeroFormat;
-        }
-
         options.zeroFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.nullFormat = function (format) {
-        if (!format) {
-            return options.nullFormat;
-        }
-
         options.nullFormat = typeof(format) === 'string' ? format : null;
     };
 
     numeral.defaultFormat = function(format) {
-        if (!format) {
-            return options.defaultFormat;
-        }
-
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
