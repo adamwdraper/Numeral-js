@@ -272,15 +272,11 @@
             signed = false,
             optDec = false,
             abbr = '',
-            abbrK = false, // force abbreviation to thousands
-            abbrM = false, // force abbreviation to millions
-            abbrB = false, // force abbreviation to billions
-            abbrT = false, // force abbreviation to trillions
-            abbrForce = false, // force abbreviation
             trillion = 1000000000000,
             billion = 1000000000,
             million = 1000000,
             thousand = 1000,
+            abbrForce, // force abbreviation
             abs,
             min,
             max,
@@ -308,12 +304,9 @@
 
         // see if abbreviation is wanted
         if (format.includes('a')) {
-            // check if abbreviation is specified
-            abbrK = format.includes('ak');
-            abbrM = format.includes('am');
-            abbrB = format.includes('ab');
-            abbrT = format.includes('at');
-            abbrForce = abbrK || abbrM || abbrB || abbrT;
+            abbrForce = format.match(/a(k|m|b|t)?/);
+
+            abbrForce = abbrForce ? abbrForce[1] : false;
 
             // check for space before abbreviation
             if (format.includes(' a')) {
@@ -322,19 +315,19 @@
 
             format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
 
-            if (abs >= trillion && !abbrForce || abbrT) {
+            if (abs >= trillion && !abbrForce || abbrForce === 't') {
                 // trillion
                 abbr += locales[options.currentLocale].abbreviations.trillion;
                 value = value / trillion;
-            } else if (abs < trillion && abs >= billion && !abbrForce || abbrB) {
+            } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
                 // billion
                 abbr += locales[options.currentLocale].abbreviations.billion;
                 value = value / billion;
-            } else if (abs < billion && abs >= million && !abbrForce || abbrM) {
+            } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
                 // million
                 abbr += locales[options.currentLocale].abbreviations.million;
                 value = value / million;
-            } else if (abs < million && abs >= thousand && !abbrForce || abbrK) {
+            } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
                 // thousand
                 abbr += locales[options.currentLocale].abbreviations.thousand;
                 value = value / thousand;
