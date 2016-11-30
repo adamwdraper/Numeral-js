@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 1.5.6
+ * version : Edge
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.6',
+        VERSION = 'Edge',
         // internal storage for locale config files
         locales = {},
         defaults = {
