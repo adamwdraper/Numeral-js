@@ -26,17 +26,18 @@ module.exports = function(grunt) {
     grunt.initConfig({
         mochaTest : {
             all: [
-                'tests/numeral/*.js',
-                'tests/locales/*.js'
+                'tests/numeral/*.js'
+                // 'tests/locales/*.js'
             ]
         },
         karma: {
             options: {
                 files: [
-                    'src/numeral.js',
-                    'src/locales/*.js',
-                    'tests/numeral/*.js',
-                    'tests/locales/*.js'
+                    'src/core.js',
+                    'tests/numeral/format.js'
+                    // 'src/locales/*.js',
+                    // 'tests/numeral/*.js',
+                    // 'tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
