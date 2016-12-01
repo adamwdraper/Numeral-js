@@ -1,8 +1,8 @@
 // Node
 if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../numeral');
+    var numeral = require('../../src/numeral');
     var expect = require('chai').expect;
-    var locale = require('../../locales/de');
+    var locale = require('../../src/locales/de');
 }
 
 describe('Locale: de', function() {

@@ -1,4 +1,4 @@
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : belgium-dutch (be-nl)
  * author : Dieter Luypaert : https://github.com/moeriki
@@ -34,7 +34,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : Bulgarian
  * author : Don Vince : https://github.com/donvince/
@@ -77,7 +77,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : simplified chinese
  * author : badplum : https://github.com/badplum
@@ -112,7 +112,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : czech (cs)
  * author : Anatoli Papirovski : https://github.com/apapirovski
@@ -147,7 +147,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : danish denmark (dk)
  * author : Michael Storgaard : https://github.com/mstorgaard
@@ -181,7 +181,7 @@
         this.numeral.locale('da-dk', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : German in Switzerland (de-ch)
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
@@ -215,7 +215,7 @@
         this.numeral.locale('de-ch', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
  * author : Marco Krage : https://github.com/sinky
@@ -249,7 +249,7 @@
         this.numeral.locale('de', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : English Australia
  * author : Don Vince : https://github.com/donvince/
@@ -288,7 +288,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : english united kingdom (uk)
  * author : Dan Ristic : https://github.com/dristic
@@ -326,7 +326,7 @@
         this.numeral.locale('en-gb', locale);
     }
 }());
-/*!
+/*
  * numeral.js locale configuration
  * locale : english south africa (uk)
  * author : Etienne Boshoff : etienne@zailab.com
@@ -364,7 +364,8 @@
         this.numeral.locale('en-za', locale);
     }
 }());
-/*! @preserve
+
+/*
  * numeral.js locale configuration
  * locale : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
@@ -404,7 +405,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : spanish
  * author : Hernan Garcia : https://github.com/hgarcia
@@ -444,7 +445,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : Estonian
  * author : Illimar Tambek : https://github.com/ragulka
@@ -482,7 +483,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : Finnish
  * author : Sami Saada : https://github.com/samitheberber
@@ -517,7 +518,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
@@ -551,7 +552,8 @@
         this.numeral.locale('fr-ca', locale);
     }
 }());
-/*! @preserve 
+
+/* 
  * numeral.js locale configuration
  * locale : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
@@ -586,7 +588,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : french (fr)
  * author : Adam Draper : https://github.com/adamwdraper
@@ -620,7 +622,7 @@
         this.numeral.locale('fr', locale);
     }
 }());
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : Hungarian (hu)
  * author : Peter Bakondy : https://github.com/pbakondy
@@ -654,7 +656,7 @@
         this.numeral.locale('hu', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : italian Italy (it)
  * author : Giacomo Trombi : http://cinquepunti.it
@@ -688,7 +690,7 @@
         this.numeral.locale('it', locale);
     }
 }());
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : japanese
  * author : teppeis : https://github.com/teppeis
@@ -723,7 +725,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : Latvian (lv)
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
@@ -757,7 +759,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : netherlands-dutch (nl-nl)
  * author : Dave Clayton : https://github.com/davedx
@@ -792,7 +794,7 @@
         this.numeral.locale('nl-nl', locale);
     }
 }());
-/*! 
+/*
  * numeral.js locale configuration
  * locale : norwegian (bokmål)
  * author : Ove Andersen : https://github.com/azzlack
@@ -830,7 +832,8 @@
         this.numeral.locale('nn', locale);
     }
 }());
-/*! @preserve 
+
+/* 
  * numeral.js locale configuration
  * locale : polish (pl)
  * author : Dominik Bulaj : https://github.com/dominikbulaj
@@ -864,7 +867,7 @@
         this.numeral.locale('pl', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : portuguese brazil (pt-br)
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
@@ -898,7 +901,7 @@
         this.numeral.locale('pt-br', locale);
     }
 }());
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : portuguese (pt-pt)
  * author : Diogo Resende : https://github.com/dresende
@@ -969,7 +972,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : russian (ru)
  * author : Anatoli Papirovski : https://github.com/apapirovski
@@ -1007,7 +1010,7 @@
     }
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : slovak (sk)
  * author : Ahmed Al Hafoudh : http://www.freevision.sk
@@ -1042,7 +1045,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
@@ -1077,7 +1080,7 @@
     }
 }());
 
-/*! @preserve 
+/* 
  * numeral.js locale configuration
  * locale : turkish (tr)
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK

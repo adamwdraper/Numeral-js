@@ -15,10 +15,10 @@ module.exports = function(grunt) {
         };
 
     // all the lang files need to be added manually
-    fs.readdirSync('./locales').forEach(function (path) {
+    fs.readdirSync('./src/locales').forEach(function (path) {
         var file = path.slice(0, -3),
             destination = 'min/locales/' + file + '.min.js',
-            src = ['locales/' + path];
+            src = ['src/locales/' + path];
 
         minifiedFiles[destination] = src;
     });
@@ -33,8 +33,8 @@ module.exports = function(grunt) {
         karma: {
             options: {
                 files: [
-                    'numeral.js',
-                    'locales/*.js',
+                    'src/numeral.js',
+                    'src/locales/*.js',
                     'tests/numeral/*.js',
                     'tests/locales/*.js'
                 ],
@@ -64,16 +64,22 @@ module.exports = function(grunt) {
             }
         },
         concat: {
+            numeral: {
+                src: [
+                    'src/numeral.js'
+                ],
+                dest: 'numeral.js'
+            },
             locales: {
                 src: [
-                    'locales/*.js'
+                    'src/locales/*.js'
                 ],
                 dest: 'locales.js'
             },
             numeralWithLocales: {
                 src: [
-                    'numeral.js',
-                    'locales/*.js'
+                    'src/numeral.js',
+                    'src/locales/*.js'
                 ],
                 dest: 'numeral-with-locales.js'
             }
@@ -81,8 +87,7 @@ module.exports = function(grunt) {
         jshint: {
             all: [
                 'Gruntfile.js',
-                'numeral.js',
-                'locales/*.js'
+                'src/**/*.js'
             ],
             options: {
                 'node': true,
