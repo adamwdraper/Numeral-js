@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 1.5.6
+ * version : Edge
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,7 +13,7 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.5.6',
+        VERSION = 'Edge',
         // internal storage for locale config files
         locales = {},
         defaults = {
@@ -93,74 +93,82 @@
 
     // determine what type of formatting we need to do
     function formatNumeral(n, format, roundingFunction) {
-        var output;
+        var value = n._value,
+            kind,
+            output,
+            formatFunction;
 
-        if (n._value === 0 && options.zeroFormat !== null) {
+        if (value === 0 && options.zeroFormat !== null) {
             output = options.zeroFormat;
-        } else if (n._value === null && options.nullFormat !== null) {
+        } else if (value === null && options.nullFormat !== null) {
             output = options.nullFormat;
         } else {
-            // figure out what kind of format we are dealing with
-            if (format.indexOf('$') > -1) {
-                output = formatCurrency(n, format, roundingFunction);
-            } else if (format.indexOf('%') > -1) {
-                output = formatPercentage(n, format, roundingFunction);
-            } else if (format.indexOf(':') > -1) {
-                output = formatTime(n, format);
-            } else if (format.indexOf('b') > -1 || format.indexOf('ib') > -1) {
-                output = formatBytes(n, format, roundingFunction);
-            } else if (format.indexOf('o') > -1) {
-                output = formatOrdinal(n, format, roundingFunction);
-            } else if (format.indexOf('e+') > -1 || format.indexOf('e-') > -1) {
-                output = formatExponential(n, format, roundingFunction);
-            } else {
-                output = formatNumber(n._value, format, roundingFunction);
+            kind = format.match(/(\$|%|:|[ai]?b|o|e\+|e-)/);
+
+            switch (kind ? kind[0] : '') {
+                case '$':
+                    formatFunction = formatCurrency;
+                    break;
+                case '%':
+                    formatFunction = formatPercentage;
+                    break;
+                case ':':
+                    formatFunction = formatTime;
+                    break;
+                case 'b':
+                case 'ib':
+                    formatFunction = formatBytes;
+                    break;
+                case 'o':
+                    formatFunction = formatOrdinal;
+                    break;
+                case 'e+':
+                case 'e-':
+                    formatFunction = formatExponential;
+                    break;
+                default:
+                    formatFunction = formatNumber;
             }
+
+            output = formatFunction(value, format, roundingFunction);
         }
 
         return output;
     }
 
-    function formatCurrency(n, format, roundingFunction) {
+    function formatCurrency(value, format, roundingFunction) {
         var symbolIndex = format.indexOf('$'),
             openParenIndex = format.indexOf('('),
             minusSignIndex = format.indexOf('-'),
-            space = '',
+            space = format.includes(' $') || format.includes('$ ') ? ' ' : '',
             spliceIndex,
             output;
 
-        // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
-            space = ' ';
-            format = format.replace('$ ', '');
-        } else {
-            format = format.replace('$', '');
-        }
+        // strip format of spaces and $
+        format = format.replace(/\s?\$\s?/, '');
 
         // format the number
-        output = formatNumber(n._value, format, roundingFunction, false);
+        output = formatNumber(value, format, roundingFunction);
 
         // position the symbol
         if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+            if (output.includes('(') || output.includes('-')) {
                 output = output.split('');
-                spliceIndex = 1;
-                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                    // the symbol appears before the "(" or "-"
-                    spliceIndex = 0;
-                }
+
+                spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
+
                 output.splice(spliceIndex, 0, locales[options.currentLocale].currency.symbol + space);
+
                 output = output.join('');
             } else {
                 output = locales[options.currentLocale].currency.symbol + space + output;
             }
         } else {
-            if (output.indexOf(')') > -1) {
+            if (output.includes(')')) {
                 output = output.split('');
+
                 output.splice(-1, 0, space + locales[options.currentLocale].currency.symbol);
+
                 output = output.join('');
             } else {
                 output = output + space + locales[options.currentLocale].currency.symbol;
@@ -170,24 +178,22 @@
         return output;
     }
 
-    function formatPercentage(n, format, roundingFunction) {
-        var space = '',
-            output,
-            value = n._value * 100;
+    function formatPercentage(value, format, roundingFunction) {
+        var space = format.includes(' %') ? ' ' : '',
+            output;
+
+        value = value * 100;
 
         // check for space before %
-        if (format.indexOf(' %') > -1) {
-            space = ' ';
-            format = format.replace(' %', '');
-        } else {
-            format = format.replace('%', '');
-        }
+        format = format.replace(/\s?\%/, '');
 
         output = formatNumber(value, format, roundingFunction);
 
-        if (output.indexOf(')') > -1) {
+        if (output.includes(')')) {
             output = output.split('');
+
             output.splice(-1, 0, space + '%');
+
             output = output.join('');
         } else {
             output = output + space + '%';
@@ -196,22 +202,16 @@
         return output;
     }
 
-    function formatBytes(n, format, roundingFunction) {
+    function formatBytes(value, format, roundingFunction) {
         var output,
-            bytes = format.indexOf('ib') > -1 ? config.bytes.binary : config.bytes.decimal,
-            value = n._value,
-            suffix = '',
+            bytes = format.includes('ib') ? config.bytes.binary : config.bytes.decimal,
+            suffix = format.includes(' b') || format.includes(' ib') ? ' ' : '',
             power,
             min,
             max;
 
         // check for space before
-        if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
-            suffix = ' ';
-            format = format.replace(' ib', '').replace(' b', '');
-        } else {
-            format = format.replace('ib', '').replace('b', '');
-        }
+        format = format.replace(/\s?i?b/, '');
 
         for (power = 0; power <= bytes.suffixes.length; power++) {
             min = Math.pow(bytes.base, power);
@@ -233,43 +233,38 @@
         return output + suffix;
     }
 
-    function formatOrdinal(n, format, roundingFunction) {
+    function formatOrdinal(value, format, roundingFunction) {
         var output,
-            ordinal = '';
+            ordinal = format.includes(' o') ? ' ' : '';
 
         // check for space before
-        if (format.indexOf(' o') > -1) {
-            ordinal = ' ';
-            format = format.replace(' o', '');
-        } else {
-            format = format.replace('o', '');
-        }
+        format = format.replace(/\s?o/, '');
 
-        ordinal += locales[options.currentLocale].ordinal(n._value);
+        ordinal += locales[options.currentLocale].ordinal(value);
 
-        output = formatNumber(n._value, format, roundingFunction);
+        output = formatNumber(value, format, roundingFunction);
 
         return output + ordinal;
     }
 
-    function formatExponential(n, format, roundingFunction) {
+    function formatExponential(value, format, roundingFunction) {
         var output,
-            exponential = typeof n._value === 'number' && !Number.isNaN(n._value) ? n._value.toExponential() : '0e+0',
+            exponential = typeof value === 'number' && !Number.isNaN(value) ? value.toExponential() : '0e+0',
             parts = exponential.split('e');
 
-        format = format.indexOf('e+') > -1 ? format.replace('e+0', '') : format.replace('e-0', '');
+        format = format.replace(/e[\+|\-]{1}0/, '');
 
         output = formatNumber(Number(parts[0]), format, roundingFunction);
 
         return output + 'e' + parts[1];
     }
 
-    function formatTime(n) {
-        var hours = Math.floor(n._value / 60 / 60),
-            minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
-            seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
+    function formatTime(value) {
+        var hours = Math.floor(value / 60 / 60),
+            minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+            seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
 
-        return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
+        return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
     }
 
     function formatNumber(value, format, roundingFunction) {
@@ -277,121 +272,117 @@
             signed = false,
             optDec = false,
             abbr = '',
-            abbrK = false, // force abbreviation to thousands
-            abbrM = false, // force abbreviation to millions
-            abbrB = false, // force abbreviation to billions
-            abbrT = false, // force abbreviation to trillions
-            abbrForce = false, // force abbreviation
+            trillion = 1000000000000,
+            billion = 1000000000,
+            million = 1000000,
+            thousand = 1000,
+            abbrForce, // force abbreviation
             abs,
             min,
             max,
             power,
-            w,
+            int,
             precision,
             thousands,
-            d = '',
+            decimal = '',
             neg = false;
 
-        if (value === null) {
-            value = 0;
-        }
+        // make sure we never format a null value
+        value = value || 0;
 
         abs = Math.abs(value);
 
         // see if we should use parentheses for negative number or if we should prefix with a sign
         // if both are present we default to parentheses
-        if (format.indexOf('(') > -1) {
+        if (format.includes('(')) {
             negP = true;
             format = format.slice(1, -1);
-        } else if (format.indexOf('+') > -1) {
+        } else if (format.includes('+')) {
             signed = true;
             format = format.replace(/\+/g, '');
         }
 
         // see if abbreviation is wanted
-        if (format.indexOf('a') > -1) {
-            // check if abbreviation is specified
-            abbrK = format.indexOf('aK') >= 0;
-            abbrM = format.indexOf('aM') >= 0;
-            abbrB = format.indexOf('aB') >= 0;
-            abbrT = format.indexOf('aT') >= 0;
-            abbrForce = abbrK || abbrM || abbrB || abbrT;
+        if (format.includes('a')) {
+            abbrForce = format.match(/a(k|m|b|t)?/);
+
+            abbrForce = abbrForce ? abbrForce[1] : false;
 
             // check for space before abbreviation
-            if (format.indexOf(' a') > -1) {
+            if (format.includes(' a')) {
                 abbr = ' ';
             }
 
-            format = format.replace(new RegExp(abbr + 'a[KMBT]?'), '');
+            format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
 
-            if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
+            if (abs >= trillion && !abbrForce || abbrForce === 't') {
                 // trillion
-                abbr = abbr + locales[options.currentLocale].abbreviations.trillion;
-                value = value / Math.pow(10, 12);
-            } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
+                abbr += locales[options.currentLocale].abbreviations.trillion;
+                value = value / trillion;
+            } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
                 // billion
-                abbr = abbr + locales[options.currentLocale].abbreviations.billion;
-                value = value / Math.pow(10, 9);
-            } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
+                abbr += locales[options.currentLocale].abbreviations.billion;
+                value = value / billion;
+            } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
                 // million
-                abbr = abbr + locales[options.currentLocale].abbreviations.million;
-                value = value / Math.pow(10, 6);
-            } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
+                abbr += locales[options.currentLocale].abbreviations.million;
+                value = value / million;
+            } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
                 // thousand
-                abbr = abbr + locales[options.currentLocale].abbreviations.thousand;
-                value = value / Math.pow(10, 3);
+                abbr += locales[options.currentLocale].abbreviations.thousand;
+                value = value / thousand;
             }
         }
 
 
-        if (format.indexOf('[.]') > -1) {
+        if (format.includes('[.]')) {
             optDec = true;
             format = format.replace('[.]', '.');
         }
 
-        w = value.toString().split('.')[0];
+        int = value.toString().split('.')[0];
         precision = format.split('.')[1];
         thousands = format.indexOf(',');
 
         if (precision) {
-            if (precision.indexOf('[') > -1) {
+            if (precision.includes('[')) {
                 precision = precision.replace(']', '');
                 precision = precision.split('[');
-                d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                decimal = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
             } else {
-                d = toFixed(value, precision.length, roundingFunction);
+                decimal = toFixed(value, precision.length, roundingFunction);
             }
 
-            w = d.split('.')[0];
+            int = decimal.split('.')[0];
 
-            if (d.indexOf('.') > -1) {
-                d = locales[options.currentLocale].delimiters.decimal + d.split('.')[1];
+            if (decimal.includes('.')) {
+                decimal = locales[options.currentLocale].delimiters.decimal + decimal.split('.')[1];
             } else {
-                d = '';
+                decimal = '';
             }
 
-            if (optDec && Number(d.slice(1)) === 0) {
-                d = '';
+            if (optDec && Number(decimal.slice(1)) === 0) {
+                decimal = '';
             }
         } else {
-            w = toFixed(value, null, roundingFunction);
+            int = toFixed(value, null, roundingFunction);
         }
 
         // format number
-        if (w.indexOf('-') > -1) {
-            w = w.slice(1);
+        if (int.includes('-')) {
+            int = int.slice(1);
             neg = true;
         }
 
         if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
+            int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
         }
 
         if (format.indexOf('.') === 0) {
-            w = '';
+            int = '';
         }
 
-        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
+        return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
     }
 
 
@@ -410,9 +401,9 @@
             power,
             value;
 
-        if (string.indexOf(':') > -1) {
+        if (string.includes(':')) {
             value = unformatTime(string);
-        } else if (string.indexOf('e+') > -1 || string.indexOf('e-') > -1) {
+        } else if (string.includes('e+') || string.includes('e-')) {
             value = unformatExponential(string);
         } else {
             if (string === options.zeroFormat || string === options.nullFormat) {
@@ -430,7 +421,7 @@
 
                 // see if bytes are there so that we can multiply to the correct number
                 for (power = 1; power <= config.bytes.decimal.suffixes.length; power++) {
-                    bytesMultiplier = ((string.indexOf(config.bytes.decimal.suffixes[power]) > -1) || (string.indexOf(config.bytes.binary.suffixes[power]) > -1))? Math.pow(1024, power) : false;
+                    bytesMultiplier = ((string.includes(config.bytes.decimal.suffixes[power])) || (string.includes(config.bytes.binary.suffixes[power])))? Math.pow(1024, power) : false;
 
                     if (bytesMultiplier) {
                         break;
@@ -444,7 +435,7 @@
                 value *= stringOriginal.match(billionRegExp) ? Math.pow(10, 9) : 1;
                 value *= stringOriginal.match(trillionRegExp) ? Math.pow(10, 12) : 1;
                 // check for percentage
-                value *= string.indexOf('%') > -1 ? 0.01 : 1;
+                value *= string.includes('%') ? 0.01 : 1;
                 // check for negative number
                 value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
                 // remove non numbers
@@ -480,11 +471,11 @@
     }
 
     function unformatExponential(string) {
-        var parts = string.indexOf('e+') > -1 ? string.split('e+') : string.split('e-'),
+        var parts = string.includes('e+') ? string.split('e+') : string.split('e-'),
             value = Number(parts[0]),
             power = Number(parts[1]);
 
-        power = string.indexOf('e-') > -1 ? power *= -1 : power;
+        power = string.includes('e-') ? power *= -1 : power;
 
         function cback(accum, curr, currI, O) {
             var corrFactor = correctionFactor(accum, curr),
@@ -494,7 +485,6 @@
 
         return [value, Math.pow(10, power)].reduce(cback, 1);
     }
-
 
     /************************************
         Top Level Functions
@@ -551,12 +541,6 @@
         return numeral;
     };
 
-    numeral.reset = function() {
-        for (var property in defaults) {
-            options[property] = defaults[property];
-        }
-    };
-
     // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
     // global locale object.
@@ -597,6 +581,12 @@
         }
     });
 
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
+        }
+    };
+
     numeral.zeroFormat = function(format) {
         options.zeroFormat = typeof(format) === 'string' ? format : null;
     };
@@ -622,6 +612,7 @@
         //coerce val to string
         if (typeof val !== 'string') {
             val += '';
+
             if (console.warn) {
                 console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
             }
@@ -631,7 +622,7 @@
         val = val.trim();
 
         //if val is just digits return true
-        if ( !! val.match(/^\d+$/)) {
+        if (!!val.match(/^\d+$/)) {
             return true;
         }
 
@@ -711,6 +702,11 @@
         return typeof value === 'number' && isNaN(value);
     };
 
+    // String includes polyfill
+    String.prototype.includes = String.prototype.includes || function(search, start) {
+        return this.indexOf(search, start) !== -1;
+    };
+
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
     if (!Array.prototype.reduce) {
@@ -755,10 +751,8 @@
      */
     function multiplier(x) {
         var parts = x.toString().split('.');
-        if (parts.length < 2) {
-            return 1;
-        }
-        return Math.pow(10, parts[1].length);
+
+        return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
     }
 
     /**
@@ -768,6 +762,7 @@
      */
     function correctionFactor() {
         var args = Array.prototype.slice.call(arguments);
+
         return args.reduce(function(accum, next) {
             var mn = multiplier(next);
             return accum > mn ? accum : mn;
@@ -781,18 +776,15 @@
 
 
     numeral.fn = Numeral.prototype = {
-
         clone: function() {
             return numeral(this);
         },
-
         format: function (inputString, roundingFunction) {
             return formatNumeral(this,
                 inputString ? inputString : options.defaultFormat,
                 roundingFunction !== undefined ? roundingFunction : Math.round
             );
         },
-
         unformat: function (inputString) {
             if (Object.prototype.toString.call(inputString) === '[object Number]') {
                 return inputString;
@@ -800,62 +792,62 @@
 
             return unformatNumeral(this, inputString ? inputString : options.defaultFormat);
         },
-
         value: function() {
             return this._value;
         },
-
         valueOf: function() {
             return this._value;
         },
-
         set: function(value) {
             this._value = Number(value);
+
             return this;
         },
-
         add: function(value) {
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum + Math.round(corrFactor * curr);
             }
+
             this._value = [this._value, value].reduce(cback, 0) / corrFactor;
+
             return this;
         },
-
         subtract: function(value) {
             var corrFactor = correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum - Math.round(corrFactor * curr);
             }
+
             this._value = [value].reduce(cback, Math.round(this._value * corrFactor)) / corrFactor;
+
             return this;
         },
-
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
+
             this._value = [this._value, value].reduce(cback, 1);
+
             return this;
         },
-
         divide: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
+
             this._value = [this._value, value].reduce(cback);
+
             return this;
         },
-
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
         }
-
     };
 
     /************************************
