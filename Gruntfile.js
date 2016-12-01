@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         mochaTest : {
             all: [
-                'tests/numeral/*.js'
+                'tests/numeral/format.js'
                 // 'tests/locales/*.js'
             ]
         },
