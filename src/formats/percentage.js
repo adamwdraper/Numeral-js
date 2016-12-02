@@ -1,6 +1,6 @@
 /*
  * numeral.js format configuration
- * format : currency
+ * format : percentage
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
