@@ -27,8 +27,8 @@ module.exports = function(grunt) {
         mochaTest : {
             all: [
                 'tests/numeral.js',
-                'tests/formats/*.js'
-                // 'tests/locales/*.js'
+                'tests/formats/*.js',
+                'tests/locales/*.js'
             ]
         },
         karma: {
@@ -36,10 +36,10 @@ module.exports = function(grunt) {
                 files: [
                     'src/numeral.js',
                     'src/formats/*.js',
-                    // 'src/locales/*.js',
+                    'src/locales/*.js',
                     'tests/numeral.js',
-                    'tests/formats/*.js'
-                    // 'tests/locales/*.js'
+                    'tests/formats/*.js',
+                    'tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -69,7 +69,8 @@ module.exports = function(grunt) {
         concat: {
             numeral: {
                 src: [
-                    'src/numeral.js'
+                    'src/numeral.js',
+                    'src/formats/*.js'
                 ],
                 dest: 'numeral.js'
             },
@@ -82,6 +83,7 @@ module.exports = function(grunt) {
             numeralWithLocales: {
                 src: [
                     'src/numeral.js',
+                    'src/formats/*.js',
                     'src/locales/*.js'
                 ],
                 dest: 'numeral-with-locales.js'
