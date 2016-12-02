@@ -4,8 +4,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral,
-        format;
+    var numeral;
 
     // get numeral from environment
     if (typeof window !== 'undefined' && this.numeral) {
@@ -16,7 +15,7 @@
         numeral = require('../numeral');
     }
 
-    format = {
+    numeral.register('format', 'currency', {
         regexp: /(\$)/,
         format: function(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
@@ -31,7 +30,7 @@
             format = format.replace(/\s?\$\s?/, '');
 
             // format the number
-            output = numeral.format(value, format, roundingFunction);
+            output = numeral._.formatNumber(value, format, roundingFunction);
 
             // position the symbol
             if (symbolIndex <= 1) {
@@ -60,7 +59,5 @@
 
             return output;
         }
-    };
-
-    numeral.register('format', 'currency', format);
+    });
 }());

@@ -26,8 +26,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         mochaTest : {
             all: [
-                'tests/numeral.js'
-                // 'tests/formats/*.js'
+                'tests/numeral.js',
+                'tests/formats/*.js'
                 // 'tests/locales/*.js'
             ]
         },
@@ -35,9 +35,10 @@ module.exports = function(grunt) {
             options: {
                 files: [
                     'src/numeral.js',
-                    // 'tests/formats/format.js'
+                    'src/formats/*.js',
                     // 'src/locales/*.js',
-                    'tests/numeral.js'
+                    'tests/numeral.js',
+                    'tests/formats/*.js'
                     // 'tests/locales/*.js'
                 ],
                 frameworks: [

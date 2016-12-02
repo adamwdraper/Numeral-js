@@ -78,153 +78,138 @@ describe('Format', function() {
             }
         });
     });
-    // describe('Ordinals', function() {
-    //     it('should format to an ordinal', function() {
-    //         var tests = [
-    //                 [1,'0o','1st'],
-    //                 [52,'0 o','52 nd'],
-    //                 [23,'0o','23rd'],
-    //                 [100,'0o','100th'],
-    //                 [1234,'0,0o','1,234th']
-    //             ],
-    //             i,
-    //             n,
-    //             output;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             n = numeral(tests[i][0]);
-    //             output = n.format(tests[i][1]);
-    //
-    //             expect(output).to.equal(tests[i][2]);
-    //
-    //             expect(typeof output).to.equal('string');
-    //         }
-    //     });
-    // });
+    describe('Ordinals', function() {
+        it('should format to an ordinal', function() {
+            var tests = [
+                    [1,'0o','1st'],
+                    [52,'0 o','52 nd'],
+                    [23,'0o','23rd'],
+                    [100,'0o','100th'],
+                    [1234,'0,0o','1,234th']
+                ],
+                i,
+                n,
+                output;
 
-    // describe('Currency', function() {
-    //     it('should format to currency', function() {
-    //         var tests = [
-    //                 [0,'$0.00','$0.00'],
-    //                 [null,'$0.00','$0.00'],
-    //                 [0.99,'$0,0.00','$0.99'],
-    //                 [1000.234,'$0,0.00','$1,000.23'],
-    //                 [1001,'$ 0,0.[00]','$ 1,001'],
-    //                 [1000.234,'0,0.00 $','1,000.23 $'],
-    //                 [-1000.234,'($0,0)','($1,000)'],
-    //                 [-1000.234,'(0,0$)','(1,000$)'],
-    //                 [-1000.234,'$0.00','-$1000.23'],
-    //                 [1230974,'($0.00 a)','$1.23 m'],
-    //
-    //                 // test symbol position before negative sign / open parens
-    //                 [-1000.234,'$ (0,0)','$ (1,000)'],
-    //                 [-1000.234,'$(0,0)','$(1,000)'],
-    //                 [-1000.234,'$ (0,0.00)','$ (1,000.23)'],
-    //                 [-1000.234,'$(0,0.00)','$(1,000.23)'],
-    //                 [-1000.238,'$(0,0.00)','$(1,000.24)'],
-    //                 [-1000.234,'$-0,0','$-1,000'],
-    //                 [-1000.234,'$ -0,0','$ -1,000'],
-    //
-    //                 [1000.234,'$ (0,0)','$ 1,000'],
-    //                 [1000.234,'$(0,0)','$1,000'],
-    //                 [1000.234,'$ (0,0.00)','$ 1,000.23'],
-    //                 [1000.234,'$(0,0.00)','$1,000.23'],
-    //                 [1000.238,'$(0,0.00)','$1,000.24'],
-    //                 [1000.234,'$-0,0)','$1,000'],
-    //                 [1000.234,'$ -0,0','$ 1,000']
-    //             ],
-    //             i;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
-    //         }
-    //     });
-    // });
-    //
-    // describe('Bytes', function() {
-    //     it('should format to bytes', function() {
-    //         var decimal = 1000;
-    //         var binary = 1024;
-    //         var tests = [
-    //                 [0,'0b','0B'],
-    //                 [null,'0 b','0 B'],
-    //                 [100,'0b','100B'],
-    //                 [binary * 2,'0 ib','2 KiB'],
-    //                 [Math.pow(binary, 2) * 5,'0ib','5MiB'],
-    //                 [Math.pow(binary, 3) * 7.343,'0.[0] ib','7.3 GiB'],
-    //                 [Math.pow(binary, 4) * 3.1536544,'0.000ib','3.154TiB'],
-    //                 [Math.pow(binary, 5) * 2.953454534534,'0ib','3PiB'],
-    //                 [decimal * 2,'0 b','2 KB'],
-    //                 [Math.pow(decimal, 2) * 5,'0b','5MB'],
-    //                 [Math.pow(decimal, 3) * 7.343,'0.[0] b','7.3 GB'],
-    //                 [Math.pow(decimal, 4) * 3.1536544,'0.000b','3.154TB'],
-    //                 [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB']
-    //             ],
-    //             i;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
-    //         }
-    //     });
-    // });
-    //
-    // describe('Percentages', function() {
-    //     it('should format to percentages', function() {
-    //         var tests = [
-    //                 [0,'0%','0%'],
-    //                 [null,'0 %','0 %'],
-    //                 [1,'0%','100%'],
-    //                 [0.974878234,'0.000%','97.488%'],
-    //                 [-0.43,'0 %','-43 %'],
-    //                 [0.43,'(0.00[0]%)','43.00%']
-    //             ],
-    //             i;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
-    //         }
-    //     });
-    // });
-    //
-    // describe('Times', function() {
-    //     it('should format to times', function() {
-    //         var tests = [
-    //                 [0,'00:00:00','0:00:00'],
-    //                 [null,'00:00:00','0:00:00'],
-    //                 [25,'00:00:00','0:00:25'],
-    //                 [238,'00:00:00','0:03:58'],
-    //                 [63846,'00:00:00','17:44:06']
-    //             ],
-    //             i;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
-    //         }
-    //
-    //     });
-    // });
-    //
-    // describe('Exponential', function() {
-    //     it('should format to exponential notation', function() {
-    //         var tests = [
-    //                 [0,'0e+0','0e+0'],
-    //                 [null,'0e+0','0e+0'],
-    //                 [1,'0e+0','1e+0'],
-    //                 [77.1234,'0.0e+0','7.7e+1'],
-    //                 [0.000000771234,'0.0e-0','7.7e-7'],
-    //                 [-0.000000771234,'0.00e-0','-7.71e-7'],
-    //                 [77.1234,'0.000e+0','7.712e+1'],
-    //                 [-1000830298,'0.0[000]e+0','-1.0008e+9']
-    //             ],
-    //             i;
-    //
-    //         for (i = 0; i < tests.length; i++) {
-    //             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
-    //         }
-    //
-    //     });
-    // });
-    //
+            for (i = 0; i < tests.length; i++) {
+                n = numeral(tests[i][0]);
+                output = n.format(tests[i][1]);
+
+                expect(output).to.equal(tests[i][2]);
+
+                expect(typeof output).to.equal('string');
+            }
+        });
+    });
+
+    describe('Currency', function() {
+        it('should format to currency', function() {
+            var tests = [
+                    [0,'$0.00','$0.00'],
+                    [null,'$0.00','$0.00'],
+                    [0.99,'$0,0.00','$0.99'],
+                    [1000.234,'$0,0.00','$1,000.23'],
+                    [1001,'$ 0,0.[00]','$ 1,001'],
+                    [1000.234,'0,0.00 $','1,000.23 $'],
+                    [-1000.234,'($0,0)','($1,000)'],
+                    [-1000.234,'(0,0$)','(1,000$)'],
+                    [-1000.234,'$0.00','-$1000.23'],
+                    [1230974,'($0.00 a)','$1.23 m'],
+
+                    // test symbol position before negative sign / open parens
+                    [-1000.234,'$ (0,0)','$ (1,000)'],
+                    [-1000.234,'$(0,0)','$(1,000)'],
+                    [-1000.234,'$ (0,0.00)','$ (1,000.23)'],
+                    [-1000.234,'$(0,0.00)','$(1,000.23)'],
+                    [-1000.238,'$(0,0.00)','$(1,000.24)'],
+                    [-1000.234,'$-0,0','$-1,000'],
+                    [-1000.234,'$ -0,0','$ -1,000'],
+
+                    [1000.234,'$ (0,0)','$ 1,000'],
+                    [1000.234,'$(0,0)','$1,000'],
+                    [1000.234,'$ (0,0.00)','$ 1,000.23'],
+                    [1000.234,'$(0,0.00)','$1,000.23'],
+                    [1000.238,'$(0,0.00)','$1,000.24'],
+                    [1000.234,'$-0,0)','$1,000'],
+                    [1000.234,'$ -0,0','$ 1,000']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+            }
+        });
+    });
+
+    describe('Bytes', function() {
+        it('should format to bytes', function() {
+            var decimal = 1000;
+            var binary = 1024;
+            var tests = [
+                    [0,'0b','0B'],
+                    [null,'0 b','0 B'],
+                    [100,'0b','100B'],
+                    [binary * 2,'0 ib','2 KiB'],
+                    [Math.pow(binary, 2) * 5,'0ib','5MiB'],
+                    [Math.pow(binary, 3) * 7.343,'0.[0] ib','7.3 GiB'],
+                    [Math.pow(binary, 4) * 3.1536544,'0.000ib','3.154TiB'],
+                    [Math.pow(binary, 5) * 2.953454534534,'0ib','3PiB'],
+                    [decimal * 2,'0 b','2 KB'],
+                    [Math.pow(decimal, 2) * 5,'0b','5MB'],
+                    [Math.pow(decimal, 3) * 7.343,'0.[0] b','7.3 GB'],
+                    [Math.pow(decimal, 4) * 3.1536544,'0.000b','3.154TB'],
+                    [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+            }
+        });
+    });
+
+    describe('Percentages', function() {
+    });
+
+    describe('Times', function() {
+        it('should format to times', function() {
+            var tests = [
+                    [0,'00:00:00','0:00:00'],
+                    [null,'00:00:00','0:00:00'],
+                    [25,'00:00:00','0:00:25'],
+                    [238,'00:00:00','0:03:58'],
+                    [63846,'00:00:00','17:44:06']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+            }
+
+        });
+    });
+
+    describe('Exponential', function() {
+        it('should format to exponential notation', function() {
+            var tests = [
+                    [0,'0e+0','0e+0'],
+                    [null,'0e+0','0e+0'],
+                    [1,'0e+0','1e+0'],
+                    [77.1234,'0.0e+0','7.7e+1'],
+                    [0.000000771234,'0.0e-0','7.7e-7'],
+                    [-0.000000771234,'0.00e-0','-7.71e-7'],
+                    [77.1234,'0.000e+0','7.712e+1'],
+                    [-1000830298,'0.0[000]e+0','-1.0008e+9']
+                ],
+                i;
+
+            for (i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
+            }
+
+        });
+    });
+
     describe('Rounding', function() {
         it('should format with rounding', function() {
             var tests = [
