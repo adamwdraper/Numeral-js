@@ -400,7 +400,7 @@
                     }
                 }
 
-                formatFunction = formatFunction || numeral._.formatNumber;
+                formatFunction = formatFunction || numeral._.numberToFormat;
 
                 output = formatFunction(value, format, roundingFunction);
             }
@@ -568,7 +568,7 @@
                 }
             }
 
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             return output + suffix;
         }
@@ -607,7 +607,7 @@
             format = format.replace(/\s?\$\s?/, '');
 
             // format the number
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             // position the symbol
             if (symbolIndex <= 1) {
@@ -665,7 +665,7 @@
 
             format = format.replace(/e[\+|\-]{1}0/, '');
 
-            output = numeral._.formatNumber(Number(parts[0]), format, roundingFunction);
+            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
 
             return output + 'e' + parts[1];
         }
@@ -701,7 +701,7 @@
 
             ordinal += locale.ordinal(value);
 
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             return output + ordinal;
         }
@@ -736,7 +736,7 @@
             // check for space before %
             format = format.replace(/\s?\%/, '');
 
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             if (numeral._.includes(output, ')')) {
                 output = output.split('');

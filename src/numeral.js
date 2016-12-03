@@ -51,6 +51,9 @@
             value = 0;
         } else if (input === null || _.isNaN(input)) {
             value = null;
+        } else if (typeof input === 'string') {
+            console.log('string', input);
+            value = numeral._.stringToNumber(input);
         } else {
             value = Number(input)|| null;
         }
@@ -68,8 +71,9 @@
 
     // helper functions
     numeral._ = _ = {
-        formatNumber: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
+        // formats numbers separators, decimals places, signs, abbreviations
+        numberToFormat: function(value, format, roundingFunction) {
+            var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 signed = false,
                 optDec = false,
@@ -185,6 +189,56 @@
             }
 
             return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
+        },
+        // unformats numbers separators, decimals places, signs, abbreviations
+        stringToNumber: function(string) {
+            var locale = locales[options.currentLocale],
+                stringOriginal = string,
+                abbreviations = {
+                    thousand: 3,
+                    million: 6,
+                    billion: 9,
+                    trillion: 12
+                },
+                abbreviation,
+                power,
+                value,
+                i,
+                regexp;
+
+            if (string === options.zeroFormat) {
+                value = 0;
+            } else if (string === options.nullFormat || !string.replace(/[^0-9]+/g, '')) {
+                value = null;
+            } else {
+                value = 1;
+
+                if (locale.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                }
+
+                for (abbreviation in abbreviations) {
+                    regexp = new RegExp(locale.abbreviations[abbreviation] + '$');
+
+                    if (stringOriginal.match(regexp)) {
+                        value *= Math.pow(10, abbreviations[abbreviation]);
+
+                        break;
+                    }
+                }
+
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                // remove non numbers
+                string = string.replace(/[^0-9\.]+/g, '');
+
+                value *= Number(string);
+            }
+
+            // loop through formats for furthur 
+
+            return value;
         },
         loadLocale: function (key, values) {
             locales[key] = values;
@@ -400,7 +454,7 @@
                     }
                 }
 
-                formatFunction = formatFunction || numeral._.formatNumber;
+                formatFunction = formatFunction || numeral._.numberToFormat;
 
                 output = formatFunction(value, format, roundingFunction);
             }

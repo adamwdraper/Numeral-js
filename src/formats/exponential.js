@@ -24,7 +24,7 @@
 
             format = format.replace(/e[\+|\-]{1}0/, '');
 
-            output = numeral._.formatNumber(Number(parts[0]), format, roundingFunction);
+            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
 
             return output + 'e' + parts[1];
         }

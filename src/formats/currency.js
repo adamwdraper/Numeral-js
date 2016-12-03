@@ -30,7 +30,7 @@
             format = format.replace(/\s?\$\s?/, '');
 
             // format the number
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             // position the symbol
             if (symbolIndex <= 1) {

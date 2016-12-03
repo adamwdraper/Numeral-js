@@ -26,7 +26,7 @@
             // check for space before %
             format = format.replace(/\s?\%/, '');
 
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             if (numeral._.includes(output, ')')) {
                 output = output.split('');

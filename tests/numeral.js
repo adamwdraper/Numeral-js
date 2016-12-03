@@ -29,6 +29,7 @@ describe('Numeral', function() {
                 i;
 
             for (i = 0; i < tests.length; i++) {
+                console.log(tests[i][0]);
                 expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });
@@ -40,7 +41,7 @@ describe('Numeral', function() {
                     [1000, 1000],
                     [0.5, 0.5],
                     [null, null],
-                    ['1,000', null],
+                    ['1,000', 1000],
                     ['not a number', null]
                 ],
                 num;
@@ -188,6 +189,39 @@ describe('Numeral', function() {
                 expect(output).to.equal(tests[i][2]);
 
                 expect(typeof output).to.equal('string');
+            }
+        });
+    });
+
+    describe('Unformat', function() {
+        before(function() {
+            numeral.zeroFormat('N/A');
+            numeral.nullFormat('N/A');
+        });
+
+        after(function() {
+            numeral.reset();
+        });
+
+        it('should unformat a number', function() {
+            var tests = [
+                ['10,000.123', 10000.123],
+                ['(0.12345)', -0.12345],
+                ['((--0.12345))', 0.12345],
+                ['1.23t', 1230000000000],
+                ['N/A', null],
+                ['', null],
+                // Pass Through for Numbers
+                [0, 0],
+                [1, 1],
+                [1.1, 1.1],
+                [-0, 0],
+                [-1, -1],
+                [-1.1, -1.1]
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });
     });

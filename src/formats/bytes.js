@@ -51,7 +51,7 @@
                 }
             }
 
-            output = numeral._.formatNumber(value, format, roundingFunction);
+            output = numeral._.numberToFormat(value, format, roundingFunction);
 
             return output + suffix;
         }
