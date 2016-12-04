@@ -255,9 +255,6 @@
 
             return value;
         },
-        loadLocale: function (key, values) {
-            locales[key] = values;
-        },
         isNaN: function(value) {
             return typeof value === 'number' && isNaN(value);
         },
@@ -366,28 +363,15 @@
     // avaliable formats
     numeral.locales = locales;
 
-    // This function will load locales and then set the global locale.  If
+    // This function sets the current locale.  If
     // no arguments are passed in, it will simply return the current global
     // locale key.
-    numeral.locale = function(key, values) {
+    numeral.locale = function(key) {
         if (!key) {
             return options.currentLocale;
         }
 
-        // standardize to lowercase
-        key = key.toLowerCase();
-
-        if (key && !values) {
-            if (!locales[key]) {
-                throw new Error('Unknown locale : ' + key);
-            }
-
-            options.currentLocale = key;
-        }
-
-        if (values || !locales[key]) {
-            _.loadLocale(key, values);
-        }
+        options.currentLocale = key.toLowerCase();
 
         return numeral;
     };
