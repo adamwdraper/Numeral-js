@@ -220,7 +220,6 @@
                     trillion: 12
                 },
                 abbreviation,
-                power,
                 value,
                 i,
                 regexp;
@@ -237,11 +236,10 @@
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[0-9\\s]' + locale.abbreviations[abbreviation] + '$');
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
 
                     if (stringOriginal.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
-
                         break;
                     }
                 }
@@ -256,9 +254,6 @@
             }
 
             return value;
-        },
-        loadLocale: function (key, values) {
-            locales[key] = values;
         },
         isNaN: function(value) {
             return typeof value === 'number' && isNaN(value);
@@ -368,28 +363,15 @@
     // avaliable formats
     numeral.locales = locales;
 
-    // This function will load locales and then set the global locale.  If
+    // This function sets the current locale.  If
     // no arguments are passed in, it will simply return the current global
     // locale key.
-    numeral.locale = function(key, values) {
+    numeral.locale = function(key) {
         if (!key) {
             return options.currentLocale;
         }
 
-        // standardize to lowercase
-        key = key.toLowerCase();
-
-        if (key && !values) {
-            if (!locales[key]) {
-                throw new Error('Unknown locale : ' + key);
-            }
-
-            options.currentLocale = key;
-        }
-
-        if (values || !locales[key]) {
-            _.loadLocale(key, values);
-        }
+        options.currentLocale = key.toLowerCase();
 
         return numeral;
     };
@@ -430,6 +412,8 @@
     };
 
     numeral.register = function(type, name, format) {
+        name = name.toLowerCase();
+
         if (this[type + 's'][name]) {
             throw new TypeError(name + ' ' + type + ' already registered.');
         }
@@ -595,7 +579,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral,
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
         decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -604,15 +588,6 @@
             base: 1024,
             suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
 
     numeral.register('format', 'bytes', {
         regexps: {
@@ -683,16 +658,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     numeral.register('format', 'currency', {
         regexps: {
@@ -749,16 +715,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     numeral.register('format', 'exponential', {
         regexps: {
@@ -800,7 +757,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     // get numeral from environment
     if (typeof window !== 'undefined' && this.numeral) {
@@ -838,16 +795,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     numeral.register('format', 'percentage', {
         regexps: {
@@ -889,16 +837,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     numeral.register('format', 'time', {
         regexps: {
