@@ -1,20 +1,20 @@
 /*! @preserve
  * numeral.js
- * version : 1.5.6
+ * version : Edge
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
 
 (function() {
-
     /************************************
         Variables
     ************************************/
 
     var numeral,
-        VERSION = '1.5.6',
-        // internal storage for locale config files
+        _,
+        VERSION = 'Edge',
+        formats = {},
         locales = {},
         defaults = {
             currentLocale: 'en',
@@ -27,18 +27,6 @@
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
             defaultFormat: defaults.defaultFormat
-        },
-        config = {
-            bytes: {
-                decimal: {
-                    base: 1000,
-                    suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-                },
-                binary: {
-                    base: 1024,
-                    suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
-                }
-            }
         };
 
 
@@ -46,441 +34,50 @@
         Constructors
     ************************************/
 
-
     // Numeral prototype object
-    function Numeral(number) {
+    function Numeral(input, number) {
+        this._input = input;
+
         this._value = number;
     }
 
-    /**
-     * Implementation of toFixed() that treats floats more like decimals
-     *
-     * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
-     * problems for accounting- and finance-related software.
-     */
-    function toFixed (value, maxDecimals, roundingFunction, optionals) {
-        var splitValue = value.toString().split('.'),
-            minDecimals = maxDecimals - (optionals || 0),
-            boundedPrecision,
-            optionalsRegExp,
-            power,
-            output;
+    numeral = function(input) {
+        var value,
+            kind,
+            unformatFunction,
+            regexp;
 
-        // Use the smallest precision value possible to avoid errors from floating point representation
-        if (splitValue.length === 2) {
-          boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
-        } else {
-          boundedPrecision = minDecimals;
-        }
-
-        power = Math.pow(10, boundedPrecision);
-
-        //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
-        // Multiply up by precision, round accurately, then divide and use native toFixed():
-        output = (roundingFunction(value * power) / power).toFixed(boundedPrecision);
-
-        if (optionals > maxDecimals - boundedPrecision) {
-            optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
-            output = output.replace(optionalsRegExp, '');
-        }
-
-        return output;
-    }
-
-    /************************************
-        Formatting
-    ************************************/
-
-    // determine what type of formatting we need to do
-    function formatNumeral(n, format, roundingFunction) {
-        var output;
-
-        if (n._value === 0 && options.zeroFormat !== null) {
-            output = options.zeroFormat;
-        } else if (n._value === null && options.nullFormat !== null) {
-            output = options.nullFormat;
-        } else {
-            // figure out what kind of format we are dealing with
-            if (format.indexOf('$') > -1) {
-                output = formatCurrency(n, format, roundingFunction);
-            } else if (format.indexOf('%') > -1) {
-                output = formatPercentage(n, format, roundingFunction);
-            } else if (format.indexOf(':') > -1) {
-                output = formatTime(n, format);
-            } else if (format.indexOf('b') > -1 || format.indexOf('ib') > -1) {
-                output = formatBytes(n, format, roundingFunction);
-            } else if (format.indexOf('o') > -1) {
-                output = formatOrdinal(n, format, roundingFunction);
-            } else {
-                output = formatNumber(n._value, format, roundingFunction);
-            }
-        }
-
-        return output;
-    }
-
-    function formatCurrency(n, format, roundingFunction) {
-        var symbolIndex = format.indexOf('$'),
-            openParenIndex = format.indexOf('('),
-            minusSignIndex = format.indexOf('-'),
-            space = '',
-            spliceIndex,
-            output;
-
-        // check for space before or after currency
-        if (format.indexOf(' $') > -1) {
-            space = ' ';
-            format = format.replace(' $', '');
-        } else if (format.indexOf('$ ') > -1) {
-            space = ' ';
-            format = format.replace('$ ', '');
-        } else {
-            format = format.replace('$', '');
-        }
-
-        // format the number
-        output = formatNumber(n._value, format, roundingFunction, false);
-
-        // position the symbol
-        if (symbolIndex <= 1) {
-            if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
-                output = output.split('');
-                spliceIndex = 1;
-                if (symbolIndex < openParenIndex || symbolIndex < minusSignIndex) {
-                    // the symbol appears before the "(" or "-"
-                    spliceIndex = 0;
-                }
-                output.splice(spliceIndex, 0, locales[options.currentLocale].currency.symbol + space);
-                output = output.join('');
-            } else {
-                output = locales[options.currentLocale].currency.symbol + space + output;
-            }
-        } else {
-            if (output.indexOf(')') > -1) {
-                output = output.split('');
-                output.splice(-1, 0, space + locales[options.currentLocale].currency.symbol);
-                output = output.join('');
-            } else {
-                output = output + space + locales[options.currentLocale].currency.symbol;
-            }
-        }
-
-        return output;
-    }
-
-    function formatPercentage(n, format, roundingFunction) {
-        var space = '',
-            output,
-            value = n._value * 100;
-
-        // check for space before %
-        if (format.indexOf(' %') > -1) {
-            space = ' ';
-            format = format.replace(' %', '');
-        } else {
-            format = format.replace('%', '');
-        }
-
-        output = formatNumber(value, format, roundingFunction);
-
-        if (output.indexOf(')') > -1) {
-            output = output.split('');
-            output.splice(-1, 0, space + '%');
-            output = output.join('');
-        } else {
-            output = output + space + '%';
-        }
-
-        return output;
-    }
-
-    function formatBytes(n, format, roundingFunction) {
-        var output,
-            bytes = format.indexOf('ib') > -1 ? config.bytes.binary : config.bytes.decimal,
-            value = n._value,
-            suffix = '',
-            power,
-            min,
-            max;
-
-        // check for space before
-        if (format.indexOf(' b') > -1 || format.indexOf(' ib') > -1) {
-            suffix = ' ';
-            format = format.replace(' ib', '').replace(' b', '');
-        } else {
-            format = format.replace('ib', '').replace('b', '');
-        }
-
-        for (power = 0; power <= bytes.suffixes.length; power++) {
-            min = Math.pow(bytes.base, power);
-            max = Math.pow(bytes.base, power + 1);
-
-            if (value === null || value === 0 || value >= min && value < max) {
-                suffix += bytes.suffixes[power];
-
-                if (min > 0) {
-                    value = value / min;
-                }
-
-                break;
-            }
-        }
-
-        output = formatNumber(value, format, roundingFunction);
-
-        return output + suffix;
-    }
-
-    function formatOrdinal(n, format, roundingFunction) {
-        var output,
-            ordinal = '';
-
-        // check for space before
-        if (format.indexOf(' o') > -1) {
-            ordinal = ' ';
-            format = format.replace(' o', '');
-        } else {
-            format = format.replace('o', '');
-        }
-
-        ordinal += locales[options.currentLocale].ordinal(n._value);
-
-        output = formatNumber(n._value, format, roundingFunction);
-
-        return output + ordinal;
-    }
-
-    function formatTime(n) {
-        var hours = Math.floor(n._value / 60 / 60),
-            minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
-            seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
-
-        return hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
-    }
-
-    function formatNumber(value, format, roundingFunction) {
-        var negP = false,
-            signed = false,
-            optDec = false,
-            abbr = '',
-            abbrK = false, // force abbreviation to thousands
-            abbrM = false, // force abbreviation to millions
-            abbrB = false, // force abbreviation to billions
-            abbrT = false, // force abbreviation to trillions
-            abbrForce = false, // force abbreviation
-            abs,
-            min,
-            max,
-            power,
-            w,
-            precision,
-            thousands,
-            d = '',
-            neg = false;
-
-        if (value === null) {
+        if (numeral.isNumeral(input)) {
+            value = input.value();
+        } else if (input === 0 || typeof input === 'undefined') {
             value = 0;
-        }
-
-        abs = Math.abs(value);
-
-        // see if we should use parentheses for negative number or if we should prefix with a sign
-        // if both are present we default to parentheses
-        if (format.indexOf('(') > -1) {
-            negP = true;
-            format = format.slice(1, -1);
-        } else if (format.indexOf('+') > -1) {
-            signed = true;
-            format = format.replace(/\+/g, '');
-        }
-
-        // see if abbreviation is wanted
-        if (format.indexOf('a') > -1) {
-            // check if abbreviation is specified
-            abbrK = format.indexOf('aK') >= 0;
-            abbrM = format.indexOf('aM') >= 0;
-            abbrB = format.indexOf('aB') >= 0;
-            abbrT = format.indexOf('aT') >= 0;
-            abbrForce = abbrK || abbrM || abbrB || abbrT;
-
-            // check for space before abbreviation
-            if (format.indexOf(' a') > -1) {
-                abbr = ' ';
-            }
-
-            format = format.replace(new RegExp(abbr + 'a[KMBT]?'), '');
-
-            if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
-                // trillion
-                abbr = abbr + locales[options.currentLocale].abbreviations.trillion;
-                value = value / Math.pow(10, 12);
-            } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
-                // billion
-                abbr = abbr + locales[options.currentLocale].abbreviations.billion;
-                value = value / Math.pow(10, 9);
-            } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
-                // million
-                abbr = abbr + locales[options.currentLocale].abbreviations.million;
-                value = value / Math.pow(10, 6);
-            } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
-                // thousand
-                abbr = abbr + locales[options.currentLocale].abbreviations.thousand;
-                value = value / Math.pow(10, 3);
-            }
-        }
-
-
-        if (format.indexOf('[.]') > -1) {
-            optDec = true;
-            format = format.replace('[.]', '.');
-        }
-
-        w = value.toString().split('.')[0];
-        precision = format.split('.')[1];
-        thousands = format.indexOf(',');
-
-        if (precision) {
-            if (precision.indexOf('[') > -1) {
-                precision = precision.replace(']', '');
-                precision = precision.split('[');
-                d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
-            } else {
-                d = toFixed(value, precision.length, roundingFunction);
-            }
-
-            w = d.split('.')[0];
-
-            if (d.indexOf('.') > -1) {
-                d = locales[options.currentLocale].delimiters.decimal + d.split('.')[1];
-            } else {
-                d = '';
-            }
-
-            if (optDec && Number(d.slice(1)) === 0) {
-                d = '';
-            }
-        } else {
-            w = toFixed(value, null, roundingFunction);
-        }
-
-        // format number
-        if (w.indexOf('-') > -1) {
-            w = w.slice(1);
-            neg = true;
-        }
-
-        if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locales[options.currentLocale].delimiters.thousands);
-        }
-
-        if (format.indexOf('.') === 0) {
-            w = '';
-        }
-
-        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
-    }
-
-
-    /************************************
-        Unformatting
-    ************************************/
-
-    // revert to number
-    function unformatNumeral(n, string) {
-        var stringOriginal = string,
-            thousandRegExp,
-            millionRegExp,
-            billionRegExp,
-            trillionRegExp,
-            bytesMultiplier = false,
-            power,
-            value;
-
-        if (string.indexOf(':') > -1) {
-            value = unformatTime(string);
-        } else {
-            if (string === options.zeroFormat || string === options.nullFormat) {
+        } else if (input === null || _.isNaN(input)) {
+            value = null;
+        } else if (typeof input === 'string') {
+            if (options.zeroFormat && input === options.zeroFormat) {
                 value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
+                value = null;
             } else {
-                if (locales[options.currentLocale].delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(locales[options.currentLocale].delimiters.decimal, '.');
-                }
+                for (kind in formats) {
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
 
-                // see if abbreviations are there so that we can multiply to the correct number
-                thousandRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.thousand + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
-                millionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.million + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
-                billionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.billion + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
-                trillionRegExp = new RegExp('[^a-zA-Z]' + locales[options.currentLocale].abbreviations.trillion + '(?:\\)|(\\' + locales[options.currentLocale].currency.symbol + ')?(?:\\))?)?$');
+                    if (regexp && input.match(regexp)) {
+                        unformatFunction = formats[kind].unformat;
 
-                // see if bytes are there so that we can multiply to the correct number
-                for (power = 1; power <= config.bytes.decimal.suffixes.length; power++) {
-                    bytesMultiplier = ((string.indexOf(config.bytes.decimal.suffixes[power]) > -1) || (string.indexOf(config.bytes.binary.suffixes[power]) > -1))? Math.pow(1024, power) : false;
-
-                    if (bytesMultiplier) {
                         break;
                     }
                 }
 
-                // do some math to create our number
-                value = bytesMultiplier ? bytesMultiplier : 1;
-                value *= stringOriginal.match(thousandRegExp) ? Math.pow(10, 3) : 1;
-                value *= stringOriginal.match(millionRegExp) ? Math.pow(10, 6) : 1;
-                value *= stringOriginal.match(billionRegExp) ? Math.pow(10, 9) : 1;
-                value *= stringOriginal.match(trillionRegExp) ? Math.pow(10, 12) : 1;
-                // check for percentage
-                value *= string.indexOf('%') > -1 ? 0.01 : 1;
-                // check for negative number
-                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
-                // remove non numbers
-                value *= Number(string.replace(/[^0-9\.]+/g, ''));
-                // round if we are talking about bytes
-                value = bytesMultiplier ? Math.ceil(value) : value;
+                unformatFunction = unformatFunction || numeral._.stringToNumber;
+
+                value = unformatFunction(input);
             }
-        }
-
-        n._value = value;
-
-        return n._value;
-    }
-    function unformatTime(string) {
-        var timeArray = string.split(':'),
-            seconds = 0;
-        // turn hours and minutes into seconds and add them all up
-        if (timeArray.length === 3) {
-            // hours
-            seconds = seconds + (Number(timeArray[0]) * 60 * 60);
-            // minutes
-            seconds = seconds + (Number(timeArray[1]) * 60);
-            // seconds
-            seconds = seconds + Number(timeArray[2]);
-        } else if (timeArray.length === 2) {
-            // minutes
-            seconds = seconds + (Number(timeArray[0]) * 60);
-            // seconds
-            seconds = seconds + Number(timeArray[1]);
-        }
-        return Number(seconds);
-    }
-
-
-    /************************************
-        Top Level Functions
-    ************************************/
-
-    numeral = function(input) {
-        if (numeral.isNumeral(input)) {
-            input = input.value();
-        } else if (input === 0 || typeof input === 'undefined') {
-            input = 0;
-        } else if (input === null || Number.isNaN(input)) {
-            input = null;
-        } else if (!Number(input)) {
-            input = numeral.fn.unformat(input);
         } else {
-            input = Number(input);
+            value = Number(input)|| null;
         }
 
-        return new Numeral(input);
+        return new Numeral(input, value);
     };
 
     // version number
@@ -491,37 +88,292 @@
         return obj instanceof Numeral;
     };
 
+    // helper functions
+    numeral._ = _ = {
+        // formats numbers separators, decimals places, signs, abbreviations
+        numberToFormat: function(value, format, roundingFunction) {
+            var locale = locales[numeral.options.currentLocale],
+                negP = false,
+                signed = false,
+                optDec = false,
+                abbr = '',
+                trillion = 1000000000000,
+                billion = 1000000000,
+                million = 1000000,
+                thousand = 1000,
+                abbrForce, // force abbreviation
+                abs,
+                min,
+                max,
+                power,
+                int,
+                precision,
+                thousands,
+                decimal = '',
+                neg = false;
 
-    // This function will load locales and then set the global locale.  If
+            // make sure we never format a null value
+            value = value || 0;
+
+            abs = Math.abs(value);
+
+            // see if we should use parentheses for negative number or if we should prefix with a sign
+            // if both are present we default to parentheses
+            if (numeral._.includes(format, '(')) {
+                negP = true;
+                format = format.slice(1, -1);
+            } else if (numeral._.includes(format, '+')) {
+                signed = true;
+                format = format.replace(/\+/g, '');
+            }
+
+            // see if abbreviation is wanted
+            if (numeral._.includes(format, 'a')) {
+                abbrForce = format.match(/a(k|m|b|t)?/);
+
+                abbrForce = abbrForce ? abbrForce[1] : false;
+
+                // check for space before abbreviation
+                if (numeral._.includes(format, ' a')) {
+                    abbr = ' ';
+                }
+
+                format = format.replace(new RegExp(abbr + 'a[kmbt]?'), '');
+
+                if (abs >= trillion && !abbrForce || abbrForce === 't') {
+                    // trillion
+                    abbr += locale.abbreviations.trillion;
+                    value = value / trillion;
+                } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === 'b') {
+                    // billion
+                    abbr += locale.abbreviations.billion;
+                    value = value / billion;
+                } else if (abs < billion && abs >= million && !abbrForce || abbrForce === 'm') {
+                    // million
+                    abbr += locale.abbreviations.million;
+                    value = value / million;
+                } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === 'k') {
+                    // thousand
+                    abbr += locale.abbreviations.thousand;
+                    value = value / thousand;
+                }
+            }
+
+
+            if (numeral._.includes(format, '[.]')) {
+                optDec = true;
+                format = format.replace('[.]', '.');
+            }
+
+            int = value.toString().split('.')[0];
+            precision = format.split('.')[1];
+            thousands = format.indexOf(',');
+
+            if (precision) {
+                if (numeral._.includes(precision, '[')) {
+                    precision = precision.replace(']', '');
+                    precision = precision.split('[');
+                    decimal = numeral._.toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                } else {
+                    decimal = numeral._.toFixed(value, precision.length, roundingFunction);
+                }
+
+                int = decimal.split('.')[0];
+
+                if (numeral._.includes(decimal, '.')) {
+                    decimal = locale.delimiters.decimal + decimal.split('.')[1];
+                } else {
+                    decimal = '';
+                }
+
+                if (optDec && Number(decimal.slice(1)) === 0) {
+                    decimal = '';
+                }
+            } else {
+                int = numeral._.toFixed(value, null, roundingFunction);
+            }
+
+            // format number
+            if (numeral._.includes(int, '-')) {
+                int = int.slice(1);
+                neg = true;
+            }
+
+            if (thousands > -1) {
+                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
+            }
+
+            if (format.indexOf('.') === 0) {
+                int = '';
+            }
+
+            return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
+        },
+        // unformats numbers separators, decimals places, signs, abbreviations
+        stringToNumber: function(string) {
+            var locale = locales[options.currentLocale],
+                stringOriginal = string,
+                abbreviations = {
+                    thousand: 3,
+                    million: 6,
+                    billion: 9,
+                    trillion: 12
+                },
+                abbreviation,
+                value,
+                i,
+                regexp;
+
+            if (options.zeroFormat && string === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                value = 1;
+
+                if (locale.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                }
+
+                for (abbreviation in abbreviations) {
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+
+                    if (stringOriginal.match(regexp)) {
+                        value *= Math.pow(10, abbreviations[abbreviation]);
+                        break;
+                    }
+                }
+
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                // remove non numbers
+                string = string.replace(/[^0-9\.]+/g, '');
+
+                value *= Number(string);
+            }
+
+            return value;
+        },
+        isNaN: function(value) {
+            return typeof value === 'number' && isNaN(value);
+        },
+        includes: function(string, search) {
+            return string.indexOf(search) !== -1;
+        },
+        reduce: function(array, callback /*, initialValue*/) {
+            if (this === null) {
+                throw new TypeError('Array.prototype.reduce called on null or undefined');
+            }
+
+            if (typeof callback !== 'function') {
+                throw new TypeError(callback + ' is not a function');
+            }
+
+            var t = Object(array),
+                len = t.length >>> 0,
+                k = 0,
+                value;
+
+            if (arguments.length === 3) {
+                value = arguments[2];
+            } else {
+                while (k < len && !(k in t)) {
+                    k++;
+                }
+
+                if (k >= len) {
+                    throw new TypeError('Reduce of empty array with no initial value');
+                }
+
+                value = t[k++];
+            }
+            for (; k < len; k++) {
+                if (k in t) {
+                    value = callback(value, t[k], k, t);
+                }
+            }
+            return value;
+        },
+        /**
+         * Computes the multiplier necessary to make x >= 1,
+         * effectively eliminating miscalculations caused by
+         * finite precision.
+         */
+        multiplier: function (x) {
+            var parts = x.toString().split('.');
+
+            return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
+        },
+        /**
+         * Given a variable number of arguments, returns the maximum
+         * multiplier that must be used to normalize an operation involving
+         * all of them.
+         */
+        correctionFactor: function () {
+            var args = Array.prototype.slice.call(arguments);
+
+            return args.reduce(function(accum, next) {
+                var mn = _.multiplier(next);
+                return accum > mn ? accum : mn;
+            }, 1);
+        },
+        /**
+         * Implementation of toFixed() that treats floats more like decimals
+         *
+         * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
+         * problems for accounting- and finance-related software.
+         */
+        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+            var splitValue = value.toString().split('.'),
+                minDecimals = maxDecimals - (optionals || 0),
+                boundedPrecision,
+                optionalsRegExp,
+                power,
+                output;
+
+            // Use the smallest precision value possible to avoid errors from floating point representation
+            if (splitValue.length === 2) {
+              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+            } else {
+              boundedPrecision = minDecimals;
+            }
+
+            power = Math.pow(10, boundedPrecision);
+
+            //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
+            // Multiply up by precision, round accurately, then divide and use native toFixed():
+            output = (roundingFunction(value * power) / power).toFixed(boundedPrecision);
+
+            if (optionals > maxDecimals - boundedPrecision) {
+                optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
+                output = output.replace(optionalsRegExp, '');
+            }
+
+            return output;
+        }
+    };
+
+    // avaliable options
+    numeral.options = options;
+
+    // avaliable formats
+    numeral.formats = formats;
+
+    // avaliable formats
+    numeral.locales = locales;
+
+    // This function sets the current locale.  If
     // no arguments are passed in, it will simply return the current global
     // locale key.
-    numeral.locale = function(key, values) {
+    numeral.locale = function(key) {
         if (!key) {
             return options.currentLocale;
         }
 
-        // standardize to lowercase
-        key = key.toLowerCase();
-
-        if (key && !values) {
-            if (!locales[key]) {
-                throw new Error('Unknown locale : ' + key);
-            }
-
-            options.currentLocale = key;
-        }
-
-        if (values || !locales[key]) {
-            loadLocale(key, values);
-        }
+        options.currentLocale = key.toLowerCase();
 
         return numeral;
-    };
-
-    numeral.reset = function() {
-        for (var property in defaults) {
-            options[property] = defaults[property];
-        }
     };
 
     // This function provides access to the loaded locale data.  If
@@ -541,28 +393,11 @@
         return locales[key];
     };
 
-    numeral.locale('en', {
-        delimiters: {
-            thousands: ',',
-            decimal: '.'
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
-        },
-        ordinal: function(number) {
-            var b = number % 10;
-            return (~~(number % 100 / 10) === 1) ? 'th' :
-                (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
-        },
-        currency: {
-            symbol: '$'
+    numeral.reset = function() {
+        for (var property in defaults) {
+            options[property] = defaults[property];
         }
-    });
+    };
 
     numeral.zeroFormat = function(format) {
         options.zeroFormat = typeof(format) === 'string' ? format : null;
@@ -575,6 +410,17 @@
     numeral.defaultFormat = function(format) {
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
+
+    numeral.register = function(type, name, format) {
+        name = name.toLowerCase();
+
+        if (this[type + 's'][name]) {
+            throw new TypeError(name + ' ' + type + ' already registered.');
+        }
+
+        this[type + 's'][name] = format;
+    };
+
 
     numeral.validate = function(val, culture) {
         var _decimalSep,
@@ -589,6 +435,7 @@
         //coerce val to string
         if (typeof val !== 'string') {
             val += '';
+
             if (console.warn) {
                 console.warn('Numeral.js: Value is not string. It has been co-erced to: ', val);
             }
@@ -598,7 +445,7 @@
         val = val.trim();
 
         //if val is just digits return true
-        if ( !! val.match(/^\d+$/)) {
+        if (!!val.match(/^\d+$/)) {
             return true;
         }
 
@@ -665,174 +512,131 @@
         return false;
     };
 
-    /************************************
-        Helpers
-    ************************************/
-
-    function loadLocale(key, values) {
-        locales[key] = values;
-    }
-
-    /************************************
-        Floating-point helpers
-    ************************************/
-
-    // The floating-point helper functions and implementation
-    // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
-
-    Number.isNaN = Number.isNaN || function(value) {
-        return typeof value === 'number' && isNaN(value);
-    };
-
-
-    // Production steps of ECMA-262, Edition 5, 15.4.4.21
-    // Reference: http://es5.github.io/#x15.4.4.21
-    if (!Array.prototype.reduce) {
-        Array.prototype.reduce = function(callback /*, initialValue*/) {
-            'use strict';
-            if (this === null) {
-                throw new TypeError('Array.prototype.reduce called on null or undefined');
-            }
-
-            if (typeof callback !== 'function') {
-                throw new TypeError(callback + ' is not a function');
-            }
-
-            var t = Object(this), len = t.length >>> 0, k = 0, value;
-
-            if (arguments.length === 2) {
-                value = arguments[1];
-            } else {
-                while (k < len && !(k in t)) {
-                    k++;
-                }
-
-                if (k >= len) {
-                    throw new TypeError('Reduce of empty array with no initial value');
-                }
-
-                value = t[k++];
-            }
-            for (; k < len; k++) {
-                if (k in t) {
-                    value = callback(value, t[k], k, t);
-                }
-            }
-            return value;
-        };
-    }
-
-    /**
-     * Computes the multiplier necessary to make x >= 1,
-     * effectively eliminating miscalculations caused by
-     * finite precision.
-     */
-    function multiplier(x) {
-        var parts = x.toString().split('.');
-        if (parts.length < 2) {
-            return 1;
-        }
-        return Math.pow(10, parts[1].length);
-    }
-
-    /**
-     * Given a variable number of arguments, returns the maximum
-     * multiplier that must be used to normalize an operation involving
-     * all of them.
-     */
-    function correctionFactor() {
-        var args = Array.prototype.slice.call(arguments);
-        return args.reduce(function(prev, next) {
-            var mp = multiplier(prev),
-                mn = multiplier(next);
-            return mp > mn ? mp : mn;
-        }, -Infinity);
-    }
-
 
     /************************************
         Numeral Prototype
     ************************************/
 
-
     numeral.fn = Numeral.prototype = {
-
         clone: function() {
             return numeral(this);
         },
+        format: function(inputString, roundingFunction) {
+            var value = this._value,
+                format = inputString || options.defaultFormat,
+                kind,
+                output,
+                formatFunction;
 
-        format: function (inputString, roundingFunction) {
-            return formatNumeral(this,
-                inputString ? inputString : options.defaultFormat,
-                roundingFunction !== undefined ? roundingFunction : Math.round
-            );
-        },
+            // make sure we have a roundingFunction
+            roundingFunction = roundingFunction || Math.round;
 
-        unformat: function (inputString) {
-            if (Object.prototype.toString.call(inputString) === '[object Number]') {
-                return inputString;
+            // format based on value
+            if (value === 0 && options.zeroFormat !== null) {
+                output = options.zeroFormat;
+            } else if (value === null && options.nullFormat !== null) {
+                output = options.nullFormat;
+            } else {
+                for (kind in formats) {
+                    if (format.match(formats[kind].regexps.format)) {
+                        formatFunction = formats[kind].format;
+
+                        break;
+                    }
+                }
+
+                formatFunction = formatFunction || numeral._.numberToFormat;
+
+                output = formatFunction(value, format, roundingFunction);
             }
 
-            return unformatNumeral(this, inputString ? inputString : options.defaultFormat);
+            return output;
         },
-
         value: function() {
             return this._value;
         },
-
-        valueOf: function() {
-            return this._value;
+        input: function() {
+            return this._input;
         },
-
         set: function(value) {
             this._value = Number(value);
+
             return this;
         },
-
         add: function(value) {
-            var corrFactor = correctionFactor.call(null, this._value, value);
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
-                return accum + corrFactor * curr;
+                return accum + Math.round(corrFactor * curr);
             }
-            this._value = [this._value, value].reduce(cback, 0) / corrFactor;
+
+            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
+
             return this;
         },
-
         subtract: function(value) {
-            var corrFactor = correctionFactor.call(null, this._value, value);
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
-                return accum - corrFactor * curr;
+                return accum - Math.round(corrFactor * curr);
             }
-            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
+
+            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+
             return this;
         },
-
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
-                var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) * (curr * corrFactor) /
-                    (corrFactor * corrFactor);
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
-            this._value = [this._value, value].reduce(cback, 1);
+
+            this._value = _.reduce([this._value, value], cback, 1);
+
             return this;
         },
-
         divide: function(value) {
             function cback(accum, curr, currI, O) {
-                var corrFactor = correctionFactor(accum, curr);
-                return (accum * corrFactor) / (curr * corrFactor);
+                var corrFactor = _.correctionFactor(accum, curr);
+                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
-            this._value = [this._value, value].reduce(cback);
+
+            this._value = _.reduce([this._value, value], cback);
+
             return this;
         },
-
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
         }
-
     };
+
+    /************************************
+        Default Locale && Format
+    ************************************/
+
+    numeral.register('locale', 'en', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function(number) {
+            var b = number % 10;
+            return (~~(number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    });
+
 
     /************************************
         Exposing Numeral
@@ -859,13 +663,316 @@
     }
 }).call(this);
 
-/*! @preserve 
+/*
+ * numeral.js format configuration
+ * format : bytes
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+        decimal = {
+            base: 1000,
+            suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        },
+        binary = {
+            base: 1024,
+            suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+        };
+
+    numeral.register('format', 'bytes', {
+        regexps: {
+            format: /([0\s]i?b)/,
+            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                bytes = numeral._.includes(format, 'ib') ? binary : decimal,
+                suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
+                power,
+                min,
+                max;
+
+            // check for space before
+            format = format.replace(/\s?i?b/, '');
+
+            for (power = 0; power <= bytes.suffixes.length; power++) {
+                min = Math.pow(bytes.base, power);
+                max = Math.pow(bytes.base, power + 1);
+
+                if (value === null || value === 0 || value >= min && value < max) {
+                    suffix += bytes.suffixes[power];
+
+                    if (min > 0) {
+                        value = value / min;
+                    }
+
+                    break;
+                }
+            }
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + suffix;
+        },
+        unformat: function(string) {
+            var value = numeral._.stringToNumber(string),
+                power,
+                bytesMultiplier;
+
+            if (value) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                    if (numeral._.includes(string, decimal.suffixes[power])) {
+                        bytesMultiplier = Math.pow(decimal.base, power);
+
+                        break;
+                    }
+
+                    if (numeral._.includes(string, binary.suffixes[power])) {
+                        bytesMultiplier = Math.pow(binary.base, power);
+
+                        break;
+                    }
+                }
+
+                value *= (bytesMultiplier || 1);
+            }
+
+            return value;
+        }
+    });
+}());
+
+/*
+ * numeral.js format configuration
+ * format : currency
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('format', 'currency', {
+        regexps: {
+            format: /(\$)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                symbolIndex = format.indexOf('$'),
+                openParenIndex = format.indexOf('('),
+                minusSignIndex = format.indexOf('-'),
+                space = numeral._.includes(format, ' $') || numeral._.includes(format, '$ ') ? ' ' : '',
+                spliceIndex,
+                output;
+
+            // strip format of spaces and $
+            format = format.replace(/\s?\$\s?/, '');
+
+            // format the number
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            // position the symbol
+            if (symbolIndex <= 1) {
+                if (numeral._.includes(output, '(') || numeral._.includes(output, '-')) {
+                    output = output.split('');
+
+                    spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
+
+                    output.splice(spliceIndex, 0, locale.currency.symbol + space);
+
+                    output = output.join('');
+                } else {
+                    output = locale.currency.symbol + space + output;
+                }
+            } else {
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + locale.currency.symbol);
+
+                    output = output.join('');
+                } else {
+                    output = output + space + locale.currency.symbol;
+                }
+            }
+
+            return output;
+        }
+    });
+}());
+
+/*
+ * numeral.js format configuration
+ * format : exponential
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('format', 'exponential', {
+        regexps: {
+            format: /(e\+|e-)/,
+            unformat: /(e\+|e-)/
+        },
+        format: function(value, format, roundingFunction) {
+            var output,
+                exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
+                parts = exponential.split('e');
+
+            format = format.replace(/e[\+|\-]{1}0/, '');
+
+            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
+
+            return output + 'e' + parts[1];
+        },
+        unformat: function(string) {
+            var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
+                value = Number(parts[0]),
+                power = Number(parts[1]);
+
+            power = numeral._.includes(string, 'e-') ? power *= -1 : power;
+
+            function cback(accum, curr, currI, O) {
+                var corrFactor = numeral._.correctionFactor(accum, curr),
+                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+                return num;
+            }
+
+            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
+        }
+    });
+}());
+
+/*
+ * numeral.js format configuration
+ * format : ordinal
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    // get numeral from environment
+    if (typeof window !== 'undefined' && this.numeral) {
+        // Browser
+        numeral = this.numeral;
+    } else if (typeof module !== 'undefined' && module.exports) {
+        // Node
+        numeral = require('../numeral');
+    }
+
+    numeral.register('format', 'ordinal', {
+        regexps: {
+            format: /(o)/
+        },
+        format: function(value, format, roundingFunction) {
+            var locale = numeral.locales[numeral.options.currentLocale],
+                output,
+                ordinal = numeral._.includes(format, ' o') ? ' ' : '';
+
+            // check for space before
+            format = format.replace(/\s?o/, '');
+
+            ordinal += locale.ordinal(value);
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            return output + ordinal;
+        }
+    });
+}());
+
+/*
+ * numeral.js format configuration
+ * format : percentage
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('format', 'percentage', {
+        regexps: {
+            format: /(%)/,
+            unformat: /(%)/
+        },
+        format: function(value, format, roundingFunction) {
+            var space = numeral._.includes(format, ' %') ? ' ' : '',
+                output;
+
+            value = value * 100;
+
+            // check for space before %
+            format = format.replace(/\s?\%/, '');
+
+            output = numeral._.numberToFormat(value, format, roundingFunction);
+
+            if (numeral._.includes(output, ')')) {
+                output = output.split('');
+
+                output.splice(-1, 0, space + '%');
+
+                output = output.join('');
+            } else {
+                output = output + space + '%';
+            }
+
+            return output;
+        },
+        unformat: function(string) {
+            return numeral._.stringToNumber(string) * 0.01;
+        }
+    });
+}());
+
+/*
+ * numeral.js format configuration
+ * format : time
+ * author : Adam Draper : https://github.com/adamwdraper
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('format', 'time', {
+        regexps: {
+            format: /(:)/,
+            unformat: /(:)/
+        },
+        format: function(value, format, roundingFunction) {
+            var hours = Math.floor(value / 60 / 60),
+                minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+
+            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        },
+        unformat: function(string) {
+            var timeArray = string.split(':'),
+                seconds = 0;
+
+            // turn hours and minutes into seconds and add them all up
+            if (timeArray.length === 3) {
+                // hours
+                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+                // minutes
+                seconds = seconds + (Number(timeArray[1]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[2]);
+            } else if (timeArray.length === 2) {
+                // minutes
+                seconds = seconds + (Number(timeArray[0]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[1]);
+            }
+            return Number(seconds);
+        }
+    });
+}());
+
+/*
  * numeral.js locale configuration
  * locale : belgium-dutch (be-nl)
  * author : Dieter Luypaert : https://github.com/moeriki
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'be-nl', {
         delimiters: {
             thousands: ' ',
             decimal  : ','
@@ -878,30 +985,60 @@
         },
         ordinal : function (number) {
             var remainder = number % 100;
+            
             return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },
         currency: {
             symbol: '€ '
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('be-nl', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
- * locale : simplified chinese
+ * locale : Bulgarian
+ * author : Don Vince : https://github.com/donvince/
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'bg', {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/bg.html
+            thousand: 'хил',
+            million: 'млн',
+            billion: 'млрд',
+            trillion: 'трлн'
+        },
+        ordinal: function (number) {
+            // google translate suggests:
+            // 1st=1-ви; 2nd=2-ри; 7th=7-ми;
+            // 8th=8-ми and many others end with -ти
+            // for example 3rd=3-ти
+            // However since I've seen suggestions that in
+            // Bulgarian the ordinal can be taken in
+            // different forms (masculine, feminine, neuter)
+            // I've opted to wimp out on commiting that to code
+            return '';
+        },
+        currency: {
+            symbol: 'лв'
+        }
+    });
+}());
+
+/*
+ * numeral.js locale configuration
+ * locale : simplified chinese (chs)
  * author : badplum : https://github.com/badplum
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -918,25 +1055,18 @@
         currency: {
             symbol: '¥'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('chs', locale);
-    }
+    });
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : czech (cs)
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'cs', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -953,25 +1083,18 @@
         currency: {
             symbol: 'Kč'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('cs', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : danish denmark (dk)
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -988,24 +1111,18 @@
         currency: {
             symbol: 'DKK'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('da-dk', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : German in Switzerland (de-ch)
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
- */ 
+ */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'de-ch', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1022,24 +1139,18 @@
         currency: {
             symbol: 'CHF'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('de-ch', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
  * author : Marco Krage : https://github.com/sinky
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'de', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1056,24 +1167,50 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('de', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
+ * numeral.js locale configuration
+ * locale : English Australia
+ * author : Don Vince : https://github.com/donvince/
+ */
+(function () {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-au', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal: function (number) {
+            var b = number % 10;
+            return (~~ (number % 100 / 10) === 1) ? 'th' :
+                (b === 1) ? 'st' :
+                (b === 2) ? 'nd' :
+                (b === 3) ? 'rd' : 'th';
+        },
+        currency: {
+            symbol: '$'
+        }
+    });
+}());
+
+/*
  * numeral.js locale configuration
  * locale : english united kingdom (uk)
  * author : Dan Ristic : https://github.com/dristic
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-gb', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -1094,24 +1231,18 @@
         currency: {
             symbol: '£'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('en-gb', locale);
-    }
+    });
 }());
-/*!
+
+/*
  * numeral.js locale configuration
  * locale : english south africa (uk)
  * author : Etienne Boshoff : etienne@zailab.com
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1132,24 +1263,18 @@
         currency: {
             symbol: 'R'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('en-za', locale);
-    }
+    });
 }());
-/*! @preserve
+
+/*
  * numeral.js locale configuration
  * locale : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -1171,25 +1296,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('es-es', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : spanish
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -1204,26 +1322,17 @@
             var b = number % 10;
             return (b === 1 || b === 3) ? 'er' :
                 (b === 2) ? 'do' :
-                (b === 7 || b === 0) ? 'mo' : 
+                (b === 7 || b === 0) ? 'mo' :
 		(b === 8) ? 'vo' :
 		(b === 9) ? 'no' : 'to';
         },
         currency: {
             symbol: '$'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('es', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : Estonian
  * author : Illimar Tambek : https://github.com/ragulka
@@ -1232,7 +1341,9 @@
  * from numbers with a space
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1249,25 +1360,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('et', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : Finnish
  * author : Sami Saada : https://github.com/samitheberber
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fi', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1284,25 +1388,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fi', locale);
-    }
+    });
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fr-ca', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1319,24 +1416,18 @@
         currency: {
             symbol: '$'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr-ca', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fr-ch', {
         delimiters: {
             thousands: '\'',
             decimal: '.'
@@ -1353,25 +1444,18 @@
         currency: {
             symbol: 'CHF'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr-ch', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : french (fr)
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fr', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1388,24 +1472,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr', locale);
-    }
+    });
 }());
-/*! @preserve
+
+/*
  * numeral.js locale configuration
  * locale : Hungarian (hu)
  * author : Peter Bakondy : https://github.com/pbakondy
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1422,24 +1500,18 @@
         currency: {
             symbol: ' Ft'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('hu', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : italian Italy (it)
  * author : Giacomo Trombi : http://cinquepunti.it
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -1456,24 +1528,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('it', locale);
-    }
+    });
 }());
-/*! @preserve
+
+/*
  * numeral.js locale configuration
  * locale : japanese
  * author : teppeis : https://github.com/teppeis
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'ja', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -1490,25 +1556,18 @@
         currency: {
             symbol: '¥'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ja', locale);
-    }
+    });
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : Latvian (lv)
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'lv', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1525,24 +1584,18 @@
         currency: {
             symbol: '€'
         }
-    };
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('lv', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : netherlands-dutch (nl-nl)
  * author : Dave Clayton : https://github.com/davedx
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
             decimal  : ','
@@ -1560,24 +1613,18 @@
         currency: {
             symbol: '€ '
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('nl-nl', locale);
-    }
+    });
 }());
-/*! 
+
+/*
  * numeral.js locale configuration
  * locale : norwegian (bokmål)
  * author : Ove Andersen : https://github.com/azzlack
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'no', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1594,28 +1641,18 @@
         currency: {
             symbol: 'kr'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('nb-no', locale);
-        this.numeral.locale('nn-no', locale);
-        this.numeral.locale('no', locale);
-        this.numeral.locale('nb', locale);
-        this.numeral.locale('nn', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : polish (pl)
  * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'pl', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1632,24 +1669,18 @@
         currency: {
             symbol: 'PLN'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('pl', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : portuguese brazil (pt-br)
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'pt-br', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -1666,24 +1697,18 @@
         currency: {
             symbol: 'R$'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('pt-br', locale);
-    }
+    });
 }());
-/*! @preserve 
+
+/*
  * numeral.js locale configuration
  * locale : portuguese (pt-pt)
  * author : Diogo Resende : https://github.com/dresende
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'pt-pt', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1700,23 +1725,16 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('pt-pt', locale);
-    }
+    });
 }());
 
 // numeral.js locale configuration
 // locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1728,33 +1746,26 @@
             trillion: 't'
         },
         ordinal: function () {
-            // not ideal, but since in Russian it can taken on 
+            // not ideal, but since in Russian it can taken on
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return '.'; 
+            return '.';
         },
         currency: {
             symbol: '\u20B4'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ru-ua', locale);
-    }
+    });
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : russian (ru)
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'ru', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1774,25 +1785,18 @@
         currency: {
             symbol: 'руб.'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ru', locale);
-    }
+    });
 }());
 
-/*! @preserve
+/*
  * numeral.js locale configuration
  * locale : slovak (sk)
  * author : Ahmed Al Hafoudh : http://www.freevision.sk
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'sk', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1809,25 +1813,18 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('sk', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'th', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -1844,25 +1841,17 @@
         currency: {
             symbol: '฿'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('th', locale);
-    }
+    });
 }());
 
-/*! @preserve 
+/*
  * numeral.js locale configuration
  * locale : turkish (tr)
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
  */
 (function () {
-    var suffixes = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+        suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -1886,49 +1875,43 @@
 
             60: '\'ıncı',
             90: '\'ıncı'
-        },
-        locale = {
-            delimiters: {
-                thousands: '.',
-                decimal: ','
-            },
-            abbreviations: {
-                thousand: 'bin',
-                million: 'milyon',
-                billion: 'milyar',
-                trillion: 'trilyon'
-            },
-            ordinal: function (number) {
-                if (number === 0) {  // special case for zero
-                    return '\'ıncı';
-                }
-
-                var a = number % 10,
-                    b = number % 100 - a,
-                    c = number >= 100 ? 100 : null;
-
-              return suffixes[a] || suffixes[b] || suffixes[c];
-            },
-            currency: {
-                symbol: '\u20BA'
-            }
         };
 
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('tr', locale);
-    }
+    numeral.register('locale', 'tr', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'bin',
+            million: 'milyon',
+            billion: 'milyar',
+            trillion: 'trilyon'
+        },
+        ordinal: function (number) {
+            if (number === 0) {  // special case for zero
+                return '\'ıncı';
+            }
+
+            var a = number % 10,
+                b = number % 100 - a,
+                c = number >= 100 ? 100 : null;
+
+          return suffixes[a] || suffixes[b] || suffixes[c];
+        },
+        currency: {
+            symbol: '\u20BA'
+        }
+    });
 }());
 
 // numeral.js locale configuration
 // locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'uk-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1940,22 +1923,13 @@
             trillion: 'блн'
         },
         ordinal: function () {
-            // not ideal, but since in Ukrainian it can taken on 
+            // not ideal, but since in Ukrainian it can taken on
             // different forms (masculine, feminine, neuter)
             // this is all we can do
-            return ''; 
+            return '';
         },
         currency: {
             symbol: '\u20B4'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('uk-ua', locale);
-    }
+    });
 }());

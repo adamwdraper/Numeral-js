@@ -45,8 +45,6 @@ function formatNumbers () {
             1460,
             -104000,
             1,
-            52,
-            23,
             100
         ],
         formats = [
@@ -64,8 +62,6 @@ function formatNumbers () {
             '0.0a',
             '0 a',
             '0a',
-            '0o',
-            '0o',
             '0o',
             '0o'
         ];
@@ -191,7 +187,7 @@ function unformatAll () {
         ];
 
     for (var i = 0; i < formats.length; i++) {
-        html += '<tr><td>\'' + formats[i] + '\'</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>';
+        html += '<tr><td>\'' + formats[i] + '\'</td><td>numeral(' + formats[i] + ')</td><td>' + numeral(formats[i]).value() + '</td></tr>';
     }
 
     $body.empty().html(html);
