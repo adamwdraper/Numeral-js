@@ -17,7 +17,8 @@
 
     numeral.register('format', 'percentage', {
         regexps: {
-            format: /(%)/
+            format: /(%)/,
+            unformat: /(%)/
         },
         format: function(value, format, roundingFunction) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
@@ -41,6 +42,9 @@
             }
 
             return output;
+        },
+        unformat: function(string) {
+            return numeral._.stringToNumber(string) * 0.01;
         }
     });
 }());

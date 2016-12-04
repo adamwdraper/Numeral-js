@@ -7,7 +7,6 @@
  */
 
 (function() {
-
     /************************************
         Variables
     ************************************/
@@ -45,7 +44,8 @@
     numeral = function(input) {
         var value,
             kind,
-            unformatFunction;
+            unformatFunction,
+            regexp;
 
         if (numeral.isNumeral(input)) {
             value = input.value();
@@ -60,7 +60,9 @@
                 value = null;
             } else {
                 for (kind in formats) {
-                    if (input.match(formats[kind].regexps.unformat)) {
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+
+                    if (regexp && input.match(regexp)) {
                         unformatFunction = formats[kind].unformat;
 
                         break;
@@ -235,7 +237,7 @@
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp(locale.abbreviations[abbreviation] + '$');
+                    regexp = new RegExp('[0-9\\s]' + locale.abbreviations[abbreviation] + '$');
 
                     if (stringOriginal.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
@@ -479,6 +481,9 @@
         value: function() {
             return this._value;
         },
+        input: function() {
+            return this._input;
+        },
         set: function(value) {
             this._value = Number(value);
 
@@ -649,21 +654,16 @@
                 power,
                 bytesMultiplier;
 
-            console.log('unformating', new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')'));
-
             if (value) {
-                for (power = 0; power <= decimal.suffixes.length; power++) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
                     if (numeral._.includes(string, decimal.suffixes[power])) {
                         bytesMultiplier = Math.pow(decimal.base, power);
-
-                        console.log('jflsekjf');
 
                         break;
                     }
 
                     if (numeral._.includes(string, binary.suffixes[power])) {
                         bytesMultiplier = Math.pow(binary.base, power);
-                        console.log('gergsegserse');
 
                         break;
                     }
@@ -671,7 +671,6 @@
 
                 value *= (bytesMultiplier || 1);
             }
-            console.log(string, value, bytesMultiplier);
 
             return value;
         }
@@ -763,7 +762,8 @@
 
     numeral.register('format', 'exponential', {
         regexps: {
-            format: /(e\+|e-)/
+            format: /(e\+|e-)/,
+            unformat: /(e\+|e-)/
         },
         format: function(value, format, roundingFunction) {
             var output,
@@ -775,6 +775,21 @@
             output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
 
             return output + 'e' + parts[1];
+        },
+        unformat: function(string) {
+            var parts = string.includes('e+') ? string.split('e+') : string.split('e-'),
+                value = Number(parts[0]),
+                power = Number(parts[1]);
+
+            power = string.includes('e-') ? power *= -1 : power;
+
+            function cback(accum, curr, currI, O) {
+                var corrFactor = numeral._.correctionFactor(accum, curr),
+                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+                return num;
+            }
+
+            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
     });
 }());
@@ -836,7 +851,8 @@
 
     numeral.register('format', 'percentage', {
         regexps: {
-            format: /(%)/
+            format: /(%)/,
+            unformat: /(%)/
         },
         format: function(value, format, roundingFunction) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
@@ -860,6 +876,9 @@
             }
 
             return output;
+        },
+        unformat: function(string) {
+            return numeral._.stringToNumber(string) * 0.01;
         }
     });
 }());
@@ -883,7 +902,8 @@
 
     numeral.register('format', 'time', {
         regexps: {
-            format: /(:)/
+            format: /(:)/,
+            unformat: /(:)/
         },
         format: function(value, format, roundingFunction) {
             var hours = Math.floor(value / 60 / 60),
@@ -891,6 +911,26 @@
                 seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
 
             return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        },
+        unformat: function(string) {
+            var timeArray = string.split(':'),
+                seconds = 0;
+
+            // turn hours and minutes into seconds and add them all up
+            if (timeArray.length === 3) {
+                // hours
+                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+                // minutes
+                seconds = seconds + (Number(timeArray[1]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[2]);
+            } else if (timeArray.length === 2) {
+                // minutes
+                seconds = seconds + (Number(timeArray[0]) * 60);
+                // seconds
+                seconds = seconds + Number(timeArray[1]);
+            }
+            return Number(seconds);
         }
     });
 }());

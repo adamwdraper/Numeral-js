@@ -26,4 +26,19 @@ describe('Percentage', function() {
             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
         }
     });
+
+    it('should unformat to percentages', function() {
+        var tests = [
+                ['0%', 0],
+                ['100%', 1],
+                ['97.488%', 0.97488],
+                ['-43 %', -0.43],
+                ['43.00%', 0.43]
+            ],
+            i;
+
+        for (i = 0; i < tests.length; i++) {
+            expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+        }
+    });
 });

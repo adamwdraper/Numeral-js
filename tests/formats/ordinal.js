@@ -32,4 +32,19 @@ describe('Ordinal', function() {
             expect(typeof output).to.equal('string');
         }
     });
+
+    it('should unformat to an ordinal', function() {
+        var tests = [
+                ['1st', 1],
+                ['52 nd', 52],
+                ['23rd', 23],
+                ['100th', 100],
+                ['1,234th', 1234]
+            ],
+            i;
+
+        for (i = 0; i < tests.length; i++) {
+            expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+        }
+    });
 });

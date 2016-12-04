@@ -7,7 +7,6 @@
  */
 
 (function() {
-
     /************************************
         Variables
     ************************************/
@@ -45,7 +44,8 @@
     numeral = function(input) {
         var value,
             kind,
-            unformatFunction;
+            unformatFunction,
+            regexp;
 
         if (numeral.isNumeral(input)) {
             value = input.value();
@@ -60,7 +60,9 @@
                 value = null;
             } else {
                 for (kind in formats) {
-                    if (input.match(formats[kind].regexps.unformat)) {
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+
+                    if (regexp && input.match(regexp)) {
                         unformatFunction = formats[kind].unformat;
 
                         break;
@@ -235,7 +237,7 @@
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp(locale.abbreviations[abbreviation] + '$');
+                    regexp = new RegExp('[0-9\\s]' + locale.abbreviations[abbreviation] + '$');
 
                     if (stringOriginal.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
@@ -478,6 +480,9 @@
         },
         value: function() {
             return this._value;
+        },
+        input: function() {
+            return this._input;
         },
         set: function(value) {
             this._value = Number(value);
