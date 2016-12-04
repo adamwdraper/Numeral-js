@@ -4,7 +4,9 @@
  * author : Etienne Boshoff : etienne@zailab.com
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -25,14 +27,5 @@
         currency: {
             symbol: 'R'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('en-za', locale);
-    }
+    });
 }());

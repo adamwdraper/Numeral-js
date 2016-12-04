@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fr-ch', {
         delimiters: {
             thousands: '\'',
             decimal: '.'
@@ -21,14 +23,5 @@
         currency: {
             symbol: 'CHF'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fr-ch', locale);
-    }
+    });
 }());

@@ -4,7 +4,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     // get numeral from environment
     if (typeof window !== 'undefined' && this.numeral) {

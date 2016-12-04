@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : english united kingdom (uk)
  * author : Dan Ristic : https://github.com/dristic
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-gb', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -25,14 +27,5 @@
         currency: {
             symbol: '£'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('en-gb', locale);
-    }
+    });
 }());

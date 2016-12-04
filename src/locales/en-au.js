@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : English Australia
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'en-au', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -25,14 +27,5 @@
         currency: {
             symbol: '$'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('en-au', locale);
-    }
+    });
 }());

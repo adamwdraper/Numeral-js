@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : danish denmark (dk)
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -21,14 +23,5 @@
         currency: {
             symbol: 'DKK'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('da-dk', locale);
-    }
+    });
 }());

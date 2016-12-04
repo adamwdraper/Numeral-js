@@ -8,8 +8,6 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Locale: da-dk', function() {
 
     before(function() {
-        numeral.locale('da-dk', locale);
-
         numeral.locale('da-dk');
     });
 

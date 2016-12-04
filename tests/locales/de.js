@@ -8,8 +8,6 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Locale: de', function() {
 
     before(function() {
-        numeral.locale('de', locale);
-
         numeral.locale('de');
     });
 

@@ -4,16 +4,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral;
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
 
     numeral.register('format', 'percentage', {
         regexps: {

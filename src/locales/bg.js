@@ -4,7 +4,9 @@
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'bg', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -29,14 +31,5 @@
         currency: {
             symbol: 'лв'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('bg', locale);
-    }
+    });
 }());

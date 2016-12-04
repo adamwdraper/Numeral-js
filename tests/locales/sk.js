@@ -8,8 +8,6 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Locale: sk', function() {
 
     before(function() {
-        numeral.locale('sk', locale);
-
         numeral.locale('sk');
     });
 

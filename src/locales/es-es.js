@@ -4,7 +4,9 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -26,14 +28,5 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('es-es', locale);
-    }
+    });
 }());

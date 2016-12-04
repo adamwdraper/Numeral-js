@@ -4,7 +4,9 @@
  * author : teppeis : https://github.com/teppeis
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'ja', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -21,14 +23,5 @@
         currency: {
             symbol: '¥'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('ja', locale);
-    }
+    });
 }());

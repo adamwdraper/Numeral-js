@@ -4,7 +4,9 @@
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'lv', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -21,13 +23,5 @@
         currency: {
             symbol: '€'
         }
-    };
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('lv', locale);
-    }
+    });
 }());

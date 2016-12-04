@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : netherlands-dutch (nl-nl)
  * author : Dave Clayton : https://github.com/davedx
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
             decimal  : ','
@@ -22,14 +24,5 @@
         currency: {
             symbol: '€ '
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('nl-nl', locale);
-    }
+    });
 }());

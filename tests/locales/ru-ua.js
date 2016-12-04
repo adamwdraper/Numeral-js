@@ -8,8 +8,6 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Locale: ru-ua', function() {
 
     before(function() {
-        numeral.locale('ru-ua', locale);
-
         numeral.locale('ru-ua');
     });
 

@@ -1,10 +1,11 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : turkish (tr)
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
  */
 (function () {
-    var suffixes = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+        suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -28,40 +29,32 @@
 
             60: '\'ıncı',
             90: '\'ıncı'
-        },
-        locale = {
-            delimiters: {
-                thousands: '.',
-                decimal: ','
-            },
-            abbreviations: {
-                thousand: 'bin',
-                million: 'milyon',
-                billion: 'milyar',
-                trillion: 'trilyon'
-            },
-            ordinal: function (number) {
-                if (number === 0) {  // special case for zero
-                    return '\'ıncı';
-                }
-
-                var a = number % 10,
-                    b = number % 100 - a,
-                    c = number >= 100 ? 100 : null;
-
-              return suffixes[a] || suffixes[b] || suffixes[c];
-            },
-            currency: {
-                symbol: '\u20BA'
-            }
         };
 
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('tr', locale);
-    }
+    numeral.register('locale', 'tr', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'bin',
+            million: 'milyon',
+            billion: 'milyar',
+            trillion: 'trilyon'
+        },
+        ordinal: function (number) {
+            if (number === 0) {  // special case for zero
+                return '\'ıncı';
+            }
+
+            var a = number % 10,
+                b = number % 100 - a,
+                c = number >= 100 ? 100 : null;
+
+          return suffixes[a] || suffixes[b] || suffixes[c];
+        },
+        currency: {
+            symbol: '\u20BA'
+        }
+    });
 }());

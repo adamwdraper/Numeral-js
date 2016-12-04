@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'th', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -21,14 +23,5 @@
         currency: {
             symbol: '฿'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('th', locale);
-    }
+    });
 }());

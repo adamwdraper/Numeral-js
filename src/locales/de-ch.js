@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : German in Switzerland (de-ch)
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
- */ 
+ */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'de-ch', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -21,14 +23,5 @@
         currency: {
             symbol: 'CHF'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('de-ch', locale);
-    }
+    });
 }());

@@ -1,10 +1,12 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : Finnish
  * author : Sami Saada : https://github.com/samitheberber
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'fi', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -21,14 +23,5 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('fi', locale);
-    }
+    });
 }());

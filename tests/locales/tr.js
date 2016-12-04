@@ -8,8 +8,6 @@ if (typeof module !== 'undefined' && module.exports) {
 describe('Locale: tr', function() {
 
     before(function() {
-        numeral.locale('tr', locale);
-
         numeral.locale('tr');
     });
 

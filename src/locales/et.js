@@ -1,4 +1,4 @@
-/* 
+/*
  * numeral.js locale configuration
  * locale : Estonian
  * author : Illimar Tambek : https://github.com/ragulka
@@ -7,7 +7,9 @@
  * from numbers with a space
  */
 (function () {
-    var locale = {
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+
+    numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -24,14 +26,5 @@
         currency: {
             symbol: '€'
         }
-    };
-
-    // Node
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = locale;
-    }
-    // Browser
-    if (typeof window !== 'undefined' && this.numeral && this.numeral.locale) {
-        this.numeral.locale('et', locale);
-    }
+    });
 }());

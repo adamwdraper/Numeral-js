@@ -4,7 +4,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral,
+    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
         decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -13,15 +13,6 @@
             base: 1024,
             suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
-
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
-    }
 
     numeral.register('format', 'bytes', {
         regexps: {
