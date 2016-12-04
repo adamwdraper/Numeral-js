@@ -80,13 +80,13 @@
                 <option value="th">Thai</option>
                 <option value="tr">Turkish</option>
             </select>
-            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script>
+            <!-- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script> -->
         </div>
     </div>
     <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
         <div class="inner">
 
-            <h3>Use it</h3>
+            <h3><a name="use-it"></a>Use it</h3>
             <h4>In the Browser</h4>
 <pre>
 &lt;script src=&quot;numeral.min.js&quot;&gt;&lt;/script&gt;
@@ -103,7 +103,7 @@ npm install numeral
 var numeral = require('numeral');
 </pre>
 
-            <h3>Format</h3>
+            <h3><a name="format"></a>Format</h3>
             <p>
                 Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.
             </p>
@@ -217,7 +217,7 @@ var string = number.format('0,0');
 var value = number.value();
 // 1000
 </pre>
-            <h3>Set</h3>
+            <h3><a name="set"></a>Set</h3>
             <p>
                 Set the value of your numeral object.
             </p>
@@ -229,7 +229,7 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
-            <h3>Difference</h3>
+            <h3><a name="difference"></a>Difference</h3>
             <p>
                 Find the difference between your numeral object and a value
             </p>
@@ -240,7 +240,7 @@ var number = numeral(1000),
 var difference = number.difference(value);
 // 900
 </pre>
-            <h3>Default Formatting</h3>
+            <h3><a name="default-formatting"></a>Default Formatting</h3>
             <p>
                 Set a default format so you can use .format() without a string.  The default format to '0,0'
             </p>
@@ -255,7 +255,7 @@ numeral.defaultFormat('$0,0.00');
 number.format();
 // '$1,000.00'
 </pre>
-            <h3>Custom Zero and Null Formatting</h3>
+            <h3><a name="custom-zero"></a>Custom Zero and Null Formatting</h3>
             <p>
                 Set a custom output when formatting numerals with a value of 0 or null
             </p>
@@ -272,7 +272,7 @@ var zero = number.format('0.0')
 var na = nullNumber.format('0.0')
 // 'N/A'
 </pre>
-            <h3>Clone</h3>
+            <h3><a name="clone"></a>Clone</h3>
             <p>
                 Go ahead and clone any numeral object while you're at it.
             </p>
@@ -290,7 +290,7 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-            <h3>Locales</h3>
+            <h3><a name="locales"></a>Locales</h3>
             <p>
                 Let's make this useable all over the place!
             </p>
@@ -322,7 +322,7 @@ numeral.locale('fr');
                 As I am not fluent in every locale on the planet, please feel free to create locale files of your own by submitting a pull request.  Don't forget to create both the locale file (example: locales/fr.js) and the locale test (example: tests/locales/fr.js). Thanks for helping out.
             </p>
 
-            <h3>Custom Formats</h3>
+            <h3><a name="formats"></a>Custom Formats</h3>
             <p>
                 Adding your own custom formats is as easy as adding a locale.
             </p>
@@ -375,7 +375,7 @@ numeral().format('0%');
     <div class="footer l-thrd xl-thrd full">
         <div class="inner">
             <p>
-                This is a project by <a href="http://github.com/adamwdraper">adamwdraper</a>
+                This is a project by <a href="http://adamwdraper.com">adamwdraper</a>
             </p>
         </div>
     </div>

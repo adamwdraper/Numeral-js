@@ -21,7 +21,7 @@
 @import "icons";
 
 /*!
- * 
+ *
  *  Begin Project CSS
  *
  */
@@ -64,7 +64,18 @@ a {
 
 h3 {
     color: $grayDark;
-    font-size: 1.4em;
+    font-size: 1.75em;
+    margin: 2.5em 0 .5em;
+
+    &:before {
+        content: '# ';
+        color: $grayLighter;
+        font-weight: normal;
+    }
+
+    &:first-child {
+        margin-top: 1em;
+    }
 }
 
 h4 {
@@ -185,7 +196,7 @@ h4 {
     }
 
 }
- 
+
 // Portrait tablet
 @media (min-width: 768px) {
 
@@ -217,7 +228,7 @@ h4 {
     }
 
 }
- 
+
 // Landscape tablet or desktop
 @media (min-width: 981px) {
 
@@ -291,13 +302,13 @@ h4 {
         position: fixed;
         bottom: 0;
         padding-bottom: 1.5em;
-        
+
         .inner {
             padding: 0 0 0 2em;
         }
     }
 }
- 
+
 // Large desktop
 @media (min-width: 1210px) {
 
