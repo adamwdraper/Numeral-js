@@ -90,7 +90,7 @@ describe('Locale: pl', function() {
             ];
 
             for (var i = 0; i < tests.length; i++) {
-                expect(numeral().unformat(tests[i][0])).to.equal(tests[i][1]);
+                expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });
     });

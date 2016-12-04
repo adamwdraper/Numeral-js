@@ -220,7 +220,6 @@
                     trillion: 12
                 },
                 abbreviation,
-                power,
                 value,
                 i,
                 regexp;
@@ -237,11 +236,10 @@
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[0-9\\s]' + locale.abbreviations[abbreviation] + '$');
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
 
                     if (stringOriginal.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
-
                         break;
                     }
                 }
