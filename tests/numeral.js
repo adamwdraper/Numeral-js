@@ -209,7 +209,7 @@ describe('Numeral', function() {
                 ['(0.12345)', -0.12345],
                 ['((--0.12345))', 0.12345],
                 ['1.23t', 1230000000000],
-                ['N/A', null],
+                ['N/A', 0],
                 ['', null],
                 // Pass Through for Numbers
                 [0, 0],

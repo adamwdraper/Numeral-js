@@ -52,7 +52,6 @@
         } else if (input === null || _.isNaN(input)) {
             value = null;
         } else if (typeof input === 'string') {
-            console.log('string', input);
             value = numeral._.stringToNumber(input);
         } else {
             value = Number(input)|| null;
@@ -206,9 +205,9 @@
                 i,
                 regexp;
 
-            if (string === options.zeroFormat) {
+            if (options.zeroFormat && string === options.zeroFormat) {
                 value = 0;
-            } else if (string === options.nullFormat || !string.replace(/[^0-9]+/g, '')) {
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
                 value = null;
             } else {
                 value = 1;
@@ -236,7 +235,7 @@
                 value *= Number(string);
             }
 
-            // loop through formats for furthur 
+            // loop through formats for furthur
 
             return value;
         },
