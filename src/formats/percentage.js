@@ -16,7 +16,9 @@
     }
 
     numeral.register('format', 'percentage', {
-        regexp: /(%)/,
+        regexps: {
+            format: /(%)/
+        },
         format: function(value, format, roundingFunction) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;

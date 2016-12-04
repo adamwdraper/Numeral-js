@@ -49,9 +49,9 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 ### 2.0.0
 
-Breaking change: The unformat function has been removed `numeral().unformat(string)` and now happens on numeral init `numeral(string)`
+Breaking change: The `unformat` function has been removed `numeral().unformat(string)` and now happens on numeral init `numeral(string)`
 
-Breaking change: All formats are now separate files like locales.  The built numeral.js will contain them all, but this will also allow for custom builds that only include certain types of formats.
+Breaking change: All formats are now separate files.  The built numeral.js will contain them all, but this will also allow for custom builds that only include certain types of formats.
 
 Breaking change: All `language` now renamed to `locale` and standardized to all lowercase filenames
 

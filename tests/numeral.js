@@ -29,7 +29,6 @@ describe('Numeral', function() {
                 i;
 
             for (i = 0; i < tests.length; i++) {
-                console.log(tests[i][0]);
                 expect(typeof numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });

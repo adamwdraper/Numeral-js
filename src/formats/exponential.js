@@ -16,7 +16,9 @@
     }
 
     numeral.register('format', 'exponential', {
-        regexp: /(e\+|e-)/,
+        regexps: {
+            format: /(e\+|e-)/
+        },
         format: function(value, format, roundingFunction) {
             var output,
                 exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',

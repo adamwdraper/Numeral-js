@@ -24,7 +24,10 @@
     }
 
     numeral.register('format', 'bytes', {
-        regexp: /([0\s]i?b)/,
+        regexps: {
+            format: /([0\s]i?b)/,
+            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+        },
         format: function(value, format, roundingFunction) {
             var output,
                 bytes = numeral._.includes(format, 'ib') ? binary : decimal,
@@ -54,6 +57,31 @@
             output = numeral._.numberToFormat(value, format, roundingFunction);
 
             return output + suffix;
+        },
+        unformat: function(string) {
+            var value = numeral._.stringToNumber(string),
+                power,
+                bytesMultiplier;
+
+            if (value) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                    if (numeral._.includes(string, decimal.suffixes[power])) {
+                        bytesMultiplier = Math.pow(decimal.base, power);
+
+                        break;
+                    }
+
+                    if (numeral._.includes(string, binary.suffixes[power])) {
+                        bytesMultiplier = Math.pow(binary.base, power);
+
+                        break;
+                    }
+                }
+
+                value *= (bytesMultiplier || 1);
+            }
+
+            return value;
         }
     });
 }());

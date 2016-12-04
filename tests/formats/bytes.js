@@ -35,4 +35,29 @@ describe('Bytes', function() {
             expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
         }
     });
+
+    it('should unformat to number', function() {
+        var decimal = 1000;
+        var binary = 1024;
+        var tests = [
+                ['0B', 0],
+                ['0 B', 0],
+                ['100B', 100],
+                ['2 KiB', binary * 2],
+                ['5MiB', Math.pow(binary, 2) * 5],
+                ['7.3 GiB', Math.pow(binary, 3) * 7.3],
+                ['3.154TiB', Math.pow(binary, 4) * 3.154],
+                ['3PiB', Math.pow(binary, 5) * 3],
+                ['2 KB', decimal * 2],
+                ['5MB', Math.pow(decimal, 2) * 5],
+                ['7.3 GB', Math.pow(decimal, 3) * 7.3],
+                ['3.154TB', Math.pow(decimal, 4) * 3.154],
+                ['3PB', Math.pow(decimal, 5) * 3]
+            ],
+            i;
+
+        for (i = 0; i < tests.length; i++) {
+            expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+        }
+    });
 });

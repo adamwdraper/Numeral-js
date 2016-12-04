@@ -16,7 +16,9 @@
     }
 
     numeral.register('format', 'time', {
-        regexp: /(:)/,
+        regexps: {
+            format: /(:)/
+        },
         format: function(value, format, roundingFunction) {
             var hours = Math.floor(value / 60 / 60),
                 minutes = Math.floor((value - (hours * 60 * 60)) / 60),

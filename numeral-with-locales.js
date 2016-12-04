@@ -43,7 +43,9 @@
     }
 
     numeral = function(input) {
-        var value;
+        var value,
+            kind,
+            unformatFunction;
 
         if (numeral.isNumeral(input)) {
             value = input.value();
@@ -51,6 +53,24 @@
             value = 0;
         } else if (input === null || _.isNaN(input)) {
             value = null;
+        } else if (typeof input === 'string') {
+            if (options.zeroFormat && input === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                for (kind in formats) {
+                    if (input.match(formats[kind].regexps.unformat)) {
+                        unformatFunction = formats[kind].unformat;
+
+                        break;
+                    }
+                }
+
+                unformatFunction = unformatFunction || numeral._.stringToNumber;
+
+                value = unformatFunction(input);
+            }
         } else {
             value = Number(input)|| null;
         }
@@ -68,8 +88,9 @@
 
     // helper functions
     numeral._ = _ = {
-        formatNumber: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
+        // formats numbers separators, decimals places, signs, abbreviations
+        numberToFormat: function(value, format, roundingFunction) {
+            var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 signed = false,
                 optDec = false,
@@ -185,6 +206,54 @@
             }
 
             return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
+        },
+        // unformats numbers separators, decimals places, signs, abbreviations
+        stringToNumber: function(string) {
+            var locale = locales[options.currentLocale],
+                stringOriginal = string,
+                abbreviations = {
+                    thousand: 3,
+                    million: 6,
+                    billion: 9,
+                    trillion: 12
+                },
+                abbreviation,
+                power,
+                value,
+                i,
+                regexp;
+
+            if (options.zeroFormat && string === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                value = 1;
+
+                if (locale.delimiters.decimal !== '.') {
+                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                }
+
+                for (abbreviation in abbreviations) {
+                    regexp = new RegExp(locale.abbreviations[abbreviation] + '$');
+
+                    if (stringOriginal.match(regexp)) {
+                        value *= Math.pow(10, abbreviations[abbreviation]);
+
+                        break;
+                    }
+                }
+
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                // remove non numbers
+                string = string.replace(/[^0-9\.]+/g, '');
+
+                value *= Number(string);
+            }
+
+            return value;
         },
         loadLocale: function (key, values) {
             locales[key] = values;
@@ -393,7 +462,7 @@
                 output = options.nullFormat;
             } else {
                 for (kind in formats) {
-                    if (formats[kind].regexp && format.match(formats[kind].regexp)) {
+                    if (format.match(formats[kind].regexps.format)) {
                         formatFunction = formats[kind].format;
 
                         break;
@@ -541,7 +610,10 @@
     }
 
     numeral.register('format', 'bytes', {
-        regexp: /([0\s]i?b)/,
+        regexps: {
+            format: /([0\s]i?b)/,
+            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+        },
         format: function(value, format, roundingFunction) {
             var output,
                 bytes = numeral._.includes(format, 'ib') ? binary : decimal,
@@ -571,6 +643,37 @@
             output = numeral._.numberToFormat(value, format, roundingFunction);
 
             return output + suffix;
+        },
+        unformat: function(string) {
+            var value = numeral._.stringToNumber(string),
+                power,
+                bytesMultiplier;
+
+            console.log('unformating', new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')'));
+
+            if (value) {
+                for (power = 0; power <= decimal.suffixes.length; power++) {
+                    if (numeral._.includes(string, decimal.suffixes[power])) {
+                        bytesMultiplier = Math.pow(decimal.base, power);
+
+                        console.log('jflsekjf');
+
+                        break;
+                    }
+
+                    if (numeral._.includes(string, binary.suffixes[power])) {
+                        bytesMultiplier = Math.pow(binary.base, power);
+                        console.log('gergsegserse');
+
+                        break;
+                    }
+                }
+
+                value *= (bytesMultiplier || 1);
+            }
+            console.log(string, value, bytesMultiplier);
+
+            return value;
         }
     });
 }());
@@ -593,7 +696,9 @@
     }
 
     numeral.register('format', 'currency', {
-        regexp: /(\$)/,
+        regexps: {
+            format: /(\$)/
+        },
         format: function(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 symbolIndex = format.indexOf('$'),
@@ -657,7 +762,9 @@
     }
 
     numeral.register('format', 'exponential', {
-        regexp: /(e\+|e-)/,
+        regexps: {
+            format: /(e\+|e-)/
+        },
         format: function(value, format, roundingFunction) {
             var output,
                 exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
@@ -690,7 +797,9 @@
     }
 
     numeral.register('format', 'ordinal', {
-        regexp: /(o)/,
+        regexps: {
+            format: /(o)/
+        },
         format: function(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 output,
@@ -726,7 +835,9 @@
     }
 
     numeral.register('format', 'percentage', {
-        regexp: /(%)/,
+        regexps: {
+            format: /(%)/
+        },
         format: function(value, format, roundingFunction) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
@@ -771,7 +882,9 @@
     }
 
     numeral.register('format', 'time', {
-        regexp: /(:)/,
+        regexps: {
+            format: /(:)/
+        },
         format: function(value, format, roundingFunction) {
             var hours = Math.floor(value / 60 / 60),
                 minutes = Math.floor((value - (hours * 60 * 60)) / 60),

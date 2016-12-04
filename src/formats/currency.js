@@ -16,7 +16,9 @@
     }
 
     numeral.register('format', 'currency', {
-        regexp: /(\$)/,
+        regexps: {
+            format: /(\$)/
+        },
         format: function(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 symbolIndex = format.indexOf('$'),

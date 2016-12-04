@@ -43,7 +43,9 @@
     }
 
     numeral = function(input) {
-        var value;
+        var value,
+            kind,
+            unformatFunction;
 
         if (numeral.isNumeral(input)) {
             value = input.value();
@@ -52,7 +54,23 @@
         } else if (input === null || _.isNaN(input)) {
             value = null;
         } else if (typeof input === 'string') {
-            value = numeral._.stringToNumber(input);
+            if (options.zeroFormat && input === options.zeroFormat) {
+                value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, '').length) {
+                value = null;
+            } else {
+                for (kind in formats) {
+                    if (input.match(formats[kind].regexps.unformat)) {
+                        unformatFunction = formats[kind].unformat;
+
+                        break;
+                    }
+                }
+
+                unformatFunction = unformatFunction || numeral._.stringToNumber;
+
+                value = unformatFunction(input);
+            }
         } else {
             value = Number(input)|| null;
         }
@@ -234,8 +252,6 @@
 
                 value *= Number(string);
             }
-
-            // loop through formats for furthur
 
             return value;
         },
@@ -446,7 +462,7 @@
                 output = options.nullFormat;
             } else {
                 for (kind in formats) {
-                    if (formats[kind].regexp && format.match(formats[kind].regexp)) {
+                    if (format.match(formats[kind].regexps.format)) {
                         formatFunction = formats[kind].format;
 
                         break;
