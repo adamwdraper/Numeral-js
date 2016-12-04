@@ -1,15 +1,13 @@
 // Node
 if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../numeral');
+    var numeral = require('../../src/numeral');
     var expect = require('chai').expect;
-    var locale = require('../../locales/sk');
+    var locale = require('../../src/locales/sk');
 }
 
 describe('Locale: sk', function() {
 
     before(function() {
-        numeral.locale('sk', locale);
-
         numeral.locale('sk');
     });
 
@@ -89,7 +87,7 @@ describe('Locale: sk', function() {
             ];
 
             for (var i = 0; i < tests.length; i++) {
-                expect(numeral().unformat(tests[i][0])).to.equal(tests[i][1]);
+                expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
             }
         });
     });
