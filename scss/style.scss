@@ -36,7 +36,6 @@ a {
         text-decoration: none;
     }
 
-    &:active,
     &:visited {
         color: $link;
     }
@@ -46,7 +45,6 @@ h1 {
     display: block;
     color: white;
     font-size: 2.7em;
-    margin: 0;
 
     .version {
         color: $grayLighter;
@@ -79,7 +77,7 @@ h4 {
 
 .hero {
     padding: 2em 1em;
-    background-color: $green;
+    background: radial-gradient(ellipse 75em 55em at top, #ff6a00, #ee0979);
 
     .inner {
         max-width: $innerWidth;
@@ -99,15 +97,27 @@ h4 {
     }
 
     .github-links {
-        margin: 1em 0 0;
+        margin: 2em 0 0;
+    }
+}
+
+.nav {
+    padding: 1em 0 0;
+    background-color: $grayLightest;
+
+    .inner {
+        max-width: $innerWidth;
+        margin: auto;
     }
 
     #carbonads {
-        margin-top: 1em;
+        margin: auto;
+        max-width: 22em;
 
         .carbon-wrap {
             @include clearfix;
             display: block;
+            background-color: white;
             padding: .5em;
             border: $tableBorder;
             border-radius: $tableBorderRadius;
@@ -162,20 +172,17 @@ h4 {
         max-width: $innerWidth;
         margin: auto;
     }
+
+    p {
+        color: $gray;
+    }
 }
 
 // Media Queries ------------------------------
-// Smartphones
-@media (max-width: 480px) {
-
-}
-
-// Smartphone and Tablet Devices
-@media (max-width: 767px) {
-}
-
-// Portrait tablet
 @media (min-width: 768px) {
+    .hero {
+        padding: 3em 1em;
+    }
 }
 
 // Landscape tablet or desktop

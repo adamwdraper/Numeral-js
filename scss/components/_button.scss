@@ -22,9 +22,12 @@
 
 a {
 
-    &.button,
-    &:visited {
-        color: $grayDark;
+    &.button {
+
+        &:active,
+        &:visited {
+            color: $grayDark;
+        }
     }
 }
 
