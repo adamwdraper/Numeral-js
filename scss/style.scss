@@ -1,104 +1,162 @@
-// This is a convenient boilerplate less file for starting a project with ResponCSS
+@import "libraries/normalize";
 
-@import "theme";
+@import "utilities/variables";
+@import "utilities/mixins";
+@import "utilities/functions";
+@import "components/button";
+@import "components/icons";
+@import "components/code";
+@import "components/table";
+
 
 // Style Defaults ------------------------------
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
-
+    background: $bodyBackground;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: $textColor;
+    font-size: $baseFontSize;
+    line-height: $baseLineHeight;
 }
 
-.header-bar {
+a {
+    color: $link;
+    text-decoration: none;
+    @include transition(color .3s ease);
 
-}
+    &:hover {
+        color: $linkHover;
+        text-decoration: none;
+    }
 
-table {
-
-    td, th {
-        width: 33%;
-        text-align: center;
+    &:active,
+    &:visited {
+        color: $link;
     }
 }
 
-.sidebar {
+h1 {
+    display: block;
+    color: $green;
+    font-size: 2.7em;
+    margin: 0;
+
+    .version {
+        color: $grayLight;
+        font-weight: 300;
+        font-size: .6em;
+    }
+}
+
+h3 {
+    color: $grayDark;
+    font-size: 1.75em;
+    margin: 1.75em 0 .5em;
+
+    &:before {
+        content: '# ';
+        color: $grayLighter;
+        font-weight: normal;
+    }
+
+    &:first-child {
+        margin-top: 1em;
+    }
+}
+
+h4 {
+    color: $gray;
+    font-size: 1.2em;
+    margin-bottom: .4em;
+}
+
+.hero {
+    padding: 2em 1em 0;
 
     .inner {
+
     }
 
     h1 {
+        margin-bottom: .5em;
     }
 
     .tagline {
+        display: block;
+        line-height: 1.5em;
+        color: $grayDark;
+        font-size: 1.3em;
+        margin: 0;
     }
 
     .github-links {
+        margin: .5em 0;
     }
 
-    .nav {
-    }
+    #carbonads {
+        margin-top: 1em;
 
-    label {
-        color: $gray;
-        margin-right: .5em;
-    }
-
-    select {
-        margin: 1.2em 0;
-    }
-
-    .button {
-
-        &:hover, &:active, &:visited, &.active {
-        }
-
-    }
-
-    .download {
-    }
-
-}
-
-#carbonads {
-    margin-top: 1em;
-
-    .carbon-wrap {
-        @include clearfix;
-        display: block;
-        padding: .5em;
-        border: $tableBorder;
-        border-radius: $tableBorderRadius;
-    }
-
-    .carbon-img {
-        display: block;
-        float: left;
-        margin-right: .5em;
-
-        img {
+        .carbon-wrap {
+            @include clearfix;
             display: block;
+            padding: .5em;
+            border: $tableBorder;
+            border-radius: $tableBorderRadius;
         }
-    }
 
-    .carbon-poweredby {
-        display: block;
-        text-align: right;
-        font-size: .8em;
-        color: $textColor;
+        .carbon-img {
+            display: block;
+            float: left;
+            margin-right: .5em;
 
-        &:hover {
-            color: $link;
+            img {
+                display: block;
+            }
+        }
+
+        .carbon-poweredby {
+            display: block;
+            text-align: right;
+            font-size: .8em;
+            color: $textColor;
+
+            &:hover {
+                color: $link;
+            }
         }
     }
 }
 
 .content {
+    padding: 1em;
 
     .inner {
+
+    }
+
+    table {
+        max-width: 100%;
+        width: 100%;
+
+        th,
+        td {
+            min-width: 33%;
+        }
     }
 }
 
 .footer {
+    padding: 1em;
 
     .inner {
+
     }
 }
 
@@ -110,105 +168,17 @@ table {
 
 // Smartphone and Tablet Devices
 @media (max-width: 767px) {
-
-    .sidebar {
-
-        .button {
-
-            &:hover, &.active {
-            }
-        }
-    }
-
 }
 
 // Portrait tablet
 @media (min-width: 768px) {
-
-    .sidebar {
-
-        .button {
-
-            &:hover, &.active {
-            }
-        }
-
-        .download {
-        }
-    }
-
 }
 
 // Landscape tablet or desktop
 @media (min-width: 981px) {
 
-    a {
-
-        &:hover {
-        }
-    }
-
-    .sidebar {
-
-        .inner {
-        }
-
-        h1 {
-        }
-
-        .tagline {
-        }
-
-        .github-links {
-        }
-
-        .nav {
-        }
-
-        .button {
-
-            &:hover, &.active {
-            }
-        }
-    }
-
-    .content {
-
-        .inner {
-        }
-    }
-
-    .footer {
-
-        .inner {
-        }
-    }
 }
 
 // Large desktop
 @media (min-width: 1210px) {
-
-    .sidebar {
-
-        .inner {
-        }
-
-        .button {
-
-            &:hover, &.active {
-            }
-        }
-    }
-
-    .content {
-
-        .inner {
-        }
-    }
-
-    .footer {
-
-        .inner {
-        }
-    }
 }

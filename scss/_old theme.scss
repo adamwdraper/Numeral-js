@@ -5,20 +5,17 @@
 // styles bootstrap
 @import "styles/bootstrap";
 
-// styles responcss
-@import "responcss/responcss";
-
 // import project override variables
-@import "variables";
+@import "utilities/variables";
+@import "utilities/utilities";
+@import "utilities/mixins";
+@import "utilities/functions";
 
 // // import any styles components
 @import "styles/components/button";
-@import "styles/components/icon";
+@import "styles/components/icons";
 @import "styles/components/code";
 @import "styles/components/table";
-
-// import any project specific files
-@import "icons";
 
 /*!
  *

@@ -16,6 +16,7 @@
 
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,900" rel="stylesheet">
     <link rel="stylesheet" href="css/build/style.css">
 
     <script type="text/javascript">
@@ -36,23 +37,21 @@
 </head>
 <body class="cf">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-    <div class="header-bar full"></div>
-    <div class="sidebar thrd m-full s-full">
+    <div class="hero">
         <div class="inner">
             <h1 class="logo">
-                Numeral.js
+                Numeral.js <span class="version" id="version"></span>
             </h1>
             <p class="tagline">
                 A javascript library for formatting and manipulating numbers.
             </p>
-            <p id="version"></p>
-            <div id="nav" class="nav"></div>
-            <div class="github-links">
-                <a class="button flat" href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="icon-github"></i> GitHub</a>
-                <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="icon-download"></i> .ZIP</a>
-                <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="icon-download"></i> .TGZ</a>
+
+            <div class="github-links group">
+                <a class="button" href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="icon-github"></i> GitHub</a>
+                <a class="button" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="icon-download"></i> .ZIP</a>
+                <a class="button" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="icon-download"></i> .TGZ</a>
             </div>
-            <label for="locale-select">Locale</label>
+            <!-- <label for="locale-select">Locale</label>
             <select id="locale-select" name="locale-select">
                 <option value="be-nl">Dutch (Belgium)</option>
                 <option value="chs">Chinese</option>
@@ -79,13 +78,12 @@
                 <option value="sk">Slovak</option>
                 <option value="th">Thai</option>
                 <option value="tr">Turkish</option>
-            </select>
+            </select> -->
             <!-- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script> -->
         </div>
     </div>
-    <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
+    <div class="content">
         <div class="inner">
-
             <h3><a name="use-it"></a>Use it</h3>
             <h4>In the Browser</h4>
 <pre>
@@ -103,9 +101,29 @@ npm install numeral
 var numeral = require('numeral');
 </pre>
 
+            <h3><a name="create"></a>Create</h3>
+            <p>
+                Create an instance of a numeral. Numeral takes numbers or strings that it trys to convert into a number.
+            </p>
+<pre>
+var myNumeral = numeral(1000);
+
+var value = numeral.value();
+// 1000
+</pre>
+<table id="create" class="table striped bordered">
+    <thead>
+        <tr>
+            <th>Input</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
             <h3><a name="format"></a>Format</h3>
             <p>
-                Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.
+                Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations. And you can always <a href="#formats">create a custom format</a>.
             </p>
 <pre>
 var string = numeral(1000).format('0,0');
@@ -166,25 +184,33 @@ var string = numeral(1000).format('0,0');
                 </thead>
                 <tbody></tbody>
             </table>
-            <h3>Unformat</h3>
-            <p>
-                Got a formatted string?  Numeral will attempt to unformat it to make it useful again.
-            </p>
-<pre>
-var string = numeral('($10,000.00)').value();
-// -10000
-</pre>
-            <table id="unformat-all" class="table striped bordered">
+            <h4>Exponential</h4>
+            <table id="format-exponential" class="table striped bordered">
                 <thead>
                     <tr>
-                        <th>String</th>
-                        <th>Function</th>
                         <th>Number</th>
+                        <th>Format</th>
+                        <th>String</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-            <h3>Manipulate</h3>
+
+            <h3>Functions</h3>
+            <h4>Value</h4>
+            <p>
+                The value is always available.
+            </p>
+<pre>
+var number = numeral(1000);
+
+var string = number.format('0,0');
+// '1,000'
+
+var value = number.value();
+// 1000
+</pre>
+            <h4>Manipulate</h4>
             <p>
                 Not that you will use these often, but they're there when you need them.
             </p>
@@ -204,20 +230,7 @@ var added = number.add(10);
                 </thead>
                 <tbody></tbody>
             </table>
-            <h3>Value</h3>
-            <p>
-                The value is always available.
-            </p>
-<pre>
-var number = numeral(1000);
-
-var string = number.format('0,0');
-// '1,000'
-
-var value = number.value();
-// 1000
-</pre>
-            <h3><a name="set"></a>Set</h3>
+            <h4>Set</h4>
             <p>
                 Set the value of your numeral object.
             </p>
@@ -229,7 +242,7 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
-            <h3><a name="difference"></a>Difference</h3>
+            <h4>Difference</h4>
             <p>
                 Find the difference between your numeral object and a value
             </p>
@@ -240,39 +253,7 @@ var number = numeral(1000),
 var difference = number.difference(value);
 // 900
 </pre>
-            <h3><a name="default-formatting"></a>Default Formatting</h3>
-            <p>
-                Set a default format so you can use .format() without a string.  The default format to '0,0'
-            </p>
-<pre>
-var number = numeral(1000);
-
-number.format();
-// '1,000'
-
-numeral.defaultFormat('$0,0.00');
-
-number.format();
-// '$1,000.00'
-</pre>
-            <h3><a name="custom-zero"></a>Custom Zero and Null Formatting</h3>
-            <p>
-                Set a custom output when formatting numerals with a value of 0 or null
-            </p>
-<pre>
-var number = numeral(0);
-var nullNumber = numeral(null);
-
-numeral.zeroFormat('N/A');
-numeral.nullFormat('N/A');
-
-var zero = number.format('0.0')
-// 'N/A'
-
-var na = nullNumber.format('0.0')
-// 'N/A'
-</pre>
-            <h3><a name="clone"></a>Clone</h3>
+            <h4>Clone</h4>
             <p>
                 Go ahead and clone any numeral object while you're at it.
             </p>
@@ -289,6 +270,39 @@ var bVal = b.value();
 
 var cVal = c.add(10).value();
 // 1010
+</pre>
+            <h3><a name="settings"></a>Settings</h3>
+            <h4>Default Formatting</h4>
+            <p>
+                Set a default format so you can use .format() without a string.  The default format to '0,0'
+            </p>
+<pre>
+var number = numeral(1000);
+
+number.format();
+// '1,000'
+
+numeral.defaultFormat('$0,0.00');
+
+number.format();
+// '$1,000.00'
+</pre>
+            <h4>Custom Zero and Null Formatting</h4>
+            <p>
+                Set a custom output when formatting numerals with a value of 0 or null
+            </p>
+<pre>
+var number = numeral(0);
+var nullNumber = numeral(null);
+
+numeral.zeroFormat('N/A');
+numeral.nullFormat('N/A');
+
+var zero = number.format('0.0')
+// 'N/A'
+
+var na = nullNumber.format('0.0')
+// 'N/A'
 </pre>
             <h3><a name="locales"></a>Locales</h3>
             <p>
@@ -372,10 +386,10 @@ numeral().format('0%');
         </div>
     </div>
 
-    <div class="footer l-thrd xl-thrd full">
+    <div class="footer">
         <div class="inner">
             <p>
-                This is a project by <a href="http://adamwdraper.com">adamwdraper</a>
+                Project by <a href="http://adamwdraper.com">adamwdraper</a>
             </p>
         </div>
     </div>
