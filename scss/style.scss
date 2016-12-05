@@ -44,12 +44,12 @@ a {
 
 h1 {
     display: block;
-    color: $green;
+    color: white;
     font-size: 2.7em;
     margin: 0;
 
     .version {
-        color: $grayLight;
+        color: $grayLighter;
         font-weight: 300;
         font-size: .6em;
     }
@@ -78,10 +78,12 @@ h4 {
 }
 
 .hero {
-    padding: 2em 1em 0;
+    padding: 2em 1em;
+    background-color: $green;
 
     .inner {
-
+        max-width: $innerWidth;
+        margin: auto;
     }
 
     h1 {
@@ -91,13 +93,13 @@ h4 {
     .tagline {
         display: block;
         line-height: 1.5em;
-        color: $grayDark;
+        color: $grayLightest;
         font-size: 1.3em;
         margin: 0;
     }
 
     .github-links {
-        margin: .5em 0;
+        margin: 1em 0 0;
     }
 
     #carbonads {
@@ -138,7 +140,8 @@ h4 {
     padding: 1em;
 
     .inner {
-
+        max-width: $innerWidth;
+        margin: auto;
     }
 
     table {
@@ -147,7 +150,7 @@ h4 {
 
         th,
         td {
-            min-width: 33%;
+            width: 33%;
         }
     }
 }
@@ -156,7 +159,8 @@ h4 {
     padding: 1em;
 
     .inner {
-
+        max-width: $innerWidth;
+        margin: auto;
     }
 }
 
