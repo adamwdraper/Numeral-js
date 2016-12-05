@@ -76,12 +76,13 @@ h4 {
 }
 
 .hero {
-    padding: 2em 1em;
+    padding-top: 3em;
     background: radial-gradient(ellipse 75em 55em at top, #ff6a00, #ee0979);
 
     .inner {
         max-width: $innerWidth;
         margin: auto;
+        padding: 0 1em 2em;
     }
 
     h1 {
@@ -99,48 +100,49 @@ h4 {
     .github-links {
         margin: 2em 0 0;
     }
-}
 
-.nav {
-    padding: 1em 0 0;
-    background-color: $grayLightest;
+    .ad {
+        padding: 1em 1em 0;
+        background: $grayLightest;
 
-    .inner {
-        max-width: $innerWidth;
-        margin: auto;
-    }
+        .inner {
 
-    #carbonads {
-        margin: auto;
-        max-width: 22em;
-
-        .carbon-wrap {
-            @include clearfix;
-            display: block;
-            background-color: white;
-            padding: .5em;
-            border: $tableBorder;
-            border-radius: $tableBorderRadius;
+            max-width: $innerWidth;
+            margin: auto;
         }
 
-        .carbon-img {
-            display: block;
-            float: left;
-            margin-right: .5em;
+        #carbonads {
+            margin: auto;
+            max-width: 22em;
 
-            img {
+            .carbon-wrap {
+                @include clearfix;
                 display: block;
+                background-color: white;
+                padding: .5em;
+                border: $tableBorder;
+                border-radius: $tableBorderRadius;
             }
-        }
 
-        .carbon-poweredby {
-            display: block;
-            text-align: right;
-            font-size: .8em;
-            color: $textColor;
+            .carbon-img {
+                display: block;
+                float: left;
+                margin-right: .5em;
 
-            &:hover {
-                color: $link;
+                img {
+                    display: block;
+                }
+            }
+
+            .carbon-poweredby {
+                display: block;
+                text-align: right;
+                font-size: .8em;
+                color: $grayLight;
+
+                &:hover {
+                    color: $link;
+                }
             }
         }
     }
@@ -152,6 +154,10 @@ h4 {
     .inner {
         max-width: $innerWidth;
         margin: auto;
+    }
+
+    .nav {
+        display: none;
     }
 
     table {
@@ -180,14 +186,37 @@ h4 {
 
 // Media Queries ------------------------------
 @media (min-width: 768px) {
-    .hero {
-        padding: 3em 1em;
-    }
 }
 
 // Landscape tablet or desktop
 @media (min-width: 981px) {
+    .hero {
 
+        .inner {
+            max-width: 65em;
+        }
+
+        .ad {
+        }
+    }
+
+    .content {
+
+        .inner {
+            max-width: 65em;
+            display: table;
+        }
+
+        .nav {
+            display: table-cell;
+            width: 13em;
+            padding: 0 2em 0 0;
+        }
+
+        .main {
+            display: table-cell;
+        }
+    }
 }
 
 // Large desktop

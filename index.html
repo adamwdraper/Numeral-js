@@ -80,16 +80,15 @@
                 <option value="tr">Turkish</option>
             </select> -->
         </div>
-    </div>
-    <div class="nav">
-        <div class="inner">
-            <!-- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script> -->
+        <div class="ad">
+            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script>
         </div>
     </div>
     <div class="content">
         <div class="inner">
-            <h3><a name="use-it"></a>Use it</h3>
-            <h4>In the Browser</h4>
+            <div class="main">
+                <h3><a name="use-it"></a>Use it</h3>
+                <h4>In the Browser</h4>
 <pre>
 &lt;script src=&quot;numeral.min.js&quot;&gt;&lt;/script&gt;
 </pre>
@@ -105,106 +104,106 @@ npm install numeral
 var numeral = require('numeral');
 </pre>
 
-            <h3><a name="create"></a>Create</h3>
-            <p>
-                Create an instance of a numeral. Numeral takes numbers or strings that it trys to convert into a number.
-            </p>
+                <h3><a name="create"></a>Create</h3>
+                <p>
+                    Create an instance of a numeral. Numeral takes numbers or strings that it trys to convert into a number.
+                </p>
 <pre>
 var myNumeral = numeral(1000);
 
 var value = numeral.value();
 // 1000
 </pre>
-<table id="create" class="table striped bordered">
-    <thead>
-        <tr>
-            <th>Input</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+                <table id="create" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Input</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
 
-            <h3><a name="format"></a>Format</h3>
-            <p>
-                Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations. And you can always <a href="#formats">create a custom format</a>.
-            </p>
+                <h3><a name="format"></a>Format</h3>
+                <p>
+                    Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations. And you can always <a href="#formats">create a custom format</a>.
+                </p>
 <pre>
 var string = numeral(1000).format('0,0');
 // '1,000'
 </pre>
-            <h4>Numbers</h4>
-            <table id="format-numbers" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Currency</h4>
-            <table id="format-currency" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Bytes</h4>
-            <table id="format-bytes" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Percentages</h4>
-            <table id="format-percentage" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Time</h4>
-            <table id="format-time" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Exponential</h4>
-            <table id="format-exponential" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+                <h4>Numbers</h4>
+                <table id="format-numbers" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Currency</h4>
+                <table id="format-currency" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Bytes</h4>
+                <table id="format-bytes" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Percentages</h4>
+                <table id="format-percentage" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Time</h4>
+                <table id="format-time" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Exponential</h4>
+                <table id="format-exponential" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
 
-            <h3>Functions</h3>
-            <h4>Value</h4>
-            <p>
-                The value is always available.
-            </p>
+                <h3>Functions</h3>
+                <h4>Value</h4>
+                <p>
+                    The value is always available.
+                </p>
 <pre>
 var number = numeral(1000);
 
@@ -214,30 +213,30 @@ var string = number.format('0,0');
 var value = number.value();
 // 1000
 </pre>
-            <h4>Manipulate</h4>
-            <p>
-                Not that you will use these often, but they're there when you need them.
-            </p>
+                <h4>Manipulate</h4>
+                <p>
+                    Not that you will use these often, but they're there when you need them.
+                </p>
 <pre>
 var number = numeral(1000);
 
 var added = number.add(10);
 // 1010
 </pre>
-            <table id="manipulate" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Before</th>
-                        <th>Function</th>
-                        <th>After</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Set</h4>
-            <p>
-                Set the value of your numeral object.
-            </p>
+                <table id="manipulate" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Before</th>
+                            <th>Function</th>
+                            <th>After</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Set</h4>
+                <p>
+                    Set the value of your numeral object.
+                </p>
 <pre>
 var number = numeral();
 
@@ -246,10 +245,10 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
-            <h4>Difference</h4>
-            <p>
-                Find the difference between your numeral object and a value
-            </p>
+                <h4>Difference</h4>
+                <p>
+                    Find the difference between your numeral object and a value
+                </p>
 <pre>
 var number = numeral(1000),
     value = 100;
@@ -257,10 +256,10 @@ var number = numeral(1000),
 var difference = number.difference(value);
 // 900
 </pre>
-            <h4>Clone</h4>
-            <p>
-                Go ahead and clone any numeral object while you're at it.
-            </p>
+                <h4>Clone</h4>
+                <p>
+                    Go ahead and clone any numeral object while you're at it.
+                </p>
 <pre>
 var a = numeral(1000);
 var b = numeral(a);
@@ -275,11 +274,11 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-            <h3><a name="settings"></a>Settings</h3>
-            <h4>Default Formatting</h4>
-            <p>
-                Set a default format so you can use .format() without a string.  The default format to '0,0'
-            </p>
+                <h3><a name="settings"></a>Settings</h3>
+                <h4>Default Formatting</h4>
+                <p>
+                    Set a default format so you can use .format() without a string.  The default format to '0,0'
+                </p>
 <pre>
 var number = numeral(1000);
 
@@ -291,10 +290,10 @@ numeral.defaultFormat('$0,0.00');
 number.format();
 // '$1,000.00'
 </pre>
-            <h4>Custom Zero and Null Formatting</h4>
-            <p>
-                Set a custom output when formatting numerals with a value of 0 or null
-            </p>
+                <h4>Custom Zero and Null Formatting</h4>
+                <p>
+                    Set a custom output when formatting numerals with a value of 0 or null
+                </p>
 <pre>
 var number = numeral(0);
 var nullNumber = numeral(null);
@@ -308,10 +307,10 @@ var zero = number.format('0.0')
 var na = nullNumber.format('0.0')
 // 'N/A'
 </pre>
-            <h3><a name="locales"></a>Locales</h3>
-            <p>
-                Let's make this useable all over the place!
-            </p>
+                <h3><a name="locales"></a>Locales</h3>
+                <p>
+                    Let's make this useable all over the place!
+                </p>
 <pre>
 // load a locale
 numeral.register('locale', 'fr', {
@@ -336,14 +335,14 @@ numeral.register('locale', 'fr', {
 // switch between locales
 numeral.locale('fr');
 </pre>
-            <p>
-                As I am not fluent in every locale on the planet, please feel free to create locale files of your own by submitting a pull request.  Don't forget to create both the locale file (example: locales/fr.js) and the locale test (example: tests/locales/fr.js). Thanks for helping out.
-            </p>
+                <p>
+                    As I am not fluent in every locale on the planet, please feel free to create locale files of your own by submitting a pull request.  Don't forget to create both the locale file (example: locales/fr.js) and the locale test (example: tests/locales/fr.js). Thanks for helping out.
+                </p>
 
-            <h3><a name="formats"></a>Formats</h3>
-            <p>
-                Adding your own custom formats is as easy as adding a locale.
-            </p>
+                <h3><a name="formats"></a>Formats</h3>
+                <p>
+                    Adding your own custom formats is as easy as adding a locale.
+                </p>
 <pre>
 // load a format
 numeral.register('format', 'percentage', {
@@ -382,11 +381,25 @@ numeral.register('format', 'percentage', {
 // use your custom format
 numeral().format('0%');
 </pre>
-            <h3>Acknowlegements</h3>
-            <p>
-                Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
-            </p>
+                <h3>Acknowlegements</h3>
+                <p>
+                    Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
+                </p>
 
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="#">Format</a>
+                    </li>
+                    <li>
+                        <a href="#">Format</a>
+                    </li>
+                    <li>
+                        <a href="#">Format</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
