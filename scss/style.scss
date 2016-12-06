@@ -80,6 +80,9 @@ h4 {
     background: radial-gradient(ellipse 75em 55em at top, #ff6a00, #ee0979);
 
     .inner {
+    }
+
+    .header {
         max-width: $innerWidth;
         margin: auto;
         padding: 0 1em 2em;
@@ -113,7 +116,7 @@ h4 {
 
         #carbonads {
             margin: auto;
-            max-width: 22em;
+            max-width: 20em;
 
             .carbon-wrap {
                 @include clearfix;
