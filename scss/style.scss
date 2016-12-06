@@ -106,7 +106,7 @@ h4 {
 
     .ad {
         padding: 1em 1em 0;
-        background: $grayLightest;
+        background: rgba(255, 255, 255, 0.9);
 
         .inner {
 
@@ -196,24 +196,58 @@ h4 {
     .hero {
 
         .inner {
-            max-width: 65em;
+            @include clearfix();
+            max-width: 60em;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 3.5em;
+        }
+
+        .header {
+            float: left;
+            padding-left: 0;
         }
 
         .ad {
+            background: none;
+            float: right;
+            padding-right: 0;
         }
     }
 
     .content {
 
         .inner {
-            max-width: 65em;
+            max-width: 60em;
             display: table;
         }
 
         .nav {
             display: table-cell;
-            width: 13em;
-            padding: 0 2em 0 0;
+            width: 8em;
+            padding-left: 3em;
+            font-size: 1.2em;
+
+            &.sticky {
+
+                ul {
+                    position: fixed;
+                    top: 1em;
+                }
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+            }
+
+            li {
+                margin: .35em 0;
+            }
         }
 
         .main {

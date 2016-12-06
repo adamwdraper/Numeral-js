@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             build: {
                 files: {
                     'js/min/site.min.js': [
-                        'js/respond.js',
+                        'js/sticky-spy.js',
                         'js/numeral-with-locales.js',
                         'js/site.js'
                     ]

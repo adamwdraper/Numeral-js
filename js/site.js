@@ -6,6 +6,8 @@ $(function() {
     addVersion();
 
     updateFormats();
+
+    $('#nav').stickySpy();
 });
 
 function addVersion () {

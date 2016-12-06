@@ -82,7 +82,7 @@
                 </select> -->
             </div>
             <div class="ad">
-                <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script>
+                <!-- <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script> -->
             </div>
         </div>
     </div>
@@ -201,7 +201,7 @@ var string = numeral(1000).format('0,0');
                     <tbody></tbody>
                 </table>
 
-                <h3>Functions</h3>
+                <h3><a name="functions"></a>Functions</h3>
                 <h4>Value</h4>
                 <p>
                     The value is always available.
@@ -341,7 +341,7 @@ numeral.locale('fr');
                     As I am not fluent in every locale on the planet, please feel free to create locale files of your own by submitting a pull request.  Don't forget to create both the locale file (example: locales/fr.js) and the locale test (example: tests/locales/fr.js). Thanks for helping out.
                 </p>
 
-                <h3><a name="formats"></a>Formats</h3>
+                <h3><a name="custom-formats"></a>Formats</h3>
                 <p>
                     Adding your own custom formats is as easy as adding a locale.
                 </p>
@@ -389,16 +389,28 @@ numeral().format('0%');
                 </p>
 
             </div>
-            <div class="nav">
+            <div id="nav" class="nav">
                 <ul>
                     <li>
-                        <a href="#">Format</a>
+                        <a href="#use-it">Use It</a>
                     </li>
                     <li>
-                        <a href="#">Format</a>
+                        <a href="#create">Create</a>
                     </li>
                     <li>
-                        <a href="#">Format</a>
+                        <a href="#format">Format</a>
+                    </li>
+                    <li>
+                        <a href="#functions">Functions</a>
+                    </li>
+                    <li>
+                        <a href="#settings">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#locales">Locales</a>
+                    </li>
+                    <li>
+                        <a href="#custom-formats">Custom Formats</a>
                     </li>
                 </ul>
             </div>
@@ -412,7 +424,7 @@ numeral().format('0%');
             </p>
         </div>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/min/site.min.js"></script>
 </body>
 </html>
