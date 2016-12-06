@@ -30,16 +30,16 @@ function updateFormats () {
 
 function create () {
     var html = '',
+        locale = numeral.localeData(numeral.locale()),
         $body = $('#create tbody'),
         formats = [
             974,
             0.12345,
-            '\'10,000.12\'',
-            '\'1.23m\'',
-            '\'23rd\'',
-            '\'$10,000.00\'',
+            '\'10' + locale.delimiters.thousands + '000' + locale.delimiters.decimal + '12\'',
+            '\'23' + locale.ordinal(23) + '\'',
+            '\'$10' + locale.delimiters.thousands + '000' + locale.delimiters.decimal + '00\'',
             '\'100B\'',
-            '\'3.467TB\'',
+            '\'3' + locale.delimiters.decimal + '467TB\'',
             '\'-76%\'',
             '\'2:23:57\''
         ];
