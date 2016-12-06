@@ -1,0 +1,50 @@
+// Styles - https://github.com/adamwdraper/styles
+// Buttons 0.0.1
+// -----------------------------------------------------------------
+.button {
+    @include inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: .35em .7em;
+    background: $buttonBackgroundColor;
+    border: 1px solid darken($buttonBackgroundColor, $buttonBorderVarient);
+    @include transition(all .3s ease);
+    @include user-select(none);
+    color: $grayDark;
+
+    &:hover, &:active {
+        color: $grayDark;
+        background: darken($buttonBackgroundColor, $buttonGradientVarient);
+        text-decoration: none;
+    }
+}
+
+a {
+
+    &.button {
+
+        &:active,
+        &:visited {
+            color: $grayDark;
+        }
+    }
+}
+
+.group {
+    display: table;
+
+    .button {
+        margin-left: -1px;
+        @include border-radius(0);
+
+        &:first-child {
+            margin-left: 0;
+            @include border-radius($buttonBorderRadius 0 0 $buttonBorderRadius);
+        }
+
+        &:last-child {
+            @include border-radius(0 $buttonBorderRadius $buttonBorderRadius 0);
+        }
+    }
+}

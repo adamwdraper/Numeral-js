@@ -19,18 +19,20 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: 'scss/**/*',
+            files: [
+                'scss/**/*',
+                'js/**/*'
+            ],
             tasks: [
-                'sass:dev'
+                'default'
             ]
         },
         uglify: {
             build: {
                 files: {
                     'js/min/site.min.js': [
-                        'js/respond.js',
-                        'js/numeral.js',
-                        'js/languages.js',
+                        'js/sticky-spy.js',
+                        'js/numeral-with-locales.js',
                         'js/site.js'
                     ]
                 }
@@ -65,7 +67,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', [
-        'sass:dev',
+        'build',
         'watch'
     ]);
 

@@ -19,7 +19,7 @@ $white: #fff;
 // -------------------------
 $blue: #049cdb;
 $blueDark: #0064cd;
-$green: #46a546;
+$green: #50C574;
 $red: #9d261d;
 $yellow: #ffc40d;
 $orange: #f89406;
@@ -45,6 +45,8 @@ $typeVarsList: $primary, $secondary, $active, $alert, $info, $error, $success, $
 $bodyBackground: $white;
 $textColor: $grayDarker;
 
+$innerWidth: 50em;
+
 
 $smallBorderRadius: 3px;
 $smallInnerBorderRadius: 2px;
@@ -56,7 +58,7 @@ $largeInnerBorderRadius: 4px;
 
 // Links
 // -------------------------
-$link: #0066AA;
+$link: #ff6a00;
 $linkHover: lighten($link, 10%);
 
 

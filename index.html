@@ -16,6 +16,7 @@
 
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,900" rel="stylesheet">
     <link rel="stylesheet" href="css/build/style.css">
 
     <script type="text/javascript">
@@ -36,58 +37,32 @@
 </head>
 <body class="cf">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-    <div class="header-bar full"></div>
-    <div class="sidebar thrd m-full s-full">
+    <div class="hero">
         <div class="inner">
-            <h1 class="logo">
-                Numeral.js
-            </h1>
-            <p class="tagline">
-                A javascript library for formatting and manipulating numbers.
-            </p>
-            <p id="version"></p>
-            <div id="nav" class="nav"></div>
-            <div class="github-links">
-                <a class="button flat" href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="icon-github"></i> GitHub</a>
-                <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="icon-download"></i> .ZIP</a>
-                <a class="button flat download" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="icon-download"></i> .TGZ</a>
+            <div class="header">
+                <h1 class="logo">
+                    Numeral.js <span class="version" id="version"></span>
+                </h1>
+                <p class="tagline">
+                    A javascript library for formatting and manipulating numbers.
+                </p>
+
+                <div class="github-links group">
+                    <a class="button" href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="icon-github"></i> GitHub</a>
+                    <a class="button" href="https://github.com/adamwdraper/Numeral-js/zipball/master"><i aria-hidden="true" class="icon-download"></i> .ZIP</a>
+                    <a class="button" href="https://github.com/adamwdraper/Numeral-js/tarball/master"><i aria-hidden="true" class="icon-download"></i> .TGZ</a>
+                </div>
             </div>
-            <label for="language-select">Language</label>
-            <select id="language-select" name="language-select">
-                <option value="be-nl">Dutch (Belgium)</option>
-                <option value="chs">Chinese</option>
-                <option value="cs">Czech</option>
-                <option value="da-dk">Danish (Denmark)</option>
-                <option value="de-ch">German (Switzerland)</option>
-                <option value="de">German</option>
-                <option value="en" selected="selected">English</option>
-                <option value="en-gb">English (Great Britain)</option>
-                <option value="es-ES">Spanish (Spain)</option>
-                <option value="es">Spanish</option>
-                <option value="et">Estonian</option>
-                <option value="fi">Finnish</option>
-                <option value="fr">French</option>
-                <option value="fr-CA">French (Canadian)</option>
-                <option value="hu">Hungarian</option>
-                <option value="it">Italian</option>
-                <option value="ja">Japanese</option>
-                <option value="pl">Polish</option>
-                <option value="pt-br">Portuguese (Brazil)</option>
-                <option value="pt-pt">Portuguese (Portugal)</option>
-                <option value="ru">Russian</option>
-                <option value="ru-UA">Ukraine</option>
-                <option value="sk">Slovak</option>
-                <option value="th">Thai</option>
-                <option value="tr">Turkish</option>
-            </select>
-            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script>
+            <div class="ad">
+                <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=numeraljscom" id="_carbonads_js"></script>
+            </div>
         </div>
     </div>
-    <div class="content xl-over-thrd l-over-thrd thrd2 m-full s-full">
+    <div class="content">
         <div class="inner">
-
-            <h3>Use it</h3>
-            <h4>In the Browser</h4>
+            <div class="main">
+                <h3><a name="use-it"></a>Use it</h3>
+                <h4>In the Browser</h4>
 <pre>
 &lt;script src=&quot;numeral.min.js&quot;&gt;&lt;/script&gt;
 </pre>
@@ -103,111 +78,106 @@ npm install numeral
 var numeral = require('numeral');
 </pre>
 
-            <h3>Format</h3>
-            <p>
-                Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.
-            </p>
+                <h3><a name="create"></a>Create</h3>
+                <p>
+                    Create an instance of a numeral. Numeral takes numbers or strings that it trys to convert into a number.
+                </p>
+<pre>
+var myNumeral = numeral(1000);
+
+var value = numeral.value();
+// 1000
+</pre>
+                <table id="create" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Input</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3><a name="format"></a>Format</h3>
+                <p>
+                    Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations. And you can always <a href="#formats">create a custom format</a>.
+                </p>
 <pre>
 var string = numeral(1000).format('0,0');
 // '1,000'
 </pre>
-            <h4>Numbers</h4>
-            <table id="format-numbers" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Currency</h4>
-            <table id="format-currency" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Bytes</h4>
-            <table id="format-bytes" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Percentages</h4>
-            <table id="format-percentage" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h4>Time</h4>
-            <table id="format-time" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Format</th>
-                        <th>String</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h3>Unformat</h3>
-            <p>
-                Got a formatted string?  Use the unformat function to make it useful again.
-            </p>
-<pre>
-var string = numeral().unformat('($10,000.00)');
-// -10000
-</pre>
-            <table id="unformat-all" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>String</th>
-                        <th>Function</th>
-                        <th>Number</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h3>Manipulate</h3>
-            <p>
-                Not that you will use these often, but they're there when you need them.
-            </p>
-<pre>
-var number = numeral(1000);
+                <h4>Numbers</h4>
+                <table id="format-numbers" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Currency</h4>
+                <table id="format-currency" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Bytes</h4>
+                <table id="format-bytes" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Percentages</h4>
+                <table id="format-percentage" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Time</h4>
+                <table id="format-time" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Exponential</h4>
+                <table id="format-exponential" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Format</th>
+                            <th>String</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
 
-var added = number.add(10);
-// 1010
-</pre>
-            <table id="manipulate" class="table striped bordered">
-                <thead>
-                    <tr>
-                        <th>Before</th>
-                        <th>Function</th>
-                        <th>After</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <h3>Value</h3>
-            <p>
-                The value is always available.
-            </p>
+                <h3><a name="functions"></a>Functions</h3>
+                <h4>Value</h4>
+                <p>
+                    The value is always available.
+                </p>
 <pre>
 var number = numeral(1000);
 
@@ -217,10 +187,30 @@ var string = number.format('0,0');
 var value = number.value();
 // 1000
 </pre>
-            <h3>Set</h3>
-            <p>
-                Set the value of your numeral object.
-            </p>
+                <h4>Manipulate</h4>
+                <p>
+                    Not that you will use these often, but they're there when you need them.
+                </p>
+<pre>
+var number = numeral(1000);
+
+var added = number.add(10);
+// 1010
+</pre>
+                <table id="manipulate" class="table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Before</th>
+                            <th>Function</th>
+                            <th>After</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h4>Set</h4>
+                <p>
+                    Set the value of your numeral object.
+                </p>
 <pre>
 var number = numeral();
 
@@ -229,10 +219,10 @@ number.set(1000);
 var value = number.value();
 // 1000
 </pre>
-            <h3>Difference</h3>
-            <p>
-                Find the difference between your numeral object and a value
-            </p>
+                <h4>Difference</h4>
+                <p>
+                    Find the difference between your numeral object and a value
+                </p>
 <pre>
 var number = numeral(1000),
     value = 100;
@@ -240,42 +230,10 @@ var number = numeral(1000),
 var difference = number.difference(value);
 // 900
 </pre>
-            <h3>Default Formatting</h3>
-            <p>
-                Set a default format so you can use .format() without a string.  The default format to '0,0'
-            </p>
-<pre>
-var number = numeral(1000);
-
-number.format();
-// '1,000'
-
-numeral.defaultFormat('$0,0.00');
-
-number.format();
-// '$1,000.00'
-</pre>
-            <h3>Custom Zero and Null Formatting</h3>
-            <p>
-                Set a custom output when formatting numerals with a value of 0 or null
-            </p>
-<pre>
-var number = numeral(0);
-var nullNumber = numeral(null);
-
-numeral.zeroFormat('N/A');
-numeral.nullFormat('N/A');
-
-var zero = number.format('0.0')
-// 'N/A'
-
-var na = nullNumber.format('0.0')
-// 'N/A'
-</pre>
-            <h3>Clone</h3>
-            <p>
-                Go ahead and clone any numeral object while you're at it.
-            </p>
+                <h4>Clone</h4>
+                <p>
+                    Go ahead and clone any numeral object while you're at it.
+                </p>
 <pre>
 var a = numeral(1000);
 var b = numeral(a);
@@ -290,13 +248,46 @@ var bVal = b.value();
 var cVal = c.add(10).value();
 // 1010
 </pre>
-            <h3>Languages</h3>
-            <p>
-                Lets make this useable all over the place!
-            </p>
+                <h3><a name="settings"></a>Settings</h3>
+                <h4>Default Formatting</h4>
+                <p>
+                    Set a default format so you can use .format() without a string.  The default format to '0,0'
+                </p>
 <pre>
-// load a language
-numeral.language('fr', {
+var number = numeral(1000);
+
+number.format();
+// '1,000'
+
+numeral.defaultFormat('$0,0.00');
+
+number.format();
+// '$1,000.00'
+</pre>
+                <h4>Custom Zero and Null Formatting</h4>
+                <p>
+                    Set a custom output when formatting numerals with a value of 0 or null
+                </p>
+<pre>
+var number = numeral(0);
+var nullNumber = numeral(null);
+
+numeral.zeroFormat('N/A');
+numeral.nullFormat('N/A');
+
+var zero = number.format('0.0')
+// 'N/A'
+
+var na = nullNumber.format('0.0')
+// 'N/A'
+</pre>
+                <h3><a name="locales"></a>Locales</h3>
+                <p>
+                    Let's make this useable all over the place!
+                </p>
+<pre>
+// load a locale
+numeral.register('locale', 'fr', {
     delimiters: {
         thousands: ' ',
         decimal: ','
@@ -315,29 +306,129 @@ numeral.language('fr', {
     }
 });
 
-// switch between languages
-numeral.language('fr');
+// switch between locales
+numeral.locale('fr');
 </pre>
-            <p>
-                As I am not fluent in every language on the planet, please feel free to create language files of your own by submitting a pull request.  Don't forget to create both the language file (example: languages/fr.js) and the language test (example: tests/languages/fr.js). Thanks for helping out.
-            </p>
+                <p>
+                    As I am not fluent in every locale on the planet, please feel free to create locale files of your own by submitting a pull request.  Don't forget to create both the locale file (example: locales/fr.js) and the locale test (example: tests/locales/fr.js). Thanks for helping out.
+                </p>
 
-            <h3>Acknowlegements</h3>
-            <p>
-                Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
-            </p>
+                <h3><a name="custom-formats"></a>Formats</h3>
+                <p>
+                    Adding your own custom formats is as easy as adding a locale.
+                </p>
+<pre>
+// load a format
+numeral.register('format', 'percentage', {
+    regexps: {
+        format: /(%)/,
+        unformat: /(%)/
+    },
+    format: function(value, format, roundingFunction) {
+        var space = numeral._.includes(format, ' %') ? ' ' : '',
+            output;
 
+        value = value * 100;
+
+        // check for space before %
+        format = format.replace(/\s?\%/, '');
+
+        output = numeral._.numberToFormat(value, format, roundingFunction);
+
+        if (numeral._.includes(output, ')')) {
+            output = output.split('');
+
+            output.splice(-1, 0, space + '%');
+
+            output = output.join('');
+        } else {
+            output = output + space + '%';
+        }
+
+        return output;
+    },
+    unformat: function(string) {
+        return numeral._.stringToNumber(string) * 0.01;
+    }
+});
+
+// use your custom format
+numeral().format('0%');
+</pre>
+                <h3>Acknowlegements</h3>
+                <p>
+                    Numeral.js, while less complex, was inspired by and heavily borrowed from <a href="http://momentjs.com/">Moment.js</a>
+                </p>
+
+            </div>
+            <div id="nav" class="nav">
+                <ul>
+                    <li>
+                        <a href="#use-it">Use It</a>
+                    </li>
+                    <li>
+                        <a href="#create">Create</a>
+                    </li>
+                    <li>
+                        <a href="#format">Format</a>
+                    </li>
+                    <li>
+                        <a href="#functions">Functions</a>
+                    </li>
+                    <li>
+                        <a href="#settings">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#locales">Locales</a>
+                    </li>
+                    <li>
+                        <a href="#custom-formats">Custom Formats</a>
+                    </li>
+                    <li class="locales">
+                        <select id="locale-select" name="locale-select">
+                            <option value="be-nl">Dutch (Belgium)</option>
+                            <option value="chs">Chinese</option>
+                            <option value="cs">Czech</option>
+                            <option value="da-dk">Danish (Denmark)</option>
+                            <option value="de-ch">German (Switzerland)</option>
+                            <option value="de">German</option>
+                            <option value="en" selected="selected">English</option>
+                            <option value="en-gb">English (Great Britain)</option>
+                            <option value="es-es">Spanish (Spain)</option>
+                            <option value="es">Spanish</option>
+                            <option value="et">Estonian</option>
+                            <option value="fi">Finnish</option>
+                            <option value="fr">French</option>
+                            <option value="fr-ca">French (Canadian)</option>
+                            <option value="hu">Hungarian</option>
+                            <option value="it">Italian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="pl">Polish</option>
+                            <option value="pt-br">Portuguese (Brazil)</option>
+                            <option value="pt-pt">Portuguese (Portugal)</option>
+                            <option value="ru">Russian</option>
+                            <option value="uk-ua">Ukraine</option>
+                            <option value="sk">Slovak</option>
+                            <option value="th">Thai</option>
+                            <option value="tr">Turkish</option>
+                        </select>
+                    </li>
+                    <li class="github">
+                        <a href="https://github.com/adamwdraper/Numeral-js"><i aria-hidden="true" class="icon-github"></i> GitHub</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="footer l-thrd xl-thrd full">
+    <div class="footer">
         <div class="inner">
             <p>
-                This is a project by <a href="http://github.com/adamwdraper">adamwdraper</a>
+                Project by <a href="http://adamwdraper.com">adamwdraper</a>
             </p>
         </div>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/min/site.min.js"></script>
 </body>
 </html>

@@ -1,28 +1,54 @@
 $(function() {
-    $('#language-select').on('change', function() {
+    $('#locale-select').on('change', function() {
         updateFormats();
     });
 
     addVersion();
 
     updateFormats();
+
+    $('#nav').stickySpy();
 });
 
 function addVersion () {
-    $('#version').text(numeral.version);
+    $('#version').text('v. ' + numeral.version);
 }
 
 function updateFormats () {
-    // get language
-    numeral.language($('#language-select').val());
+    // get locale
+    numeral.locale($('#locale-select').val());
 
     formatNumbers();
     formatCurrency();
     formatBytes();
     formatPercentage();
     formatTime();
-    unformatAll();
+    formatExponential();
+    create();
     manipulate();
+}
+
+function create () {
+    var html = '',
+        locale = numeral.localeData(numeral.locale()),
+        $body = $('#create tbody'),
+        formats = [
+            974,
+            0.12345,
+            '\'10' + locale.delimiters.thousands + '000' + locale.delimiters.decimal + '12\'',
+            '\'23' + locale.ordinal(23) + '\'',
+            '\'$10' + locale.delimiters.thousands + '000' + locale.delimiters.decimal + '00\'',
+            '\'100B\'',
+            '\'3' + locale.delimiters.decimal + '467TB\'',
+            '\'-76%\'',
+            '\'2:23:57\''
+        ];
+
+    for (var i = 0; i < formats.length; i++) {
+        html += '<tr><td>numeral(' + formats[i] + ')</td><td>' + numeral(formats[i]).value() + '</td></tr>';
+    }
+
+    $body.empty().html(html);
 }
 
 function formatNumbers () {
@@ -45,8 +71,6 @@ function formatNumbers () {
             1460,
             -104000,
             1,
-            52,
-            23,
             100
         ],
         formats = [
@@ -64,8 +88,6 @@ function formatNumbers () {
             '0.0a',
             '0 a',
             '0a',
-            '0o',
-            '0o',
             '0o',
             '0o'
         ];
@@ -175,27 +197,28 @@ function formatTime () {
     $body.empty().html(html);
 }
 
-function unformatAll () {
+
+function formatExponential () {
     var html = '',
-        $body = $('#unformat-all tbody'),
+        $body = $('#format-exponential tbody'),
+        nums = [
+            1123456789,
+            12398734.202,
+            0.000123987
+        ],
         formats = [
-            numeral(10000.123).format('0,0.000'),
-            numeral(0.12345).format('0.00000'),
-            numeral(1234000).format('0.00a'),
-            numeral(23).format('0o'),
-            numeral(10000).format('$0,0.00'),
-            numeral(100).format('0b'),
-            numeral(3467479682787).format('0.000b'),
-            numeral(-0.76).format('0%'),
-            '2:23:57'
+            '0,0e+0',
+            '0.00e+0',
+            '0.000e+0'
         ];
 
-    for (var i = 0; i < formats.length; i++) {
-        html += '<tr><td>\'' + formats[i] + '\'</td><td>.unformat(\'' + formats[i] + '\')</td><td>' + numeral().unformat(formats[i]) + '</td></tr>';
+    for (var i = 0; i < nums.length; i++) {
+        html += '<tr><td>' + nums[i] + '</td><td>\'' + formats[i] + '\'</td><td>' + numeral(nums[i]).format(formats[i]) + '</td></tr>';
     }
 
     $body.empty().html(html);
 }
+
 
 function manipulate () {
     var html = '',
