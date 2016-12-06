@@ -226,7 +226,7 @@ h4 {
 
         .nav {
             display: table-cell;
-            width: 8em;
+            width: 9em;
             padding-left: 3em;
             font-size: 1.2em;
 
@@ -248,7 +248,17 @@ h4 {
             li {
                 margin: .35em 0;
 
-                &:last-child {
+                &.locales {
+                    margin-top: 1em;
+                    padding-top: 1em;
+                    border-top: 1px solid $grayLightest;
+
+                    select {
+                        font-size: .7em;
+                    }
+                }
+
+                &.github {
                     margin-top: 1em;
                     padding-top: 1em;
                     border-top: 1px solid $grayLightest;
