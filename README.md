@@ -47,6 +47,28 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.0
+
+2.0.0 brings a lot of breaking changes and a reorganization of the repo, but also simplifies the api as well as the creating of custom formats.
+
+Breaking change / Feature: All formats are now separate files.  This makes it easy to create custom formats, and will also allow for custom builds with only certain formats.  (Note: The built numeral.js still contains all formats in the repo).
+
+Breaking change / Feature: All formats and locales are now loaded using `numeral.register(type, name, {})`
+
+Breaking change: All `language` now renamed to `locale` and standardized to all lowercase filenames
+
+Breaking change: The `locale` function no longer loads locales, it only sets the current locale
+
+Breaking change: The `unformat` function has been removed `numeral().unformat(string)` and now happens on numeral init `numeral(string)`
+
+Breaking change / Feature: Bytes are now formatted as: `b` (base 1000)  and `ib` (base 1024)
+
+Breaking change: `numeral(NaN)` is now treated the same as `numeral(null)` and no longer throws an error
+
+Feature: Exponential format using `e+` or `e-`
+
+Bug fix: Update to floating point helpers (Note: Numeral does not fix JS floating point errors, but look to our tests to see that it covers quite a few cases.)
+
 ### 1.5.6
 
 Bug fix: numeral converts strings to numbers
