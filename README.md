@@ -47,6 +47,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.1
+
+Bug fix: Fixed regression for webpack/browserify/rollup
+
 ### 2.0.0
 
 2.0.0 brings a lot of breaking changes and a reorganization of the repo, but also simplifies the api as well as the creating of custom formats.
