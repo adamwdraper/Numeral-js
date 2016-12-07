@@ -4,7 +4,7 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'es-es', {
         delimiters: {

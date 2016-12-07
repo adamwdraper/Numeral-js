@@ -669,7 +669,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
         decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -748,7 +748,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'currency', {
         regexps: {
@@ -805,7 +805,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'exponential', {
         regexps: {
@@ -847,7 +847,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     // get numeral from environment
     if (typeof window !== 'undefined' && this.numeral) {
@@ -885,7 +885,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'percentage', {
         regexps: {
@@ -927,7 +927,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'time', {
         regexps: {
