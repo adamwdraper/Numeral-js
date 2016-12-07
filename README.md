@@ -36,13 +36,13 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 8. Submit a pull request to the `develop` branch.
 
 
-### Languages
+### Locales
 
-When naming language files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
+When naming locale files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
 
-### Language translations will not be merged without unit tests.
+### Locale translations will not be merged without unit tests.
 
-See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en-gb.js) for an example.
+See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/locales/en-gb.js) for an example.
 
 
 # Changelog
