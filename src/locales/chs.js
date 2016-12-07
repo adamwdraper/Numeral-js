@@ -4,7 +4,7 @@
  * author : badplum : https://github.com/badplum
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'chs', {
         delimiters: {

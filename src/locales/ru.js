@@ -4,7 +4,7 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'ru', {
         delimiters: {

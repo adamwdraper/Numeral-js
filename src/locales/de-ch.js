@@ -4,7 +4,7 @@
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'de-ch', {
         delimiters: {

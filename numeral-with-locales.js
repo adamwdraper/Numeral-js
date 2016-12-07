@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.0
+ * version : 2.0.1
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -13,7 +13,7 @@
 
     var numeral,
         _,
-        VERSION = '2.0.0',
+        VERSION = '2.0.1',
         formats = {},
         locales = {},
         defaults = {
@@ -669,7 +669,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
         decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -748,7 +748,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'currency', {
         regexps: {
@@ -805,7 +805,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'exponential', {
         regexps: {
@@ -847,7 +847,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     // get numeral from environment
     if (typeof window !== 'undefined' && this.numeral) {
@@ -885,7 +885,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'percentage', {
         regexps: {
@@ -927,7 +927,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('format', 'time', {
         regexps: {
@@ -970,7 +970,7 @@
  * author : Dieter Luypaert : https://github.com/moeriki
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'be-nl', {
         delimiters: {
@@ -1000,7 +1000,7 @@
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'bg', {
         delimiters: {
@@ -1036,7 +1036,7 @@
  * author : badplum : https://github.com/badplum
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'chs', {
         delimiters: {
@@ -1064,7 +1064,7 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'cs', {
         delimiters: {
@@ -1092,7 +1092,7 @@
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'da-dk', {
         delimiters: {
@@ -1120,7 +1120,7 @@
  * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'de-ch', {
         delimiters: {
@@ -1148,7 +1148,7 @@
  * author : Marco Krage : https://github.com/sinky
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'de', {
         delimiters: {
@@ -1176,7 +1176,7 @@
  * author : Don Vince : https://github.com/donvince/
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'en-au', {
         delimiters: {
@@ -1208,7 +1208,7 @@
  * author : Dan Ristic : https://github.com/dristic
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'en-gb', {
         delimiters: {
@@ -1240,7 +1240,7 @@
  * author : Etienne Boshoff : etienne@zailab.com
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'en-za', {
         delimiters: {
@@ -1272,7 +1272,7 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'es-es', {
         delimiters: {
@@ -1305,7 +1305,7 @@
  * author : Hernan Garcia : https://github.com/hgarcia
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'es', {
         delimiters: {
@@ -1341,7 +1341,7 @@
  * from numbers with a space
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'et', {
         delimiters: {
@@ -1369,7 +1369,7 @@
  * author : Sami Saada : https://github.com/samitheberber
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'fi', {
         delimiters: {
@@ -1397,7 +1397,7 @@
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'fr-ca', {
         delimiters: {
@@ -1425,7 +1425,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'fr-ch', {
         delimiters: {
@@ -1453,7 +1453,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'fr', {
         delimiters: {
@@ -1481,7 +1481,7 @@
  * author : Peter Bakondy : https://github.com/pbakondy
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'hu', {
         delimiters: {
@@ -1509,7 +1509,7 @@
  * author : Giacomo Trombi : http://cinquepunti.it
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'it', {
         delimiters: {
@@ -1537,7 +1537,7 @@
  * author : teppeis : https://github.com/teppeis
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'ja', {
         delimiters: {
@@ -1565,7 +1565,7 @@
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'lv', {
         delimiters: {
@@ -1593,7 +1593,7 @@
  * author : Dave Clayton : https://github.com/davedx
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'nl-nl', {
         delimiters: {
@@ -1622,7 +1622,7 @@
  * author : Ove Andersen : https://github.com/azzlack
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'no', {
         delimiters: {
@@ -1650,7 +1650,7 @@
  * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'pl', {
         delimiters: {
@@ -1678,7 +1678,7 @@
  * author : Ramiro Varandas Jr : https://github.com/ramirovjr
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'pt-br', {
         delimiters: {
@@ -1706,7 +1706,7 @@
  * author : Diogo Resende : https://github.com/dresende
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'pt-pt', {
         delimiters: {
@@ -1732,7 +1732,7 @@
 // locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'ru-ua', {
         delimiters: {
@@ -1763,7 +1763,7 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'ru', {
         delimiters: {
@@ -1794,7 +1794,7 @@
  * author : Ahmed Al Hafoudh : http://www.freevision.sk
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'sk', {
         delimiters: {
@@ -1822,7 +1822,7 @@
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'th', {
         delimiters: {
@@ -1850,7 +1850,7 @@
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
         suffixes = {
             1: '\'inci',
             5: '\'inci',
@@ -1909,7 +1909,7 @@
 // locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'uk-ua', {
         delimiters: {

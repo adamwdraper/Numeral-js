@@ -4,7 +4,7 @@
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'th', {
         delimiters: {
