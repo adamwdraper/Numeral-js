@@ -4,7 +4,7 @@
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'fr-ca', {
         delimiters: {

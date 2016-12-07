@@ -4,7 +4,7 @@
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
         suffixes = {
             1: '\'inci',
             5: '\'inci',

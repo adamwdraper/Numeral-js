@@ -4,7 +4,7 @@
  * author : Adam Draper : https://github.com/adamwdraper
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral'),
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
         decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']

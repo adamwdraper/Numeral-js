@@ -4,7 +4,7 @@
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
 (function () {
-    var numeral = typeof window !== 'undefined' ? this.numeral : require('../numeral');
+    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
     numeral.register('locale', 'lv', {
         delimiters: {
