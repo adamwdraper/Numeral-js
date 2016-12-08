@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-module.exports = function(grunt) {
 
+module.exports = function(grunt) {
     var minifiedFiles = {
             'min/numeral.min.js' : [
                 'numeral.js'
@@ -22,6 +22,8 @@ module.exports = function(grunt) {
 
         minifiedFiles[destination] = src;
     });
+
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         mochaTest : {
@@ -109,14 +111,18 @@ module.exports = function(grunt) {
                 'strict': false,
                 'quotmark': 'single'
             }
+        },
+        babel: {
+          options: {
+            sourceMap: true
+          },
+          dist: {
+            files: {
+              'dist/numeral.js': 'src/numeral.js'
+            }
+          }
         }
     });
-
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', [
         'test'
