@@ -1,6 +1,5 @@
 var fs = require('fs');
 
-
 module.exports = function(grunt) {
     var minifiedFiles = {
             'min/numeral.min.js' : [
@@ -27,21 +26,26 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         mochaTest : {
-            all: [
-                'tests/numeral.js',
-                'tests/formats/*.js',
-                'tests/locales/*.js'
-            ]
+            all: {
+                options: {
+                    require: 'babel-register'
+                },
+                src: [
+                    'build/tests/numeral.js'
+                // 'tests/formats/*.js',
+                // 'tests/locales/*.js'
+                ]
+            }
         },
         karma: {
             options: {
                 files: [
-                    'src/numeral.js',
-                    'src/formats/*.js',
-                    'src/locales/*.js',
-                    'tests/numeral.js',
-                    'tests/formats/*.js',
-                    'tests/locales/*.js'
+                    'build/src/numeral.js',
+                    // 'src/formats/*.js',
+                    // 'src/locales/*.js',
+                    'build/tests/numeral.js'
+                    // 'tests/formats/*.js',
+                    // 'tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -97,28 +101,18 @@ module.exports = function(grunt) {
                 'src/**/*.js'
             ],
             options: {
-                'node': true,
-                'browser': true,
-                'curly': true,
-                'devel': false,
-                'eqeqeq': true,
-                'eqnull': true,
-                'newcap': true,
-                'noarg': true,
-                'onevar': true,
-                'undef': true,
-                'sub': true,
-                'strict': false,
-                'quotmark': 'single'
+                'jshintrc': true
             }
         },
         babel: {
           options: {
             sourceMap: true
           },
-          dist: {
+          build: {
             files: {
-              'dist/numeral.js': 'src/numeral.js'
+              'build/src/numeral.js': 'src/numeral.js',
+              'build/tests/numeral.js': 'tests/numeral.js',
+              'build/src/locales/be-nl.js': 'src/locales/be-nl.js'
             }
           }
         }
@@ -128,31 +122,35 @@ module.exports = function(grunt) {
         'test'
     ]);
 
-    grunt.registerTask('test', [
+    grunt.registerTask('build', [
         'jshint',
+        'babel:build'
+    ]);
+
+    grunt.registerTask('test', [
+        'build',
         'mochaTest',
         'karma:local'
     ]);
 
     grunt.registerTask('test:npm', [
-        'jshint',
+        'build',
         'mochaTest'
     ]);
 
     grunt.registerTask('test:browser', [
-        'jshint',
+        'build',
         'karma:local'
     ]);
 
-    // P
-    grunt.registerTask('build', [
+    grunt.registerTask('dist', [
         'concat',
         'uglify'
     ]);
 
     // Travis CI task.
     grunt.registerTask('travis', [
-        'jshint',
+        'build',
         'mochaTest',
         'karma:ci'
     ]);

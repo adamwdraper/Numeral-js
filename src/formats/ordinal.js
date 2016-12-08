@@ -19,7 +19,7 @@
         regexps: {
             format: /(o)/
         },
-        format: function(value, format, roundingFunction) {
+        format(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 output,
                 ordinal = numeral._.includes(format, ' o') ? ' ' : '';

@@ -11,7 +11,7 @@
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
         },
-        format: function(value, format, roundingFunction) {
+        format(value, format, roundingFunction) {
             var output,
                 exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
                 parts = exponential.split('e');
@@ -22,7 +22,7 @@
 
             return output + 'e' + parts[1];
         },
-        unformat: function(string) {
+        unformat(string) {
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
                 value = Number(parts[0]),
                 power = Number(parts[1]);

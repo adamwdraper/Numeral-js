@@ -11,7 +11,7 @@
             format: /(%)/,
             unformat: /(%)/
         },
-        format: function(value, format, roundingFunction) {
+        format(value, format, roundingFunction) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
 
@@ -34,7 +34,7 @@
 
             return output;
         },
-        unformat: function(string) {
+        unformat(string) {
             return numeral._.stringToNumber(string) * 0.01;
         }
     });

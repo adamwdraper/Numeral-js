@@ -10,7 +10,7 @@
         regexps: {
             format: /(\$)/
         },
-        format: function(value, format, roundingFunction) {
+        format(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 symbolIndex = format.indexOf('$'),
                 openParenIndex = format.indexOf('('),

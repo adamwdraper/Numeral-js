@@ -19,7 +19,7 @@
             format: /([0\s]i?b)/,
             unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
         },
-        format: function(value, format, roundingFunction) {
+        format(value, format, roundingFunction) {
             var output,
                 bytes = numeral._.includes(format, 'ib') ? binary : decimal,
                 suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
@@ -49,7 +49,7 @@
 
             return output + suffix;
         },
-        unformat: function(string) {
+        unformat(string) {
             var value = numeral._.stringToNumber(string),
                 power,
                 bytesMultiplier;
