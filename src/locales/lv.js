@@ -3,7 +3,7 @@
  * locale : Latvian (lv)
  * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'lv', {
     delimiters: {

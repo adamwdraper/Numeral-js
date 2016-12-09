@@ -3,7 +3,7 @@
  * locale : thai (th)
  * author : Sathit Jittanupat : https://github.com/jojosati
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'th', {
     delimiters: {

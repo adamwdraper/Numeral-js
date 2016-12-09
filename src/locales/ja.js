@@ -3,7 +3,7 @@
  * locale : japanese
  * author : teppeis : https://github.com/teppeis
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'ja', {
     delimiters: {

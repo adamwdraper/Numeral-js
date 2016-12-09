@@ -3,7 +3,7 @@
  * locale : Ukrainian for the Ukraine (uk-ua)
  * author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'uk-ua', {
     delimiters: {

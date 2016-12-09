@@ -3,7 +3,7 @@
  * locale : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'fr-ch', {
     delimiters: {

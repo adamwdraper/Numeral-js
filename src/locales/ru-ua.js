@@ -1,7 +1,7 @@
 // numeral.js locale configuration
 // locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'ru-ua', {
     delimiters: {

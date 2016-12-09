@@ -3,7 +3,7 @@
  * locale : english united kingdom (uk)
  * author : Dan Ristic : https://github.com/dristic
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'en-gb', {
     delimiters: {

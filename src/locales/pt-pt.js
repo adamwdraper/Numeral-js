@@ -3,7 +3,7 @@
  * locale : portuguese (pt-pt)
  * author : Diogo Resende : https://github.com/dresende
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'pt-pt', {
     delimiters: {

@@ -3,7 +3,7 @@
  * locale : slovak (sk)
  * author : Ahmed Al Hafoudh : http://www.freevision.sk
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'sk', {
     delimiters: {

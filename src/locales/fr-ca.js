@@ -3,7 +3,7 @@
  * locale : french (Canada) (fr-ca)
  * author : Léo Renaud-Allaire : https://github.com/renaudleo
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'fr-ca', {
     delimiters: {

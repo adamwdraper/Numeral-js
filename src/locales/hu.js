@@ -3,7 +3,7 @@
  * locale : Hungarian (hu)
  * author : Peter Bakondy : https://github.com/pbakondy
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'hu', {
     delimiters: {

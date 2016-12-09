@@ -3,7 +3,7 @@
  * locale : italian Italy (it)
  * author : Giacomo Trombi : http://cinquepunti.it
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'it', {
     delimiters: {

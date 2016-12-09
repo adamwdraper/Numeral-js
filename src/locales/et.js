@@ -6,7 +6,7 @@
  * Note: in Estonian, abbreviations are always separated
  * from numbers with a space
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'et', {
     delimiters: {

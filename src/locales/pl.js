@@ -3,7 +3,7 @@
  * locale : polish (pl)
  * author : Dominik Bulaj : https://github.com/dominikbulaj
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'pl', {
     delimiters: {

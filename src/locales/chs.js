@@ -3,8 +3,7 @@
  * locale : simplified chinese (chs)
  * author : badplum : https://github.com/badplum
  */
-
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'chs', {
     delimiters: {

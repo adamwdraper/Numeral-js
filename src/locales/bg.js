@@ -3,8 +3,7 @@
  * locale : Bulgarian
  * author : Don Vince : https://github.com/donvince/
  */
-
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'bg', {
     delimiters: {

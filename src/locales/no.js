@@ -3,7 +3,7 @@
  * locale : norwegian (bokmål)
  * author : Ove Andersen : https://github.com/azzlack
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'no', {
     delimiters: {

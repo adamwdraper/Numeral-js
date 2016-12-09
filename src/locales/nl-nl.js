@@ -3,7 +3,7 @@
  * locale : netherlands-dutch (nl-nl)
  * author : Dave Clayton : https://github.com/davedx
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'nl-nl', {
     delimiters: {

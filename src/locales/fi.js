@@ -3,7 +3,7 @@
  * locale : Finnish
  * author : Sami Saada : https://github.com/samitheberber
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'fi', {
     delimiters: {

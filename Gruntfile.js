@@ -29,19 +29,15 @@ module.exports = function(grunt) {
         mochaTest : {
             all: {
                 src: [
-                    'build/tests/numeral.js',
-                    'build/tests/formats/bytes.js'
+                    'build/tests/**/*.js'
                 ]
             }
         },
         karma: {
             options: {
                 files: [
-                    'build/src/numeral.js',
-                    'build/src/formats/bytes.js',
-                    'build/tests/numeral.js',
-                    'build/tests/formats/bytes.js'
-                    // 'tests/formats/*.js',
+                    'build/src/**/*.js',
+                    'build/tests/**/*.js'
                 ],
                 frameworks: [
                     'mocha',

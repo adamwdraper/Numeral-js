@@ -3,7 +3,7 @@
  * locale : english south africa (uk)
  * author : Etienne Boshoff : etienne@zailab.com
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'en-za', {
     delimiters: {

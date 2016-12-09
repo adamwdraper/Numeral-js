@@ -4,7 +4,7 @@
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
 
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'cs', {
     delimiters: {

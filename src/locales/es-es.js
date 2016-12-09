@@ -3,7 +3,7 @@
  * locale : spanish Spain
  * author : Hernan Garcia : https://github.com/hgarcia
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'es-es', {
     delimiters: {

@@ -3,7 +3,7 @@
  * locale : turkish (tr)
  * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 var suffixes = {
         1: '\'inci',

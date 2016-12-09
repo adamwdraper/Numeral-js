@@ -3,7 +3,7 @@
  * locale : danish denmark (dk)
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
-import * as numeral from '../numeral';
+import numeral from '../numeral';
 
 numeral.register('locale', 'da-dk', {
     delimiters: {
