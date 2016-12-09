@@ -3,25 +3,23 @@
  * locale : french (fr-ch)
  * author : Adam Draper : https://github.com/adamwdraper
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import * as numeral from '../numeral';
 
-    numeral.register('locale', 'fr-ch', {
-        delimiters: {
-            thousands: '\'',
-            decimal: '.'
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
-        },
-        ordinal : function (number) {
-            return number === 1 ? 'er' : 'e';
-        },
-        currency: {
-            symbol: 'CHF'
-        }
-    });
-}());
+numeral.register('locale', 'fr-ch', {
+    delimiters: {
+        thousands: '\'',
+        decimal: '.'
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal : function (number) {
+        return number === 1 ? 'er' : 'e';
+    },
+    currency: {
+        symbol: 'CHF'
+    }
+});

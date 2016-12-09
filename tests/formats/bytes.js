@@ -1,10 +1,6 @@
-
-// Node
-if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../src/numeral');
-    var format = require('../../src/formats/bytes');
-    var expect = require('chai').expect;
-}
+import numeral from '../../src/numeral';
+import { expect } from 'chai';
+import format from '../../src/formats/bytes';
 
 describe('Bytes', function() {
     after(function() {

@@ -1,10 +1,6 @@
-
-// Node
-if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../src/numeral');
-    var format = require('../../src/formats/ordinal');
-    var expect = require('chai').expect;
-}
+import numeral from '../../src/numeral';
+import { expect } from 'chai';
+import format from '../../src/formats/ordinal';
 
 describe('Ordinal', function() {
     after(function() {

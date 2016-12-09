@@ -13,6 +13,7 @@ module.exports = function(grunt) {
             ]
         };
 
+
     // all the lang files need to be added manually
     fs.readdirSync('./src/locales').forEach(function (path) {
         var file = path.slice(0, -3),
@@ -27,13 +28,9 @@ module.exports = function(grunt) {
     grunt.initConfig({
         mochaTest : {
             all: {
-                options: {
-                    require: 'babel-register'
-                },
                 src: [
-                    'build/tests/numeral.js'
-                // 'tests/formats/*.js',
-                // 'tests/locales/*.js'
+                    'build/tests/numeral.js',
+                    'build/tests/formats/bytes.js'
                 ]
             }
         },
@@ -41,11 +38,10 @@ module.exports = function(grunt) {
             options: {
                 files: [
                     'build/src/numeral.js',
-                    // 'src/formats/*.js',
-                    // 'src/locales/*.js',
-                    'build/tests/numeral.js'
+                    'build/src/formats/bytes.js',
+                    'build/tests/numeral.js',
+                    'build/tests/formats/bytes.js'
                     // 'tests/formats/*.js',
-                    // 'tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -65,8 +61,16 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            my_target: {
-                files: minifiedFiles
+            minified: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'build/src/**/*.js'
+                        ],
+                        dest: 'min/'
+                    }
+                ]
             },
             options: {
                 preserveComments: 'some'
@@ -105,16 +109,21 @@ module.exports = function(grunt) {
             }
         },
         babel: {
-          options: {
-            sourceMap: true
-          },
-          build: {
-            files: {
-              'build/src/numeral.js': 'src/numeral.js',
-              'build/tests/numeral.js': 'tests/numeral.js',
-              'build/src/locales/be-nl.js': 'src/locales/be-nl.js'
+            options: {
+                sourceMap: true
+            },
+            build: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'src/**/*.js',
+                            'tests/**/*.js'
+                        ],
+                        dest: 'build/'
+                    }
+                ]
             }
-          }
         }
     });
 

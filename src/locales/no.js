@@ -3,25 +3,23 @@
  * locale : norwegian (bokmål)
  * author : Ove Andersen : https://github.com/azzlack
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import * as numeral from '../numeral';
 
-    numeral.register('locale', 'no', {
-        delimiters: {
-            thousands: ' ',
-            decimal: ','
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
-        },
-        ordinal: function (number) {
-            return '.';
-        },
-        currency: {
-            symbol: 'kr'
-        }
-    });
-}());
+numeral.register('locale', 'no', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+    ordinal: function (number) {
+        return '.';
+    },
+    currency: {
+        symbol: 'kr'
+    }
+});

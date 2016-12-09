@@ -6,25 +6,23 @@
  * Note: in Estonian, abbreviations are always separated
  * from numbers with a space
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import * as numeral from '../numeral';
 
-    numeral.register('locale', 'et', {
-        delimiters: {
-            thousands: ' ',
-            decimal: ','
-        },
-        abbreviations: {
-            thousand: ' tuh',
-            million: ' mln',
-            billion: ' mld',
-            trillion: ' trl'
-        },
-        ordinal: function (number) {
-            return '.';
-        },
-        currency: {
-            symbol: '€'
-        }
-    });
-}());
+numeral.register('locale', 'et', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: ' tuh',
+        million: ' mln',
+        billion: ' mld',
+        trillion: ' trl'
+    },
+    ordinal: function (number) {
+        return '.';
+    },
+    currency: {
+        symbol: '€'
+    }
+});

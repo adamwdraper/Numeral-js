@@ -3,25 +3,23 @@
  * locale : Finnish
  * author : Sami Saada : https://github.com/samitheberber
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import * as numeral from '../numeral';
 
-    numeral.register('locale', 'fi', {
-        delimiters: {
-            thousands: ' ',
-            decimal: ','
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'M',
-            billion: 'G',
-            trillion: 'T'
-        },
-        ordinal: function (number) {
-            return '.';
-        },
-        currency: {
-            symbol: '€'
-        }
-    });
-}());
+numeral.register('locale', 'fi', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'M',
+        billion: 'G',
+        trillion: 'T'
+    },
+    ordinal: function (number) {
+        return '.';
+    },
+    currency: {
+        symbol: '€'
+    }
+});

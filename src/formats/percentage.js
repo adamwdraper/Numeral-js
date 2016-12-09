@@ -3,39 +3,38 @@
  * format : percentage
  * author : Adam Draper : https://github.com/adamwdraper
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
-    numeral.register('format', 'percentage', {
-        regexps: {
-            format: /(%)/,
-            unformat: /(%)/
-        },
-        format(value, format, roundingFunction) {
-            var space = numeral._.includes(format, ' %') ? ' ' : '',
-                output;
+import numeral from '../numeral';
 
-            value = value * 100;
+numeral.register('format', 'percentage', {
+    regexps: {
+        format: /(%)/,
+        unformat: /(%)/
+    },
+    format(value, format, roundingFunction) {
+        var space = numeral._.includes(format, ' %') ? ' ' : '',
+            output;
 
-            // check for space before %
-            format = format.replace(/\s?\%/, '');
+        value = value * 100;
 
-            output = numeral._.numberToFormat(value, format, roundingFunction);
+        // check for space before %
+        format = format.replace(/\s?\%/, '');
 
-            if (numeral._.includes(output, ')')) {
-                output = output.split('');
+        output = numeral._.numberToFormat(value, format, roundingFunction);
 
-                output.splice(-1, 0, space + '%');
+        if (numeral._.includes(output, ')')) {
+            output = output.split('');
 
-                output = output.join('');
-            } else {
-                output = output + space + '%';
-            }
+            output.splice(-1, 0, space + '%');
 
-            return output;
-        },
-        unformat(string) {
-            return numeral._.stringToNumber(string) * 0.01;
+            output = output.join('');
+        } else {
+            output = output + space + '%';
         }
-    });
-}());
+
+        return output;
+    },
+    unformat(string) {
+        return numeral._.stringToNumber(string) * 0.01;
+    }
+});
