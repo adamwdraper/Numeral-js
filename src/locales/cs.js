@@ -3,7 +3,6 @@
  * locale : czech (cs)
  * author : Anatoli Papirovski : https://github.com/apapirovski
  */
-
 import numeral from '../numeral';
 
 numeral.register('locale', 'cs', {

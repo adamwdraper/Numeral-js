@@ -28,7 +28,7 @@ module.exports = function(config) {
             'mocha',
             'saucelabs'
         ],
-        browserDisconnectTimeout : 10000,
+        browserDisconnectTimeout: 10000,
         browserNoActivityTimeout: 120000,
         browserDisconnectTolerance : 1,
         browsers: Object.keys(customLaunchers),

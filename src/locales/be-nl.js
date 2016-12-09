@@ -8,15 +8,15 @@ import numeral from '../numeral';
 numeral.register('locale', 'be-nl', {
     delimiters: {
         thousands: ' ',
-        decimal  : ','
+        decimal: ','
     },
     abbreviations: {
-        thousand : 'k',
-        million  : ' mln',
-        billion  : ' mld',
-        trillion : ' bln'
+        thousand: 'k',
+        million: ' mln',
+        billion: ' mld',
+        trillion: ' bln'
     },
-    ordinal : function (number) {
+    ordinal: function (number) {
         var remainder = number % 100;
 
         return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
@@ -25,5 +25,3 @@ numeral.register('locale', 'be-nl', {
         symbol: '€'
     }
 });
-
-console.log(numeral.localeData('be-nl'));
