@@ -1,9 +1,6 @@
-// Node
-if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../src/numeral');
-    var expect = require('chai').expect;
-    var locale = require('../../src/locales/es-es');
-}
+import numeral from '../../src/numeral';
+import { expect } from 'chai';
+import '../../src/locales/es-es';
 
 describe('Locale: es-es', function() {
 

@@ -1,8 +1,5 @@
-// Node
-if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../src/numeral');
-    var expect = require('chai').expect;
-}
+import numeral from '../src/numeral';
+import { expect } from 'chai';
 
 describe('Numeral', function() {
     afterEach(function() {

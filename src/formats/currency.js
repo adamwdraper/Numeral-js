@@ -3,54 +3,52 @@
  * format : currency
  * author : Adam Draper : https://github.com/adamwdraper
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import numeral from '../numeral';
 
-    numeral.register('format', 'currency', {
-        regexps: {
-            format: /(\$)/
-        },
-        format: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
-                symbolIndex = format.indexOf('$'),
-                openParenIndex = format.indexOf('('),
-                minusSignIndex = format.indexOf('-'),
-                space = numeral._.includes(format, ' $') || numeral._.includes(format, '$ ') ? ' ' : '',
-                spliceIndex,
-                output;
+numeral.register('format', 'currency', {
+    regexps: {
+        format: /(\$)/
+    },
+    format(value, format, roundingFunction) {
+        var locale = numeral.locales[numeral.options.currentLocale],
+            symbolIndex = format.indexOf('$'),
+            openParenIndex = format.indexOf('('),
+            minusSignIndex = format.indexOf('-'),
+            space = numeral._.includes(format, ' $') || numeral._.includes(format, '$ ') ? ' ' : '',
+            spliceIndex,
+            output;
 
-            // strip format of spaces and $
-            format = format.replace(/\s?\$\s?/, '');
+        // strip format of spaces and $
+        format = format.replace(/\s?\$\s?/, '');
 
-            // format the number
-            output = numeral._.numberToFormat(value, format, roundingFunction);
+        // format the number
+        output = numeral._.numberToFormat(value, format, roundingFunction);
 
-            // position the symbol
-            if (symbolIndex <= 1) {
-                if (numeral._.includes(output, '(') || numeral._.includes(output, '-')) {
-                    output = output.split('');
+        // position the symbol
+        if (symbolIndex <= 1) {
+            if (numeral._.includes(output, '(') || numeral._.includes(output, '-')) {
+                output = output.split('');
 
-                    spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
+                spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
 
-                    output.splice(spliceIndex, 0, locale.currency.symbol + space);
+                output.splice(spliceIndex, 0, locale.currency.symbol + space);
 
-                    output = output.join('');
-                } else {
-                    output = locale.currency.symbol + space + output;
-                }
+                output = output.join('');
             } else {
-                if (numeral._.includes(output, ')')) {
-                    output = output.split('');
-
-                    output.splice(-1, 0, space + locale.currency.symbol);
-
-                    output = output.join('');
-                } else {
-                    output = output + space + locale.currency.symbol;
-                }
+                output = locale.currency.symbol + space + output;
             }
+        } else {
+            if (numeral._.includes(output, ')')) {
+                output = output.split('');
 
-            return output;
+                output.splice(-1, 0, space + locale.currency.symbol);
+
+                output = output.join('');
+            } else {
+                output = output + space + locale.currency.symbol;
+            }
         }
-    });
-}());
+
+        return output;
+    }
+});

@@ -1,7 +1,6 @@
 var fs = require('fs');
 
 module.exports = function(grunt) {
-
     var minifiedFiles = {
             'min/numeral.min.js' : [
                 'numeral.js'
@@ -14,6 +13,7 @@ module.exports = function(grunt) {
             ]
         };
 
+
     // all the lang files need to be added manually
     fs.readdirSync('./src/locales').forEach(function (path) {
         var file = path.slice(0, -3),
@@ -23,23 +23,25 @@ module.exports = function(grunt) {
         minifiedFiles[destination] = src;
     });
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         mochaTest : {
-            all: [
-                'tests/numeral.js',
-                'tests/formats/*.js',
-                'tests/locales/*.js'
-            ]
+            all: {
+                src: [
+                    'build/tests/**/*.js'
+                ]
+            }
         },
         karma: {
             options: {
                 files: [
-                    'src/numeral.js',
-                    'src/formats/*.js',
-                    'src/locales/*.js',
-                    'tests/numeral.js',
-                    'tests/formats/*.js',
-                    'tests/locales/*.js'
+                    'build/src/numeral.js',
+                    'build/src/formats/*.js',
+                    'build/src/locales/*.js',
+                    'build/tests/numeral.js',
+                    'build/tests/formats/*.js',
+                    'build/tests/locales/*.js'
                 ],
                 frameworks: [
                     'mocha',
@@ -59,8 +61,16 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            my_target: {
-                files: minifiedFiles
+            minified: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'build/src/**/*.js'
+                        ],
+                        dest: 'min/'
+                    }
+                ]
             },
             options: {
                 preserveComments: 'some'
@@ -95,58 +105,61 @@ module.exports = function(grunt) {
                 'src/**/*.js'
             ],
             options: {
-                'node': true,
-                'browser': true,
-                'curly': true,
-                'devel': false,
-                'eqeqeq': true,
-                'eqnull': true,
-                'newcap': true,
-                'noarg': true,
-                'onevar': true,
-                'undef': true,
-                'sub': true,
-                'strict': false,
-                'quotmark': 'single'
+                'jshintrc': true
+            }
+        },
+        babel: {
+            options: {
+                sourceMap: true
+            },
+            build: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'src/**/*.js',
+                            'tests/**/*.js'
+                        ],
+                        dest: 'build/'
+                    }
+                ]
             }
         }
     });
-
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', [
         'test'
     ]);
 
-    grunt.registerTask('test', [
+    grunt.registerTask('build', [
         'jshint',
+        'babel:build'
+    ]);
+
+    grunt.registerTask('test', [
+        'build',
         'mochaTest',
         'karma:local'
     ]);
 
     grunt.registerTask('test:npm', [
-        'jshint',
+        'build',
         'mochaTest'
     ]);
 
     grunt.registerTask('test:browser', [
-        'jshint',
+        'build',
         'karma:local'
     ]);
 
-    // P
-    grunt.registerTask('build', [
+    grunt.registerTask('dist', [
         'concat',
         'uglify'
     ]);
 
     // Travis CI task.
     grunt.registerTask('travis', [
-        'jshint',
+        'build',
         'mochaTest',
         'karma:ci'
     ]);

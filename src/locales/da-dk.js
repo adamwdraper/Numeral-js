@@ -3,25 +3,23 @@
  * locale : danish denmark (dk)
  * author : Michael Storgaard : https://github.com/mstorgaard
  */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+import numeral from '../numeral';
 
-    numeral.register('locale', 'da-dk', {
-        delimiters: {
-            thousands: '.',
-            decimal: ','
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'mio',
-            billion: 'mia',
-            trillion: 'b'
-        },
-        ordinal: function (number) {
-            return '.';
-        },
-        currency: {
-            symbol: 'DKK'
-        }
-    });
-}());
+numeral.register('locale', 'da-dk', {
+    delimiters: {
+        thousands: '.',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'mio',
+        billion: 'mia',
+        trillion: 'b'
+    },
+    ordinal: function (number) {
+        return '.';
+    },
+    currency: {
+        symbol: 'DKK'
+    }
+});

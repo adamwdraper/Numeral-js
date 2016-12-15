@@ -1,9 +1,6 @@
-// Node
-if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../src/numeral');
-    var expect = require('chai').expect;
-    var locale = require('../../src/locales/be-nl');
-}
+import numeral from '../../src/numeral';
+import { expect } from 'chai';
+import '../../src/locales/be-nl';
 
 describe('Locale: be-nl', function() {
 
@@ -51,10 +48,10 @@ describe('Locale: be-nl', function() {
     describe('Currency', function() {
         it('should format a currency', function() {
             var tests = [
-                [1000.234,'$0,0.00','€ 1 000,23'],
-                [-1000.234,'($0,0)','(€ 1 000)'],
-                [-1000.234,'$0.00','-€ 1000,23'],
-                [1230974,'($0.00a)','€ 1,23 mln']
+                [1000.234,'$ 0,0.00','€ 1 000,23'],
+                [-1000.234,'($ 0,0)','(€ 1 000)'],
+                [-1000.234,'$ 0.00','-€ 1000,23'],
+                [1230974,'($ 0.00a)','€ 1,23 mln']
             ];
 
             for (var i = 0; i < tests.length; i++) {
