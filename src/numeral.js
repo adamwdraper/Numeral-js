@@ -1,19 +1,27 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.1
+ * version : 2.0.2
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
 
-(function() {
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        global.numeral = factory();
+    }
+}(this, function () {
     /************************************
         Variables
     ************************************/
 
     var numeral,
         _,
-        VERSION = '2.0.1',
+        VERSION = '2.0.2',
         formats = {},
         locales = {},
         defaults = {
@@ -419,6 +427,8 @@
         }
 
         this[type + 's'][name] = format;
+
+        return format;
     };
 
 
@@ -637,28 +647,5 @@
         }
     });
 
-
-    /************************************
-        Exposing Numeral
-    ************************************/
-
-    // CommonJS module is defined
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = numeral;
-    }
-
-    /*global ender:false */
-    if (typeof ender === 'undefined') {
-        // here, `this` means `window` in the browser, or `global` on the server
-        // add `numeral` as a global object via a string identifier,
-        // for Closure Compiler 'advanced' mode
-        this['numeral'] = numeral;
-    }
-
-    /*global define:false */
-    if (typeof define === 'function' && define.amd) {
-        define([], function() {
-            return numeral;
-        });
-    }
-}).call(this);
+    return numeral;
+}));

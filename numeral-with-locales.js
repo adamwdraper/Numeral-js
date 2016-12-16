@@ -1,19 +1,27 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.1
+ * version : 2.0.2
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
 
-(function() {
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        global.numeral = factory();
+    }
+}(this, function () {
     /************************************
         Variables
     ************************************/
 
     var numeral,
         _,
-        VERSION = '2.0.1',
+        VERSION = '2.0.2',
         formats = {},
         locales = {},
         defaults = {
@@ -419,6 +427,8 @@
         }
 
         this[type + 's'][name] = format;
+
+        return format;
     };
 
 
@@ -637,40 +647,23 @@
         }
     });
 
+    return numeral;
+}));
 
-    /************************************
-        Exposing Numeral
-    ************************************/
+// numeral.js format configuration
+// format : bytes
+// author : Adam Draper : https://github.com/adamwdraper
 
-    // CommonJS module is defined
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = numeral;
-    }
-
-    /*global ender:false */
-    if (typeof ender === 'undefined') {
-        // here, `this` means `window` in the browser, or `global` on the server
-        // add `numeral` as a global object via a string identifier,
-        // for Closure Compiler 'advanced' mode
-        this['numeral'] = numeral;
-    }
-
-    /*global define:false */
+(function (global, factory) {
     if (typeof define === 'function' && define.amd) {
-        define([], function() {
-            return numeral;
-        });
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
     }
-}).call(this);
-
-/*
- * numeral.js format configuration
- * format : bytes
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
-        decimal = {
+}(this, function (numeral) {
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -740,16 +733,21 @@
             return value;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : currency
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : currency
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
@@ -797,16 +795,21 @@
             return output;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : exponential
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : exponential
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
@@ -839,25 +842,21 @@
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : ordinal
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : ordinal
+// author : Adam Draper : https://github.com/adamwdraper
 
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
     }
-
+}(this, function (numeral) {
     numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
@@ -877,16 +876,21 @@
             return output + ordinal;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : percentage
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : percentage
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
@@ -919,16 +923,21 @@
             return numeral._.stringToNumber(string) * 0.01;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : time
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : time
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
@@ -962,16 +971,21 @@
             return Number(seconds);
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : belgium-dutch (be-nl)
- * author : Dieter Luypaert : https://github.com/moeriki
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : belgium-dutch (be-nl)
+// author : Dieter Luypaert : https://github.com/moeriki
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'be-nl', {
         delimiters: {
             thousands: ' ',
@@ -985,23 +999,28 @@
         },
         ordinal : function (number) {
             var remainder = number % 100;
-            
+
             return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },
         currency: {
             symbol: '€ '
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : Bulgarian
- * author : Don Vince : https://github.com/donvince/
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : Bulgarian
+// author : Don Vince : https://github.com/donvince/
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'bg', {
         delimiters: {
             thousands: ' ',
@@ -1028,16 +1047,21 @@
             symbol: 'лв'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : simplified chinese (chs)
- * author : badplum : https://github.com/badplum
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : simplified chinese (chs)
+// author : badplum : https://github.com/badplum
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
@@ -1056,16 +1080,21 @@
             symbol: '¥'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : czech (cs)
- * author : Anatoli Papirovski : https://github.com/apapirovski
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : czech (cs)
+// author : Anatoli Papirovski : https://github.com/apapirovski
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'cs', {
         delimiters: {
             thousands: ' ',
@@ -1084,16 +1113,21 @@
             symbol: 'Kč'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : danish denmark (dk)
- * author : Michael Storgaard : https://github.com/mstorgaard
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : danish denmark (dk)
+// author : Michael Storgaard : https://github.com/mstorgaard
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
@@ -1112,16 +1146,21 @@
             symbol: 'DKK'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : German in Switzerland (de-ch)
- * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : German in Switzerland (de-ch)
+// author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'de-ch', {
         delimiters: {
             thousands: ' ',
@@ -1140,16 +1179,21 @@
             symbol: 'CHF'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
- * author : Marco Krage : https://github.com/sinky
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
+// author : Marco Krage : https://github.com/sinky
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'de', {
         delimiters: {
             thousands: ' ',
@@ -1168,16 +1212,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : English Australia
- * author : Don Vince : https://github.com/donvince/
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : English Australia
+// author : Don Vince : https://github.com/donvince/
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'en-au', {
         delimiters: {
             thousands: ',',
@@ -1200,16 +1249,21 @@
             symbol: '$'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : english united kingdom (uk)
- * author : Dan Ristic : https://github.com/dristic
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : english united kingdom (uk)
+// author : Dan Ristic : https://github.com/dristic
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'en-gb', {
         delimiters: {
             thousands: ',',
@@ -1232,16 +1286,21 @@
             symbol: '£'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : english south africa (uk)
- * author : Etienne Boshoff : etienne@zailab.com
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : english south africa (uk)
+// author : Etienne Boshoff : etienne@zailab.com
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
@@ -1264,16 +1323,21 @@
             symbol: 'R'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : spanish Spain
- * author : Hernan Garcia : https://github.com/hgarcia
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : spanish Spain
+// author : Hernan Garcia : https://github.com/hgarcia
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
@@ -1297,16 +1361,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : spanish
- * author : Hernan Garcia : https://github.com/hgarcia
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : spanish
+// author : Hernan Garcia : https://github.com/hgarcia
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'es', {
         delimiters: {
             thousands: '.',
@@ -1330,19 +1399,22 @@
             symbol: '$'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : Estonian
- * author : Illimar Tambek : https://github.com/ragulka
- *
- * Note: in Estonian, abbreviations are always separated
- * from numbers with a space
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : Estonian
+// author : Illimar Tambek : https://github.com/ragulka
+// Note: in Estonian, abbreviations are always separated from numbers with a space
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
@@ -1361,16 +1433,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : Finnish
- * author : Sami Saada : https://github.com/samitheberber
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : Finnish
+// author : Sami Saada : https://github.com/samitheberber
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'fi', {
         delimiters: {
             thousands: ' ',
@@ -1389,16 +1466,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : french (Canada) (fr-ca)
- * author : Léo Renaud-Allaire : https://github.com/renaudleo
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : french (Canada) (fr-ca)
+// author : Léo Renaud-Allaire : https://github.com/renaudleo
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'fr-ca', {
         delimiters: {
             thousands: ' ',
@@ -1417,16 +1499,21 @@
             symbol: '$'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : french (fr-ch)
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : french (fr-ch)
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'fr-ch', {
         delimiters: {
             thousands: '\'',
@@ -1445,16 +1532,21 @@
             symbol: 'CHF'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : french (fr)
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : french (fr)
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'fr', {
         delimiters: {
             thousands: ' ',
@@ -1473,16 +1565,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : Hungarian (hu)
- * author : Peter Bakondy : https://github.com/pbakondy
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : Hungarian (hu)
+// author : Peter Bakondy : https://github.com/pbakondy
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
@@ -1501,16 +1598,21 @@
             symbol: ' Ft'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : italian Italy (it)
- * author : Giacomo Trombi : http://cinquepunti.it
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : italian Italy (it)
+// author : Giacomo Trombi : http://cinquepunti.it
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
@@ -1529,16 +1631,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : japanese
- * author : teppeis : https://github.com/teppeis
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : japanese
+// author : teppeis : https://github.com/teppeis
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'ja', {
         delimiters: {
             thousands: ',',
@@ -1557,16 +1664,21 @@
             symbol: '¥'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : Latvian (lv)
- * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : Latvian (lv)
+// author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'lv', {
         delimiters: {
             thousands: ' ',
@@ -1585,16 +1697,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : netherlands-dutch (nl-nl)
- * author : Dave Clayton : https://github.com/davedx
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : netherlands-dutch (nl-nl)
+// author : Dave Clayton : https://github.com/davedx
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
@@ -1614,16 +1731,21 @@
             symbol: '€ '
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : norwegian (bokmål)
- * author : Ove Andersen : https://github.com/azzlack
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : norwegian (bokmål)
+// author : Ove Andersen : https://github.com/azzlack
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'no', {
         delimiters: {
             thousands: ' ',
@@ -1642,16 +1764,21 @@
             symbol: 'kr'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : polish (pl)
- * author : Dominik Bulaj : https://github.com/dominikbulaj
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : polish (pl)
+// author : Dominik Bulaj : https://github.com/dominikbulaj
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'pl', {
         delimiters: {
             thousands: ' ',
@@ -1670,16 +1797,21 @@
             symbol: 'PLN'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : portuguese brazil (pt-br)
- * author : Ramiro Varandas Jr : https://github.com/ramirovjr
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : portuguese brazil (pt-br)
+// author : Ramiro Varandas Jr : https://github.com/ramirovjr
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'pt-br', {
         delimiters: {
             thousands: '.',
@@ -1698,16 +1830,21 @@
             symbol: 'R$'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : portuguese (pt-pt)
- * author : Diogo Resende : https://github.com/dresende
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : portuguese (pt-pt)
+// author : Diogo Resende : https://github.com/dresende
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'pt-pt', {
         delimiters: {
             thousands: ' ',
@@ -1726,14 +1863,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
 // numeral.js locale configuration
 // locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
@@ -1755,16 +1899,21 @@
             symbol: '\u20B4'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : russian (ru)
- * author : Anatoli Papirovski : https://github.com/apapirovski
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : russian (ru)
+// author : Anatoli Papirovski : https://github.com/apapirovski
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'ru', {
         delimiters: {
             thousands: ' ',
@@ -1786,16 +1935,21 @@
             symbol: 'руб.'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : slovak (sk)
- * author : Ahmed Al Hafoudh : http://www.freevision.sk
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : slovak (sk)
+// author : Ahmed Al Hafoudh : http://www.freevision.sk
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'sk', {
         delimiters: {
             thousands: ' ',
@@ -1814,16 +1968,21 @@
             symbol: '€'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : slovenian (sl)
- * author : Boštjan Pišler : https://github.com/BostjanPisler
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : slovenian (sl)
+// author : Boštjan Pišler : https://github.com/BostjanPisler
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'sl', {
         delimiters: {
             thousands: '.',
@@ -1842,14 +2001,22 @@
             symbol: '€'
         }
     });
-}());
-/*
- * numeral.js locale configuration
- * locale : thai (th)
- * author : Sathit Jittanupat : https://github.com/jojosati
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+}));
+
+// numeral.js locale configuration
+// locale : thai (th)
+// author : Sathit Jittanupat : https://github.com/jojosati
+
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+
 
     numeral.register('locale', 'th', {
         delimiters: {
@@ -1869,16 +2036,22 @@
             symbol: '฿'
         }
     });
-}());
+}));
 
-/*
- * numeral.js locale configuration
- * locale : turkish (tr)
- * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
-        suffixes = {
+// numeral.js locale configuration
+// locale : turkish (tr)
+// author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
+
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+    var suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -1930,14 +2103,21 @@
             symbol: '\u20BA'
         }
     });
-}());
+}));
 
 // numeral.js locale configuration
 // locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'uk-ua', {
         delimiters: {
             thousands: ' ',
@@ -1959,4 +2139,4 @@
             symbol: '\u20B4'
         }
     });
-}());
+}));

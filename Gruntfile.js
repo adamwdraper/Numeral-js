@@ -107,7 +107,10 @@ module.exports = function(grunt) {
                 'undef': true,
                 'sub': true,
                 'strict': false,
-                'quotmark': 'single'
+                'quotmark': 'single',
+                'globals': {
+                    'define': true
+                }
             }
         }
     });

@@ -1,10 +1,17 @@
-/*
- * numeral.js locale configuration
- * locale : thai (th)
- * author : Sathit Jittanupat : https://github.com/jojosati
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js locale configuration
+// locale : thai (th)
+// author : Sathit Jittanupat : https://github.com/jojosati
+
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+
 
     numeral.register('locale', 'th', {
         delimiters: {
@@ -24,4 +31,4 @@
             symbol: '฿'
         }
     });
-}());
+}));

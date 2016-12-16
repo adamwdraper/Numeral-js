@@ -1,19 +1,27 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.1
+ * version : 2.0.2
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
 
-(function() {
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        global.numeral = factory();
+    }
+}(this, function () {
     /************************************
         Variables
     ************************************/
 
     var numeral,
         _,
-        VERSION = '2.0.1',
+        VERSION = '2.0.2',
         formats = {},
         locales = {},
         defaults = {
@@ -419,6 +427,8 @@
         }
 
         this[type + 's'][name] = format;
+
+        return format;
     };
 
 
@@ -637,40 +647,23 @@
         }
     });
 
+    return numeral;
+}));
 
-    /************************************
-        Exposing Numeral
-    ************************************/
+// numeral.js format configuration
+// format : bytes
+// author : Adam Draper : https://github.com/adamwdraper
 
-    // CommonJS module is defined
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = numeral;
-    }
-
-    /*global ender:false */
-    if (typeof ender === 'undefined') {
-        // here, `this` means `window` in the browser, or `global` on the server
-        // add `numeral` as a global object via a string identifier,
-        // for Closure Compiler 'advanced' mode
-        this['numeral'] = numeral;
-    }
-
-    /*global define:false */
+(function (global, factory) {
     if (typeof define === 'function' && define.amd) {
-        define([], function() {
-            return numeral;
-        });
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
     }
-}).call(this);
-
-/*
- * numeral.js format configuration
- * format : bytes
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
-        decimal = {
+}(this, function (numeral) {
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -740,16 +733,21 @@
             return value;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : currency
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : currency
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
@@ -797,16 +795,21 @@
             return output;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : exponential
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : exponential
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
@@ -839,25 +842,21 @@
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : ordinal
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : ordinal
+// author : Adam Draper : https://github.com/adamwdraper
 
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
     }
-
+}(this, function (numeral) {
     numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
@@ -877,16 +876,21 @@
             return output + ordinal;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : percentage
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : percentage
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
@@ -919,16 +923,21 @@
             return numeral._.stringToNumber(string) * 0.01;
         }
     });
-}());
+}));
 
-/*
- * numeral.js format configuration
- * format : time
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : time
+// author : Adam Draper : https://github.com/adamwdraper
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
@@ -962,4 +971,4 @@
             return Number(seconds);
         }
     });
-}());
+}));
