@@ -32,7 +32,8 @@ module.exports = function(grunt) {
                 files: {
                     'js/min/site.min.js': [
                         'js/sticky-spy.js',
-                        'js/numeral-with-locales.js',
+                        'js/numeral.js',
+                        'js/locales.js',
                         'js/site.js'
                     ]
                 }
