@@ -28,3 +28,4 @@ Icon
 # --------------------
 node_modules/
 .sass-cache
+temp/

@@ -650,20 +650,25 @@
     return numeral;
 }));
 
-// numeral.js format configuration
-// format : bytes
-// author : Adam Draper : https://github.com/adamwdraper
+/*! @preserve
+ * numeral.js
+ * formats: 2.0.2
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
+        define(['numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
+        factory(require('numeral'));
     } else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    var decimal = {
+    
+(function() {
+        var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -733,22 +738,11 @@
             return value;
         }
     });
-}));
+})();
 
-// numeral.js format configuration
-// format : currency
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('format', 'currency', {
+(function() {
+        numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -795,22 +789,11 @@
             return output;
         }
     });
-}));
+})();
 
-// numeral.js format configuration
-// format : exponential
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('format', 'exponential', {
+(function() {
+        numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -842,22 +825,11 @@
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
     });
-}));
+})();
 
-// numeral.js format configuration
-// format : ordinal
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('format', 'ordinal', {
+(function() {
+        numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -876,22 +848,11 @@
             return output + ordinal;
         }
     });
-}));
+})();
 
-// numeral.js format configuration
-// format : percentage
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('format', 'percentage', {
+(function() {
+        numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -923,22 +884,11 @@
             return numeral._.stringToNumber(string) * 0.01;
         }
     });
-}));
+})();
 
-// numeral.js format configuration
-// format : time
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('format', 'time', {
+(function() {
+        numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -971,4 +921,7 @@
             return Number(seconds);
         }
     });
+})();
+
+
 }));

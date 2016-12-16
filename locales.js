@@ -1,17 +1,22 @@
-// numeral.js locale configuration
-// locale : belgium-dutch (be-nl)
-// author : Dieter Luypaert : https://github.com/moeriki
+/*! @preserve
+ * numeral.js
+ * locales: 2.0.2
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
+        define(['numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
+        factory(require('numeral'));
     } else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    numeral.register('locale', 'be-nl', {
+    
+(function() {
+        numeral.register('locale', 'be-nl', {
         delimiters: {
             thousands: ' ',
             decimal  : ','
@@ -31,22 +36,11 @@
             symbol: '€ '
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Bulgarian
-// author : Don Vince : https://github.com/donvince/
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'bg', {
+(function() {
+        numeral.register('locale', 'bg', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -72,21 +66,11 @@
             symbol: 'лв'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : simplified chinese (chs)
-// author : badplum : https://github.com/badplum
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
+(function() {
+    
     numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
@@ -105,22 +89,11 @@
             symbol: '¥'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : czech (cs)
-// author : Anatoli Papirovski : https://github.com/apapirovski
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'cs', {
+(function() {
+        numeral.register('locale', 'cs', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -138,22 +111,11 @@
             symbol: 'Kč'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : danish denmark (dk)
-// author : Michael Storgaard : https://github.com/mstorgaard
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'da-dk', {
+(function() {
+        numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -171,22 +133,11 @@
             symbol: 'DKK'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : German in Switzerland (de-ch)
-// author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'de-ch', {
+(function() {
+        numeral.register('locale', 'de-ch', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -204,22 +155,11 @@
             symbol: 'CHF'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : German (de) – generally useful in Germany, Austria, Luxembourg, Belgium
-// author : Marco Krage : https://github.com/sinky
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'de', {
+(function() {
+        numeral.register('locale', 'de', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -237,22 +177,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : English Australia
-// author : Don Vince : https://github.com/donvince/
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'en-au', {
+(function() {
+        numeral.register('locale', 'en-au', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -274,22 +203,11 @@
             symbol: '$'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : english united kingdom (uk)
-// author : Dan Ristic : https://github.com/dristic
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'en-gb', {
+(function() {
+        numeral.register('locale', 'en-gb', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -311,22 +229,11 @@
             symbol: '£'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : english south africa (uk)
-// author : Etienne Boshoff : etienne@zailab.com
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'en-za', {
+(function() {
+        numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -348,22 +255,11 @@
             symbol: 'R'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : spanish Spain
-// author : Hernan Garcia : https://github.com/hgarcia
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'es-es', {
+(function() {
+        numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -386,22 +282,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : spanish
-// author : Hernan Garcia : https://github.com/hgarcia
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'es', {
+(function() {
+        numeral.register('locale', 'es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -424,23 +309,11 @@
             symbol: '$'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Estonian
-// author : Illimar Tambek : https://github.com/ragulka
-// Note: in Estonian, abbreviations are always separated from numbers with a space
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'et', {
+(function() {
+        numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -458,22 +331,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Finnish
-// author : Sami Saada : https://github.com/samitheberber
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'fi', {
+(function() {
+        numeral.register('locale', 'fi', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -491,22 +353,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : french (Canada) (fr-ca)
-// author : Léo Renaud-Allaire : https://github.com/renaudleo
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'fr-ca', {
+(function() {
+        numeral.register('locale', 'fr-ca', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -524,22 +375,11 @@
             symbol: '$'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : french (fr-ch)
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'fr-ch', {
+(function() {
+        numeral.register('locale', 'fr-ch', {
         delimiters: {
             thousands: '\'',
             decimal: '.'
@@ -557,22 +397,11 @@
             symbol: 'CHF'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : french (fr)
-// author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'fr', {
+(function() {
+        numeral.register('locale', 'fr', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -590,22 +419,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Hungarian (hu)
-// author : Peter Bakondy : https://github.com/pbakondy
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'hu', {
+(function() {
+        numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -623,22 +441,11 @@
             symbol: ' Ft'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : italian Italy (it)
-// author : Giacomo Trombi : http://cinquepunti.it
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'it', {
+(function() {
+        numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -656,22 +463,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : japanese
-// author : teppeis : https://github.com/teppeis
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'ja', {
+(function() {
+        numeral.register('locale', 'ja', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -689,22 +485,11 @@
             symbol: '¥'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Latvian (lv)
-// author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'lv', {
+(function() {
+        numeral.register('locale', 'lv', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -722,22 +507,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : netherlands-dutch (nl-nl)
-// author : Dave Clayton : https://github.com/davedx
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'nl-nl', {
+(function() {
+        numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
             decimal  : ','
@@ -756,22 +530,11 @@
             symbol: '€ '
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : norwegian (bokmål)
-// author : Ove Andersen : https://github.com/azzlack
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'no', {
+(function() {
+        numeral.register('locale', 'no', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -789,22 +552,11 @@
             symbol: 'kr'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : polish (pl)
-// author : Dominik Bulaj : https://github.com/dominikbulaj
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'pl', {
+(function() {
+        numeral.register('locale', 'pl', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -822,22 +574,11 @@
             symbol: 'PLN'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : portuguese brazil (pt-br)
-// author : Ramiro Varandas Jr : https://github.com/ramirovjr
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'pt-br', {
+(function() {
+        numeral.register('locale', 'pt-br', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -855,22 +596,11 @@
             symbol: 'R$'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : portuguese (pt-pt)
-// author : Diogo Resende : https://github.com/dresende
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'pt-pt', {
+(function() {
+        numeral.register('locale', 'pt-pt', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -888,22 +618,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Russian for the Ukraine (ru-ua)
-// author : Anatoli Papirovski : https://github.com/apapirovski
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'ru-ua', {
+(function() {
+        numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -924,22 +643,11 @@
             symbol: '\u20B4'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : russian (ru)
-// author : Anatoli Papirovski : https://github.com/apapirovski
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'ru', {
+(function() {
+        numeral.register('locale', 'ru', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -960,22 +668,11 @@
             symbol: 'руб.'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : slovak (sk)
-// author : Ahmed Al Hafoudh : http://www.freevision.sk
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'sk', {
+(function() {
+        numeral.register('locale', 'sk', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -993,22 +690,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : slovenian (sl)
-// author : Boštjan Pišler : https://github.com/BostjanPisler
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'sl', {
+(function() {
+        numeral.register('locale', 'sl', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -1026,22 +712,11 @@
             symbol: '€'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : thai (th)
-// author : Sathit Jittanupat : https://github.com/jojosati
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-
+(function() {
+    
 
     numeral.register('locale', 'th', {
         delimiters: {
@@ -1061,22 +736,11 @@
             symbol: '฿'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : turkish (tr)
-// author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    var suffixes = {
+(function() {
+        var suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -1128,22 +792,11 @@
             symbol: '\u20BA'
         }
     });
-}));
+})();
 
-// numeral.js locale configuration
-// locale : Ukrainian for the Ukraine (uk-ua)
-// author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('../numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
-    numeral.register('locale', 'uk-ua', {
+(function() {
+        numeral.register('locale', 'uk-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -1164,4 +817,7 @@
             symbol: '\u20B4'
         }
     });
+})();
+
+
 }));
