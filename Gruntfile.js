@@ -56,7 +56,7 @@ module.exports = function(grunt) {
             options: {
                 files: [
                     'numeral.js',
-                    'dist/locales/*.js',
+                    'locales.js',
                     'tests/numeral.js',
                     'tests/formats/*.js',
                     'tests/locales/*.js'
@@ -95,24 +95,16 @@ module.exports = function(grunt) {
                         src: [
                             'locales/*.js'
                         ],
-                        dest: 'dist/',
+                        dest: 'min/',
                         ext: '.min.js'
                     },
                     {
                         expand: true,
-                        cwd: 'dist/',
                         src: [
+                            'numeral.js',
                             'locales.js'
                         ],
-                        dest: 'dist/',
-                        ext: '.min.js'
-                    },
-                    {
-                        expand: true,
-                        src: [
-                            'numeral.js'
-                        ],
-                        dest: 'dist/',
+                        dest: 'min/',
                         ext: '.min.js'
                     }
                 ]
