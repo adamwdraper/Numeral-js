@@ -9,7 +9,7 @@
     if (typeof define === 'function' && define.amd) {
         define(['numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
-        factory(require('numeral'));
+        factory(require('./numeral'));
     } else {
         factory(global.numeral);
     }
