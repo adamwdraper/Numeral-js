@@ -68,7 +68,7 @@
 </pre>
 or include from cdnjs.com
 <pre>
-&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.0/numeral.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.2/numeral.min.js&quot;&gt;&lt;/script&gt;
 </pre>
 <h4>In Node.js</h4>
 <pre>
@@ -85,7 +85,12 @@ var numeral = require('numeral');
 <pre>
 var myNumeral = numeral(1000);
 
-var value = numeral.value();
+var value = myNumeral.value();
+// 1000
+
+var myNumeral2 = numeral('1,000');
+
+var value2 = myNumeral2.value();
 // 1000
 </pre>
                 <table id="create" class="table striped bordered">
