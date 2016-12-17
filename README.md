@@ -58,8 +58,6 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 ### 2.0.2
 
-Repo change: Built files are now in the `dist` directory
-
 Bug fix: Updated module definitions
 
 ### 2.0.1
