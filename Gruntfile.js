@@ -78,6 +78,20 @@ module.exports = function(grunt) {
                 configFile: 'karma-ci.conf.js'
             }
         },
+        copy: {
+            locales: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/',
+                        src: [
+                            'locales/*.js'
+                        ],
+                        dest: './'
+                    }
+                ]
+            }
+        },
         compile: {
             locales: {
                 type: 'locales'
@@ -138,6 +152,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
@@ -154,7 +169,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'jshint',
         'compile',
-        'compile:numeral'
+        'compile:numeral',
+        'copy'
     ]);
 
     grunt.registerTask('test', [
