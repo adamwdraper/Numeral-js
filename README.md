@@ -21,7 +21,7 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 # Contributing
 
-#### Important: Please create your branch from and submit pull requests to the `develop` branch.
+#### Important: Please create your branch from and submit pull requests to the `develop` branch.  All pull requests must include the appropriate tests.
 
 1. Fork the library
 
@@ -35,9 +35,14 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 6. To test your tests, run `grunt`
 
-7. When all your tests are passing, run `grunt build` to minify all files
+7. When all your tests are passing, run `grunt dist` to compile and minify all files
 
 8. Submit a pull request to the `develop` branch.
+
+
+### Formats
+
+Formats now exist in their own files and act more or less as plugins. Check out the [bytes format](https://github.com/adamwdraper/Numeral-js/blob/master/src/formats/bytes.js) for an example of how to create one.
 
 
 ### Locales

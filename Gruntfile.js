@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             grunt.file.write('temp/' + type + '.js', content);
 
             if (type === 'locales') {
-                grunt.file.write('dist/' + type + '.js', grunt.template.process(template, {
+                grunt.file.write('locales.js', grunt.template.process(template, {
                     data: {
                         type: type,
                         content: content
