@@ -1,6 +1,6 @@
 // Node
 if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../src/numeral');
+    var numeral = require('../numeral');
     var expect = require('chai').expect;
 }
 

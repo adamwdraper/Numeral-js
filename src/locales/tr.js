@@ -1,11 +1,17 @@
-/*
- * numeral.js locale configuration
- * locale : turkish (tr)
- * author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
-        suffixes = {
+// numeral.js locale configuration
+// locale : turkish (tr)
+// author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
+
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+    var suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -57,4 +63,4 @@
             symbol: '\u20BA'
         }
     });
-}());
+}));

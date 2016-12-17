@@ -1,8 +1,7 @@
 
 // Node
 if (typeof module !== 'undefined' && module.exports) {
-    var numeral = require('../../src/numeral');
-    var format = require('../../src/formats/ordinal');
+    var numeral = require('../../numeral');
     var expect = require('chai').expect;
 }
 
