@@ -1,20 +1,16 @@
-/*
- * numeral.js format configuration
- * format : ordinal
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
+// numeral.js format configuration
+// format : ordinal
+// author : Adam Draper : https://github.com/adamwdraper
 
-    // get numeral from environment
-    if (typeof window !== 'undefined' && this.numeral) {
-        // Browser
-        numeral = this.numeral;
-    } else if (typeof module !== 'undefined' && module.exports) {
-        // Node
-        numeral = require('../numeral');
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
     }
-
+}(this, function (numeral) {
     numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
@@ -34,4 +30,4 @@
             return output + ordinal;
         }
     });
-}());
+}));

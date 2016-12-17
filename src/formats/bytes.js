@@ -1,11 +1,17 @@
-/*
- * numeral.js format configuration
- * format : bytes
- * author : Adam Draper : https://github.com/adamwdraper
- */
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral'),
-        decimal = {
+// numeral.js format configuration
+// format : bytes
+// author : Adam Draper : https://github.com/adamwdraper
+
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -75,4 +81,4 @@
             return value;
         }
     });
-}());
+}));

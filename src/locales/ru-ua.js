@@ -1,9 +1,16 @@
 // numeral.js locale configuration
 // locale : Russian for the Ukraine (ru-ua)
 // author : Anatoli Papirovski : https://github.com/apapirovski
-(function () {
-    var numeral = typeof window !== 'undefined' && window.numeral ? window.numeral : require('../numeral');
 
+(function (global, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../numeral'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        factory(require('../numeral'));
+    } else {
+        factory(global.numeral);
+    }
+}(this, function (numeral) {
     numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
@@ -25,4 +32,4 @@
             symbol: '\u20B4'
         }
     });
-}());
+}));

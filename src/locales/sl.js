@@ -1,6 +1,6 @@
 // numeral.js locale configuration
-// locale : netherlands-dutch (nl-nl)
-// author : Dave Clayton : https://github.com/davedx
+// locale : slovenian (sl)
+// author : Boštjan Pišler : https://github.com/BostjanPisler
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -11,23 +11,22 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    numeral.register('locale', 'nl-nl', {
+    numeral.register('locale', 'sl', {
         delimiters: {
             thousands: '.',
-            decimal  : ','
+            decimal: ','
         },
         abbreviations: {
-            thousand : 'k',
-            million  : 'mln',
-            billion  : 'mrd',
-            trillion : 'bln'
+            thousand: 'k',
+            million: 'mio',
+            billion: 'mrd',
+            trillion: 'trilijon'
         },
-        ordinal : function (number) {
-            var remainder = number % 100;
-            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+        ordinal: function () {
+            return '.';
         },
         currency: {
-            symbol: '€ '
+            symbol: '€'
         }
     });
 }));
