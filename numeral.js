@@ -375,13 +375,11 @@
     // no arguments are passed in, it will simply return the current global
     // locale key.
     numeral.locale = function(key) {
-        if (!key) {
-            return options.currentLocale;
+        if (key) {
+            options.currentLocale = key.toLowerCase();
         }
 
-        options.currentLocale = key.toLowerCase();
-
-        return numeral;
+        return options.currentLocale;
     };
 
     // This function provides access to the loaded locale data.  If
@@ -647,26 +645,8 @@
         }
     });
 
-    return numeral;
-}));
-
-/*! @preserve
- * numeral.js
- * formats: 2.0.2
- * license : MIT
- * http://adamwdraper.github.com/Numeral-js/
- */
-
-(function (global, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        factory(require('numeral'));
-    } else {
-        factory(global.numeral);
-    }
-}(this, function (numeral) {
     
+
 (function() {
         var decimal = {
             base: 1000,
@@ -923,5 +903,5 @@
     });
 })();
 
-
+return numeral;
 }));

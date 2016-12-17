@@ -1,13 +1,13 @@
 module.exports = function(grunt) {
 
-    var compileFile = function() {
+    var compileType = function() {
             var type = this.data.type;
             var template = grunt.file.read('templates/types.js');
             var anon = grunt.file.read('templates/anon.js');
             var files =  grunt.file.expand([
                 'src/' + type + '/*.js'
             ]);
-            var regexp = /}\(this, function \(numeral\) {\s([\s\S]+)(?:\s}\)\);)/;
+            var regexp = /\}\(this, function \(numeral\) \{\s([\s\S]+)(?:\s\}\)\);)/;
             var content = '';
             var file;
             var i;
@@ -22,12 +22,26 @@ module.exports = function(grunt) {
                 }) + '\n';
             }
 
-            grunt.file.write('temp/' + type + '.js', grunt.template.process(template, {
-                data: {
-                    type: type,
-                    content: content
-                }
-            }));
+            grunt.file.write('temp/' + type + '.js', content);
+
+            if (type === 'locales') {
+                grunt.file.write('dist/' + type + '.js', grunt.template.process(template, {
+                    data: {
+                        type: type,
+                        content: content
+                    }
+                }));
+            }
+        },
+        compileNumeral = function() {
+            var regexp = /([\s])return numeral;(?:\s\}\)\);)/;
+            var numeral = grunt.file.read('src/numeral.js');
+            var formats = grunt.file.read('temp/formats.js');
+            var index = numeral.indexOf('return numeral;');
+
+            numeral = numeral.substr(0, index) + '\n' + formats + numeral.substr(index);
+
+            grunt.file.write('numeral.js', numeral);
         };
 
     grunt.initConfig({
@@ -82,37 +96,30 @@ module.exports = function(grunt) {
                         src: [
                             'locales/*.js'
                         ],
-                        dest: 'min/',
+                        dest: 'dist/',
+                        ext: '.min.js'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'dist/',
+                        src: [
+                            'locales.js'
+                        ],
+                        dest: 'dist/',
                         ext: '.min.js'
                     },
                     {
                         expand: true,
                         src: [
-                            'numeral.js',
-                            'locales.js'
+                            'numeral.js'
                         ],
-                        dest: 'min/',
+                        dest: 'dist/',
                         ext: '.min.js'
                     }
                 ]
             },
             options: {
                 preserveComments: 'some'
-            }
-        },
-        concat: {
-            numeral: {
-                src: [
-                    'src/numeral.js',
-                    'temp/formats.js'
-                ],
-                dest: 'numeral.js'
-            },
-            locales: {
-                src: [
-                    'temp/locales.js'
-                ],
-                dest: 'locales.js'
             }
         },
         jshint: {
@@ -129,7 +136,6 @@ module.exports = function(grunt) {
                 'eqnull': true,
                 'newcap': true,
                 'noarg': true,
-                'onevar': true,
                 'undef': true,
                 'sub': true,
                 'strict': false,
@@ -143,70 +149,47 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-karma');
-
-    grunt.registerTask('build:locales', function() {
-        var template = grunt.file.read('templates/locales.js');
-        var anon = grunt.file.read('templates/anon.js');
-        var files =  grunt.file.expand([
-            'src/locales/*.js'
-        ]);
-        var regexp = /}\(this, function \(numeral\) {\s([\s\S]+)(?:\s}\)\);)/;
-        var content = '';
-        var file;
-        var i;
-
-        for (i = 0; i < files.length; i++) {
-            file = grunt.file.read(files[i]);
-
-            content += '\n' + grunt.template.process(anon, {
-                data: {
-                    content: file.match(regexp)[1]
-                }
-            }) + '\n';
-        }
-
-        grunt.file.write('locales.js', grunt.template.process(template, {
-            data: {
-                content: content
-            }
-        }));
-    });
-
-    grunt.registerMultiTask('compile', compileFile);
 
     grunt.registerTask('default', [
         'test'
     ]);
 
-    grunt.registerTask('test', [
+    grunt.registerMultiTask('compile', compileType);
+
+    grunt.registerTask('compile:numeral', compileNumeral);
+
+    grunt.registerTask('build', [
         'jshint',
+        'compile',
+        'compile:numeral'
+    ]);
+
+    grunt.registerTask('test', [
+        'build',
         'mochaTest',
         'karma:local'
     ]);
 
     grunt.registerTask('test:npm', [
-        'jshint',
+        'build',
         'mochaTest'
     ]);
 
     grunt.registerTask('test:browser', [
-        'jshint',
+        'build',
         'karma:local'
     ]);
 
-    // P
-    grunt.registerTask('build', [
-        'compile',
-        'concat',
+    grunt.registerTask('dist', [
+        'build',
         'uglify'
     ]);
 
     // Travis CI task.
     grunt.registerTask('travis', [
-        'jshint',
+        'build',
         'mochaTest',
         'karma:ci'
     ]);

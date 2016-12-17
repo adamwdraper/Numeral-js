@@ -375,13 +375,11 @@
     // no arguments are passed in, it will simply return the current global
     // locale key.
     numeral.locale = function(key) {
-        if (!key) {
-            return options.currentLocale;
+        if (key) {
+            options.currentLocale = key.toLowerCase();
         }
 
-        options.currentLocale = key.toLowerCase();
-
-        return numeral;
+        return options.currentLocale;
     };
 
     // This function provides access to the loaded locale data.  If
