@@ -55,9 +55,8 @@ module.exports = function(grunt) {
         karma: {
             options: {
                 files: [
-                    'src/numeral.js',
-                    'src/formats/*.js',
-                    'src/locales/*.js',
+                    'numeral.js',
+                    'dist/locales/*.js',
                     'tests/numeral.js',
                     'tests/formats/*.js',
                     'tests/locales/*.js'
