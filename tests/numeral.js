@@ -152,6 +152,7 @@ describe('Numeral', function() {
                     [-10000,'(0,0.0000)','(10,000.0000)'],
                     [-12300,'+0,0.0000','-12,300.0000'],
                     [1230,'+0,0','+1,230'],
+                    [-1230.4,'0,0.0+','1,230.4-'],
                     [100.78, '0', '101'],
                     [100.28, '0', '100'],
                     [1.932,'0.0','1.9'],
@@ -434,6 +435,22 @@ describe('Numeral', function() {
 
                     // ceil
                     expect(numeral(tests[i][0]).format(tests[i][1], Math.ceil)).to.equal(tests[i][3]);
+                }
+            });
+        });
+    });
+
+    describe('Utilities', function() {
+        describe('Insert', function() {
+            it('should insert into string', function() {
+                var tests = [
+                        ['1000', '+', 0, '+1000'],
+                        ['1000', '-', 4, '1000-']
+                    ],
+                    i;
+
+                for (i = 0; i < tests.length; i++) {
+                    expect(numeral._.insert(tests[i][0], tests[i][1], tests[i][2])).to.equal(tests[i][3]);
                 }
             });
         });
