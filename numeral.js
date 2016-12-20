@@ -102,13 +102,14 @@
         numberToFormat: function(value, format, roundingFunction) {
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
-                signed = false,
                 optDec = false,
                 abbr = '',
                 trillion = 1000000000000,
                 billion = 1000000000,
                 million = 1000000,
                 thousand = 1000,
+                decimal = '',
+                neg = false,
                 abbrForce, // force abbreviation
                 abs,
                 min,
@@ -116,9 +117,9 @@
                 power,
                 int,
                 precision,
+                signed,
                 thousands,
-                decimal = '',
-                neg = false;
+                output;
 
             // make sure we never format a null value
             value = value || 0;
@@ -129,10 +130,10 @@
             // if both are present we default to parentheses
             if (numeral._.includes(format, '(')) {
                 negP = true;
-                format = format.slice(1, -1);
-            } else if (numeral._.includes(format, '+')) {
-                signed = true;
-                format = format.replace(/\+/g, '');
+                format = format.replace(/[\(|\)]/g, '');
+            } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
+                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
+                format = format.replace(/[\+|\-]/g, '');
             }
 
             // see if abbreviation is wanted
@@ -215,7 +216,19 @@
                 int = '';
             }
 
-            return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
+            output = int + decimal + (abbr ? abbr : '');
+
+            if (negP) {
+                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
+            } else {
+                if (signed >= 0) {
+                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
+                } else if (neg) {
+                    output = '-' + output;
+                }
+            }
+
+            return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
         stringToNumber: function(string) {
@@ -268,6 +281,9 @@
         },
         includes: function(string, search) {
             return string.indexOf(search) !== -1;
+        },
+        insert: function(string, subString, start) {
+            return string.slice(0, start) + subString + string.slice(start);
         },
         reduce: function(array, callback /*, initialValue*/) {
             if (this === null) {
@@ -728,12 +744,13 @@
         },
         format: function(value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale],
-                symbolIndex = format.indexOf('$'),
-                openParenIndex = format.indexOf('('),
-                minusSignIndex = format.indexOf('-'),
-                space = numeral._.includes(format, ' $') || numeral._.includes(format, '$ ') ? ' ' : '',
-                spliceIndex,
-                output;
+                symbols = {
+                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
+                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                },
+                output,
+                symbol,
+                i;
 
             // strip format of spaces and $
             format = format.replace(/\s?\$\s?/, '');
@@ -741,30 +758,42 @@
             // format the number
             output = numeral._.numberToFormat(value, format, roundingFunction);
 
-            // position the symbol
-            if (symbolIndex <= 1) {
-                if (numeral._.includes(output, '(') || numeral._.includes(output, '-')) {
-                    output = output.split('');
+            // update the before and after based on value
+            if (value >= 0) {
+                symbols.before = symbols.before.replace(/[\-\(]/, '');
+                symbols.after = symbols.after.replace(/[\-\)]/, '');
+            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+                symbols.before = '-' + symbols.before;
+            }
 
-                    spliceIndex = symbolIndex < openParenIndex || symbolIndex < minusSignIndex ? 0 : 1;
+            // loop through each before symbol
+            for (i = 0; i < symbols.before.length; i++) {
+                symbol = symbols.before[i];
 
-                    output.splice(spliceIndex, 0, locale.currency.symbol + space);
-
-                    output = output.join('');
-                } else {
-                    output = locale.currency.symbol + space + output;
-                }
-            } else {
-                if (numeral._.includes(output, ')')) {
-                    output = output.split('');
-
-                    output.splice(-1, 0, space + locale.currency.symbol);
-
-                    output = output.join('');
-                } else {
-                    output = output + space + locale.currency.symbol;
+                switch (symbol) {
+                    case '$':
+                        output = numeral._.insert(output, locale.currency.symbol, i);
+                        break;
+                    case ' ':
+                        output = numeral._.insert(output, ' ', i);
+                        break;
                 }
             }
+
+            // loop through each after symbol
+            for (i = symbols.after.length - 1; i >= 0; i--) {
+                symbol = symbols.after[i];
+
+                switch (symbol) {
+                    case '$':
+                        output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                        break;
+                    case ' ':
+                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i)));
+                        break;
+                }
+            }
+
 
             return output;
         }

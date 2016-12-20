@@ -56,6 +56,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.1.0
+
+Bug fix: Signed currency is inconsistent
+
 ### 2.0.2
 
 Bug fix: Updated module definitions
