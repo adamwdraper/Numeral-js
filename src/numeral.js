@@ -132,7 +132,7 @@
                 negP = true;
                 format = format.replace(/[\(|\)]/g, '');
             } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
-                signed = numeral._.includes(format, '+') ? format.indexOf('+') : format.indexOf('-');
+                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
                 format = format.replace(/[\+|\-]/g, '');
             }
 
