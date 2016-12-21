@@ -229,8 +229,23 @@ module.exports = function(grunt) {
             }
         });
 
+        grunt.config('string-replace.templates', {
+            files: {
+                'templates/types.js': 'templates/types.js'
+            },
+            options: {
+                replacements: [
+                    {
+                        pattern: /: .*/,
+                        replacement: ': ' + version
+                    }
+                ]
+            }
+        });
+
         grunt.task.run([
             'string-replace:json',
+            'string-replace:templates',
             'string-replace:numeral'
         ]);
     });
