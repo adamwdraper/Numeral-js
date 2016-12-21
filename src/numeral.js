@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.3
+ * version : 2.0.4
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -21,7 +21,7 @@
 
     var numeral,
         _,
-        VERSION = '2.0.3',
+        VERSION = '2.0.4',
         formats = {},
         locales = {},
         defaults = {
@@ -102,13 +102,14 @@
         numberToFormat: function(value, format, roundingFunction) {
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
-                signed = false,
                 optDec = false,
                 abbr = '',
                 trillion = 1000000000000,
                 billion = 1000000000,
                 million = 1000000,
                 thousand = 1000,
+                decimal = '',
+                neg = false,
                 abbrForce, // force abbreviation
                 abs,
                 min,
@@ -116,9 +117,9 @@
                 power,
                 int,
                 precision,
+                signed,
                 thousands,
-                decimal = '',
-                neg = false;
+                output;
 
             // make sure we never format a null value
             value = value || 0;
@@ -129,10 +130,10 @@
             // if both are present we default to parentheses
             if (numeral._.includes(format, '(')) {
                 negP = true;
-                format = format.slice(1, -1);
-            } else if (numeral._.includes(format, '+')) {
-                signed = true;
-                format = format.replace(/\+/g, '');
+                format = format.replace(/[\(|\)]/g, '');
+            } else if (numeral._.includes(format, '+') || numeral._.includes(format, '-')) {
+                signed = numeral._.includes(format, '+') ? format.indexOf('+') : value < 0 ? format.indexOf('-') : -1;
+                format = format.replace(/[\+|\-]/g, '');
             }
 
             // see if abbreviation is wanted
@@ -167,12 +168,13 @@
                 }
             }
 
-
+            // check for optional decimals
             if (numeral._.includes(format, '[.]')) {
                 optDec = true;
                 format = format.replace('[.]', '.');
             }
 
+            // break number and format
             int = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
@@ -201,6 +203,24 @@
                 int = numeral._.toFixed(value, null, roundingFunction);
             }
 
+            // check abbreviation again after rounding
+            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+                int = String(Number(int) / 1000);
+
+                switch (abbr) {
+                    case locale.abbreviations.thousand:
+                        abbr = locale.abbreviations.million;
+                        break;
+                    case locale.abbreviations.million:
+                        abbr = locale.abbreviations.billion;
+                        break;
+                    case locale.abbreviations.billion:
+                        abbr = locale.abbreviations.trillion;
+                        break;
+                }
+            }
+
+
             // format number
             if (numeral._.includes(int, '-')) {
                 int = int.slice(1);
@@ -215,7 +235,19 @@
                 int = '';
             }
 
-            return (negP && neg ? '(' : '') + (!negP && neg ? '-' : '') + (!neg && signed ? '+' : '') + int + decimal + (abbr ? abbr : '') + (negP && neg ? ')' : '');
+            output = int + decimal + (abbr ? abbr : '');
+
+            if (negP) {
+                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
+            } else {
+                if (signed >= 0) {
+                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
+                } else if (neg) {
+                    output = '-' + output;
+                }
+            }
+
+            return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
         stringToNumber: function(string) {
@@ -268,6 +300,9 @@
         },
         includes: function(string, search) {
             return string.indexOf(search) !== -1;
+        },
+        insert: function(string, subString, start) {
+            return string.slice(0, start) + subString + string.slice(start);
         },
         reduce: function(array, callback /*, initialValue*/) {
             if (this === null) {

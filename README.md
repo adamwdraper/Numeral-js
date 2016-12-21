@@ -56,6 +56,12 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.4
+
+Bug fix: Incorrect abbreviations for values rounded up [#187](https://github.com/adamwdraper/Numeral-js/issues/187)
+
+Bug fix: Signed currency is inconsistent [#89](https://github.com/adamwdraper/Numeral-js/issues/89)
+
 ### 2.0.2
 
 Bug fix: Updated module definitions
