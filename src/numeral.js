@@ -168,12 +168,13 @@
                 }
             }
 
-
+            // check for optional decimals
             if (numeral._.includes(format, '[.]')) {
                 optDec = true;
                 format = format.replace('[.]', '.');
             }
 
+            // break number and format
             int = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
@@ -201,6 +202,24 @@
             } else {
                 int = numeral._.toFixed(value, null, roundingFunction);
             }
+
+            // check abbreviation again after rounding
+            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+                int = String(Number(int) / 1000);
+
+                switch (abbr) {
+                    case locale.abbreviations.thousand:
+                        abbr = locale.abbreviations.million;
+                        break;
+                    case locale.abbreviations.million:
+                        abbr = locale.abbreviations.billion;
+                        break;
+                    case locale.abbreviations.billion:
+                        abbr = locale.abbreviations.trillion;
+                        break;
+                }
+            }
+
 
             // format number
             if (numeral._.includes(int, '-')) {
