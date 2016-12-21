@@ -44,6 +44,8 @@ module.exports = function(grunt) {
             grunt.file.write('numeral.js', numeral);
         };
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         mochaTest : {
             all: [
@@ -152,12 +154,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-karma');
-
     grunt.registerTask('default', [
         'test'
     ]);
@@ -193,6 +189,32 @@ module.exports = function(grunt) {
         'build',
         'uglify'
     ]);
+
+    grunt.registerTask('version', function (version) {
+        if (!version || version.split('.').length !== 3) {
+            grunt.fail.fatal('malformed version. Use\n\n    grunt version:1.2.3');
+        }
+
+        grunt.config('string-replace.json', {
+            files: {
+                'package.json': 'package.json',
+                'component.json': 'component.json',
+                'bower.json': 'bower.json'
+            },
+            options: {
+                replacements: [
+                    {
+                        pattern: /"version": .*/,
+                        replacement: '"version": "' + version + '",'
+                    }
+                ]
+            }
+        });
+
+        grunt.task.run([
+            'string-replace:json'
+        ]);
+    });
 
     // Travis CI task.
     grunt.registerTask('travis', [
