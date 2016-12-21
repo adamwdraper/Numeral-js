@@ -211,8 +211,27 @@ module.exports = function(grunt) {
             }
         });
 
+        grunt.config('string-replace.numeral', {
+            files: {
+                'src/numeral.js': 'src/numeral.js'
+            },
+            options: {
+                replacements: [
+                    {
+                        pattern: /version : .*/,
+                        replacement: 'version : ' + version
+                    },
+                    {
+                        pattern: /VERSION = .*/,
+                        replacement: 'VERSION = \'' + version + '\','
+                    }
+                ]
+            }
+        });
+
         grunt.task.run([
-            'string-replace:json'
+            'string-replace:json',
+            'string-replace:numeral'
         ]);
     });
 
