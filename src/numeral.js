@@ -220,7 +220,6 @@
                 }
             }
 
-
             // format number
             if (numeral._.includes(int, '-')) {
                 int = int.slice(1);
@@ -237,13 +236,16 @@
 
             output = int + decimal + (abbr ? abbr : '');
 
-            if (negP) {
-                output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
-            } else {
-                if (signed >= 0) {
-                    output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
-                } else if (neg) {
-                    output = '-' + output;
+            // adding signs or negative parentheses
+            if (Number(int + decimal) !== 0) {
+                if (negP) {
+                    output = (negP && neg ? '(' : '') + output + (negP && neg ? ')' : '');
+                } else {
+                    if (signed >= 0) {
+                        output = signed === 0 ? (neg ? '-' : '+') + output : output + (neg ? '-' : '+');
+                    } else if (neg) {
+                        output = '-' + output;
+                    }
                 }
             }
 
