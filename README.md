@@ -56,6 +56,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.1.0
+
+Bug fix: Removed sign for values of 0 [#430](https://github.com/adamwdraper/Numeral-js/issues/430)
+
 ### 2.0.4
 
 Bug fix: Incorrect abbreviations for values rounded up [#187](https://github.com/adamwdraper/Numeral-js/issues/187)
