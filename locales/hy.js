@@ -17,10 +17,10 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'հազ.',
-            million: 'միլ.',
-            billion: 'մլրդ.',
-            trillion: 'տրլն.'
+            thousand: 'հազ',
+            million: 'միլլ',
+            billion: 'մլրդ',
+            trillion: 'տրլն'
         },
         ordinal: function (number) {
             return number === 1 ? '-ին' : '-րդ';
