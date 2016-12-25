@@ -1,5 +1,5 @@
 // numeral.js locale configuration
-// locale : Armenian ('hy', 'arm', 'am')
+// locale : Armenian ('hy') ('arm')
 // author : Arman Yeghiazaryan : https://github.com/otanim
 
 (function (global, factory) {
@@ -17,16 +17,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'հազ',
-            million: 'միլլ',
-            billion: 'մլրդ',
-            trillion: 'տրլն'
+            thousand: ' հազ․',
+            million: ' միլլ․',
+            billion: ' մլրդ․',
+            trillion: ' տրլն․'
         },
         ordinal: function (number) {
             return number === 1 ? '-ին' : '-րդ';
         },
         currency: {
-            symbol: '֏'
+            symbol: ' դրամ'
         }
     });
 }));
