@@ -5,7 +5,7 @@ if (typeof module !== 'undefined' && module.exports) {
     var expect = require('chai').expect;
 }
 
-describe('Locale: ru', function() {
+describe('Locale: hy', function() {
 
     before(function() {
         numeral.locale('hy');
@@ -26,13 +26,13 @@ describe('Locale: ru', function() {
                 [-0.23,'.00','-,23'],
                 [-0.23,'(.00)','(,23)'],
                 [0.23,'0.00000','0,23000'],
-                [1230974,'0.0a','1,2 հազ․'],
+                [1230974,'0.0a','1,2 միլլ․'],
                 [1460,'0a','1 հազ․'],
                 [-104000,'0a','-104 հազ․'],
-                [1,'0o','1.'],
-                [52,'0o','52.'],
-                [23,'0o','23.'],
-                [100,'0o','100.'],
+                [1,'0o','1-ին'],
+                [52,'0o','52-րդ'],
+                [23,'0o','23-րդ'],
+                [100,'0o','100-րդ'],
                 [1,'0[.]0','1']
             ];
 
