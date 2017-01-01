@@ -290,6 +290,23 @@
                 // remove non numbers
                 string = string.replace(/[^0-9\.]+/g, '');
 
+                // only leave a single decimal delimiters
+                var passedDelimiter = false;
+                string = string
+                    .split('')
+                    .filter(function(character) {
+                        if(character === '.') {
+                            if(passedDelimiter) {
+                                return false;
+                            } else {
+                                passedDelimiter = true;
+                            }
+                        }
+
+                        return true;
+                    })
+                    .join('');
+
                 value *= Number(string);
             }
 
