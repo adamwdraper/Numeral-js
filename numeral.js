@@ -28,13 +28,15 @@
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
-            defaultFormat: '0,0'
+            defaultFormat: '0,0',
+            scalePercentBy100: true
         },
         options = {
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
         };
 
 
@@ -683,7 +685,8 @@
     
 
 (function() {
-        var decimal = {
+    
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -752,12 +755,13 @@
 
             return value;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -816,12 +820,13 @@
 
             return output;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -852,12 +857,13 @@
 
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -875,12 +881,13 @@
 
             return output + ordinal;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -889,7 +896,9 @@
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
 
-            value = value * 100;
+            if (numeral.options.scalePercentBy100) {
+                value = value * 100;
+            }
 
             // check for space before %
             format = format.replace(/\s?\%/, '');
@@ -909,14 +918,19 @@
             return output;
         },
         unformat: function(string) {
-            return numeral._.stringToNumber(string) * 0.01;
+            var number = numeral._.stringToNumber(string);
+            if (numeral.options.scalePercentBy100) {
+                return number * 0.01;
+            }
+            return number;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'time', {
+    
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -948,7 +962,7 @@
             }
             return Number(seconds);
         }
-    });
+    });
 })();
 
 return numeral;
