@@ -445,7 +445,7 @@
 
 
 (function () {
-        numeral.register('locale', 'hy', {
+        numeral.register('locale', 'hy-AM', {
         delimiters: {
             thousands: ' ',
             decimal: ','

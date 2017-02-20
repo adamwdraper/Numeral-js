@@ -1,5 +1,5 @@
 // numeral.js locale configuration
-// locale : Armenian ('hy') ('arm')
+// locale : Armenian ('hy-AM') ('arm')
 // author : Arman Yeghiazaryan : https://github.com/otanim
 
 (function (global, factory) {
@@ -11,7 +11,7 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    numeral.register('locale', 'hy', {
+    numeral.register('locale', 'hy-AM', {
         delimiters: {
             thousands: ' ',
             decimal: ','

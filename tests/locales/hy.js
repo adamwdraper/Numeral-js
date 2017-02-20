@@ -5,10 +5,10 @@ if (typeof module !== 'undefined' && module.exports) {
     var expect = require('chai').expect;
 }
 
-describe('Locale: hy', function() {
+describe('Locale: hy-AM', function() {
 
     before(function() {
-        numeral.locale('hy');
+        numeral.locale('hy-AM');
     });
 
     after(function() {
