@@ -7,17 +7,21 @@ A javascript library for formatting and manipulating numbers.
 
 # Travis Build Status
 
-Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.png)](https://travis-ci.org/adamwdraper/Numeral-js)
+Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.svg)](https://travis-ci.org/adamwdraper/Numeral-js)
 
-Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.png?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
+Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
 
 # NPM
 
-[![NPM](https://nodei.co/npm/numeral.png?downloads=true)](https://nodei.co/npm/numeral/)
+[![NPM](https://nodei.co/npm/numeral.svg?downloads=true)](https://nodei.co/npm/numeral/)
+
+#CDNJS
+
+[![CDNJS](https://img.shields.io/cdnjs/v/numeral.js.svg)](https://cdnjs.com/libraries/numeral.js)
 
 # Contributing
 
-Please submit all pull requests to the `develop` branch.
+#### Important: Please create your branch from and submit pull requests to the `develop` branch.  All pull requests must include the appropriate tests.
 
 1. Fork the library
 
@@ -25,25 +29,98 @@ Please submit all pull requests to the `develop` branch.
 
 3. Run `npm install` to install dependencies
 
-4. Add your tests to the files in `/tests`
+4. Create a new branch from `develop`
 
-5. To test your tests, run `grunt`
+5. Add your tests to the files in `/tests`
 
-6. When all your tests are passing, run `grunt build` to minify all files
+6. To test your tests, run `grunt`
 
-7. Submit a pull request to the `develop` branch.
+7. When all your tests are passing, run `grunt dist` to compile and minify all files
+
+8. Submit a pull request to the `develop` branch.
 
 
-### Languages 
+### Formats
 
-When naming language files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
+Formats now exist in their own files and act more or less as plugins. Check out the [bytes format](https://github.com/adamwdraper/Numeral-js/blob/master/src/formats/bytes.js) for an example of how to create one.
 
-### Language translations will not be merged without unit tests.
 
-See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/languages/en-gb.js) for an example.
+### Locales
+
+When naming locale files use the [ISO 639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) supplemented by [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes when necessary.
+
+### Locale translations will not be merged without unit tests.
+
+See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/master/tests/locales/en-gb.js) for an example.
 
 
 # Changelog
+
+### 2.0.4
+
+Bug fix: Incorrect abbreviations for values rounded up [#187](https://github.com/adamwdraper/Numeral-js/issues/187)
+
+Bug fix: Signed currency is inconsistent [#89](https://github.com/adamwdraper/Numeral-js/issues/89)
+
+### 2.0.2
+
+Bug fix: Updated module definitions
+
+### 2.0.1
+
+Bug fix: Fixed regression for webpack/browserify/rollup
+
+### 2.0.0
+
+2.0.0 brings a lot of breaking changes and a reorganization of the repo, but also simplifies the api as well as the creating of custom formats.
+
+Breaking change / Feature: All formats are now separate files.  This makes it easy to create custom formats, and will also allow for custom builds with only certain formats.  (Note: The built numeral.js still contains all formats in the repo).
+
+Breaking change / Feature: All formats and locales are now loaded using `numeral.register(type, name, {})`
+
+Breaking change: All `language` now renamed to `locale` and standardized to all lowercase filenames
+
+Breaking change: The `locale` function no longer loads locales, it only sets the current locale
+
+Breaking change: The `unformat` function has been removed `numeral().unformat(string)` and now happens on numeral init `numeral(string)`
+
+Breaking change / Feature: Bytes are now formatted as: `b` (base 1000)  and `ib` (base 1024)
+
+Breaking change: `numeral(NaN)` is now treated the same as `numeral(null)` and no longer throws an error
+
+Feature: Exponential format using `e+` or `e-`
+
+Bug fix: Update to floating point helpers (Note: Numeral does not fix JS floating point errors, but look to our tests to see that it covers quite a few cases.)
+
+### 1.5.6
+
+Bug fix: numeral converts strings to numbers
+
+Bug fix: Null values return same as 0
+
+### 1.5.5
+
+Contained breaking changes, recommended to use 1.5.6
+
+Bug fix: Switch bytes back to `b` and change iecBinary to `ib`, and calculate both using 1024 for backwards compatibility
+
+### 1.5.4
+
+Contained breaking changes, recommended to use 1.5.6
+
+Tests: Changed all tests to use Mocha and Chai
+
+Tests: Added browser tests for Chrome, Firefox, and IE using saucelabs
+
+Added reset function to reset numeral to default options
+
+Added nullFormat option
+
+Update reduce polyfill
+
+Added Binary bytes
+
+Bug fix: Fixes problem with many optional decimals
 
 ### 1.5.3
 
