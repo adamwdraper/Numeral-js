@@ -42,9 +42,9 @@ describe('Locale: ar-kw', function() {
     describe('Currency', function() {
         it('should format a currency', function() {
             var tests = [
-                [1000.234,'$0,0.','KD 1,000.23'],
-                [-1000.234,'($0,0)','(KD 1,000)'],
-                [-1000.234,'$0.','KD -1000.23']
+                [1000.234,'$0,0.00','KD1,000.23'],
+                [-1000.234,'($0,0)','(KD1,000)'],
+                [-1000.234,'$0.','-KD1000.23']
             ];
 
             for (var i = 0; i < tests.length; i++) {
