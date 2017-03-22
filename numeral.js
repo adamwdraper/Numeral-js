@@ -683,7 +683,45 @@
     
 
 (function() {
-        var decimal = {
+    
+    numeral.register('format', 'bps', {
+            regexps: {
+                format: /(BPS)/,
+                unformat: /(BPS)/
+            },
+            format: function(value, format, roundingFunction) {
+                var space = numeral._.includes(format, ' BPS') ? ' ' : '',
+                    output;
+
+                value = value * 10000;
+
+                // check for space before BPS
+                format = format.replace(/\s?BPS/, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + 'BPS');
+
+                    output = output.join('');
+                } else {
+                    output = output + space + 'BPS';
+                }
+
+                return output;
+            },
+            unformat: function(string) {
+                return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
+            }
+        });
+})();
+
+
+(function() {
+    
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -692,10 +730,17 @@
             suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
 
+    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+            return decimal.suffixes.indexOf(item) < 0;
+        }));
+        var unformatRegex = allSuffixes.join('|');
+        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
+        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
+
     numeral.register('format', 'bytes', {
         regexps: {
             format: /([0\s]i?b)/,
-            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+            unformat: new RegExp(unformatRegex)
         },
         format: function(value, format, roundingFunction) {
             var output,
@@ -752,12 +797,13 @@
 
             return value;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -816,12 +862,13 @@
 
             return output;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -852,12 +899,13 @@
 
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -875,12 +923,13 @@
 
             return output + ordinal;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -911,12 +960,13 @@
         unformat: function(string) {
             return numeral._.stringToNumber(string) * 0.01;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'time', {
+    
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -948,7 +998,7 @@
             }
             return Number(seconds);
         }
-    });
+    });
 })();
 
 return numeral;
