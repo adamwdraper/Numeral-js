@@ -846,7 +846,11 @@
                         output = numeral._.insert(output, locale.currency.symbol, i);
                         break;
                     case ' ':
-                        output = numeral._.insert(output, ' ', i);
+                        if (output.search('-') === 0) {
+                            output = numeral._.insert(output, ' ', locale.currency.symbol.length + 1);
+                            break;
+                        }
+                        output = numeral._.insert(output, ' ', locale.currency.symbol.length);
                         break;
                 }
             }
