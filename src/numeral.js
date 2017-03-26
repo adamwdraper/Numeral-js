@@ -202,7 +202,7 @@
                     decimal = '';
                 }
             } else {
-                int = numeral._.toFixed(value, null, roundingFunction);
+                int = numeral._.toFixed(value, 0, roundingFunction);
             }
 
             // check abbreviation again after rounding
@@ -386,9 +386,8 @@
 
             power = Math.pow(10, boundedPrecision);
 
-            //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value * power) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
