@@ -443,6 +443,27 @@
     });
 })();
 
+(function (numeral) {
+        numeral.register('locale', 'id', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'ribu',
+            million: 'juta',
+            billion: 'milyar',
+            trillion: 'triliun'
+        },
+        ordinal: function (number) {
+            return '';
+        },
+        currency: {
+            symbol: 'IDR'
+        }
+    });
+})();
+
 
 (function() {
         numeral.register('locale', 'it', {
