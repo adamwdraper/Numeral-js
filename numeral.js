@@ -28,13 +28,15 @@
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
-            defaultFormat: '0,0'
+            defaultFormat: '0,0',
+            scalePercentBy100: true
         },
         options = {
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
         };
 
 
@@ -931,7 +933,9 @@
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
 
-            value = value * 100;
+            if (numeral.options.scalePercentBy100) {
+                value = value * 100;
+            }
 
             // check for space before %
             format = format.replace(/\s?\%/, '');
@@ -951,7 +955,11 @@
             return output;
         },
         unformat: function(string) {
-            return numeral._.stringToNumber(string) * 0.01;
+            var number = numeral._.stringToNumber(string);
+            if (numeral.options.scalePercentBy100) {
+                return number * 0.01;
+            }
+            return number;
         }
     });
 })();
