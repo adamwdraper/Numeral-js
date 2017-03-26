@@ -21,20 +21,22 @@
 
     var numeral,
         _,
-        VERSION = '2.0.4',
+        VERSION = '2.0.5',
         formats = {},
         locales = {},
         defaults = {
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
-            defaultFormat: '0,0'
+            defaultFormat: '0,0',
+            scalePercentBy100: true
         },
         options = {
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
         };
 
 
@@ -103,6 +105,7 @@
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 optDec = false,
+                leadingCount = 0,
                 abbr = '',
                 trillion = 1000000000000,
                 billion = 1000000000,
@@ -178,6 +181,7 @@
             int = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
+            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
 
             if (precision) {
                 if (numeral._.includes(precision, '[')) {
@@ -225,6 +229,12 @@
             if (numeral._.includes(int, '-')) {
                 int = int.slice(1);
                 neg = true;
+            }
+
+            if (int.length < leadingCount) {
+                for (var i = leadingCount - int.length; i > 0; i--) {
+                    int = '0' + int;
+                }
             }
 
             if (thousands > -1) {
@@ -682,6 +692,42 @@
     
 
 (function() {
+        numeral.register('format', 'bps', {
+            regexps: {
+                format: /(BPS)/,
+                unformat: /(BPS)/
+            },
+            format: function(value, format, roundingFunction) {
+                var space = numeral._.includes(format, ' BPS') ? ' ' : '',
+                    output;
+
+                value = value * 10000;
+
+                // check for space before BPS
+                format = format.replace(/\s?BPS/, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + 'BPS');
+
+                    output = output.join('');
+                } else {
+                    output = output + space + 'BPS';
+                }
+
+                return output;
+            },
+            unformat: function(string) {
+                return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
+            }
+        });
+})();
+
+
+(function() {
         var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -691,10 +737,17 @@
             suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
 
+    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+            return decimal.suffixes.indexOf(item) < 0;
+        }));
+        var unformatRegex = allSuffixes.join('|');
+        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
+        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
+
     numeral.register('format', 'bytes', {
         regexps: {
             format: /([0\s]i?b)/,
-            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+            unformat: new RegExp(unformatRegex)
         },
         format: function(value, format, roundingFunction) {
             var output,
@@ -888,7 +941,9 @@
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
 
-            value = value * 100;
+            if (numeral.options.scalePercentBy100) {
+                value = value * 100;
+            }
 
             // check for space before %
             format = format.replace(/\s?\%/, '');
@@ -908,7 +963,11 @@
             return output;
         },
         unformat: function(string) {
-            return numeral._.stringToNumber(string) * 0.01;
+            var number = numeral._.stringToNumber(string);
+            if (numeral.options.scalePercentBy100) {
+                return number * 0.01;
+            }
+            return number;
         }
     });
 })();

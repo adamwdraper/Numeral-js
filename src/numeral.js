@@ -21,20 +21,22 @@
 
     var numeral,
         _,
-        VERSION = '2.0.4',
+        VERSION = '2.0.5',
         formats = {},
         locales = {},
         defaults = {
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
-            defaultFormat: '0,0'
+            defaultFormat: '0,0',
+            scalePercentBy100: true
         },
         options = {
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
         };
 
 
@@ -103,6 +105,7 @@
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 optDec = false,
+                leadingCount = 0,
                 abbr = '',
                 trillion = 1000000000000,
                 billion = 1000000000,
@@ -178,6 +181,7 @@
             int = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
+            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
 
             if (precision) {
                 if (numeral._.includes(precision, '[')) {
@@ -225,6 +229,12 @@
             if (numeral._.includes(int, '-')) {
                 int = int.slice(1);
                 neg = true;
+            }
+
+            if (int.length < leadingCount) {
+                for (var i = leadingCount - int.length; i > 0; i--) {
+                    int = '0' + int;
+                }
             }
 
             if (thousands > -1) {

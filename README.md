@@ -56,6 +56,14 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.5
+
+Added: Formatting of numbers with leading zeros
+
+New format: Basic Point
+
+Option: Added `scalePercentBy100` (default: true) option to turn on/off scaling percentages
+
 ### 2.0.4
 
 Bug fix: Incorrect abbreviations for values rounded up [#187](https://github.com/adamwdraper/Numeral-js/issues/187)
