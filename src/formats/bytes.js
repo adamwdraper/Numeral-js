@@ -20,10 +20,17 @@
             suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
         };
 
+    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+            return decimal.suffixes.indexOf(item) < 0;
+        }));
+        var unformatRegex = allSuffixes.join('|');
+        // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
+        unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
+
     numeral.register('format', 'bytes', {
         regexps: {
             format: /([0\s]i?b)/,
-            unformat: new RegExp('(' + decimal.suffixes.concat(binary.suffixes).join('|') + ')')
+            unformat: new RegExp(unformatRegex)
         },
         format: function(value, format, roundingFunction) {
             var output,
