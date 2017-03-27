@@ -461,10 +461,10 @@
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
-    numeral.register = function(type, name, format) {
+    numeral.register = function(type, name, format, override) {
         name = name.toLowerCase();
 
-        if (this[type + 's'][name]) {
+        if (this[type + 's'][name] && !override) {
             throw new TypeError(name + ' ' + type + ' already registered.');
         }
 
