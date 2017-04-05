@@ -28,6 +28,7 @@
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
+            nullValues: [null],
             defaultFormat: '0,0',
             scalePercentBy100: true
         },
@@ -35,6 +36,7 @@
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
+            nullValues: defaults.nullValues,
             defaultFormat: defaults.defaultFormat,
             scalePercentBy100: defaults.scalePercentBy100
         };
@@ -59,10 +61,10 @@
 
         if (numeral.isNumeral(input)) {
             value = input.value();
+        } else if (_.isNull(input, options.nullValues) || _.isNaN(input)) {
+            value = null;
         } else if (input === 0 || typeof input === 'undefined') {
             value = 0;
-        } else if (input === null || _.isNaN(input)) {
-            value = null;
         } else if (typeof input === 'string') {
             if (options.zeroFormat && input === options.zeroFormat) {
                 value = 0;
@@ -308,6 +310,15 @@
         isNaN: function(value) {
             return typeof value === 'number' && isNaN(value);
         },
+        isNull: function(value, nullValues) {
+            var isNull = value === null;
+            for(var i=0; i<nullValues.length; i++){
+                if(value === nullValues[i]){
+                    isNull = true;
+                }
+            }
+            return isNull;
+        },
         includes: function(string, search) {
             return string.indexOf(search) !== -1;
         },
@@ -455,6 +466,10 @@
 
     numeral.nullFormat = function (format) {
         options.nullFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.nullValues = function (values) {
+        options.nullValues = Array.isArray(values) ? values : [null];
     };
 
     numeral.defaultFormat = function(format) {

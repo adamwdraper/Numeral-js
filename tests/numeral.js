@@ -101,6 +101,19 @@ describe('Numeral', function() {
         });
     });
 
+    describe('Custom Null values', function(){
+        it('should format custom null values as null', function(){
+            var nullValues = [null, undefined, -32768];
+            var nullFormat = 'null value';
+            numeral.nullValues(nullValues);
+            numeral.nullFormat(nullFormat);
+
+            for (var i = 0; i < nullValues.length; i++) {
+                expect(numeral(nullValues[i]).format('')).to.equal(nullFormat);
+            }
+        });
+    });
+
     describe('Clone', function() {
         it('should clone', function() {
             var a = numeral(1000),
