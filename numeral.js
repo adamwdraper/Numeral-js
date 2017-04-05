@@ -311,7 +311,13 @@
             return typeof value === 'number' && isNaN(value);
         },
         isNull: function(value, nullValues) {
-            return value === null || nullValues.includes(value);
+            var isNull = value === null;
+            for(var i=0; i<nullValues.length; i++){
+                if(value === nullValues[i]){
+                    isNull = true;
+                }
+            }
+            return isNull;
         },
         includes: function(string, search) {
             return string.indexOf(search) !== -1;
