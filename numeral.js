@@ -28,6 +28,7 @@
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
+            nullValues: [null],
             defaultFormat: '0,0',
             scalePercentBy100: true
         },
@@ -35,6 +36,7 @@
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
+            nullValues: defaults.nullValues,
             defaultFormat: defaults.defaultFormat,
             scalePercentBy100: defaults.scalePercentBy100
         };
@@ -59,10 +61,10 @@
 
         if (numeral.isNumeral(input)) {
             value = input.value();
+        } else if (_.isNull(input, options.nullValues) || _.isNaN(input)) {
+            value = null;
         } else if (input === 0 || typeof input === 'undefined') {
             value = 0;
-        } else if (input === null || _.isNaN(input)) {
-            value = null;
         } else if (typeof input === 'string') {
             if (options.zeroFormat && input === options.zeroFormat) {
                 value = 0;
@@ -308,6 +310,9 @@
         isNaN: function(value) {
             return typeof value === 'number' && isNaN(value);
         },
+        isNull: function(value, nullValues) {
+            return value === null || nullValues.includes(value);
+        },
         includes: function(string, search) {
             return string.indexOf(search) !== -1;
         },
@@ -455,6 +460,10 @@
 
     numeral.nullFormat = function (format) {
         options.nullFormat = typeof(format) === 'string' ? format : null;
+    };
+
+    numeral.nullValues = function (values) {
+        options.nullValues = Array.isArray(values) ? values : [null];
     };
 
     numeral.defaultFormat = function(format) {
@@ -692,7 +701,8 @@
     
 
 (function() {
-        numeral.register('format', 'bps', {
+    
+    numeral.register('format', 'bps', {
             regexps: {
                 format: /(BPS)/,
                 unformat: /(BPS)/
@@ -723,12 +733,13 @@
             unformat: function(string) {
                 return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
             }
-        });
+        });
 })();
 
 
 (function() {
-        var decimal = {
+    
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -804,12 +815,13 @@
 
             return value;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -868,12 +880,13 @@
 
             return output;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -904,12 +917,13 @@
 
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -927,12 +941,13 @@
 
             return output + ordinal;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -969,12 +984,13 @@
             }
             return number;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'time', {
+    
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -1006,7 +1022,7 @@
             }
             return Number(seconds);
         }
-    });
+    });
 })();
 
 return numeral;
