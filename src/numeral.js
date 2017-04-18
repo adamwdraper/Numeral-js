@@ -129,6 +129,7 @@
 
             abs = Math.abs(value);
 
+
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
             if (numeral._.includes(format, '(')) {
@@ -314,6 +315,9 @@
         insert: function(string, subString, start) {
             return string.slice(0, start) + subString + string.slice(start);
         },
+        isExponential: function(value) {
+            return value.toString().indexOf('e') > -1;
+        },
         reduce: function(array, callback /*, initialValue*/) {
             if (this === null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
@@ -383,6 +387,7 @@
                 boundedPrecision,
                 optionalsRegExp,
                 power,
+                exponentialValue,
                 output;
 
             // Use the smallest precision value possible to avoid errors from floating point representation
@@ -394,8 +399,9 @@
 
             power = Math.pow(10, boundedPrecision);
 
+            exponentialValue = _.isExponential(value) ? (value * power) : (value + 'e+' + boundedPrecision);
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(exponentialValue) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
@@ -582,7 +588,6 @@
 
             // make sure we have a roundingFunction
             roundingFunction = roundingFunction || Math.round;
-
             // format based on value
             if (value === 0 && options.zeroFormat !== null) {
                 output = options.zeroFormat;
@@ -601,7 +606,7 @@
 
                 output = formatFunction(value, format, roundingFunction);
             }
-
+            
             return output;
         },
         value: function() {
