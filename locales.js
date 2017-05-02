@@ -716,6 +716,30 @@
 
 
 (function() {
+        numeral.register('locale', 'sv-se', {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 't',
+            million: 'mn',
+            billion: 'md',
+            trillion: 'bn'
+        },
+        ordinal: function (number) {
+            var str = number.toString();
+            var endsWith = str[str.length - 1];
+            return (endsWith === '1' || endsWith === '2') ? ':a' : ':e';
+        },
+        currency: {
+            symbol: 'SEK'
+        }
+    });
+})();
+
+
+(function() {
     
 
     numeral.register('locale', 'th', {
