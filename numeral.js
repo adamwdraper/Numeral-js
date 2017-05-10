@@ -260,7 +260,7 @@
             return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
-        stringToNumber: function(string) {
+        stringToNumber: function (string) {
             var locale = locales[options.currentLocale],
                 stringOriginal = string,
                 abbreviations = {
@@ -281,14 +281,19 @@
             } else {
                 value = 1;
 
+                if (locale.currency.symbol !== '$') {
+                    regexp = new RegExp(_.escapeRegExp(locale.currency.symbol), 'g');
+                    string = string.replace(regexp, '$');
+                }
+
                 if (locale.delimiters.decimal !== '.') {
                     string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation].replace(/\./g, '') + '(?:\\)|(\\$)?(?:\\))?)?$');
 
-                    if (stringOriginal.match(regexp)) {
+                    if (string.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
                         break;
                     }
@@ -403,6 +408,10 @@
             }
 
             return output;
+        },
+        // Escape a string for use in a RegExp
+        escapeRegExp: function (s) {
+            return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         }
     };
 
@@ -692,7 +701,8 @@
     
 
 (function() {
-        numeral.register('format', 'bps', {
+    
+    numeral.register('format', 'bps', {
             regexps: {
                 format: /(BPS)/,
                 unformat: /(BPS)/
@@ -723,12 +733,13 @@
             unformat: function(string) {
                 return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
             }
-        });
+        });
 })();
 
 
 (function() {
-        var decimal = {
+    
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -804,12 +815,13 @@
 
             return value;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -868,12 +880,13 @@
 
             return output;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -904,12 +917,13 @@
 
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -927,12 +941,13 @@
 
             return output + ordinal;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -969,12 +984,13 @@
             }
             return number;
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('format', 'time', {
+    
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -1006,7 +1022,7 @@
             }
             return Number(seconds);
         }
-    });
+    });
 })();
 
 return numeral;

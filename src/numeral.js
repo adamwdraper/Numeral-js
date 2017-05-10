@@ -260,7 +260,7 @@
             return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
-        stringToNumber: function(string) {
+        stringToNumber: function (string) {
             var locale = locales[options.currentLocale],
                 stringOriginal = string,
                 abbreviations = {
@@ -281,14 +281,19 @@
             } else {
                 value = 1;
 
+                if (locale.currency.symbol !== '$') {
+                    regexp = new RegExp(_.escapeRegExp(locale.currency.symbol), 'g');
+                    string = string.replace(regexp, '$');
+                }
+
                 if (locale.delimiters.decimal !== '.') {
                     string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
                 }
 
                 for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation].replace(/\./g, '') + '(?:\\)|(\\$)?(?:\\))?)?$');
 
-                    if (stringOriginal.match(regexp)) {
+                    if (string.match(regexp)) {
                         value *= Math.pow(10, abbreviations[abbreviation]);
                         break;
                     }
@@ -403,6 +408,10 @@
             }
 
             return output;
+        },
+        // Escape a string for use in a RegExp
+        escapeRegExp: function (s) {
+            return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         }
     };
 

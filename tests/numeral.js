@@ -1,4 +1,4 @@
-// Node
+﻿// Node
 if (typeof module !== 'undefined' && module.exports) {
     var numeral = require('../numeral');
     var expect = require('chai').expect;
@@ -235,6 +235,50 @@ describe('Numeral', function() {
                 [-0, 0],
                 [-1, -1],
                 [-1.1, -1.1]
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+            }
+        });
+    });
+
+    describe('UnformatRtl', function() {
+        before(function () {
+            numeral.register('locale', 'unformat-rtl-test', {
+                delimiters: {
+                    thousands: ',',
+                    decimal: '.'
+                },
+                abbreviations: {
+                    thousand: 'k',
+                    million: 'm',
+                    billion: 'b',
+                    trillion: 't'
+                },
+                ordinal: function (number) {
+                    var b = number % 10;
+                    return (~~(number % 100 / 10) === 1) ? 'th' :
+                        (b === 1) ? 'st' :
+                        (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
+                },
+                currency: {
+                    symbol: 'د.ت'
+                }
+            });
+            numeral.locale('unformat-rtl-test');
+
+            numeral.defaultFormat('($0,0.000)');
+        });
+
+        after(function() {
+            numeral.reset();
+        });
+
+        it('should unformat a number with a complex rtl symbol', function() {
+            var tests = [
+                ['د.ت123,456.789', 123456.789]
             ];
 
             for (var i = 0; i < tests.length; i++) {
