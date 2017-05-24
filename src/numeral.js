@@ -394,8 +394,11 @@
 
             power = Math.pow(10, boundedPrecision);
 
-            // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            // First check if a number is in exponential format.
+            // If yes, then don't manipulate it
+            // else, multiply up by precision, round accurately, then divide and use native toFixed():
+            value = String(value).indexOf('e') >= 0 ? value : (roundingFunction(value + 'e+' + boundedPrecision) / power);
+            output = value.toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
