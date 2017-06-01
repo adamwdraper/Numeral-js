@@ -184,6 +184,7 @@
             leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
 
             if (precision) {
+                precision = precision.trim();
                 if (numeral._.includes(precision, '[')) {
                     precision = precision.replace(']', '');
                     precision = precision.split('[');
