@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.4
+ * version : 2.0.6
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -21,20 +21,22 @@
 
     var numeral,
         _,
-        VERSION = '2.0.4',
+        VERSION = '2.0.6',
         formats = {},
         locales = {},
         defaults = {
             currentLocale: 'en',
             zeroFormat: null,
             nullFormat: null,
-            defaultFormat: '0,0'
+            defaultFormat: '0,0',
+            scalePercentBy100: true
         },
         options = {
             currentLocale: defaults.currentLocale,
             zeroFormat: defaults.zeroFormat,
             nullFormat: defaults.nullFormat,
-            defaultFormat: defaults.defaultFormat
+            defaultFormat: defaults.defaultFormat,
+            scalePercentBy100: defaults.scalePercentBy100
         };
 
 
@@ -103,6 +105,7 @@
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 optDec = false,
+                leadingCount = 0,
                 abbr = '',
                 trillion = 1000000000000,
                 billion = 1000000000,
@@ -178,6 +181,7 @@
             int = value.toString().split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
+            leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
 
             if (precision) {
                 if (numeral._.includes(precision, '[')) {
@@ -200,7 +204,7 @@
                     decimal = '';
                 }
             } else {
-                int = numeral._.toFixed(value, null, roundingFunction);
+                int = numeral._.toFixed(value, 0, roundingFunction);
             }
 
             // check abbreviation again after rounding
@@ -225,6 +229,12 @@
             if (numeral._.includes(int, '-')) {
                 int = int.slice(1);
                 neg = true;
+            }
+
+            if (int.length < leadingCount) {
+                for (var i = leadingCount - int.length; i > 0; i--) {
+                    int = '0' + int;
+                }
             }
 
             if (thousands > -1) {
@@ -384,9 +394,8 @@
 
             power = Math.pow(10, boundedPrecision);
 
-            //roundingFunction = (roundingFunction !== undefined ? roundingFunction : Math.round);
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value * power) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');

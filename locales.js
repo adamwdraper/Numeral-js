@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * locales : 2.0.4
+ * locales : 2.0.6
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
@@ -14,30 +14,6 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-
-(function() {
-        numeral.register('locale', 'be-nl', {
-        delimiters: {
-            thousands: ' ',
-            decimal  : ','
-        },
-        abbreviations: {
-            thousand : 'k',
-            million  : ' mln',
-            billion  : ' mld',
-            trillion : ' bln'
-        },
-        ordinal : function (number) {
-            var remainder = number % 100;
-
-            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
-        },
-        currency: {
-            symbol: '€ '
-        }
-    });
-})();
-
 
 (function() {
         numeral.register('locale', 'bg', {
@@ -533,6 +509,30 @@
 
 
 (function() {
+        numeral.register('locale', 'nl-be', {
+        delimiters: {
+            thousands: ' ',
+            decimal  : ','
+        },
+        abbreviations: {
+            thousand : 'k',
+            million  : ' mln',
+            billion  : ' mld',
+            trillion : ' bln'
+        },
+        ordinal : function (number) {
+            var remainder = number % 100;
+
+            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+        },
+        currency: {
+            symbol: '€ '
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
@@ -837,6 +837,29 @@
         },
         currency: {
             symbol: '\u20B4'
+        }
+    });
+})();
+
+
+(function() {
+    
+    numeral.register('locale', 'vi', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: ' nghìn',
+            million: ' triệu',
+            billion: ' tỷ',
+            trillion: ' nghìn tỷ'
+        },
+        ordinal: function () {
+            return '.';
+        },
+        currency: {
+            symbol: '₫'
         }
     });
 })();

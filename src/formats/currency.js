@@ -48,7 +48,7 @@
                         output = numeral._.insert(output, locale.currency.symbol, i);
                         break;
                     case ' ':
-                        output = numeral._.insert(output, ' ', i);
+                        output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
                         break;
                 }
             }
@@ -62,7 +62,7 @@
                         output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
                         break;
                     case ' ':
-                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i)));
+                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
                         break;
                 }
             }
