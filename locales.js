@@ -14,7 +14,7 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    
+
 (function() {
         numeral.register('locale', 'bg', {
         delimiters: {
@@ -46,7 +46,7 @@
 
 
 (function() {
-    
+
     numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
@@ -420,6 +420,28 @@
 })();
 
 
+(function () {
+        numeral.register('locale', 'hy-AM', {
+        delimiters: {
+            thousands: ' ',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: ' հազ․',
+            million: ' միլլ․',
+            billion: ' մլրդ․',
+            trillion: ' տրլն․'
+        },
+        ordinal: function (number) {
+            return number === 1 ? '-ին' : '-րդ';
+        },
+        currency: {
+            symbol: ' դրամ'
+        }
+    });
+})();
+
+
 (function() {
         numeral.register('locale', 'it', {
         delimiters: {
@@ -716,7 +738,7 @@
 
 
 (function() {
-    
+
 
     numeral.register('locale', 'th', {
         delimiters: {
