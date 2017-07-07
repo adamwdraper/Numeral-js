@@ -14,7 +14,7 @@
 }(this, function (numeral) {
     numeral.register('locale', 'nl-be', {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal  : ','
         },
         abbreviations: {
