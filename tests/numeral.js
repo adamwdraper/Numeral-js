@@ -101,6 +101,22 @@ describe('Numeral', function() {
         });
     });
 
+    describe('Scale Percent By 100 ', function() {
+        it('should change percentage value', function() {
+            var tests = [
+                    [0.5,false,'0.00%','0.50%'],
+                    [0.5,true,'0.00%','50.00%'],
+                    [0.5,null,'0.00%','50.00%'],
+                ];
+
+            for (var i = 0; i < tests.length; i++) {
+                numeral.scalePercentBy100(tests[i][1]);
+
+                expect(numeral(tests[i][0]).format(tests[i][2])).to.equal(tests[i][3]);
+            }
+        });
+    });
+
     describe('Clone', function() {
         it('should clone', function() {
             var a = numeral(1000),
