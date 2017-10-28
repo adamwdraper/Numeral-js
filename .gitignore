@@ -27,3 +27,6 @@ Icon
 # App Files
 # --------------------
 node_modules/
+.sass-cache
+temp/
+npm-debug.log
