@@ -19,7 +19,7 @@
             return number === 1 ? 'se' : 'se';
         },
         currency: {
-            symbol: 'Rp'
+            symbol: 'Rp.'
         }
     };
 
