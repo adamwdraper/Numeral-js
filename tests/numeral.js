@@ -172,6 +172,8 @@ describe('Numeral', function() {
                     [1.99,'0.[0]','2'],
                     [1.0501,'0.00[0]','1.05'],
                     [1.005,'0.00','1.01'],
+                    ['1.0000000000000001','0.0000000000000000','1.0000000000000001'],
+                    ['1234567890123456789','0','12,345,678,901,234,567,890'],
                     // leading zero
                     [0, '00.0', '00.0'],
                     [0.23, '000.[00]', '000.23'],
@@ -205,6 +207,25 @@ describe('Numeral', function() {
 
                 expect(output).to.equal(tests[i][2]);
 
+                expect(typeof output).to.equal('string');
+            }
+        });
+    });
+
+    describe('Floating point restrictions', function() {
+        it('should not have side effects', function() {
+            var tests = [
+                ['1.0000000000000001','0.0000000000000000','1.0000000000000001'],
+                ['1234567890123456789','0','12,345,678,901,234,567,890']
+            ],
+            i,
+            n,
+            output;
+
+            for (i = 0; i < tests.length; i++) {
+                n = numeral(tests[i][0]);
+                output = n.format(tests[i][1]);
+                expect(output).to.equal(tests[i][2]);
                 expect(typeof output).to.equal('string');
             }
         });
