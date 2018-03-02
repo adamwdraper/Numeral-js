@@ -75,16 +75,16 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'tis.',
-            million: 'mil.',
-            billion: 'b',
-            trillion: 't'
+            thousand: ' tis.',
+            million: ' mil.',
+            billion: ' mld.',
+            trillion: ' bil.'
         },
         ordinal: function () {
             return '.';
         },
         currency: {
-            symbol: 'Kč'
+            symbol: ' Kč'
         }
     });
 })();
