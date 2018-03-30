@@ -875,8 +875,8 @@
 (function() {
         numeral.register('format', 'exponential', {
         regexps: {
-            format: /(e\+|e-)/,
-            unformat: /(e\+|e-)/
+            format: /(e\+|e-)/i,
+            unformat: /(e\+|e-)/i
         },
         format: function(value, format, roundingFunction) {
             var output,
@@ -890,6 +890,7 @@
             return output + 'e' + parts[1];
         },
         unformat: function(string) {
+            string = string.replace('E', 'e');
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
                 value = Number(parts[0]),
                 power = Number(parts[1]);
