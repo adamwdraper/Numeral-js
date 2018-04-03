@@ -461,6 +461,10 @@
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
     };
 
+    numeral.scalePercentBy100 = function(scalePercentBy100) {
+        options.scalePercentBy100 = typeof(scalePercentBy100) === 'boolean' ? scalePercentBy100 : true;
+    };
+
     numeral.register = function(type, name, format) {
         name = name.toLowerCase();
 
