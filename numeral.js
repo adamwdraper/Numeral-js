@@ -168,6 +168,8 @@
                     // thousand
                     abbr += locale.abbreviations.thousand;
                     value = value / thousand;
+                } else {
+                    abbr += languages[currentLanguage].abbreviations.default;
                 }
             }
 
@@ -677,6 +679,7 @@
             decimal: '.'
         },
         abbreviations: {
+            default: '',
             thousand: 'k',
             million: 'm',
             billion: 'b',
