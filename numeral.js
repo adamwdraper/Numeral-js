@@ -300,6 +300,9 @@
                 // remove non numbers
                 string = string.replace(/[^0-9\.]+/g, '');
 
+                 //remove extra decimal point
+                 string = string.replace(/(?:[.](?=.*[.])|[^\d.])+/g, '');
+
                 value *= Number(string);
             }
 
