@@ -168,6 +168,8 @@
                     // thousand
                     abbr += locale.abbreviations.thousand;
                     value = value / thousand;
+                } else {
+                    abbr += languages[currentLanguage].abbreviations.default;
                 }
             }
 
@@ -184,6 +186,7 @@
             leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
 
             if (precision) {
+                precision = precision.trim();
                 if (numeral._.includes(precision, '[')) {
                     precision = precision.replace(']', '');
                     precision = precision.split('[');
@@ -299,6 +302,9 @@
 
                 // remove non numbers
                 string = string.replace(/[^0-9\.]+/g, '');
+
+                 //remove extra decimal point
+                 string = string.replace(/(?:[.](?=.*[.])|[^\d.])+/g, '');
 
                 value *= Number(string);
             }
@@ -459,6 +465,10 @@
 
     numeral.defaultFormat = function(format) {
         options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    };
+
+    numeral.scalePercentBy100 = function(scalePercentBy100) {
+        options.scalePercentBy100 = typeof(scalePercentBy100) === 'boolean' ? scalePercentBy100 : true;
     };
 
     numeral.register = function(type, name, format) {
@@ -672,6 +682,7 @@
             decimal: '.'
         },
         abbreviations: {
+            default: '',
             thousand: 'k',
             million: 'm',
             billion: 'b',
