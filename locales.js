@@ -16,7 +16,8 @@
 }(this, function (numeral) {
     
 (function() {
-        numeral.register('locale', 'bg', {
+    
+    numeral.register('locale', 'bg', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -41,7 +42,7 @@
         currency: {
             symbol: 'лв'
         }
-    });
+    });
 })();
 
 
@@ -64,12 +65,13 @@
         currency: {
             symbol: '¥'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'cs', {
+    
+    numeral.register('locale', 'cs', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -86,12 +88,13 @@
         currency: {
             symbol: 'Kč'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'da-dk', {
+    
+    numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -108,12 +111,13 @@
         currency: {
             symbol: 'DKK'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'de-ch', {
+    
+    numeral.register('locale', 'de-ch', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -130,12 +134,13 @@
         currency: {
             symbol: 'CHF'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'de', {
+    
+    numeral.register('locale', 'de', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -152,12 +157,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'en-au', {
+    
+    numeral.register('locale', 'en-au', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -178,12 +184,13 @@
         currency: {
             symbol: '$'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'en-gb', {
+    
+    numeral.register('locale', 'en-gb', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -204,12 +211,13 @@
         currency: {
             symbol: '£'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'en-za', {
+    
+    numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -230,12 +238,13 @@
         currency: {
             symbol: 'R'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'es-es', {
+    
+    numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -257,12 +266,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'es', {
+    
+    numeral.register('locale', 'es', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -284,12 +294,13 @@
         currency: {
             symbol: '$'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'et', {
+    
+    numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -306,12 +317,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'fi', {
+    
+    numeral.register('locale', 'fi', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -328,12 +340,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'fr-ca', {
+    
+    numeral.register('locale', 'fr-ca', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -350,12 +363,13 @@
         currency: {
             symbol: '$'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'fr-ch', {
+    
+    numeral.register('locale', 'fr-ch', {
         delimiters: {
             thousands: '\'',
             decimal: '.'
@@ -372,12 +386,13 @@
         currency: {
             symbol: 'CHF'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'fr', {
+    
+    numeral.register('locale', 'fr', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -394,12 +409,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'hu', {
+    
+    numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -416,12 +432,13 @@
         currency: {
             symbol: ' Ft'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'it', {
+    
+    numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -438,12 +455,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'ja', {
+    
+    numeral.register('locale', 'ja', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -460,12 +478,13 @@
         currency: {
             symbol: '¥'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'lv', {
+    
+    numeral.register('locale', 'lv', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -482,12 +501,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'nl-be', {
+    
+    numeral.register('locale', 'nl-be', {
         delimiters: {
             thousands: ' ',
             decimal  : ','
@@ -506,12 +526,13 @@
         currency: {
             symbol: '€ '
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'nl-nl', {
+    
+    numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
             decimal  : ','
@@ -529,12 +550,13 @@
         currency: {
             symbol: '€ '
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'no', {
+    
+    numeral.register('locale', 'no', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -551,12 +573,13 @@
         currency: {
             symbol: 'kr'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'pl', {
+    
+    numeral.register('locale', 'pl', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -573,12 +596,13 @@
         currency: {
             symbol: 'PLN'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'pt-br', {
+    
+    numeral.register('locale', 'pt-br', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -595,12 +619,13 @@
         currency: {
             symbol: 'R$'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'pt-pt', {
+    
+    numeral.register('locale', 'pt-pt', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -617,12 +642,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'ru-ua', {
+    
+    numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -642,12 +668,13 @@
         currency: {
             symbol: '\u20B4'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'ru', {
+    
+    numeral.register('locale', 'ru', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -667,12 +694,13 @@
         currency: {
             symbol: 'руб.'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'sk', {
+    
+    numeral.register('locale', 'sk', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -689,12 +717,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'sl', {
+    
+    numeral.register('locale', 'sl', {
         delimiters: {
             thousands: '.',
             decimal: ','
@@ -711,12 +740,13 @@
         currency: {
             symbol: '€'
         }
-    });
+    });
 })();
 
 
 (function() {
     
+
 
     numeral.register('locale', 'th', {
         delimiters: {
@@ -735,12 +765,13 @@
         currency: {
             symbol: '฿'
         }
-    });
+    });
 })();
 
 
 (function() {
-        var suffixes = {
+    
+    var suffixes = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -791,12 +822,13 @@
         currency: {
             symbol: '\u20BA'
         }
-    });
+    });
 })();
 
 
 (function() {
-        numeral.register('locale', 'uk-ua', {
+    
+    numeral.register('locale', 'uk-ua', {
         delimiters: {
             thousands: ' ',
             decimal: ','
@@ -816,12 +848,13 @@
         currency: {
             symbol: '\u20B4'
         }
-    });
+    });
 })();
 
 
 (function() {
     
+
     numeral.register('locale', 'vi', {
         delimiters: {
             thousands: '.',
@@ -839,7 +872,7 @@
         currency: {
             symbol: '₫'
         }
-    });
+    });
 })();
 
 
