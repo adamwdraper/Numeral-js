@@ -56,6 +56,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.0.7
+
+Bug fix: fix formatting of small numbers. [#564](https://github.com/adamwdraper/Numeral-js/pull/564), [#514](https://github.com/adamwdraper/Numeral-js/pull/514), [#563](https://github.com/adamwdraper/Numeral-js/issues/563)
+
 ### 2.0.6
 
 Bug fix: Multi letter currency symbols and spacing
