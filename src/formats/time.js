@@ -13,18 +13,20 @@
 }(this, function (numeral) {
     numeral.register('format', 'time', {
         regexps: {
-            format: /(:)/,
-            unformat: /(:)/
+            format: /(:|:\.)/,
+            unformat: /(:|:\.)/
         },
         format: function(value, format, roundingFunction) {
             var hours = Math.floor(value / 60 / 60),
                 minutes = Math.floor((value - (hours * 60 * 60)) / 60),
-                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+                seconds = Math.floor(value - (hours * 60 * 60) - (minutes * 60)),
+                milliseconds = Math.round((value - (hours * 60 * 60) - (minutes * 60) - seconds) * 1000);
 
-            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds) + ( /\./g.test(format) ? '.' + milliseconds : '');
         },
         unformat: function(string) {
-            var timeArray = string.split(':'),
+            var msArray = string.split('.'),
+                timeArray = msArray[0].split(':'),
                 seconds = 0;
 
             // turn hours and minutes into seconds and add them all up
@@ -41,7 +43,7 @@
                 // seconds
                 seconds = seconds + Number(timeArray[1]);
             }
-            return Number(seconds);
+            return Number(seconds+(typeof msArray[1] !== 'undefined' ? '.' + msArray[1] : ''));
         }
     });
 }));
