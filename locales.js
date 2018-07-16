@@ -622,6 +622,35 @@
 
 
 (function() {
+        numeral.register('locale', 'ro', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'mil', // milion/milioane
+            billion: 'mld', // miliard/miliarde
+            trillion: 't',
+        },
+        ordinal: function (number) {
+            // In Romanian the ordinal can have different forms based on gender
+            // and the quantity
+            // masculine:
+            // E.g.: 1st = primul; 2nd = al doilea; 3rd = al treilea
+            // feminine:
+            // E.g.: 1st = prima; 2nd = a doua; 3rd = a treia
+            // Therefore is difficult to predict the format
+            return '';
+        },
+        currency: {
+            symbol: 'RON'
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
