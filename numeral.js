@@ -958,7 +958,7 @@
                 }
 
                 // check for js roundoff error
-                if ((isDot && strvalue.length === strnewval.length) || (strnewval.length === strvalue.length + 2)){
+                if ((isDot && strvalue.length === strnewval.length) || (strnewval.length === strvalue.length + 2) || (strnewval.length === strvalue.length + 1)){
                     value = newvalue;
                 } else { // there is a roundoff error
                     value = newvalue.toFixed(strvalue.length-i);
