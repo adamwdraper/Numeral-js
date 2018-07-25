@@ -942,7 +942,28 @@
                 output;
 
             if (numeral.options.scalePercentBy100) {
-                value = value * 100;
+                if (value === null) {
+                    value = 0;
+                }
+                var newvalue = value * 100;
+                var strvalue = value.toString(); 
+                var strnewval = newvalue.toString();
+                var isDot = false;
+
+                for(var i = 0; i < strvalue.length; i++) {
+                    if (strvalue[i] === '.') {
+                        isDot = true;
+                        break;
+                    }
+                }
+
+                // check for js roundoff error
+                if ((isDot && strvalue.length === strnewval.length) || (strnewval.length === strvalue.length + 2) || (strnewval.length === strvalue.length + 1)){
+                    value = newvalue;
+                } else { // there is a roundoff error
+                    value = newvalue.toFixed(strvalue.length-i);
+                }
+
             }
 
             // check for space before %
