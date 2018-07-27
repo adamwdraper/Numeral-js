@@ -395,7 +395,13 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+
+            // handle numbers formatted in scientific notation (< 10^-6 or > 10^21)
+            var chunks = value.toString().split(/[eE]/);
+            var base = chunks.shift();
+            var exponent = chunks.map(parseInt).reduce(function(total, exp){ return total + exp; }, 0);
+
+            output = (roundingFunction(base + 'e' + (exponent + boundedPrecision)) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
