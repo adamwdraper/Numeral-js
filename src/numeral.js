@@ -115,14 +115,12 @@
                 neg = false,
                 abbrForce, // force abbreviation
                 abs,
-                min,
-                max,
-                power,
                 int,
                 precision,
                 signed,
                 thousands,
-                output;
+                output,
+                valueString;
 
             // make sure we never format a null value
             value = value || 0;
@@ -178,7 +176,8 @@
             }
 
             // break number and format
-            int = value.toString().split('.')[0];
+            valueString = numeral._.toNonExponentialString(value);
+            int = valueString.split('.')[0];
             precision = format.split('.')[1];
             thousands = format.indexOf(',');
             leadingCount = (format.split('.')[0].split(',')[0].match(/0/g) || []).length;
@@ -187,9 +186,9 @@
                 if (numeral._.includes(precision, '[')) {
                     precision = precision.replace(']', '');
                     precision = precision.split('[');
-                    decimal = numeral._.toFixed(value, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
+                    decimal = numeral._.toFixed(valueString, (precision[0].length + precision[1].length), roundingFunction, precision[1].length);
                 } else {
-                    decimal = numeral._.toFixed(value, precision.length, roundingFunction);
+                    decimal = numeral._.toFixed(valueString, precision.length, roundingFunction);
                 }
 
                 int = decimal.split('.')[0];
@@ -204,7 +203,7 @@
                     decimal = '';
                 }
             } else {
-                int = numeral._.toFixed(value, 0, roundingFunction);
+                int = numeral._.toFixed(valueString, 0, roundingFunction);
             }
 
             // check abbreviation again after rounding
@@ -238,7 +237,7 @@
             }
 
             if (thousands > -1) {
-                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
+                int = int.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
             }
 
             if (format.indexOf('.') === 0) {
@@ -271,7 +270,6 @@
                 },
                 abbreviation,
                 value,
-                i,
                 regexp;
 
             if (options.zeroFormat && string === options.zeroFormat) {
@@ -314,6 +312,9 @@
         insert: function(string, subString, start) {
             return string.slice(0, start) + subString + string.slice(start);
         },
+        repeat: function(string, count) {
+            return (string.repeat && string.repeat(count)) || new Array(count + 1).join(string);
+        },
         reduce: function(array, callback /*, initialValue*/) {
             if (this === null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
@@ -354,7 +355,7 @@
          * finite precision.
          */
         multiplier: function (x) {
-            var parts = x.toString().split('.');
+            var parts = _.toNonExponentialString(x).split('.');
 
             return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
         },
@@ -378,11 +379,11 @@
          * problems for accounting- and finance-related software.
          */
         toFixed: function(value, maxDecimals, roundingFunction, optionals) {
-            var splitValue = value.toString().split('.'),
+            var valueString = _.toNonExponentialString(value),
+                splitValue = valueString.split('.'),
                 minDecimals = maxDecimals - (optionals || 0),
                 boundedPrecision,
                 optionalsRegExp,
-                power,
                 output;
 
             // Use the smallest precision value possible to avoid errors from floating point representation
@@ -392,10 +393,20 @@
               boundedPrecision = minDecimals;
             }
 
-            power = Math.pow(10, boundedPrecision);
-
-            // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            if (splitValue.length === 1 && boundedPrecision > 0) {
+                // Just add a decimal point and 0's to an int
+                output = valueString + '.' + _.repeat('0', boundedPrecision);
+            } else {
+                // Multiply up by precision, round accurately, then move the decimal place
+                var rounded = /^(-*)([0-9]*)$/.exec(_.toNonExponentialString(roundingFunction(valueString + 'e+' + boundedPrecision)));
+                if (boundedPrecision > 0) {
+                    if (rounded[2].length < boundedPrecision + 1) {
+                        rounded[2] = _.repeat('0', boundedPrecision + 1 - rounded[2].length) + rounded[2];
+                    }
+                    rounded[2] = _.insert(rounded[2], '.', rounded[2].length - boundedPrecision);
+                }
+                output = rounded[1] + rounded[2];
+            }
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
@@ -403,6 +414,24 @@
             }
 
             return output;
+        },
+        /**
+         * toString the given number with no exponential formatting allowed
+         */
+        toNonExponentialString: function(value) {
+            var valueString = value.toString(),
+                parts = new RegExp(/^(-)?([0-9]+)\.?([0-9]+)?e([-+])?([0-9]+)$/).exec(valueString);
+            if (parts) {
+                var sign = parts[1],
+                    iPart = parts[2],
+                    fPart = parts[3],
+                    eSign = parts[4],
+                    e = parts[5],
+                    zeros = _.repeat('0', parseInt(e) - (eSign === '-' ? iPart : fPart || '').length);
+                return (sign || '') + (eSign === '-' ? '0.' + zeros : '') + iPart + (fPart || '') + (eSign !== '-' ? zeros : '');
+            } else {
+                return valueString;
+            }
         }
     };
 
