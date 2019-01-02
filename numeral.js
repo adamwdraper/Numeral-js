@@ -380,10 +380,14 @@
         toFixed: function(value, maxDecimals, roundingFunction, optionals) {
             var minDecimals = maxDecimals - (optionals || 0),
                 strValue = value.toString(),
+                // The the start position and value of the exponent part, if the stringified number includes it.
                 expIndex = strValue.indexOf('e'),
                 expPos = expIndex >= 0 ? expIndex : strValue.length,
                 expPrec = expIndex >= 0 ? +strValue.slice(expIndex + 1) : 0,
+                // Find the decimal point in the stringified number.
                 pointPos = strValue.indexOf('.'),
+                // Calculate the digits after decimal point, and account for exponent (e.g. 0.1e-3
+                // has 4 digits after decimal point)
                 usefulPrecision = expPos - (pointPos >= 0 ? pointPos : expPos) + Math.max(0, -expPrec),
                 boundedPrecision = Math.min(Math.max(usefulPrecision, minDecimals), maxDecimals),
                 zeroesToStrip = boundedPrecision - minDecimals,
