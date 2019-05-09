@@ -193,7 +193,12 @@ describe('Numeral', function() {
                     [-5444333222111, '0,0 ab', '-5,444 b'],
                     [-5444333222111, '0,0 at', '-5 t'],
                     [123456, '0.0[0] ak', '123.46 k'],
-                    [150,'0.0 ak','0.2 k']
+                    [150,'0.0 ak','0.2 k'],
+                    // arbitrarily small numbers
+                    [Number.EPSILON, null, '0'],
+                    [Number.EPSILON*2, null, '0'],
+                    [1e-6, null, '0'],
+                    [1e-7, null, '0']
                 ],
                 i,
                 n,

@@ -383,6 +383,7 @@
                 boundedPrecision,
                 optionalsRegExp,
                 power,
+                valueStr,
                 output;
 
             // Use the smallest precision value possible to avoid errors from floating point representation
@@ -393,9 +394,9 @@
             }
 
             power = Math.pow(10, boundedPrecision);
-
+            valueStr = String(value).indexOf('e') > -1 ? String(value) : value + 'e+' + boundedPrecision;
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(valueStr) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
