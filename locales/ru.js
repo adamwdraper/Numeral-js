@@ -29,7 +29,7 @@
             return '.';
         },
         currency: {
-            symbol: 'руб.'
+            symbol: '&#8381;'
         }
     });
 }));
