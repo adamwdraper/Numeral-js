@@ -399,6 +399,28 @@
 
 
 (function() {
+        numeral.register('locale', 'hr', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'tis.',
+            million: 'mil.',
+            billion: 'mlr.',
+            trillion: 'bil.'
+        },
+        ordinal: function () {
+            return '.';
+        },
+        currency: {
+            symbol: 'HRK'
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
