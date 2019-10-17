@@ -421,6 +421,30 @@
 
 
 (function() {
+      numeral.register('locale', 'id', {
+      delimiters: {
+          thousands: '.',
+          decimal: ','
+      },
+      abbreviations: {
+          thousand: ' Ribu',
+          million: ' Juta',
+          billion: ' Milyar',
+          trillion: ' Triliun'
+      },
+      ordinal: function (number) {
+          // Indonesian people use prefix (ke-) instead of using suffix,
+          // Because of that, i will let it to be empty.
+          return '.';
+      },
+      currency: {
+          symbol: 'Rp '
+      }
+  });
+})();
+
+
+(function() {
         numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
