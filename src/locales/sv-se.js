@@ -11,16 +11,16 @@
       factory(global.numeral);
   }
 }(this, function (numeral) {
-  numeral.register('locale', 'se', {
+  numeral.register('locale', 'sv-se', {
       delimiters: {
           thousands: ' ',
           decimal: ','
       },
       abbreviations: {
           thousand: 't',
-          million: 'm',
-          billion: 'b',
-          trillion: 't'
+          million: 'M',
+          billion: 'md',
+          trillion: 'tmd'
       },
       ordinal: function (number) {
           return '.';
