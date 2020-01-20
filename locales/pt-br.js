@@ -22,8 +22,8 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
-            return 'º';
+        ordinal: function (number, gender = 'm') {
+            return gender === 'm' ? 'º' : 'ª';
         },
         currency: {
             symbol: 'R$'
