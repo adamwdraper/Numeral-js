@@ -716,6 +716,31 @@
 
 
 (function() {
+        numeral.register('locale', 'sq', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'mijë',
+            million: 'Mln',
+            billion: 'Mld',
+            trillion: 'Tln'
+        },
+        ordinal: function (number) {
+            if (number % 10 === 4 && number !== 14) {
+                return '–t';
+            }
+            return '–ë';
+        },
+        currency: {
+            symbol: 'ALL'
+        }
+    });
+})();
+
+
+(function() {
     
 
     numeral.register('locale', 'th', {
