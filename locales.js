@@ -421,6 +421,28 @@
 
 
 (function() {
+        numeral.register('locale', 'id', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'Rb', // Ribu
+            million: 'Jt', // Juta
+            billion: 'M', // Miliar
+            trillion: 'T' // Triliun
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'Rp' // Rupiah
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'it', {
         delimiters: {
             thousands: '.',
