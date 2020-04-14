@@ -419,6 +419,7 @@
     });
 })();
 
+
 (function() {
         numeral.register('locale', 'id', {
         delimiters: {
@@ -439,6 +440,7 @@
         }
     });
 })();
+
 
 (function() {
         numeral.register('locale', 'it', {
