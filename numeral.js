@@ -406,13 +406,13 @@
         }
     };
 
-    // avaliable options
+    // available options
     numeral.options = options;
 
-    // avaliable formats
+    // available formats
     numeral.formats = formats;
 
-    // avaliable formats
+    // available formats
     numeral.locales = locales;
 
     // This function sets the current locale.  If
