@@ -13,14 +13,14 @@
 }(this, function (numeral) {
     numeral.register('locale', 'de', {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
-            thousand: 'k',
-            million: 'm',
-            billion: 'b',
-            trillion: 't'
+            thousand: 'Tsd.',
+            million: 'Mio.',
+            billion: 'Mrd.',
+            trillion: 'Bio.'
         },
         ordinal: function (number) {
             return '.';
