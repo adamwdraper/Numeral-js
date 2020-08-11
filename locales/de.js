@@ -13,7 +13,7 @@
 }(this, function (numeral) {
     numeral.register('locale', 'de', {
         delimiters: {
-            thousands: ' ',
+            thousands: '.',
             decimal: ','
         },
         abbreviations: {
