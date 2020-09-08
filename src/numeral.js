@@ -378,7 +378,14 @@
          * problems for accounting- and finance-related software.
          */
         toFixed: function(value, maxDecimals, roundingFunction, optionals) {
-            var splitValue = value.toString().split('.'),
+            var valueStr;
+            if (value.toString().match(/e-/)) {
+                valueStr = value.toFixed(maxDecimals);
+            } else {
+                valueStr = value.toString();
+            }
+
+            var splitValue = valueStr.split('.'),
                 minDecimals = maxDecimals - (optionals || 0),
                 boundedPrecision,
                 optionalsRegExp,
@@ -395,7 +402,7 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(valueStr + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
