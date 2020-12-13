@@ -59,7 +59,7 @@
 
         if (numeral.isNumeral(input)) {
             value = input.value();
-        } else if (input === 0 || typeof input === 'undefined') {
+        } else if (input === 0 || typeof input === 'undefined' || input == "") {
             value = 0;
         } else if (input === null || _.isNaN(input)) {
             value = null;
