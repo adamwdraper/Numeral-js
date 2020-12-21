@@ -397,6 +397,10 @@
             // Multiply up by precision, round accurately, then divide and use native toFixed():
             output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
+            if (isNaN(output) && String(value).includes('e-')) {
+                output = "0";
+            }
+
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
                 output = output.replace(optionalsRegExp, '');
