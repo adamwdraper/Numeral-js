@@ -210,6 +210,29 @@ describe('Numeral', function() {
         });
     });
 
+    describe('FormatToNearestOrder', function() {
+        it('should format to nearest order number', function() {
+            var tests = [
+                    [12345, 'k', 12],
+                    [120545, 'k', 121],
+                    [120545, 'm', 0],
+                    [120545, 'd', 120545],
+                ],
+                i,
+                n,
+                output;
+
+            for (i = 0; i < tests.length; i++) {
+                n = numeral(tests[i][0]);
+                output = n.formatToNearestOrder(tests[i][1]);
+
+                expect(output).to.equal(tests[i][2]);
+
+                expect(typeof output).to.equal('number');
+            }
+        });
+    });
+
     describe('Unformat', function() {
         before(function() {
             numeral.zeroFormat('N/A');
