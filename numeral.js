@@ -208,19 +208,25 @@
             }
 
             // check abbreviation again after rounding
-            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
-                int = String(Number(int) / 1000);
+            if (Number(int) >= 1000 && !abbrForce) {
+                if (abbr && abbr !== locale.abbreviations.trillion) {
+                    int = String(Number(int) / 1000);
 
-                switch (abbr) {
-                    case locale.abbreviations.thousand:
-                        abbr = locale.abbreviations.million;
-                        break;
-                    case locale.abbreviations.million:
-                        abbr = locale.abbreviations.billion;
-                        break;
-                    case locale.abbreviations.billion:
-                        abbr = locale.abbreviations.trillion;
-                        break;
+                    switch (abbr) {
+                        case locale.abbreviations.thousand:
+                            abbr = locale.abbreviations.million;
+                            break;
+                        case locale.abbreviations.million:
+                            abbr = locale.abbreviations.billion;
+                            break;
+                        case locale.abbreviations.billion:
+                            abbr = locale.abbreviations.trillion;
+                            break;
+                    }
+                } else {
+                    int = String(Number(int) / 1000);
+
+                    abbr = locale.abbreviations.thousand;
                 }
             }
 
