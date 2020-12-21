@@ -604,6 +604,13 @@
 
             return output;
         },
+        // formats to nearest order
+        formatToNearestOrder: function(orderKind) {
+            var value = this._value;
+            var order = {'k': 1e3, 'm': 1e6, 'b': 1e9, 't': 1e12};
+
+            return Math.round((value / order[orderKind]) || value);
+        },
         value: function() {
             return this._value;
         },
