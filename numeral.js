@@ -395,7 +395,26 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            var resolveValue = value.toString().toLowerCase().split('e');
+            var exponent = resolveValue[1] ? boundedPrecision + parseInt(resolveValue[1]) : boundedPrecision;
+            output = (roundingFunction(resolveValue[0] + 'e' + exponent.toString()) / power).toFixed(boundedPrecision);
+            resolveValue = output.toString().toLowerCase().split('e');
+            exponent = parseInt(resolveValue[1] || '1');
+            if(exponent > 1) {
+                var diff = exponent - (resolveValue[0].split('.')[1] || '').length;
+                if(diff >=0) {
+                    output = resolveValue[0] + Array(diff).fill('0').join('');
+                    output = output.replace('.', '');
+                    output = output + '.' + Array(boundedPrecision).fill('0').join('');
+                } else {
+                    output = resolveValue[0];
+                    output = output.replace('.', '');
+                    optionalsRegExp = new RegExp('\[0-9]{1,' + diff * (-1) + '}$');
+                    output = output.replace(optionalsRegExp, function(result) {
+                        return result[0] ? '.' + result[0] : '';
+                    });
+                }
+            }
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
