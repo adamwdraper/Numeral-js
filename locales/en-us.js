@@ -11,7 +11,7 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    numeral.register('locale', 'en-gb', {
+    numeral.register('locale', 'en-us', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -30,7 +30,7 @@
                 (b === 3) ? 'rd' : 'th';
         },
         currency: {
-            symbol: '£'
+            symbol: '$'
         }
     });
 }));
