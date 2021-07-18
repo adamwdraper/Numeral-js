@@ -25,6 +25,12 @@ describe('Time', function() {
         }
     });
 
+    it('should never should 60 seconds when formatted', function() {
+        for (i = 45; i < 75; i = i + 0.1) {
+            expect(numeral(i).format('00:00:00'), 'i='+i).to.not.include("60");
+        }
+    })
+
     it('should unformat to time', function() {
         var tests = [
                 ['0:00:00', 0],
