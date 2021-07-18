@@ -982,7 +982,7 @@
         format: function(value, format, roundingFunction) {
             var hours = Math.floor(value / 60 / 60),
                 minutes = Math.floor((value - (hours * 60 * 60)) / 60),
-                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+                seconds = Math.floor(value - (hours * 60 * 60) - (minutes * 60));
 
             return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
         },
