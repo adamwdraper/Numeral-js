@@ -616,6 +616,18 @@
             return this;
         },
         add: function(value) {
+            function isNumeric(str) {
+                if (typeof str != "string") {
+                    return false;
+                } else {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+            }
+            
+            if (isNumeric(value)) {
+                value = Number(value);   
+            }
+            
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -627,6 +639,18 @@
             return this;
         },
         subtract: function(value) {
+            function isNumeric(str) {
+                if (typeof str != "string") {
+                    return false;
+                } else {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+            }
+            
+            if (isNumeric(value)) {
+                value = Number(value);   
+            }
+            
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -638,6 +662,18 @@
             return this;
         },
         multiply: function(value) {
+            function isNumeric(str) {
+                if (typeof str != "string") {
+                    return false;
+                } else {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+            }
+            
+            if (isNumeric(value)) {
+                value = Number(value);   
+            }
+            
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
@@ -648,6 +684,18 @@
             return this;
         },
         divide: function(value) {
+            function isNumeric(str) {
+                if (typeof str != "string") {
+                    return false;
+                } else {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+            }
+            
+            if (isNumeric(value)) {
+                value = Number(value);   
+            }
+            
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
@@ -658,6 +706,18 @@
             return this;
         },
         difference: function(value) {
+            function isNumeric(str) {
+                if (typeof str != "string") {
+                    return false;
+                } else {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+            }
+            
+            if (isNumeric(value)) {
+                value = Number(value);   
+            }
+            
             return Math.abs(numeral(this._value).subtract(value).value());
         }
     };
