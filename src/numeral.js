@@ -643,19 +643,35 @@
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
 
-            this._value = _.reduce([this._value, value], cback, 1);
+            // Preventing null-related exceptions
+            if (this == null || this._value == null || value == null) {
+                // Return null to pass null-handling to the user
+                
+                return null;
+            } else {
+            
+                this._value = _.reduce([this._value, value], cback, 1);
 
-            return this;
+                return this;
+            }
         },
         divide: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
+            
+            // Preventing null-related exceptions
+            if (this == null || this._value == null || value == null) {
+                // Return null to pass null-handling to the user
+                
+                return null;
+            } else {
+            
+                this._value = _.reduce([this._value, value], cback);
 
-            this._value = _.reduce([this._value, value], cback);
-
-            return this;
+                return this;
+            }
         },
         difference: function(value) {
             return Math.abs(numeral(this._value).subtract(value).value());
