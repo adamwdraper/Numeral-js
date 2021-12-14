@@ -642,10 +642,18 @@
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
-
-            this._value = _.reduce([this._value, value], cback, 1);
-
-            return this;
+            
+            if (value == 1) {
+                // In fact, doing multiplication when value is 1 has the following problems:
+                // - consuming unnecessary time
+                // - producing non-identital-to-previous-number results due to precision issues
+                // So, better to do no computation when 1 has occured
+                
+                return this;
+            } else {
+                this._value = _.reduce([this._value, value], cback, 1);
+                return this;
+            }
         },
         divide: function(value) {
             function cback(accum, curr, currI, O) {
