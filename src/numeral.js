@@ -602,7 +602,11 @@
                 output = formatFunction(value, format, roundingFunction);
             }
 
-            return output;
+            if (isNaN(output) && inputString.length > 22) {
+                return Number(inputString).toFixed();
+            } else {
+                return output;
+            }
         },
         value: function() {
             return this._value;
