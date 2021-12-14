@@ -579,6 +579,10 @@
                 kind,
                 output,
                 formatFunction;
+            
+            if ((value == Infinity) || (value == -Infinity)) {
+                return value;   
+            }
 
             // make sure we have a roundingFunction
             roundingFunction = roundingFunction || Math.round;
