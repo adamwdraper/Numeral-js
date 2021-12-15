@@ -315,6 +315,10 @@ describe('Numeral', function() {
         });
     });
 
+    describe('.value() Precision', function () {
+        expect(numeral('8.14%').value()).to.equal(0.0814);
+    });
+
     describe('Manipulate', function() {
 
         describe('Add', function() {
