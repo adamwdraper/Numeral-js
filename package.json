@@ -55,5 +55,8 @@
   },
   "ender": "./ender.js",
   "_id": "numeral@1.5.4",
-  "_from": "numeral"
+  "_from": "numeral",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
 }
