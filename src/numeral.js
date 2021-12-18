@@ -16,8 +16,8 @@
     }
 }(this, function () {
     /************************************
-        Variables
-    ************************************/
+     Variables
+     ************************************/
 
     var numeral,
         _,
@@ -41,8 +41,8 @@
 
 
     /************************************
-        Constructors
-    ************************************/
+     Constructors
+     ************************************/
 
     // Numeral prototype object
     function Numeral(input, number) {
@@ -51,7 +51,7 @@
         this._value = number;
     }
 
-    numeral = function(input) {
+    numeral = function (input) {
         var value,
             kind,
             unformatFunction,
@@ -84,7 +84,7 @@
                 value = unformatFunction(input);
             }
         } else {
-            value = Number(input)|| null;
+            value = Number(input) || null;
         }
 
         return new Numeral(input, value);
@@ -94,14 +94,14 @@
     numeral.version = VERSION;
 
     // compare numeral object
-    numeral.isNumeral = function(obj) {
+    numeral.isNumeral = function (obj) {
         return obj instanceof Numeral;
     };
 
     // helper functions
     numeral._ = _ = {
         // formats numbers separators, decimals places, signs, abbreviations
-        numberToFormat: function(value, format, roundingFunction) {
+        numberToFormat: function (value, format, roundingFunction) {
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 optDec = false,
@@ -238,7 +238,11 @@
             }
 
             if (thousands > -1) {
-                int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + locale.delimiters.thousands);
+                if (thousands === 1){
+                    thousands = 3;
+                }
+                var reg = new RegExp('(\\d)(?=(\\d{' + thousands + '})+(?!\\d))', 'g');
+                int = int.toString().replace(reg, '$1' + locale.delimiters.thousands);
             }
 
             if (format.indexOf('.') === 0) {
@@ -260,7 +264,7 @@
             return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
-        stringToNumber: function(string) {
+        stringToNumber: function (string) {
             var locale = locales[options.currentLocale],
                 stringOriginal = string,
                 abbreviations = {
@@ -305,16 +309,16 @@
 
             return value;
         },
-        isNaN: function(value) {
+        isNaN: function (value) {
             return typeof value === 'number' && isNaN(value);
         },
-        includes: function(string, search) {
+        includes: function (string, search) {
             return string.indexOf(search) !== -1;
         },
-        insert: function(string, subString, start) {
+        insert: function (string, subString, start) {
             return string.slice(0, start) + subString + string.slice(start);
         },
-        reduce: function(array, callback /*, initialValue*/) {
+        reduce: function (array, callback /*, initialValue*/) {
             if (this === null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
             }
@@ -366,7 +370,7 @@
         correctionFactor: function () {
             var args = Array.prototype.slice.call(arguments);
 
-            return args.reduce(function(accum, next) {
+            return args.reduce(function (accum, next) {
                 var mn = _.multiplier(next);
                 return accum > mn ? accum : mn;
             }, 1);
@@ -377,7 +381,7 @@
          * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
          * problems for accounting- and finance-related software.
          */
-        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+        toFixed: function (value, maxDecimals, roundingFunction, optionals) {
             var splitValue = value.toString().split('.'),
                 minDecimals = maxDecimals - (optionals || 0),
                 boundedPrecision,
@@ -387,9 +391,9 @@
 
             // Use the smallest precision value possible to avoid errors from floating point representation
             if (splitValue.length === 2) {
-              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+                boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
             } else {
-              boundedPrecision = minDecimals;
+                boundedPrecision = minDecimals;
             }
 
             power = Math.pow(10, boundedPrecision);
@@ -418,7 +422,7 @@
     // This function sets the current locale.  If
     // no arguments are passed in, it will simply return the current global
     // locale key.
-    numeral.locale = function(key) {
+    numeral.locale = function (key) {
         if (key) {
             options.currentLocale = key.toLowerCase();
         }
@@ -429,7 +433,7 @@
     // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
     // global locale object.
-    numeral.localeData = function(key) {
+    numeral.localeData = function (key) {
         if (!key) {
             return locales[options.currentLocale];
         }
@@ -443,25 +447,25 @@
         return locales[key];
     };
 
-    numeral.reset = function() {
+    numeral.reset = function () {
         for (var property in defaults) {
             options[property] = defaults[property];
         }
     };
 
-    numeral.zeroFormat = function(format) {
-        options.zeroFormat = typeof(format) === 'string' ? format : null;
+    numeral.zeroFormat = function (format) {
+        options.zeroFormat = typeof (format) === 'string' ? format : null;
     };
 
     numeral.nullFormat = function (format) {
-        options.nullFormat = typeof(format) === 'string' ? format : null;
+        options.nullFormat = typeof (format) === 'string' ? format : null;
     };
 
-    numeral.defaultFormat = function(format) {
-        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    numeral.defaultFormat = function (format) {
+        options.defaultFormat = typeof (format) === 'string' ? format : '0.0';
     };
 
-    numeral.register = function(type, name, format) {
+    numeral.register = function (type, name, format) {
         name = name.toLowerCase();
 
         if (this[type + 's'][name]) {
@@ -474,7 +478,7 @@
     };
 
 
-    numeral.validate = function(val, culture) {
+    numeral.validate = function (val, culture) {
         var _decimalSep,
             _thousandSep,
             _currSymbol,
@@ -550,12 +554,12 @@
                 return false;
             } else {
                 if (_valArray.length < 2) {
-                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
+                    return (!!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
                 } else {
                     if (_valArray[0].length === 1) {
-                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return (!!_valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/));
                     } else {
-                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return (!!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/));
                     }
                 }
             }
@@ -566,14 +570,14 @@
 
 
     /************************************
-        Numeral Prototype
-    ************************************/
+     Numeral Prototype
+     ************************************/
 
     numeral.fn = Numeral.prototype = {
-        clone: function() {
+        clone: function () {
             return numeral(this);
         },
-        format: function(inputString, roundingFunction) {
+        format: function (inputString, roundingFunction) {
             var value = this._value,
                 format = inputString || options.defaultFormat,
                 kind,
@@ -604,18 +608,18 @@
 
             return output;
         },
-        value: function() {
+        value: function () {
             return this._value;
         },
-        input: function() {
+        input: function () {
             return this._input;
         },
-        set: function(value) {
+        set: function (value) {
             this._value = Number(value);
 
             return this;
         },
-        add: function(value) {
+        add: function (value) {
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -626,7 +630,7 @@
 
             return this;
         },
-        subtract: function(value) {
+        subtract: function (value) {
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -637,7 +641,7 @@
 
             return this;
         },
-        multiply: function(value) {
+        multiply: function (value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
@@ -647,7 +651,7 @@
 
             return this;
         },
-        divide: function(value) {
+        divide: function (value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
@@ -657,14 +661,14 @@
 
             return this;
         },
-        difference: function(value) {
+        difference: function (value) {
             return Math.abs(numeral(this._value).subtract(value).value());
         }
     };
 
     /************************************
-        Default Locale && Format
-    ************************************/
+     Default Locale && Format
+     ************************************/
 
     numeral.register('locale', 'en', {
         delimiters: {
@@ -677,12 +681,12 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function(number) {
+        ordinal: function (number) {
             var b = number % 10;
             return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
             symbol: '$'
