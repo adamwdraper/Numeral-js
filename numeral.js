@@ -828,7 +828,9 @@
 
             // format the number
             output = numeral._.numberToFormat(value, format, roundingFunction);
-
+            if (Number(output) == 0 && value < 0) {
+                output = '-' + output;
+            }
             // update the before and after based on value
             if (value >= 0) {
                 symbols.before = symbols.before.replace(/[\-\(]/, '');
