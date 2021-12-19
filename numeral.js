@@ -294,11 +294,12 @@
                     }
                 }
 
-                // check for negative number  
-                   value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
-                   if (!string.split('(').length > 0 || !string.split('(')[1].isNumeral)
-                       value *= -1
-                   
+                // check for negative number
+                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+
+                if (!string.split('(').length > 0 || !string.split('(')[1].isNumeral)
+                    value *= -1
+
                 // remove non numbers
                 string = string.replace(/[^0-9\.]+/g, '');
 
