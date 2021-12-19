@@ -40,3 +40,13 @@ describe('BPS', function() {
         }
     });
 });
+
+
+describe('Check Negatives', function() {
+
+    it('should give us right sign for number', function() {
+        expect(numeral("100(a)").value()).to.equal("100");
+        expect(numeral("-104000").format("0a")).to.equal("-104k")
+    });
+
+});
