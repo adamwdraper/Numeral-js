@@ -210,16 +210,16 @@
             // check abbreviation again after rounding
             if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
                 int = String(Number(int) / 1000);
-
-                switch (abbr) {
+                var leadingSpaces = ' '.repeat(abbr.length - abbr.trim().length);
+                switch (abbr.trim()) {
                     case locale.abbreviations.thousand:
-                        abbr = locale.abbreviations.million;
+                        abbr = leadingSpaces + locale.abbreviations.million;
                         break;
                     case locale.abbreviations.million:
-                        abbr = locale.abbreviations.billion;
+                        abbr = leadingSpaces + locale.abbreviations.billion;
                         break;
                     case locale.abbreviations.billion:
-                        abbr = locale.abbreviations.trillion;
+                        abbr = leadingSpaces + locale.abbreviations.trillion;
                         break;
                 }
             }
@@ -388,14 +388,14 @@
             // Use the smallest precision value possible to avoid errors from floating point representation
             if (splitValue.length === 2) {
               boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+              power = Math.pow(10, boundedPrecision);
+  
+              // Multiply up by precision, round accurately, then divide and use native toFixed():
+              output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
             } else {
               boundedPrecision = minDecimals;
+              output = roundingFunction(splitValue[0]).toFixed(boundedPrecision);
             }
-
-            power = Math.pow(10, boundedPrecision);
-
-            // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
@@ -638,19 +638,19 @@
             return this;
         },
         multiply: function(value) {
-            function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
-            }
-
-            this._value = _.reduce([this._value, value], cback, 1);
-
-            return this;
+            var corrFactor = _.correctionFactor(this._value, value);
+            var factor = Math.round(corrFactor * corrFactor);
+            this._value = Math.round(this._value * corrFactor) * Math.round(value * corrFactor);
+            return this.divide(factor);
         },
         divide: function(value) {
             function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
+                var res = accum / curr;
+                if (Math.abs(res - Math.round(res)) < 1e-4) {
+                    console.log(res, Math.round(res));
+                    res = Math.round(res);
+                }
+                return res;
             }
 
             this._value = _.reduce([this._value, value], cback);
