@@ -32,10 +32,10 @@
             output = numeral._.numberToFormat(value, format, roundingFunction);
 
             // update the before and after based on value
-            if (value >= 0) {
+            if (parseFloat(output)  >= 0) {
                 symbols.before = symbols.before.replace(/[\-\(]/, '');
                 symbols.after = symbols.after.replace(/[\-\)]/, '');
-            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+            } else if (parseFloat(output) < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
                 symbols.before = '-' + symbols.before;
             }
 

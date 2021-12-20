@@ -12,6 +12,7 @@ describe('Currency', function() {
 
     it('should format to currency', function() {
         var tests = [
+                [-0.001, '$0,0.00', '$0.00'],
                 [0,'$0.00','$0.00'],
                 [null,'$0.00','$0.00'],
                 [0.99,'$0,0.00','$0.99'],
