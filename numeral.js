@@ -388,14 +388,14 @@
             // Use the smallest precision value possible to avoid errors from floating point representation
             if (splitValue.length === 2) {
               boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+              power = Math.pow(10, boundedPrecision);
+  
+              // Multiply up by precision, round accurately, then divide and use native toFixed():
+              output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
             } else {
               boundedPrecision = minDecimals;
+              output = roundingFunction(splitValue[0]).toFixed(boundedPrecision);
             }
-
-            power = Math.pow(10, boundedPrecision);
-
-            // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
