@@ -638,19 +638,19 @@
             return this;
         },
         multiply: function(value) {
-            function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
-            }
-
-            this._value = _.reduce([this._value, value], cback, 1);
-
-            return this;
+            var corrFactor = _.correctionFactor(this._value, value);
+            var factor = Math.round(corrFactor * corrFactor);
+            this._value = Math.round(this._value * corrFactor) * Math.round(value * corrFactor);
+            return this.divide(factor);
         },
         divide: function(value) {
             function cback(accum, curr, currI, O) {
-                var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
+                var res = accum / curr;
+                if (Math.abs(res - Math.round(res)) < 1e-4) {
+                    console.log(res, Math.round(res));
+                    res = Math.round(res);
+                }
+                return res;
             }
 
             this._value = _.reduce([this._value, value], cback);
