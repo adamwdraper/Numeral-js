@@ -582,24 +582,21 @@
 
             // make sure we have a roundingFunction
             roundingFunction = roundingFunction || Math.round;
-
             // format based on value
+            fixedNumber = Number(inputString).toFixed();
             if (value === 0 && options.zeroFormat !== null) {
-                output = options.zeroFormat;
+                output = (isNaN(options.zeroFormat) && inputString.length > 22) ? fixedNumber : options.zeroFormat ;
             } else if (value === null && options.nullFormat !== null) {
-                output = options.nullFormat;
+                output = (isNaN(options.nullFormat) && inputString.length > 22) ? fixedNumber : options.zeroFormat ;
             } else {
                 for (kind in formats) {
                     if (format.match(formats[kind].regexps.format)) {
                         formatFunction = formats[kind].format;
-
                         break;
                     }
                 }
-
                 formatFunction = formatFunction || numeral._.numberToFormat;
-
-                output = formatFunction(value, format, roundingFunction);
+                output = (isNaN(formatFunction(value, format, roundingFunction)) && inputString.length > 22) ? fixedNumber : options.zeroFormat;
             }
 
             return output;
