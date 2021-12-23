@@ -59,7 +59,7 @@
 
         if (numeral.isNumeral(input)) {
             value = input.value();
-        } else if (input === 0 || typeof input === 'undefined' || input === '' || input === null) {
+        } else if (input === 0 || typeof input === 'undefined' || input === null || input==='') {
             value = 0;
         } else if (_.isNaN(input)) {
             value = null;
@@ -569,47 +569,41 @@
         Numeral Prototype
     ************************************/
 
-        numeral.fn = Numeral.prototype = {
-            clone: function() {
-                return numeral(this);
-            },
-            format: function(inputString, roundingFunction) {
-                var value = this._value,
-                    format = inputString || options.defaultFormat,
-                    kind,
-                    output,
-                    formatFunction;
-    
-                // make sure we have a roundingFunction
-                roundingFunction = roundingFunction || Math.round;
-    
-                // format based on value
-                if (value === 0 && options.zeroFormat !== null) {
-                    output = options.zeroFormat;
-                } else if (value === null && options.nullFormat !== null) {
-                    output = options.nullFormat;
-                } else {
-                    for (kind in formats) {
-                        if (format.match(formats[kind].regexps.format)) {
-                            formatFunction = formats[kind].format;
-    
-                            break;
-                        }
+    numeral.fn = Numeral.prototype = {
+        clone: function() {
+            return numeral(this);
+        },
+        format: function(inputString, roundingFunction) {
+            var value = this._value,
+                format = inputString || options.defaultFormat,
+                kind,
+                output,
+                formatFunction;
+
+            // make sure we have a roundingFunction
+            roundingFunction = roundingFunction || Math.round;
+
+            // format based on value
+            if (value === 0 && options.zeroFormat !== null) {
+                output = options.zeroFormat;
+            } else if (value === null && options.nullFormat !== null) {
+                output = options.nullFormat;
+            } else {
+                for (kind in formats) {
+                    if (format.match(formats[kind].regexps.format)) {
+                        formatFunction = formats[kind].format;
+
+                        break;
                     }
-    
-                    formatFunction = formatFunction || numeral._.numberToFormat;
-                    output = formatFunction(value, format, roundingFunction);
                 }
-                inputStringLen = inputString.length
-                fixedNumber = inputString.toFixed()
-                if (inputString.includes('-')) {
-                    inputStringLen -= 1
-                }
-                if (isNaN(output) && inputStringLen > 22) {
-                    return  fixedNumber
-                }
-                return output;
-            },
+
+                formatFunction = formatFunction || numeral._.numberToFormat;
+
+                output = formatFunction(value, format, roundingFunction);
+            }
+
+            return output;
+        },
         value: function() {
             return this._value;
         },
