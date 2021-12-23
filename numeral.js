@@ -5,6 +5,7 @@
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
+const BigNumber = require('bignumber.js');
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -640,7 +641,9 @@
         multiply: function(value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
+                return (new BigNumber(Math.round(accum * corrFactor))
+                .multipliedBy(Math.round(curr * corrFactor))
+                .dividedBy(corrFactor*corrFactor)).valueOf();
             }
 
             this._value = _.reduce([this._value, value], cback, 1);
@@ -692,7 +695,8 @@
     
 
 (function() {
-        numeral.register('format', 'bps', {
+    
+    numeral.register('format', 'bps', {
             regexps: {
                 format: /(BPS)/,
                 unformat: /(BPS)/
@@ -724,11 +728,13 @@
                 return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
             }
         });
+
 })();
 
 
 (function() {
-        var decimal = {
+    
+    var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         },
@@ -805,11 +811,13 @@
             return value;
         }
     });
+
 })();
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
@@ -869,11 +877,13 @@
             return output;
         }
     });
+
 })();
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -905,11 +915,13 @@
             return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
         }
     });
+
 })();
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -928,11 +940,13 @@
             return output + ordinal;
         }
     });
+
 })();
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -970,11 +984,13 @@
             return number;
         }
     });
+
 })();
 
 
 (function() {
-        numeral.register('format', 'time', {
+    
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
@@ -1007,6 +1023,7 @@
             return Number(seconds);
         }
     });
+
 })();
 
 return numeral;
