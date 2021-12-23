@@ -374,6 +374,9 @@ describe('Numeral', function() {
                 var tests = [
                         [1000,10,10000],
                         [0.5,3,1.5],
+                        [null,1,null],
+                        [1,null,null],
+                        [null,null,null],
                         [-100,200,-20000],
                         [0.1,0.2,0.02],
                         [0.28,0.01,0.0028],
@@ -397,6 +400,9 @@ describe('Numeral', function() {
                 var tests = [
                         [1000,10,100],
                         [0.5,3,0.16666666666666666],
+                        [null,1,null],
+                        [1,null,null],
+                        [null,null,null],
                         [-100,200,-0.5],
                         [5.3,0.1,53],
                         [0.28,0.01,28],
