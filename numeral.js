@@ -5,6 +5,7 @@
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
+const BigNumber = require('bignumber.js');
 
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -16,8 +17,8 @@
     }
 }(this, function () {
     /************************************
-        Variables
-    ************************************/
+     Variables
+     ************************************/
 
     var numeral,
         _,
@@ -41,8 +42,8 @@
 
 
     /************************************
-        Constructors
-    ************************************/
+     Constructors
+     ************************************/
 
     // Numeral prototype object
     function Numeral(input, number) {
@@ -51,7 +52,7 @@
         this._value = number;
     }
 
-    numeral = function(input) {
+    numeral = function (input) {
         var value,
             kind,
             unformatFunction,
@@ -84,7 +85,7 @@
                 value = unformatFunction(input);
             }
         } else {
-            value = Number(input)|| null;
+            value = Number(input) || null;
         }
 
         return new Numeral(input, value);
@@ -94,14 +95,14 @@
     numeral.version = VERSION;
 
     // compare numeral object
-    numeral.isNumeral = function(obj) {
+    numeral.isNumeral = function (obj) {
         return obj instanceof Numeral;
     };
 
     // helper functions
     numeral._ = _ = {
         // formats numbers separators, decimals places, signs, abbreviations
-        numberToFormat: function(value, format, roundingFunction) {
+        numberToFormat: function (value, format, roundingFunction) {
             var locale = locales[numeral.options.currentLocale],
                 negP = false,
                 optDec = false,
@@ -260,7 +261,7 @@
             return output;
         },
         // unformats numbers separators, decimals places, signs, abbreviations
-        stringToNumber: function(string) {
+        stringToNumber: function (string) {
             var locale = locales[options.currentLocale],
                 stringOriginal = string,
                 abbreviations = {
@@ -305,16 +306,16 @@
 
             return value;
         },
-        isNaN: function(value) {
+        isNaN: function (value) {
             return typeof value === 'number' && isNaN(value);
         },
-        includes: function(string, search) {
+        includes: function (string, search) {
             return string.indexOf(search) !== -1;
         },
-        insert: function(string, subString, start) {
+        insert: function (string, subString, start) {
             return string.slice(0, start) + subString + string.slice(start);
         },
-        reduce: function(array, callback /*, initialValue*/) {
+        reduce: function (array, callback /*, initialValue*/) {
             if (this === null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
             }
@@ -327,7 +328,8 @@
                 len = t.length >>> 0,
                 k = 0,
                 value;
-
+            if (t[0] === null || t[1] === null)
+                return null;
             if (arguments.length === 3) {
                 value = arguments[2];
             } else {
@@ -366,7 +368,7 @@
         correctionFactor: function () {
             var args = Array.prototype.slice.call(arguments);
 
-            return args.reduce(function(accum, next) {
+            return args.reduce(function (accum, next) {
                 var mn = _.multiplier(next);
                 return accum > mn ? accum : mn;
             }, 1);
@@ -377,7 +379,7 @@
          * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
          * problems for accounting- and finance-related software.
          */
-        toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+        toFixed: function (value, maxDecimals, roundingFunction, optionals) {
             var splitValue = value.toString().split('.'),
                 minDecimals = maxDecimals - (optionals || 0),
                 boundedPrecision,
@@ -387,9 +389,9 @@
 
             // Use the smallest precision value possible to avoid errors from floating point representation
             if (splitValue.length === 2) {
-              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+                boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
             } else {
-              boundedPrecision = minDecimals;
+                boundedPrecision = minDecimals;
             }
 
             power = Math.pow(10, boundedPrecision);
@@ -418,7 +420,7 @@
     // This function sets the current locale.  If
     // no arguments are passed in, it will simply return the current global
     // locale key.
-    numeral.locale = function(key) {
+    numeral.locale = function (key) {
         if (key) {
             options.currentLocale = key.toLowerCase();
         }
@@ -429,7 +431,7 @@
     // This function provides access to the loaded locale data.  If
     // no arguments are passed in, it will simply return the current
     // global locale object.
-    numeral.localeData = function(key) {
+    numeral.localeData = function (key) {
         if (!key) {
             return locales[options.currentLocale];
         }
@@ -443,25 +445,25 @@
         return locales[key];
     };
 
-    numeral.reset = function() {
+    numeral.reset = function () {
         for (var property in defaults) {
             options[property] = defaults[property];
         }
     };
 
-    numeral.zeroFormat = function(format) {
-        options.zeroFormat = typeof(format) === 'string' ? format : null;
+    numeral.zeroFormat = function (format) {
+        options.zeroFormat = typeof (format) === 'string' ? format : null;
     };
 
     numeral.nullFormat = function (format) {
-        options.nullFormat = typeof(format) === 'string' ? format : null;
+        options.nullFormat = typeof (format) === 'string' ? format : null;
     };
 
-    numeral.defaultFormat = function(format) {
-        options.defaultFormat = typeof(format) === 'string' ? format : '0.0';
+    numeral.defaultFormat = function (format) {
+        options.defaultFormat = typeof (format) === 'string' ? format : '0.0';
     };
 
-    numeral.register = function(type, name, format) {
+    numeral.register = function (type, name, format) {
         name = name.toLowerCase();
 
         if (this[type + 's'][name]) {
@@ -474,7 +476,7 @@
     };
 
 
-    numeral.validate = function(val, culture) {
+    numeral.validate = function (val, culture) {
         var _decimalSep,
             _thousandSep,
             _currSymbol,
@@ -550,12 +552,12 @@
                 return false;
             } else {
                 if (_valArray.length < 2) {
-                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
+                    return (!!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
                 } else {
                     if (_valArray[0].length === 1) {
-                        return ( !! _valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return (!!_valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/));
                     } else {
-                        return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !! _valArray[1].match(/^\d+$/));
+                        return (!!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/));
                     }
                 }
             }
@@ -566,14 +568,14 @@
 
 
     /************************************
-        Numeral Prototype
-    ************************************/
+     Numeral Prototype
+     ************************************/
 
     numeral.fn = Numeral.prototype = {
-        clone: function() {
+        clone: function () {
             return numeral(this);
         },
-        format: function(inputString, roundingFunction) {
+        format: function (inputString, roundingFunction) {
             var value = this._value,
                 format = inputString || options.defaultFormat,
                 kind,
@@ -604,18 +606,18 @@
 
             return output;
         },
-        value: function() {
+        value: function () {
             return this._value;
         },
-        input: function() {
+        input: function () {
             return this._input;
         },
-        set: function(value) {
+        set: function (value) {
             this._value = Number(value);
 
             return this;
         },
-        add: function(value) {
+        add: function (value) {
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -626,7 +628,7 @@
 
             return this;
         },
-        subtract: function(value) {
+        subtract: function (value) {
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
@@ -637,17 +639,19 @@
 
             return this;
         },
-        multiply: function(value) {
+        multiply: function (value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
-                return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
+                return (new BigNumber(Math.round(accum * corrFactor))
+                    .multipliedBy(Math.round(curr * corrFactor))
+                    .dividedBy(corrFactor * corrFactor)).valueOf();
             }
 
             this._value = _.reduce([this._value, value], cback, 1);
 
             return this;
         },
-        divide: function(value) {
+        divide: function (value) {
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
@@ -657,14 +661,14 @@
 
             return this;
         },
-        difference: function(value) {
+        difference: function (value) {
             return Math.abs(numeral(this._value).subtract(value).value());
         }
     };
 
     /************************************
-        Default Locale && Format
-    ************************************/
+     Default Locale && Format
+     ************************************/
 
     numeral.register('locale', 'en', {
         delimiters: {
@@ -677,27 +681,27 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function(number) {
+        ordinal: function (number) {
             var b = number % 10;
             return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
             symbol: '$'
         }
     });
 
-    
 
-(function() {
+    (function () {
+
         numeral.register('format', 'bps', {
             regexps: {
                 format: /(BPS)/,
                 unformat: /(BPS)/
             },
-            format: function(value, format, roundingFunction) {
+            format: function (value, format, roundingFunction) {
                 var space = numeral._.includes(format, ' BPS') ? ' ' : '',
                     output;
 
@@ -720,294 +724,307 @@
 
                 return output;
             },
-            unformat: function(string) {
+            unformat: function (string) {
                 return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
             }
         });
-})();
+
+    })();
 
 
-(function() {
+    (function () {
+
         var decimal = {
-            base: 1000,
-            suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-        },
-        binary = {
-            base: 1024,
-            suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
-        };
+                base: 1000,
+                suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+            },
+            binary = {
+                base: 1024,
+                suffixes: ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+            };
 
-    var allSuffixes =  decimal.suffixes.concat(binary.suffixes.filter(function (item) {
+        var allSuffixes = decimal.suffixes.concat(binary.suffixes.filter(function (item) {
             return decimal.suffixes.indexOf(item) < 0;
         }));
         var unformatRegex = allSuffixes.join('|');
         // Allow support for BPS (http://www.investopedia.com/terms/b/basispoint.asp)
         unformatRegex = '(' + unformatRegex.replace('B', 'B(?!PS)') + ')';
 
-    numeral.register('format', 'bytes', {
-        regexps: {
-            format: /([0\s]i?b)/,
-            unformat: new RegExp(unformatRegex)
-        },
-        format: function(value, format, roundingFunction) {
-            var output,
-                bytes = numeral._.includes(format, 'ib') ? binary : decimal,
-                suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
-                power,
-                min,
-                max;
+        numeral.register('format', 'bytes', {
+            regexps: {
+                format: /([0\s]i?b)/,
+                unformat: new RegExp(unformatRegex)
+            },
+            format: function (value, format, roundingFunction) {
+                var output,
+                    bytes = numeral._.includes(format, 'ib') ? binary : decimal,
+                    suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
+                    power,
+                    min,
+                    max;
 
-            // check for space before
-            format = format.replace(/\s?i?b/, '');
+                // check for space before
+                format = format.replace(/\s?i?b/, '');
 
-            for (power = 0; power <= bytes.suffixes.length; power++) {
-                min = Math.pow(bytes.base, power);
-                max = Math.pow(bytes.base, power + 1);
+                for (power = 0; power <= bytes.suffixes.length; power++) {
+                    min = Math.pow(bytes.base, power);
+                    max = Math.pow(bytes.base, power + 1);
 
-                if (value === null || value === 0 || value >= min && value < max) {
-                    suffix += bytes.suffixes[power];
+                    if (value === null || value === 0 || value >= min && value < max) {
+                        suffix += bytes.suffixes[power];
 
-                    if (min > 0) {
-                        value = value / min;
-                    }
-
-                    break;
-                }
-            }
-
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            return output + suffix;
-        },
-        unformat: function(string) {
-            var value = numeral._.stringToNumber(string),
-                power,
-                bytesMultiplier;
-
-            if (value) {
-                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
-                    if (numeral._.includes(string, decimal.suffixes[power])) {
-                        bytesMultiplier = Math.pow(decimal.base, power);
-
-                        break;
-                    }
-
-                    if (numeral._.includes(string, binary.suffixes[power])) {
-                        bytesMultiplier = Math.pow(binary.base, power);
+                        if (min > 0) {
+                            value = value / min;
+                        }
 
                         break;
                     }
                 }
 
-                value *= (bytesMultiplier || 1);
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                return output + suffix;
+            },
+            unformat: function (string) {
+                var value = numeral._.stringToNumber(string),
+                    power,
+                    bytesMultiplier;
+
+                if (value) {
+                    for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                        if (numeral._.includes(string, decimal.suffixes[power])) {
+                            bytesMultiplier = Math.pow(decimal.base, power);
+
+                            break;
+                        }
+
+                        if (numeral._.includes(string, binary.suffixes[power])) {
+                            bytesMultiplier = Math.pow(binary.base, power);
+
+                            break;
+                        }
+                    }
+
+                    value *= (bytesMultiplier || 1);
+                }
+
+                return value;
             }
+        });
 
-            return value;
-        }
-    });
-})();
+    })();
 
 
-(function() {
+    (function () {
+
         numeral.register('format', 'currency', {
-        regexps: {
-            format: /(\$)/
-        },
-        format: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
-                symbols = {
-                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
-                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
-                },
-                output,
-                symbol,
-                i;
+            regexps: {
+                format: /(\$)/
+            },
+            format: function (value, format, roundingFunction) {
+                var locale = numeral.locales[numeral.options.currentLocale],
+                    symbols = {
+                        before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
+                        after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                    },
+                    output,
+                    symbol,
+                    i;
 
-            // strip format of spaces and $
-            format = format.replace(/\s?\$\s?/, '');
+                // strip format of spaces and $
+                format = format.replace(/\s?\$\s?/, '');
 
-            // format the number
-            output = numeral._.numberToFormat(value, format, roundingFunction);
+                // format the number
+                output = numeral._.numberToFormat(value, format, roundingFunction);
 
-            // update the before and after based on value
-            if (value >= 0) {
-                symbols.before = symbols.before.replace(/[\-\(]/, '');
-                symbols.after = symbols.after.replace(/[\-\)]/, '');
-            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
-                symbols.before = '-' + symbols.before;
-            }
-
-            // loop through each before symbol
-            for (i = 0; i < symbols.before.length; i++) {
-                symbol = symbols.before[i];
-
-                switch (symbol) {
-                    case '$':
-                        output = numeral._.insert(output, locale.currency.symbol, i);
-                        break;
-                    case ' ':
-                        output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
-                        break;
+                // update the before and after based on value
+                if (value >= 0) {
+                    symbols.before = symbols.before.replace(/[\-\(]/, '');
+                    symbols.after = symbols.after.replace(/[\-\)]/, '');
+                } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+                    symbols.before = '-' + symbols.before;
                 }
-            }
 
-            // loop through each after symbol
-            for (i = symbols.after.length - 1; i >= 0; i--) {
-                symbol = symbols.after[i];
+                // loop through each before symbol
+                for (i = 0; i < symbols.before.length; i++) {
+                    symbol = symbols.before[i];
 
-                switch (symbol) {
-                    case '$':
-                        output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
-                        break;
-                    case ' ':
-                        output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
-                        break;
+                    switch (symbol) {
+                        case '$':
+                            output = numeral._.insert(output, locale.currency.symbol, i);
+                            break;
+                        case ' ':
+                            output = numeral._.insert(output, ' ', i + locale.currency.symbol.length - 1);
+                            break;
+                    }
                 }
+
+                // loop through each after symbol
+                for (i = symbols.after.length - 1; i >= 0; i--) {
+                    symbol = symbols.after[i];
+
+                    switch (symbol) {
+                        case '$':
+                            output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                            break;
+                        case ' ':
+                            output = i === symbols.after.length - 1 ? output + ' ' : numeral._.insert(output, ' ', -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
+                            break;
+                    }
+                }
+
+
+                return output;
             }
+        });
+
+    })();
 
 
-            return output;
-        }
-    });
-})();
+    (function () {
 
-
-(function() {
         numeral.register('format', 'exponential', {
-        regexps: {
-            format: /(e\+|e-)/,
-            unformat: /(e\+|e-)/
-        },
-        format: function(value, format, roundingFunction) {
-            var output,
-                exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
-                parts = exponential.split('e');
+            regexps: {
+                format: /(e\+|e-)/,
+                unformat: /(e\+|e-)/
+            },
+            format: function (value, format, roundingFunction) {
+                var output,
+                    exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
+                    parts = exponential.split('e');
 
-            format = format.replace(/e[\+|\-]{1}0/, '');
+                format = format.replace(/e[\+|\-]{1}0/, '');
 
-            output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
+                output = numeral._.numberToFormat(Number(parts[0]), format, roundingFunction);
 
-            return output + 'e' + parts[1];
-        },
-        unformat: function(string) {
-            var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
-                value = Number(parts[0]),
-                power = Number(parts[1]);
+                return output + 'e' + parts[1];
+            },
+            unformat: function (string) {
+                var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
+                    value = Number(parts[0]),
+                    power = Number(parts[1]);
 
-            power = numeral._.includes(string, 'e-') ? power *= -1 : power;
+                power = numeral._.includes(string, 'e-') ? power *= -1 : power;
 
-            function cback(accum, curr, currI, O) {
-                var corrFactor = numeral._.correctionFactor(accum, curr),
-                    num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
-                return num;
+                function cback(accum, curr, currI, O) {
+                    var corrFactor = numeral._.correctionFactor(accum, curr),
+                        num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
+                    return num;
+                }
+
+                return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
             }
+        });
 
-            return numeral._.reduce([value, Math.pow(10, power)], cback, 1);
-        }
-    });
-})();
+    })();
 
 
-(function() {
+    (function () {
+
         numeral.register('format', 'ordinal', {
-        regexps: {
-            format: /(o)/
-        },
-        format: function(value, format, roundingFunction) {
-            var locale = numeral.locales[numeral.options.currentLocale],
-                output,
-                ordinal = numeral._.includes(format, ' o') ? ' ' : '';
+            regexps: {
+                format: /(o)/
+            },
+            format: function (value, format, roundingFunction) {
+                var locale = numeral.locales[numeral.options.currentLocale],
+                    output,
+                    ordinal = numeral._.includes(format, ' o') ? ' ' : '';
 
-            // check for space before
-            format = format.replace(/\s?o/, '');
+                // check for space before
+                format = format.replace(/\s?o/, '');
 
-            ordinal += locale.ordinal(value);
+                ordinal += locale.ordinal(value);
 
-            output = numeral._.numberToFormat(value, format, roundingFunction);
+                output = numeral._.numberToFormat(value, format, roundingFunction);
 
-            return output + ordinal;
-        }
-    });
-})();
+                return output + ordinal;
+            }
+        });
+
+    })();
 
 
-(function() {
+    (function () {
+
         numeral.register('format', 'percentage', {
-        regexps: {
-            format: /(%)/,
-            unformat: /(%)/
-        },
-        format: function(value, format, roundingFunction) {
-            var space = numeral._.includes(format, ' %') ? ' ' : '',
-                output;
+            regexps: {
+                format: /(%)/,
+                unformat: /(%)/
+            },
+            format: function (value, format, roundingFunction) {
+                var space = numeral._.includes(format, ' %') ? ' ' : '',
+                    output;
 
-            if (numeral.options.scalePercentBy100) {
-                value = value * 100;
+                if (numeral.options.scalePercentBy100) {
+                    value = value * 100;
+                }
+
+                // check for space before %
+                format = format.replace(/\s?\%/, '');
+
+                output = numeral._.numberToFormat(value, format, roundingFunction);
+
+                if (numeral._.includes(output, ')')) {
+                    output = output.split('');
+
+                    output.splice(-1, 0, space + '%');
+
+                    output = output.join('');
+                } else {
+                    output = output + space + '%';
+                }
+
+                return output;
+            },
+            unformat: function (string) {
+                var number = numeral._.stringToNumber(string);
+                if (numeral.options.scalePercentBy100) {
+                    return number * 0.01;
+                }
+                return number;
             }
+        });
 
-            // check for space before %
-            format = format.replace(/\s?\%/, '');
-
-            output = numeral._.numberToFormat(value, format, roundingFunction);
-
-            if (numeral._.includes(output, ')')) {
-                output = output.split('');
-
-                output.splice(-1, 0, space + '%');
-
-                output = output.join('');
-            } else {
-                output = output + space + '%';
-            }
-
-            return output;
-        },
-        unformat: function(string) {
-            var number = numeral._.stringToNumber(string);
-            if (numeral.options.scalePercentBy100) {
-                return number * 0.01;
-            }
-            return number;
-        }
-    });
-})();
+    })();
 
 
-(function() {
+    (function () {
+
         numeral.register('format', 'time', {
-        regexps: {
-            format: /(:)/,
-            unformat: /(:)/
-        },
-        format: function(value, format, roundingFunction) {
-            var hours = Math.floor(value / 60 / 60),
-                minutes = Math.floor((value - (hours * 60 * 60)) / 60),
-                seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
+            regexps: {
+                format: /(:)/,
+                unformat: /(:)/
+            },
+            format: function (value, format, roundingFunction) {
+                var hours = Math.floor(value / 60 / 60),
+                    minutes = Math.floor((value - (hours * 60 * 60)) / 60),
+                    seconds = Math.round(value - (hours * 60 * 60) - (minutes * 60));
 
-            return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-        },
-        unformat: function(string) {
-            var timeArray = string.split(':'),
-                seconds = 0;
+                return hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+            },
+            unformat: function (string) {
+                var timeArray = string.split(':'),
+                    seconds = 0;
 
-            // turn hours and minutes into seconds and add them all up
-            if (timeArray.length === 3) {
-                // hours
-                seconds = seconds + (Number(timeArray[0]) * 60 * 60);
-                // minutes
-                seconds = seconds + (Number(timeArray[1]) * 60);
-                // seconds
-                seconds = seconds + Number(timeArray[2]);
-            } else if (timeArray.length === 2) {
-                // minutes
-                seconds = seconds + (Number(timeArray[0]) * 60);
-                // seconds
-                seconds = seconds + Number(timeArray[1]);
+                // turn hours and minutes into seconds and add them all up
+                if (timeArray.length === 3) {
+                    // hours
+                    seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+                    // minutes
+                    seconds = seconds + (Number(timeArray[1]) * 60);
+                    // seconds
+                    seconds = seconds + Number(timeArray[2]);
+                } else if (timeArray.length === 2) {
+                    // minutes
+                    seconds = seconds + (Number(timeArray[0]) * 60);
+                    // seconds
+                    seconds = seconds + Number(timeArray[1]);
+                }
+                return Number(seconds);
             }
-            return Number(seconds);
-        }
-    });
-})();
+        });
 
-return numeral;
+    })();
+
+    return numeral;
 }));
