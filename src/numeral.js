@@ -638,6 +638,9 @@
             return this;
         },
         multiply: function(value) {
+            if(value === null || this._value === null) {
+                return null
+            }
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
@@ -648,6 +651,9 @@
             return this;
         },
         divide: function(value) {
+            if(value === null || this._value === null) {
+                return null
+            }
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
