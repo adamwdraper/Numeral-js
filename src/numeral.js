@@ -581,7 +581,10 @@
                 formatFunction;
 
             // make sure we have a roundingFunction
-            roundingFunction = roundingFunction || Math.round;
+            function defaultRoundingFunction(input) {
+                return Math.sign(input) * Math.round(Math.abs(input));
+            }
+            roundingFunction = roundingFunction || defaultRoundingFunction;
 
             // format based on value
             if (value === 0 && options.zeroFormat !== null) {
