@@ -211,15 +211,27 @@
             if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
                 int = String(Number(int) / 1000);
 
-                switch (abbr) {
+                switch (abbr.trim()) {
                     case locale.abbreviations.thousand:
-                        abbr = locale.abbreviations.million;
+                        if (abbr.startsWith(' ')) {
+                            abbr = ' ' + locale.abbreviations.million;
+                        }else {
+                            abbr = locale.abbreviations.million;
+                        }
                         break;
                     case locale.abbreviations.million:
-                        abbr = locale.abbreviations.billion;
+                        if (abbr.startsWith(' ')) {
+                            abbr = ' ' + locale.abbreviations.billion;
+                        }else {
+                            abbr = locale.abbreviations.billion;
+                        }
                         break;
                     case locale.abbreviations.billion:
-                        abbr = locale.abbreviations.trillion;
+                        if (abbr.startsWith(' ')) {
+                            abbr = ' ' + locale.abbreviations.trillion;
+                        }else {
+                            abbr = locale.abbreviations.trillion;
+                        }
                         break;
                 }
             }
