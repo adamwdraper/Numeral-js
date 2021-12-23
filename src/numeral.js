@@ -61,7 +61,7 @@
             value = input.value();
         } else if (input === 0 || typeof input === 'undefined') {
             value = 0;
-        } else if (input === null || _.isNaN(input)) {
+        } else if (input == null || _.isNaN(input)) {
             value = null;
         } else if (typeof input === 'string') {
             if (options.zeroFormat && input === options.zeroFormat) {
@@ -70,7 +70,7 @@
                 value = null;
             } else {
                 for (kind in formats) {
-                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+                    regexp = typeof formats[kind].regexps.unformat === 'function' ? formats['kind'].regexps.unformat() : formats[kind].regexps.unformat;
 
                     if (regexp && input.match(regexp)) {
                         unformatFunction = formats[kind].unformat;
@@ -605,7 +605,14 @@
             return output;
         },
         value: function() {
-            return this._value;
+            if (this._value.includes('-')) {
+                if (this._value.match(/-/g).length >= 1 && this._value.charAt(0) !== '-') {
+                    return this._value = this._value.replace(/-/g, '')
+                }
+            }
+             else{
+                return this._value;
+            }
         },
         input: function() {
             return this._input;
