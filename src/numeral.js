@@ -327,7 +327,8 @@
                 len = t.length >>> 0,
                 k = 0,
                 value;
-
+                if(t[0]===null || t[1]===null)
+                    return null;
             if (arguments.length === 3) {
                 value = arguments[2];
             } else {
