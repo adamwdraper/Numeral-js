@@ -13,8 +13,9 @@
 }(this, function (numeral) {
     numeral.register('format', 'exponential', {
         regexps: {
-            format: /(e\+|e-)/,
-            unformat: /(e\+|e-)/
+            format: /([e,E]\+|[e,E]-)/,
+            unformat: /([e,E]\+|[e,E]-)/
+
         },
         format: function(value, format, roundingFunction) {
             var output,
@@ -28,6 +29,7 @@
             return output + 'e' + parts[1];
         },
         unformat: function(string) {
+            string = string.toLowerCase();
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
                 value = Number(parts[0]),
                 power = Number(parts[1]);
