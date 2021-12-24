@@ -395,7 +395,10 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction(Math.abs(value) + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            if(value < 0){
+                output = '-' + output
+            }
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
@@ -605,7 +608,7 @@
             return output;
         },
         value: function() {
-            return this._value;
+            return parseFloat(Number.parseFloat(this._value).toPrecision(8));
         },
         input: function() {
             return this._input;
