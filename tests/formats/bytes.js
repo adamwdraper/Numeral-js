@@ -26,7 +26,13 @@ describe('Bytes', function() {
                 [Math.pow(decimal, 2) * 5,'0b','5MB'],
                 [Math.pow(decimal, 3) * 7.343,'0.[0] b','7.3 GB'],
                 [Math.pow(decimal, 4) * 3.1536544,'0.000b','3.154TB'],
-                [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB']
+                [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB'],
+                [0.0,'0.0 ib','0.0 B'],
+                [1.1,'0.0 ib','1.1 B'],
+                [0.999,'0.0 ib','1.0 B'],
+                [0.01,'0.0 ib','0.0 B'],
+                [0.6,'0.0 ib','0.6 B'],
+                [0.91,'0.0 ib','0.9 B']
             ],
             i;
 
