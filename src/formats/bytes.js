@@ -47,7 +47,7 @@
                 min = Math.pow(bytes.base, power);
                 max = Math.pow(bytes.base, power + 1);
 
-                if (value === null || value === 0 || value >= min && value < max) {
+                if (value === null || value === 0 || value < 1 || value >= min && value < max) {
                     suffix += bytes.suffixes[power];
 
                     if (min > 0) {
