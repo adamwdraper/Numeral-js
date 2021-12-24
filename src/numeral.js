@@ -56,6 +56,10 @@
             kind,
             unformatFunction,
             regexp;
+    
+        if(input.includes(',')) {
+            input = input.replace(/,/g,'.')
+        }
 
         if (numeral.isNumeral(input)) {
             value = input.value();
