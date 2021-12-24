@@ -605,7 +605,7 @@
             return output;
         },
         value: function() {
-            return this._value;
+            return parseFloat(Number.parseFloat(this._value).toPrecision(8));
         },
         input: function() {
             return this._input;
