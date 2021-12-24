@@ -393,9 +393,20 @@
             }
 
             power = Math.pow(10, boundedPrecision);
+            isNegative = false;
+            if(parseFloat(value) < 0){
+                isNegative = true;
+            }
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            // we should use the rounding with the positive value! and if it is negative then make the output negative
+            if(isNegative){
+                output = (roundingFunction(-value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+                output = '-'+output;
+            }
+            else{
+                output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            }
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
