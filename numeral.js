@@ -296,6 +296,10 @@
 
                 // check for negative number
                 value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
+                // check for a simple phone regex and if it matches it shouldn't return a negative value! so I make it positive in this case
+                if(string.match(/^\d+-\d+.+$/)){
+                    value *= -1
+                }
 
                 // remove non numbers
                 string = string.replace(/[^0-9\.]+/g, '');
