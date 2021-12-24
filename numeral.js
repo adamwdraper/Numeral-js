@@ -212,14 +212,14 @@
                 int = String(Number(int) / 1000);
 
                 switch (abbr) {
-                    case locale.abbreviations.thousand:
-                        abbr = locale.abbreviations.million;
+                    case ' ' + locale.abbreviations.thousand:
+                        abbr = ' ' + locale.abbreviations.million;
                         break;
-                    case locale.abbreviations.million:
-                        abbr = locale.abbreviations.billion;
+                    case ' ' + locale.abbreviations.million:
+                        abbr = ' ' + locale.abbreviations.billion;
                         break;
-                    case locale.abbreviations.billion:
-                        abbr = locale.abbreviations.trillion;
+                    case ' ' + locale.abbreviations.billion:
+                        abbr = ' ' + locale.abbreviations.trillion;
                         break;
                 }
             }
