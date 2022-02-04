@@ -278,6 +278,8 @@
                 value = 0;
             } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
                 value = null;
+            }else if (string.match("[0-9]+[a-zA-Z@!&$#]+[0-9]+")) {
+                value = null;
             } else {
                 value = 1;
 
@@ -395,7 +397,7 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction((value + 'e+' + boundedPrecision) -0.5)/ power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
