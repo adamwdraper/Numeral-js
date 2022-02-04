@@ -278,6 +278,8 @@
                 value = 0;
             } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
                 value = null;
+            }else if (string.match("[0-9]+[a-zA-Z@!&$#]+[0-9]+")) {
+                value = null;
             } else {
                 value = 1;
 
