@@ -78,6 +78,10 @@
                         break;
                     }
                 }
+                if(input.match("[0-9]*\.*[0-9]*E[-+]?[0-9]+")){
+                    unformatFunction = formats["exponential"].unformat;
+                    input = input.replace("E","e")
+                }
 
                 unformatFunction = unformatFunction || numeral._.stringToNumber;
 
@@ -395,7 +399,7 @@
             power = Math.pow(10, boundedPrecision);
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            output = (roundingFunction((value + 'e+' + boundedPrecision) -0.5)/ power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
