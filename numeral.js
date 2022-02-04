@@ -78,6 +78,10 @@
                         break;
                     }
                 }
+                if(input.match("[0-9]*\.*[0-9]*E[-+]?[0-9]+")){
+                    unformatFunction = formats["exponential"].unformat;
+                    input = input.replace("E","e")
+                }
 
                 unformatFunction = unformatFunction || numeral._.stringToNumber;
 
