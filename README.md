@@ -56,6 +56,10 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 # Changelog
 
+### 2.1.0
+
+Added: Bosnian, Croatian, Romanian, Serbian locales
+
 ### 2.0.6
 
 Bug fix: Multi letter currency symbols and spacing
