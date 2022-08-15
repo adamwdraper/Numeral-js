@@ -250,8 +250,8 @@ module.exports = function(grunt) {
         ]);
     });
 
-    // Travis CI task.
-    grunt.registerTask('travis', [
+    // CI task.
+    grunt.registerTask('ci', [
         'build',
         'mochaTest',
         'karma:ci'
