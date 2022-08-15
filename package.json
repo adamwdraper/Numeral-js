@@ -1,6 +1,6 @@
 {
   "name": "numeral",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
   "author": {
@@ -51,7 +51,8 @@
     "uglify-js": "latest"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "test-ci": "grunt ci"
   },
   "ender": "./ender.js",
   "_id": "numeral@1.5.4",
