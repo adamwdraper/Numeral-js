@@ -46,6 +46,28 @@
 
 
 (function() {
+        numeral.register('locale', 'bs', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/bs.html
+            thousand: 'hilj',
+            million: 'mil',
+            billion: 'mlr',
+            trillion: 'bil'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'KM'
+        }
+    });
+})();
+
+
+(function() {
     
     numeral.register('locale', 'chs', {
         delimiters: {
@@ -399,6 +421,28 @@
 
 
 (function() {
+        numeral.register('locale', 'hr', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/hr.html
+            thousand: 'tis',
+            million: 'mil',
+            billion: 'mlr',
+            trillion: 'bil'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'kn'
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
@@ -622,6 +666,28 @@
 
 
 (function() {
+        numeral.register('locale', 'ro', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/ro.html
+            thousand: 'K',
+            million: 'mil',
+            billion: 'mld',
+            trillion: 'tril'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'L'
+        }
+    });
+})();
+
+
+(function() {
         numeral.register('locale', 'ru-ua', {
         delimiters: {
             thousands: ' ',
@@ -710,6 +776,28 @@
         },
         currency: {
             symbol: '€'
+        }
+    });
+})();
+
+
+(function() {
+        numeral.register('locale', 'sr', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/sr.html
+            thousand: 'хиљ',
+            million: 'мил',
+            billion: 'млрд',
+            trillion: 'бил'
+        },
+        ordinal: function (number) {
+            return '.';
+        },
+        currency: {
+            symbol: 'DIN'
         }
     });
 })();
