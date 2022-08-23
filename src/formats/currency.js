@@ -35,7 +35,7 @@
             if (value >= 0) {
                 symbols.before = symbols.before.replace(/[\-\(]/, '');
                 symbols.after = symbols.after.replace(/[\-\)]/, '');
-            } else if (value < 0 && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
+            } else if ((value < 0 && output !== '0') && (!numeral._.includes(symbols.before, '-') && !numeral._.includes(symbols.before, '('))) {
                 symbols.before = '-' + symbols.before;
             }
 
