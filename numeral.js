@@ -616,44 +616,48 @@
             return this;
         },
         add: function(value) {
+            value = numeral(value)
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum + Math.round(corrFactor * curr);
             }
 
-            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
+            this._value = _.reduce([this._value, value._value], cback, 0) / corrFactor;
 
             return this;
         },
         subtract: function(value) {
+            value = numeral(value)
             var corrFactor = _.correctionFactor.call(null, this._value, value);
 
             function cback(accum, curr, currI, O) {
                 return accum - Math.round(corrFactor * curr);
             }
 
-            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+            this._value = _.reduce([value._value], cback, Math.round(this._value * corrFactor)) / corrFactor;
 
             return this;
         },
         multiply: function(value) {
+            value = numeral(value)
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
             }
 
-            this._value = _.reduce([this._value, value], cback, 1);
+            this._value = _.reduce([this._value, value._value], cback, 1);
 
             return this;
         },
         divide: function(value) {
+            value = numeral(value)
             function cback(accum, curr, currI, O) {
                 var corrFactor = _.correctionFactor(accum, curr);
                 return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
             }
 
-            this._value = _.reduce([this._value, value], cback);
+            this._value = _.reduce([this._value, value._value], cback);
 
             return this;
         },
