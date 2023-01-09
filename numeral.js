@@ -965,7 +965,7 @@
         unformat: function(string) {
             var number = numeral._.stringToNumber(string);
             if (numeral.options.scalePercentBy100) {
-                return number * 0.01;
+                return numeral(number).multiply(0.01);
             }
             return number;
         }
