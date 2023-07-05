@@ -39,6 +39,16 @@
                 symbols.before = '-' + symbols.before;
             }
 
+            
+            //handlening case of -0
+            if(Number(output) >= 0 && symbols.before[0] === '-'){  
+                symbols.before = symbols.before.slice(1);
+
+            }
+
+
+
+
             // loop through each before symbol
             for (i = 0; i < symbols.before.length; i++) {
                 symbol = symbols.before[i];
