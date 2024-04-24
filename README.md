@@ -55,6 +55,15 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+### 3.0.0
+
+Added: [Big.js](https://www.npmjs.com/package/big.js) is intruduced for big int compatibility
+
+Added: formatting of big numbers with `format('0.0a')`
+
+Added: more abbreviation declerations for big numbers
+
+Bug fix: Changed Turkish Lira marker to `₺` (default: `TL`)
 
 ### 2.0.6
 
@@ -292,7 +301,7 @@ Numeral.js, while less complex, was inspired by and heavily borrowed from [Momen
 
 Numeral.js is freely distributable under the terms of the MIT license.
 
-Copyright (c) 2012 Adam Draper
+Copyright (c) 2024 Adam Draper
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
 files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use,

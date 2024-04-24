@@ -45,10 +45,10 @@ describe('Locale: tr', function() {
     describe('Currency', function() {
         it('should format a currency', function() {
             var tests = [
-                [1000.234,'$0,0.00','\u20BA1.000,23'],
-                [-1000.234,'($0,0)','(\u20BA1.000)'],
-                [-1000.234,'$0.00','-\u20BA1000,23'],
-                [1230974,'($0.00a)','\u20BA1,23milyon']
+                [1000.234,'$0,0.00','₺1.000,23'],
+                [-1000.234,'($0,0)','(₺1.000)'],
+                [-1000.234,'$0.00','-₺1000,23'],
+                [1230974,'($0.00a)','₺1,23milyon']
             ];
 
             for (var i = 0; i < tests.length; i++) {
@@ -77,17 +77,32 @@ describe('Locale: tr', function() {
             var tests = [
                 ['10.000,123',10000.123],
                 ['(0,12345)',-0.12345],
-                ['(\u20BA1,23milyon)',-1230000],
+                ['(₺1,23milyon)',-1230000],
                 ['10bin',10000],
                 ['-10bin',-10000],
                 ['23üncü',23],
-                ['\u20BA10.000,00',10000],
+                ['₺10.000,00',10000],
                 ['-76%',-0.76],
                 ['2:23:57',8637]
             ];
 
             for (var i = 0; i < tests.length; i++) {
                 expect(numeral(tests[i][0]).value()).to.equal(tests[i][1]);
+            }
+        });
+    });
+
+    describe('Currency', function() {
+        it('should format a currency', function() {
+            var tests = [
+                [1000.234,'$0,0.00','₺1.000,23'],
+                [-1000.234,'($0,0)','(₺1.000)'],
+                [-1000.234,'$0.00','-₺1000,23'],
+                [1230974,'($0.00a)','₺1,23milyon']
+            ];
+
+            for (var i = 0; i < tests.length; i++) {
+                expect(numeral(tests[i][0]).format(tests[i][1])).to.equal(tests[i][2]);
             }
         });
     });

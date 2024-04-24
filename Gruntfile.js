@@ -70,12 +70,6 @@ module.exports = function(grunt) {
                 singleRun: true,
                 autoWatch: false
             },
-            local: {
-                browsers: [
-                    'Chrome',
-                    'Firefox'
-                ]
-            },
             ci: {
                 configFile: 'karma-ci.conf.js'
             }
@@ -136,7 +130,7 @@ module.exports = function(grunt) {
             ],
             options: {
                 'node': true,
-                'browser': true,
+                'browser': false,
                 'curly': true,
                 'devel': false,
                 'eqeqeq': true,
@@ -171,18 +165,12 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', [
         'build',
-        'mochaTest',
-        'karma:local'
+        'mochaTest'
     ]);
 
     grunt.registerTask('test:npm', [
         'build',
         'mochaTest'
-    ]);
-
-    grunt.registerTask('test:browser', [
-        'build',
-        'karma:local'
     ]);
 
     grunt.registerTask('dist', [

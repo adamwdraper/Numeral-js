@@ -1,6 +1,6 @@
 {
   "name": "numeral",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
   "author": {
@@ -28,7 +28,11 @@
     "url": "https://github.com/adamwdraper/Numeral-js/issues"
   },
   "license": "MIT",
+  "dependencies": {
+    "big.js": "^6.2.1"
+  },
   "devDependencies": {
+    "@types/big.js": "^6.2.2",
     "chai": "^3.5.0",
     "grunt": "latest",
     "grunt-contrib-copy": "^1.0.0",
@@ -47,7 +51,7 @@
     "karma-mocha-reporter": "^2.2.1",
     "karma-sauce-launcher": "^1.1.0",
     "load-grunt-tasks": "^3.5.2",
-    "mocha": "^3.1.2",
+    "mocha": "^3.5.3",
     "uglify-js": "latest"
   },
   "scripts": {

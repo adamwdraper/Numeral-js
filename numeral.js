@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * version : 2.0.6
+ * version : 3.0.0
  * author : Adam Draper
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
@@ -21,7 +21,7 @@
 
     var numeral,
         _,
-        VERSION = '2.0.6',
+        VERSION = '3.0.0',
         formats = {},
         locales = {},
         defaults = {
@@ -83,9 +83,14 @@
 
                 value = unformatFunction(input);
             }
+        } else if (_.isBigNumber(input)) {
+            value = input;
+        } else if (typeof input === 'object') {
+            value = input.toString();
         } else {
-            value = Number(input)|| null;
+            value = Number(input) || null;
         }
+
 
         return new Numeral(input, value);
     };
@@ -100,6 +105,7 @@
 
     // helper functions
     numeral._ = _ = {
+        Big: require('big.js'),
         // formats numbers separators, decimals places, signs, abbreviations
         numberToFormat: function(value, format, roundingFunction) {
             var locale = locales[numeral.options.currentLocale],
@@ -126,8 +132,17 @@
 
             // make sure we never format a null value
             value = value || 0;
-
-            abs = Math.abs(value);
+            // Use conditional to handle regular numbers and BigInts separately
+            if (_.isBigNumber(value)) {
+                value = _.Big(value);
+                abs = _.Big(value).abs();
+                trillion = _.Big(trillion);
+                billion = _.Big(billion);
+                million = _.Big(million);
+                thousand = _.Big(thousand);
+            } else {
+                abs = Math.abs(value);
+            }
 
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
@@ -267,43 +282,66 @@
                     thousand: 3,
                     million: 6,
                     billion: 9,
-                    trillion: 12
+                    trillion: 12,
+                    quadrillion: 15,
+                    quintillion: 18,
+                    sextillion: 21,
+                    septillion: 24,
+                    octillion: 27,
+                    nonillion: 30,
+                    decillion: 33,
+                    undecillion: 36,
+                    duodecillion: 39,
+                    tredecillion: 42,
+                    quattuordecillion: 45,
+                    quindecillion: 48,
+                    sexdecillion: 51,
+                    septendecillion: 54,
+                    octodecillion: 57,
+                    novemdecillion: 60,
+                    vigintillion: 63,
+                    unvigintillion: 66,
                 },
                 abbreviation,
                 value,
                 i,
                 regexp;
 
-            if (options.zeroFormat && string === options.zeroFormat) {
-                value = 0;
-            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
-                value = null;
-            } else {
-                value = 1;
+                if (options.zeroFormat && string === options.zeroFormat) {
+                    value = _.Big(0);
+                } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, '').length) {
+                    value = null;
+                } else {
+                    value = _.Big(1);
+            
+                    if (locale.delimiters.decimal !== '.') {
+                        string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
+                    }
 
-                if (locale.delimiters.decimal !== '.') {
-                    string = string.replace(/\./g, '').replace(locale.delimiters.decimal, '.');
-                }
+                    for (abbreviation in abbreviations) {
+                        regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
 
-                for (abbreviation in abbreviations) {
-                    regexp = new RegExp('[^a-zA-Z]' + locale.abbreviations[abbreviation] + '(?:\\)|(\\' + locale.currency.symbol + ')?(?:\\))?)?$');
+                        if (stringOriginal.match(regexp)) {
+                            value = value.times(new _.Big(10).pow(abbreviations[abbreviation]));
+                            break;
+                        }
+                    }
 
-                    if (stringOriginal.match(regexp)) {
-                        value *= Math.pow(10, abbreviations[abbreviation]);
-                        break;
+                    // check for negative number
+                    value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? _.Big(1) : _.Big(-1);
+                    
+                    // remove non numbers
+                    string = string.replace(/[^0-9\.]+/g, '');
+                    value = _.Big(value);
+                    value = _.Big(string).times(value);
+                    if (_.isBigNumber(value)) {
+                        value = value.toString();
+                    } else {
+                        value = value.toNumber();
                     }
                 }
 
-                // check for negative number
-                value *= (string.split('-').length + Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2 ? 1 : -1;
-
-                // remove non numbers
-                string = string.replace(/[^0-9\.]+/g, '');
-
-                value *= Number(string);
-            }
-
-            return value;
+                return value;
         },
         isNaN: function(value) {
             return typeof value === 'number' && isNaN(value);
@@ -371,6 +409,9 @@
                 return accum > mn ? accum : mn;
             }, 1);
         },
+        isBigNumber: function (number) {
+            return _.Big(number).abs() > Number.MAX_SAFE_INTEGER;
+        },
         /**
          * Implementation of toFixed() that treats floats more like decimals
          *
@@ -391,11 +432,15 @@
             } else {
               boundedPrecision = minDecimals;
             }
-
-            power = Math.pow(10, boundedPrecision);
+            if (_.isBigNumber(value)) {
+                power = _.Big(10).pow(boundedPrecision);
+                output = _.Big(value).toFixed(boundedPrecision);
+            } else {
+                power = Math.pow(10, boundedPrecision);
+                output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
+            }
 
             // Multiply up by precision, round accurately, then divide and use native toFixed():
-            output = (roundingFunction(value + 'e+' + boundedPrecision) / power).toFixed(boundedPrecision);
 
             if (optionals > maxDecimals - boundedPrecision) {
                 optionalsRegExp = new RegExp('\\.?0{1,' + (optionals - (maxDecimals - boundedPrecision)) + '}$');
@@ -605,13 +650,23 @@
             return output;
         },
         value: function() {
-            return this._value;
+            if (!this._value) {
+                return this._value;
+            }
+            if (_.isBigNumber(this._value)) {
+                return _.Big(this._value).valueOf();
+            }
+            return _.Big(this._value).toNumber();
         },
         input: function() {
             return this._input;
         },
         set: function(value) {
-            this._value = Number(value);
+            if (_.isBigNumber(value)) {
+                this._value = _.Big(value);
+            } else {
+                this._value = Number(value);
+            }
 
             return this;
         },

@@ -60,7 +60,7 @@
           return suffixes[a] || suffixes[b] || suffixes[c];
         },
         currency: {
-            symbol: '\u20BA'
+            symbol: '₺'
         }
     });
 }));
