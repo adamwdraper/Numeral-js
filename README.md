@@ -1,6 +1,6 @@
 # [Numeral.js](http://numeraljs.com/)
 
-A javascript library for formatting and manipulating numbers.
+A javascript library for formatting and manipulating numbers. This is a edit by HB. 
 
 [Website and documentation](http://numeraljs.com/)
 
