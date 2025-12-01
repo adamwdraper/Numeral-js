@@ -34,7 +34,7 @@
             return '';
         },
         currency: {
-            symbol: 'лв'
+            symbol: '€'
         }
     });
 }));
