@@ -555,7 +555,7 @@
     
 
 (function() {
-        numeral.register('format', 'bps', {
+    numeral.register('format', 'bps', {
         regexps: {
             format: /(BPS)/,
             unformat: /(BPS)/
@@ -584,7 +584,7 @@
 
 
 (function() {
-        var decimal = {
+    var decimal = {
         base: 1000,
         suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
     }, binary = {
@@ -642,14 +642,14 @@
 
 
 (function() {
-        numeral.register('format', 'currency', {
+    numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
         format: function (value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale], symbols = {
-                before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
-                after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                before: (format.match(/^([\+|\-|\(|\s|\$]*)/) || [''])[0],
+                after: (format.match(/([\+|\-|\)|\s|\$]*)$/) || [''])[0]
             }, output, symbol, i;
             // strip format of spaces and $
             format = format.replace(/\s?\$\s?/, '');
@@ -694,7 +694,7 @@
 
 
 (function() {
-        numeral.register('format', 'exponential', {
+    numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
@@ -708,7 +708,7 @@
         unformat: function (string) {
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'), value = Number(parts[0]), power = Number(parts[1]);
             power = numeral._.includes(string, 'e-') ? power *= -1 : power;
-            function cback(accum, curr, currI, O) {
+            function cback(accum, curr) {
                 var corrFactor = numeral._.correctionFactor(accum, curr), num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
                 return num;
             }
@@ -719,7 +719,7 @@
 
 
 (function() {
-        numeral.register('format', 'ordinal', {
+    numeral.register('format', 'ordinal', {
         regexps: {
             format: /(o)/
         },
@@ -736,7 +736,7 @@
 
 
 (function() {
-        numeral.register('format', 'percentage', {
+    numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
@@ -771,7 +771,7 @@
 
 
 (function() {
-        numeral.register('format', 'time', {
+    numeral.register('format', 'time', {
         regexps: {
             format: /(:)/,
             unformat: /(:)/
