@@ -32,6 +32,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Build distribution artifacts
+        run: npm run dist
+
       - name: Verify generated artifacts are up to date
         run: git diff --exit-code
 
