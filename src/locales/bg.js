@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : Bulgarian
 // author : Don Vince : https://github.com/donvince/
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
@@ -16,7 +17,7 @@
             thousands: ' ',
             decimal: ','
         },
-        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/bg.html
+        abbreviations: {
             thousand: 'хил',
             million: 'млн',
             billion: 'млрд',

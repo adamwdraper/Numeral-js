@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : English Australia
 // author : Don Vince : https://github.com/donvince/
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
@@ -24,10 +25,10 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
             symbol: '$'

@@ -5,11 +5,16 @@ A javascript library for formatting and manipulating numbers.
 [Website and documentation](http://numeraljs.com/)
 
 
-# Travis Build Status
+# CI
 
-Master [![Build Status](https://api.travis-ci.org/adamwdraper/Numeral-js.svg)](https://travis-ci.org/adamwdraper/Numeral-js)
+[![CI](https://github.com/adamwdraper/Numeral-js/actions/workflows/ci.yml/badge.svg)](https://github.com/adamwdraper/Numeral-js/actions/workflows/ci.yml)
 
-Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch=develop)](https://travis-ci.org/adamwdraper/Numeral-js)
+# v3 Notes
+
+1. `3.0.0` is a TypeScript rewrite with behavior preserved from `2.0.x`.
+2. Node.js support is now `>=20`.
+3. First-party types are bundled in `numeral.d.ts`.
+4. See `MIGRATION.md` for upgrade details.
 
 # NPM
 
@@ -21,23 +26,21 @@ Develop [![Build Status](https://travis-ci.org/adamwdraper/Numeral-js.svg?branch
 
 # Contributing
 
-#### Important: Please create your branch from and submit pull requests to the `develop` branch.  All pull requests must include the appropriate tests.
+#### Important: Please create your branch from and submit pull requests to the `master` branch. All pull requests must include tests.
 
 1. Fork the library
 
-2. [Install grunt](http://gruntjs.com/getting-started#installing-the-cli)
+2. Run `npm install` to install dependencies
 
-3. Run `npm install` to install dependencies
+3. Create a new branch from `master`
 
-4. Create a new branch from `develop`
+4. Add your tests to the files in `/tests`
 
-5. Add your tests to the files in `/tests`
+5. Run `npm test`
 
-6. To test your tests, run `grunt`
+6. When tests are passing, run `npm run dist` to compile and minify all files
 
-7. When all your tests are passing, run `grunt dist` to compile and minify all files
-
-8. Submit a pull request to the `develop` branch.
+7. Submit a pull request to the `master` branch.
 
 
 ### Formats
@@ -55,6 +58,16 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 
 # Changelog
+
+### 3.0.0
+
+Breaking change: Node.js engines set to `>=20`
+
+Breaking change: Source of truth moved to TypeScript (`src/**/*.ts`)
+
+Added: Bundled TypeScript types (`numeral.d.ts`)
+
+Added: GitHub Actions CI for Node 20/22
 
 ### 2.0.6
 
