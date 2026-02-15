@@ -12,7 +12,7 @@ A javascript library for formatting and manipulating numbers.
 # v3 Notes
 
 1. `3.0.0` is a TypeScript rewrite with behavior preserved from `2.0.x`.
-2. Node.js support is now `>=18`.
+2. Node.js support is now `>=20`.
 3. First-party types are bundled in `numeral.d.ts`.
 4. See `MIGRATION.md` for upgrade details.
 
@@ -61,13 +61,13 @@ See [the english unit tests](https://github.com/adamwdraper/Numeral-js/blob/mast
 
 ### 3.0.0
 
-Breaking change: Node.js engines set to `>=18`
+Breaking change: Node.js engines set to `>=20`
 
 Breaking change: Source of truth moved to TypeScript (`src/**/*.ts`)
 
 Added: Bundled TypeScript types (`numeral.d.ts`)
 
-Added: GitHub Actions CI for Node 18/20/22
+Added: GitHub Actions CI for Node 20/22
 
 ### 2.0.6
 

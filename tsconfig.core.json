@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "none",
-    "strict": false,
+    "strict": true,
+    "alwaysStrict": false,
     "noImplicitAny": false,
     "noEmitOnError": true,
     "skipLibCheck": true

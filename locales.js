@@ -771,7 +771,7 @@
             if (number === 0) { // special case for zero
                 return '\'ıncı';
             }
-            var a = number % 10, b = number % 100 - a, c = number >= 100 ? 100 : null;
+            var a = number % 10, b = number % 100 - a, c = number >= 100 ? 100 : -1;
             return suffixes[a] || suffixes[b] || suffixes[c];
         },
         currency: {

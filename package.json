@@ -19,7 +19,7 @@
   "main": "./numeral.js",
   "types": "./numeral.d.ts",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "repository": {
     "type": "git",

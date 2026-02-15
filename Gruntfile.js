@@ -213,7 +213,7 @@ module.exports = function(grunt) {
 
         grunt.config('string-replace.numeral', {
             files: {
-                'src/numeral.js': 'src/numeral.js'
+                'src/numeral.ts': 'src/numeral.ts'
             },
             options: {
                 replacements: [

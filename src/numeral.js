@@ -87,7 +87,7 @@
     numeral._ = _ = {
         // formats numbers separators, decimals places, signs, abbreviations
         numberToFormat: function (value, format, roundingFunction) {
-            var locale = locales[numeral.options.currentLocale], negP = false, optDec = false, leadingCount = 0, abbr = '', trillion = 1000000000000, billion = 1000000000, million = 1000000, thousand = 1000, decimal = '', neg = false, abbrForce, abs, int, precision, signed, thousands, output;
+            var locale = locales[numeral.options.currentLocale], negP = false, optDec = false, leadingCount = 0, abbr = '', trillion = 1000000000000, billion = 1000000000, million = 1000000, thousand = 1000, decimal = '', neg = false, abbrForce, abs, int, precision, signed = -1, thousands, output;
             // make sure we never format a null value
             value = value || 0;
             abs = Math.abs(value);
@@ -307,7 +307,8 @@
          * problems for accounting- and finance-related software.
          */
         toFixed: function (value, maxDecimals, roundingFunction, optionals) {
-            var splitValue = value.toString().split('.'), minDecimals = maxDecimals - (optionals || 0), boundedPrecision, optionalsRegExp, power, output;
+            optionals = optionals || 0;
+            var splitValue = value.toString().split('.'), minDecimals = maxDecimals - optionals, boundedPrecision, optionalsRegExp, power, output;
             // Use the smallest precision value possible to avoid errors from floating point representation
             if (splitValue.length === 2) {
                 boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);

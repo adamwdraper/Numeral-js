@@ -6,13 +6,13 @@ Version `3.0.0` keeps the public runtime behavior from `2.0.x`, but modernizes t
 
 ### Breaking changes
 
-1. Node.js requirement is now `>=18`.
+1. Node.js requirement is now `>=20`.
 2. The project source of truth is now TypeScript in `src/**/*.ts`.
 
 ### Notable updates
 
 1. First-party TypeScript declarations are bundled via `numeral.d.ts`.
-2. CI now runs on GitHub Actions against Node `18`, `20`, and `22`.
+2. CI now runs on GitHub Actions against Node `20` and `22`.
 3. Core build/test scripts now compile TypeScript before running Grunt tasks.
 
 ### New development commands

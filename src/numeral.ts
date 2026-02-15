@@ -191,7 +191,7 @@ type NumeralFactory = {
                 abs,
                 int,
                 precision,
-                signed: number,
+                signed = -1,
                 thousands,
                 output;
 
@@ -446,9 +446,11 @@ type NumeralFactory = {
          * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
          * problems for accounting- and finance-related software.
          */
-        toFixed: function(value: number, maxDecimals: number, roundingFunction: RoundingFunction, optionals: number) {
+        toFixed: function(value: number, maxDecimals: number, roundingFunction: RoundingFunction, optionals?: number) {
+            optionals = optionals || 0;
+
             var splitValue = value.toString().split('.'),
-                minDecimals = maxDecimals - (optionals || 0),
+                minDecimals = maxDecimals - optionals,
                 boundedPrecision,
                 optionalsRegExp,
                 power,

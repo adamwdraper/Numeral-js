@@ -11,7 +11,7 @@
         factory(global.numeral);
     }
 }(this, function (numeral) {
-    var suffixes = {
+    var suffixes: Record<number, string> = {
             1: '\'inci',
             5: '\'inci',
             8: '\'inci',
@@ -55,7 +55,7 @@
 
             var a = number % 10,
                 b = number % 100 - a,
-                c = number >= 100 ? 100 : null;
+                c = number >= 100 ? 100 : -1;
 
           return suffixes[a] || suffixes[b] || suffixes[c];
         },
