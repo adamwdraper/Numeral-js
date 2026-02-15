@@ -15,6 +15,12 @@ describe('Numeral', function() {
 
             expect(numeral(10000).format()).to.equal('10,000');
         });
+
+        it('should use fallback default format when value is not a string', function() {
+            numeral.defaultFormat(null);
+
+            expect(numeral.options.defaultFormat).to.equal('0.0');
+        });
     });
 
     describe('Types', function() {
@@ -128,6 +134,105 @@ describe('Numeral', function() {
             for (var i = 0; i < tests.length; i++) {
                 expect(numeral.isNumeral(tests[i][0])).to.equal(tests[i][1]);
             }
+        });
+    });
+
+    describe('Version', function() {
+        it('should expose a semantic version string', function() {
+            expect(numeral.version).to.match(/^\d+\.\d+\.\d+$/);
+        });
+    });
+
+    describe('Input', function() {
+        it('should return the original input value', function() {
+            var tests = [
+                    [1000, 1000],
+                    ['1,000', '1,000'],
+                    [null, null]
+                ],
+                i,
+                n;
+
+            for (i = 0; i < tests.length; i++) {
+                n = numeral(tests[i][0]);
+                expect(n.input()).to.equal(tests[i][1]);
+            }
+        });
+    });
+
+    describe('Locale', function() {
+        it('should get and set locale using lowercase keys', function() {
+            expect(numeral.locale()).to.equal('en');
+            expect(numeral.locale('EN-GB')).to.equal('en-gb');
+            expect(numeral.locale()).to.equal('en-gb');
+        });
+    });
+
+    describe('Locale Data', function() {
+        it('should return locale data for current locale and throw for unknown locale', function() {
+            var localeData;
+
+            numeral.locale('en');
+            localeData = numeral.localeData();
+
+            expect(localeData).to.be.an('object');
+            expect(localeData).to.have.property('currency');
+            expect(localeData.currency).to.have.property('symbol');
+
+            expect(function() {
+                numeral.localeData('does-not-exist');
+            }).to.throw(Error);
+        });
+    });
+
+    describe('Register', function() {
+        it('should register a new locale and return it', function() {
+            var name = 'unit-test-' + String(new Date().getTime());
+            var locale = {
+                delimiters: {
+                    thousands: ',',
+                    decimal: '.'
+                },
+                abbreviations: {
+                    thousand: 'k',
+                    million: 'm',
+                    billion: 'b',
+                    trillion: 't'
+                },
+                ordinal: function() {
+                    return 'th';
+                },
+                currency: {
+                    symbol: '$'
+                }
+            };
+
+            expect(numeral.register('locale', name, locale)).to.equal(locale);
+            expect(numeral.locales[name]).to.equal(locale);
+        });
+
+        it('should throw when registering an existing locale', function() {
+            expect(function() {
+                numeral.register('locale', 'en', {});
+            }).to.throw(TypeError);
+        });
+    });
+
+    describe('Reset', function() {
+        it('should reset all options back to defaults', function() {
+            numeral.locale('fr');
+            numeral.zeroFormat('ZERO');
+            numeral.nullFormat('NULL');
+            numeral.defaultFormat('0.00');
+            numeral.options.scalePercentBy100 = false;
+
+            numeral.reset();
+
+            expect(numeral.locale()).to.equal('en');
+            expect(numeral.options.zeroFormat).to.equal(null);
+            expect(numeral.options.nullFormat).to.equal(null);
+            expect(numeral.options.defaultFormat).to.equal('0,0');
+            expect(numeral.options.scalePercentBy100).to.equal(true);
         });
     });
 
@@ -361,13 +466,6 @@ describe('Numeral', function() {
                 }
             });
         });
-
-
-        describe('Add', function() {
-            it('should add', function() {
-            });
-        });
-
 
         describe('Multiply', function() {
             it('should multiply', function() {
