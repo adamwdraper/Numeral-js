@@ -2,7 +2,7 @@
 // format : percentage
 // author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,13 +10,13 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('format', 'percentage', {
         regexps: {
             format: /(%)/,
             unformat: /(%)/
         },
-        format: function(value, format, roundingFunction) {
+        format: function (value: number, format: string, roundingFunction: (value: number) => number) {
             var space = numeral._.includes(format, ' %') ? ' ' : '',
                 output;
 
@@ -41,7 +41,7 @@
 
             return output;
         },
-        unformat: function(string) {
+        unformat: function (string: string) {
             var number = numeral._.stringToNumber(string);
             if (numeral.options.scalePercentBy100) {
                 return number * 0.01;

@@ -2,7 +2,7 @@
 // locale : vietnam (vi)
 // author : Harry Nguyen : https://github.com/thaihoa311
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
 
     numeral.register('locale', 'vi', {
         delimiters: {

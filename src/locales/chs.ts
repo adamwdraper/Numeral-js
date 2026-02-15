@@ -2,7 +2,7 @@
 // locale : simplified chinese (chs)
 // author : badplum : https://github.com/badplum
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
@@ -22,7 +22,7 @@
             billion: '十亿',
             trillion: '兆'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             return '.';
         },
         currency: {

@@ -2,7 +2,7 @@
 // locale : Hungarian (hu)
 // author : Peter Bakondy : https://github.com/pbakondy
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'hu', {
         delimiters: {
             thousands: ' ',
@@ -22,7 +22,7 @@
             billion: 'Mrd', // milliárd
             trillion: 'T'   // trillió
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             return '.';
         },
         currency: {

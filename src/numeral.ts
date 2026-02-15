@@ -78,7 +78,7 @@ type NumeralFactory = {
     fn: any;
 };
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(factory);
     } else if (typeof module === 'object' && module.exports) {

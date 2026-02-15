@@ -3,7 +3,7 @@
 // author : Illimar Tambek : https://github.com/ragulka
 // Note: in Estonian, abbreviations are always separated from numbers with a space
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -11,7 +11,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'et', {
         delimiters: {
             thousands: ' ',
@@ -23,7 +23,7 @@
             billion: ' mld',
             trillion: ' trl'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             return '.';
         },
         currency: {

@@ -2,7 +2,7 @@
 // locale : turkish (tr)
 // author : Ecmel Ercan : https://github.com/ecmel, Erhan Gundogan : https://github.com/erhangundogan, Burak Yiğit Kaya: https://github.com/BYK
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     var suffixes: Record<number, string> = {
             1: '\'inci',
             5: '\'inci',
@@ -48,7 +48,7 @@
             billion: 'milyar',
             trillion: 'trilyon'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             if (number === 0) {  // special case for zero
                 return '\'ıncı';
             }

@@ -2,7 +2,7 @@
 // locale : slovak (sk)
 // author : Ahmed Al Hafoudh : http://www.freevision.sk
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'sk', {
         delimiters: {
             thousands: ' ',

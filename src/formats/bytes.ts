@@ -2,7 +2,7 @@
 // format : bytes
 // author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     var decimal = {
             base: 1000,
             suffixes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -32,7 +32,7 @@
             format: /([0\s]i?b)/,
             unformat: new RegExp(unformatRegex)
         },
-        format: function(value, format, roundingFunction) {
+        format: function (value: number, format: string, roundingFunction: (value: number) => number) {
             var output,
                 bytes = numeral._.includes(format, 'ib') ? binary : decimal,
                 suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
@@ -62,7 +62,7 @@
 
             return output + suffix;
         },
-        unformat: function(string) {
+        unformat: function (string: string) {
             var value = numeral._.stringToNumber(string),
                 power,
                 bytesMultiplier;

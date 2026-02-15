@@ -2,7 +2,7 @@
 // locale : netherlands-dutch (nl-nl)
 // author : Dave Clayton : https://github.com/davedx
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
@@ -22,7 +22,7 @@
             billion  : 'mrd',
             trillion : 'bln'
         },
-        ordinal : function (number) {
+        ordinal: function (number: number) {
             var remainder = number % 100;
             return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },

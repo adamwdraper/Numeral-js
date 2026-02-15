@@ -3,7 +3,7 @@
 // author : Jack Altiere : https://github.com/jaltiere
 // BPS format - http://www.investopedia.com/terms/b/basispoint.asp
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -11,13 +11,13 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('format', 'bps', {
             regexps: {
                 format: /(BPS)/,
                 unformat: /(BPS)/
             },
-            format: function(value, format, roundingFunction) {
+            format: function (value: number, format: string, roundingFunction: (value: number) => number) {
                 var space = numeral._.includes(format, ' BPS') ? ' ' : '',
                     output;
 
@@ -40,7 +40,7 @@
 
                 return output;
             },
-            unformat: function(string) {
+            unformat: function (string: string) {
                 return +(numeral._.stringToNumber(string) * 0.0001).toFixed(15);
             }
         });

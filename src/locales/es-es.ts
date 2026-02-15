@@ -2,7 +2,7 @@
 // locale : spanish Spain
 // author : Hernan Garcia : https://github.com/hgarcia
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'es-es', {
         delimiters: {
             thousands: '.',
@@ -22,7 +22,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             var b = number % 10;
             return (b === 1 || b === 3) ? 'er' :
                 (b === 2) ? 'do' :

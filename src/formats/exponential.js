@@ -26,7 +26,7 @@
         unformat: function (string) {
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'), value = Number(parts[0]), power = Number(parts[1]);
             power = numeral._.includes(string, 'e-') ? power *= -1 : power;
-            function cback(accum, curr, currI, O) {
+            function cback(accum, curr) {
                 var corrFactor = numeral._.correctionFactor(accum, curr), num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
                 return num;
             }

@@ -2,7 +2,7 @@
 // format : exponential
 // author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,13 +10,13 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('format', 'exponential', {
         regexps: {
             format: /(e\+|e-)/,
             unformat: /(e\+|e-)/
         },
-        format: function(value, format, roundingFunction) {
+        format: function (value: number, format: string, roundingFunction: (value: number) => number) {
             var output,
                 exponential = typeof value === 'number' && !numeral._.isNaN(value) ? value.toExponential() : '0e+0',
                 parts = exponential.split('e');
@@ -27,14 +27,14 @@
 
             return output + 'e' + parts[1];
         },
-        unformat: function(string) {
+        unformat: function (string: string) {
             var parts = numeral._.includes(string, 'e+') ? string.split('e+') : string.split('e-'),
                 value = Number(parts[0]),
                 power = Number(parts[1]);
 
             power = numeral._.includes(string, 'e-') ? power *= -1 : power;
 
-            function cback(accum, curr, currI, O) {
+            function cback(accum: number, curr: number) {
                 var corrFactor = numeral._.correctionFactor(accum, curr),
                     num = (accum * corrFactor) * (curr * corrFactor) / (corrFactor * corrFactor);
                 return num;

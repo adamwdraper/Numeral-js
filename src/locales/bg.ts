@@ -2,7 +2,7 @@
 // locale : Bulgarian
 // author : Don Vince : https://github.com/donvince/
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'bg', {
         delimiters: {
             thousands: ' ',
@@ -22,7 +22,7 @@
             billion: 'млрд',
             trillion: 'трлн'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             // google translate suggests:
             // 1st=1-ви; 2nd=2-ри; 7th=7-ми;
             // 8th=8-ми and many others end with -ти

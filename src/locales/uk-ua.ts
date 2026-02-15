@@ -2,7 +2,7 @@
 // locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'uk-ua', {
         delimiters: {
             thousands: ' ',

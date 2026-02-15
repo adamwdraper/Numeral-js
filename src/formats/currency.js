@@ -18,8 +18,8 @@
         },
         format: function (value, format, roundingFunction) {
             var locale = numeral.locales[numeral.options.currentLocale], symbols = {
-                before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
-                after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                before: (format.match(/^([\+|\-|\(|\s|\$]*)/) || [''])[0],
+                after: (format.match(/([\+|\-|\)|\s|\$]*)$/) || [''])[0]
             }, output, symbol, i;
             // strip format of spaces and $
             format = format.replace(/\s?\$\s?/, '');

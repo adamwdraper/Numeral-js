@@ -2,7 +2,7 @@
 // locale : english south africa (uk)
 // author : Etienne Boshoff : etienne@zailab.com
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'en-za', {
         delimiters: {
             thousands: ' ',
@@ -22,7 +22,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             var b = number % 10;
             return (~~ (number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :

@@ -2,7 +2,7 @@
 // locale : danish denmark (dk)
 // author : Michael Storgaard : https://github.com/mstorgaard
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('locale', 'da-dk', {
         delimiters: {
             thousands: '.',
@@ -22,7 +22,7 @@
             billion: 'mia',
             trillion: 'b'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             return '.';
         },
         currency: {

@@ -2,7 +2,7 @@
 // locale : thai (th)
 // author : Sathit Jittanupat : https://github.com/jojosati
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,7 +10,7 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
 
 
     numeral.register('locale', 'th', {
@@ -24,7 +24,7 @@
             billion: 'พันล้าน',
             trillion: 'ล้านล้าน'
         },
-        ordinal: function (number) {
+        ordinal: function (number: number) {
             return '.';
         },
         currency: {

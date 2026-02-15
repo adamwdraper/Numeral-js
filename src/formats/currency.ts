@@ -2,7 +2,7 @@
 // format : currency
 // author : Adam Draper : https://github.com/adamwdraper
 
-(function (global, factory) {
+(function (global: any, factory: any) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -10,16 +10,16 @@
     } else {
         factory(global.numeral);
     }
-}(this, function (numeral) {
+}(this, function (numeral: any) {
     numeral.register('format', 'currency', {
         regexps: {
             format: /(\$)/
         },
-        format: function(value, format, roundingFunction) {
+        format: function (value: number, format: string, roundingFunction: (value: number) => number) {
             var locale = numeral.locales[numeral.options.currentLocale],
                 symbols = {
-                    before: format.match(/^([\+|\-|\(|\s|\$]*)/)[0],
-                    after: format.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+                    before: (format.match(/^([\+|\-|\(|\s|\$]*)/) || [''])[0],
+                    after: (format.match(/([\+|\-|\)|\s|\$]*)$/) || [''])[0]
                 },
                 output,
                 symbol,

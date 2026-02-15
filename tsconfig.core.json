@@ -4,7 +4,7 @@
     "module": "none",
     "strict": true,
     "alwaysStrict": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noEmitOnError": true,
     "skipLibCheck": true
   },
