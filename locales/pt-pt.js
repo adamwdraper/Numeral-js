@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : portuguese (pt-pt)
 // author : Diogo Resende : https://github.com/dresende
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
@@ -22,7 +23,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return 'º';
         },
         currency: {

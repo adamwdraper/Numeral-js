@@ -1,6 +1,6 @@
 {
   "name": "numeral",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
   "author": {
@@ -17,8 +17,9 @@
     "percentage"
   ],
   "main": "./numeral.js",
+  "types": "./numeral.d.ts",
   "engines": {
-    "node": "*"
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
@@ -48,12 +49,13 @@
     "karma-sauce-launcher": "^1.1.0",
     "load-grunt-tasks": "^3.5.2",
     "mocha": "^3.1.2",
+    "typescript": "^5.9.3",
     "uglify-js": "latest"
   },
   "scripts": {
-    "test": "grunt"
-  },
-  "ender": "./ender.js",
-  "_id": "numeral@1.5.4",
-  "_from": "numeral"
+    "build:core": "tsc -p tsconfig.core.json",
+    "build": "npm run build:core && grunt build",
+    "dist": "npm run build:core && grunt dist",
+    "test": "npm run build:core && grunt test:npm"
+  }
 }

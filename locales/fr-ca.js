@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : french (Canada) (fr-ca)
 // author : Léo Renaud-Allaire : https://github.com/renaudleo
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
@@ -22,7 +23,7 @@
             billion: 'G',
             trillion: 'T'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {

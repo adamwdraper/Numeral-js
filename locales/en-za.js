@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : english south africa (uk)
 // author : Etienne Boshoff : etienne@zailab.com
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
@@ -24,7 +25,7 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
                     (b === 2) ? 'nd' :
                         (b === 3) ? 'rd' : 'th';

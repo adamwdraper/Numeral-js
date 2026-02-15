@@ -1,6 +1,6 @@
 /*! @preserve
  * numeral.js
- * locales : 2.0.6
+ * locales : 3.0.0
  * license : MIT
  * http://adamwdraper.github.com/Numeral-js/
  */
@@ -21,7 +21,7 @@
             thousands: ' ',
             decimal: ','
         },
-        abbreviations: { // I found these here http://www.unicode.org/cldr/charts/28/verify/numbers/bg.html
+        abbreviations: {
             thousand: 'хил',
             million: 'млн',
             billion: 'млрд',
@@ -46,8 +46,7 @@
 
 
 (function() {
-    
-    numeral.register('locale', 'chs', {
+        numeral.register('locale', 'chs', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -170,10 +169,10 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
             symbol: '$'
@@ -196,10 +195,10 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
-                (b === 2) ? 'nd' :
-                (b === 3) ? 'rd' : 'th';
+                    (b === 2) ? 'nd' :
+                        (b === 3) ? 'rd' : 'th';
         },
         currency: {
             symbol: '£'
@@ -222,7 +221,7 @@
         },
         ordinal: function (number) {
             var b = number % 10;
-            return (~~ (number % 100 / 10) === 1) ? 'th' :
+            return (~~(number % 100 / 10) === 1) ? 'th' :
                 (b === 1) ? 'st' :
                     (b === 2) ? 'nd' :
                         (b === 3) ? 'rd' : 'th';
@@ -277,9 +276,9 @@
             var b = number % 10;
             return (b === 1 || b === 3) ? 'er' :
                 (b === 2) ? 'do' :
-                (b === 7 || b === 0) ? 'mo' :
-		(b === 8) ? 'vo' :
-		(b === 9) ? 'no' : 'to';
+                    (b === 7 || b === 0) ? 'mo' :
+                        (b === 8) ? 'vo' :
+                            (b === 9) ? 'no' : 'to';
         },
         currency: {
             symbol: '$'
@@ -344,7 +343,7 @@
             billion: 'G',
             trillion: 'T'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {
@@ -366,7 +365,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {
@@ -388,7 +387,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return number === 1 ? 'er' : 'e';
         },
         currency: {
@@ -405,10 +404,10 @@
             decimal: ','
         },
         abbreviations: {
-            thousand: 'E',  // ezer
-            million: 'M',   // millió
+            thousand: 'E', // ezer
+            million: 'M', // millió
             billion: 'Mrd', // milliárd
-            trillion: 'T'   // trillió
+            trillion: 'T' // trillió
         },
         ordinal: function (number) {
             return '.';
@@ -490,17 +489,16 @@
         numeral.register('locale', 'nl-be', {
         delimiters: {
             thousands: ' ',
-            decimal  : ','
+            decimal: ','
         },
         abbreviations: {
-            thousand : 'k',
-            million  : ' mln',
-            billion  : ' mld',
-            trillion : ' bln'
+            thousand: 'k',
+            million: ' mln',
+            billion: ' mld',
+            trillion: ' bln'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             var remainder = number % 100;
-
             return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },
         currency: {
@@ -514,15 +512,15 @@
         numeral.register('locale', 'nl-nl', {
         delimiters: {
             thousands: '.',
-            decimal  : ','
+            decimal: ','
         },
         abbreviations: {
-            thousand : 'k',
-            million  : 'mln',
-            billion  : 'mrd',
-            trillion : 'bln'
+            thousand: 'k',
+            million: 'mln',
+            billion: 'mrd',
+            trillion: 'bln'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             var remainder = number % 100;
             return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
         },
@@ -611,7 +609,7 @@
             billion: 'b',
             trillion: 't'
         },
-        ordinal : function (number) {
+        ordinal: function (number) {
             return 'º';
         },
         currency: {
@@ -716,9 +714,7 @@
 
 
 (function() {
-    
-
-    numeral.register('locale', 'th', {
+        numeral.register('locale', 'th', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -741,31 +737,25 @@
 
 (function() {
         var suffixes = {
-            1: '\'inci',
-            5: '\'inci',
-            8: '\'inci',
-            70: '\'inci',
-            80: '\'inci',
-
-            2: '\'nci',
-            7: '\'nci',
-            20: '\'nci',
-            50: '\'nci',
-
-            3: '\'üncü',
-            4: '\'üncü',
-            100: '\'üncü',
-
-            6: '\'ncı',
-
-            9: '\'uncu',
-            10: '\'uncu',
-            30: '\'uncu',
-
-            60: '\'ıncı',
-            90: '\'ıncı'
-        };
-
+        1: '\'inci',
+        5: '\'inci',
+        8: '\'inci',
+        70: '\'inci',
+        80: '\'inci',
+        2: '\'nci',
+        7: '\'nci',
+        20: '\'nci',
+        50: '\'nci',
+        3: '\'üncü',
+        4: '\'üncü',
+        100: '\'üncü',
+        6: '\'ncı',
+        9: '\'uncu',
+        10: '\'uncu',
+        30: '\'uncu',
+        60: '\'ıncı',
+        90: '\'ıncı'
+    };
     numeral.register('locale', 'tr', {
         delimiters: {
             thousands: '.',
@@ -778,15 +768,11 @@
             trillion: 'trilyon'
         },
         ordinal: function (number) {
-            if (number === 0) {  // special case for zero
+            if (number === 0) { // special case for zero
                 return '\'ıncı';
             }
-
-            var a = number % 10,
-                b = number % 100 - a,
-                c = number >= 100 ? 100 : null;
-
-          return suffixes[a] || suffixes[b] || suffixes[c];
+            var a = number % 10, b = number % 100 - a, c = number >= 100 ? 100 : null;
+            return suffixes[a] || suffixes[b] || suffixes[c];
         },
         currency: {
             symbol: '\u20BA'
@@ -821,8 +807,7 @@
 
 
 (function() {
-    
-    numeral.register('locale', 'vi', {
+        numeral.register('locale', 'vi', {
         delimiters: {
             thousands: '.',
             decimal: ','

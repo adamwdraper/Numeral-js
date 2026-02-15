@@ -1,13 +1,14 @@
 // numeral.js locale configuration
 // locale : Ukrainian for the Ukraine (uk-ua)
 // author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
-
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['../numeral'], factory);
-    } else if (typeof module === 'object' && module.exports) {
+    }
+    else if (typeof module === 'object' && module.exports) {
         factory(require('../numeral'));
-    } else {
+    }
+    else {
         factory(global.numeral);
     }
 }(this, function (numeral) {
