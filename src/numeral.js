@@ -208,7 +208,7 @@
             }
 
             // check abbreviation again after rounding
-            if (abbr && !abbrForce && Number(int) >= 1000 && abbr !== locale.abbreviations.trillion) {
+            if (abbr && !abbrForce && Math.abs(Number(int)) >= 1000 && abbr !== locale.abbreviations.trillion) {
                 int = String(Number(int) / 1000);
 
                 switch (abbr) {
